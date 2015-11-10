@@ -1,15 +1,16 @@
 'use strict';
 
-angular.module('myApp.view3', ['ngRoute'])
+angular.module('myApp.view3', ['ui.router'])
 
-.config(['$routeProvider', function($routeProvider) {
-  $routeProvider.when('/view3', {
-    templateUrl: 'view3/view3.html',
-    controller: 'View3Ctrl'
+.config(['$stateProvider', function($stateProvider) {
+  $stateProvider.state('topics.proplogic.view3', {
+      url: '/view3',
+      templateUrl: 'topics/proplogic/view3/view3.html',
+      controller: 'View3Ctrl'
   });
 }])
 
-.controller('View3Ctrl', ['$scope', '$location', function($scope, $location) {
+.controller('View3Ctrl', ['$scope', '$state', function($scope, $state) {
       $scope.buttonMessage = "Check answer";
 
       $scope.checked = false;
@@ -17,7 +18,7 @@ angular.module('myApp.view3', ['ngRoute'])
 
       $scope.check = function(solution) {
         if ($scope.checked && $scope.correct) {
-          $location.path('/view4');
+          $state.go('topics.proplogic.view4');
           return;
         }
 

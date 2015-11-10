@@ -18,17 +18,6 @@
   <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
 </head>
 <body>
-  <nav class="navbar navbar-default navbar-fixed-top">
-    <div class="container">
-      <ul class="nav navbar-nav">
-        <li><a href="#/view1">Exercise 1</a></li>
-        <li><a href="#/view2">Exercise 2</a></li>
-        <li><a href="#/view3">Exercise 3</a></li>
-        <li><a href="#/view4">Finish</a></li>
-      </ul>
-    </div>
-  </nav>
-
   <!--[if lt IE 7]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
   <![endif]-->
@@ -36,7 +25,7 @@
   <div id="wrap">
     <div id="main" class="clear-top">
       <div class="container-fluid">
-        <div ng-view></div>
+        <ui-view></ui-view>
       </div>
     </div>
   </div>
@@ -44,19 +33,28 @@
   <footer class="footer">
     Mastery learning for Propositional Logic MOCK EDITION: v<span app-version></span>
     <br/>
-    &copy Sebastian Geiger, 2015, Counceled by Andreas Holzer
+    &copy Sebastian Geiger, 2015, counceled by Andreas Holzer
   </footer>
 
   <!-- In production use:
   <script src="//ajax.googleapis.com/ajax/libs/angularjs/x.x.x/angular.min.js"></script>
   -->
   <script src="bower_components/angular/angular.js"></script>
-  <script src="bower_components/angular-route/angular-route.js"></script>
+  <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+  <script src="bower_components/angular-ui-bootstrap-bower/ui-bootstrap-tpls.js"></script>
   <script src="app.js"></script>
-  <script src="view1/view1.js"></script>
-  <script src="view2/view2.js"></script>
-  <script src="view3/view3.js"></script>
-  <script src="view4/view4.js"></script>
+  <script src="components/exercise/exercise.js"></script>
+  <script src="profiles/profiles.js"></script>
+  <script src="profiles/students/students.js"></script>
+  <script src="profiles/teachers/teachers.js"></script>
+  <script src="topics/topics.js"></script>
+  <script src="topics/overview/overview.js"></script>
+  <script src="topics/proplogic/propositionallogic.js"></script>
+  <script src="topics/proplogic/view1/view1.js"></script>
+  <script src="topics/proplogic/view2/view2.js"></script>
+  <script src="topics/proplogic/view3/view3.js"></script>
+  <script src="topics/proplogic/view4/view4.js"></script>
+  <script src="topics/kripkestructures/exercise1.js"></script>
   <script src="components/version/version.js"></script>
   <script src="components/version/version-directive.js"></script>
   <script src="components/version/interpolate-filter.js"></script>

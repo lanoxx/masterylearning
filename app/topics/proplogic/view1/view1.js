@@ -1,15 +1,16 @@
 'use strict';
 
-angular.module('myApp.view1', ['ngRoute'])
+angular.module('myApp.view1', ['ui.router'])
 
-.config(['$routeProvider', function($routeProvider) {
-  $routeProvider.when('/view1', {
-    templateUrl: 'view1/view1.html',
+.config(['$stateProvider', function($stateProvider) {
+  $stateProvider.state('topics.proplogic.view1', {
+    url: '/view1',
+    templateUrl: 'topics/proplogic/view1/view1.html',
     controller: 'View1Ctrl'
   });
 }])
 
-.controller('View1Ctrl', ['$scope', '$location', '$route', function($scope, $location, $route) {
+.controller('View1Ctrl', ['$scope', '$state', function($scope, $state) {
 
       $scope.checked = false;
       $scope.correct = false;
@@ -21,7 +22,7 @@ angular.module('myApp.view1', ['ngRoute'])
         }
 
         if ($scope.checked && $scope.correct) {
-          $location.path("/view2");
+          $state.go("topics.proplogic.view2");
           return;
         }
 
