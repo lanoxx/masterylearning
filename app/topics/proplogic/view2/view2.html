@@ -2,72 +2,100 @@
     <div class="col-md-6">
         <h1>Tree-based formula evaluation</h1>
 
-        <p>
-            Given the following variable assignments:
-        </p>
-        <ul>
-            <li>a->0</li>
-            <li>b->1</li>
-            <li>c->1</li>
-            <li>d->1</li>
-        </ul>
-        <p>
-            The following tree represents the boolean formula <span>(a ^ b) v (c XOR D)</span>. Please assign the values
-            of the atoms and operators to the respective boxes.
-        </p>
+        <div class="row">
+            <div class="col-md-9">
+                <p>
+                    Given the following variable assignments:
+                </p>
+                <ul>
+                    <li>`a rarr 0`</li>
+                    <li>`b rarr 1`</li>
+                    <li>`c rarr 1`</li>
+                    <li>`d rarr 1`</li>
+                </ul>
+                <p>
+                    The following tree represents the boolean formula <span>`(a ^^ b) vv (c o+ D)`</span>. Please assign
+                    the values
+                    of the atoms and operators to the respective boxes.
+                </p>
 
-        <div class="col-md-6">
-            <div class="row spacer-bottom">
-                <div class="col-md-12 text-center">
-                    V <input type="text" ng-model="bool.or" style="width: 40px;" name="root"/>
-                </div>
-            </div>
-            <div class="row spacer-bottom">
-                <div class="col-md-6 text-center">
-                    ^ <input type="text" ng-model="bool.and" style="width: 40px;" name="v1"/>
-                </div>
-                <div class="col-md-6 text-center">
-                    XOR <input type="text" ng-model="bool.xor" style="width: 40px;"/>
-                </div>
-            </div>
-            <div class="row spacer-bottom">
-                <div class="col-md-3 text-center">
-                    a <input type="text" ng-model="bool.a" style="width: 40px;" name="v1"/>
-                </div>
-                <div class="col-md-3 text-center">
-                    b <input type="text" ng-model="bool.b" style="width: 40px;"/>
-                </div>
-                <div class="col-md-3 text-center">
-                    c <input type="text" ng-model="bool.c" style="width: 40px;" name="v1"/>
-                </div>
-                <div class="col-md-3 text-center">
-                    d <input type="text" ng-model="bool.d" style="width: 40px;"/>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-2">
-                    <button ng-click="check(bool)" class="btn btn-primary">{{buttonMessage}}</button>
+                <div class="col-md-6">
+                    <div class="row spacer-bottom">
+                        <div class="col-md-12 text-center">
+                            `vv` <input type="text" ng-model="bool.or" style="width: 40px;" name="root"/>
+                        </div>
+                    </div>
+                    <div class="row spacer-bottom">
+                        <div class="col-md-6 text-center">
+                            `^^` <input type="text" ng-model="bool.and" style="width: 40px;" name="v1"/>
+                        </div>
+                        <div class="col-md-6 text-center">
+                            `o+` <input type="text" ng-model="bool.xor" style="width: 40px;"/>
+                        </div>
+                    </div>
+                    <div class="row spacer-bottom">
+                        <div class="col-md-3 text-center">
+                            `a` <input type="text" ng-model="bool.a" style="width: 40px;" name="v1"/>
+                        </div>
+                        <div class="col-md-3 text-center">
+                            `b` <input type="text" ng-model="bool.b" style="width: 40px;"/>
+                        </div>
+                        <div class="col-md-3 text-center">
+                            `c` <input type="text" ng-model="bool.c" style="width: 40px;" name="v1"/>
+                        </div>
+                        <div class="col-md-3 text-center">
+                            `d` <input type="text" ng-model="bool.d" style="width: 40px;"/>
+                        </div>
+                    </div>
+
                     <p ng-if="checked && correct">Answer is correct.</p>
 
-                    <p ng-if="checked && !correct">Answer is wrong.</p>
+                    <div ng-show="checked && !correct">
+                        <p>Answer is wrong. Please take a look at the following truth table for the `vv` operator:</p>
+                        <table class="table">
+                            <tr>
+                                <td>`vv`</td>
+                                <td>0</td>
+                                <td>1</td>
+                            </tr>
+                            <tr>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>1</td>
+                            </tr>
+                            <tr>
+                                <td>1</td>
+                                <td>1</td>
+                                <td>1</td>
+                            </tr>
+                        </table>
+                    </div>
+
                 </div>
+            </div>
+            <div class="col-md-3">
+                <button ng-click="check(bool)" class="btn btn-success">{{buttonMessage}}</button>
+                <br><br>
+                <button class="btn btn-primary" data-toggle="tooltip" data-placement="left" title="When using hints questions do not count as answered successfully.">View Hint</button>
             </div>
         </div>
     </div>
     <div class="col-md-6 bg-info">
         <h1>Storyboard</h1>
-        <p>This exercise demonstrates the evaluation of propositional logic in tree form. The advantage
+
+        <p><strong>Goal:</strong> This exercise demonstrates the evaluation of propositional logic in tree form. The advantage
             over the exercise 1 is, that the
-            operator precedence and parentheses are already clear through the tree form, so we can check directly if the
+            operator precedence and parentheses are already clear through the tree form, so we can check directly if
+            the
             student is able to
             evaluate the logical operators.</p>
 
-        <p>
-            Assuming the student types 1 into the box of "v" (or operator), then we show the truth table for "OR" and
-            let the student evaluate the question again.
+        <p><strong>Usage:</strong>
+            Please type `1` into the box of the `vv` operator and press check answer. You will the that the truth table for the `vv`-operator
+            is shown since the expected answer is 0.
         </p>
 
-        <p>
+        <p><strong>Other:</strong>
             For each operator that was evaluated incorrectly we keep a record of how many times the student made a
             mistake with that operator. Then we can adjust further
             questions to explicitly cover this operator.
