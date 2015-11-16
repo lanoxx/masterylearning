@@ -2,17 +2,17 @@
     <div class="col-md-6">
         <h1>Step-wise formula evaluation</h1>
         <div class="row">
-            <div class="col-md-9">
+            <div class="col-md-9" mathmode>
                 <p>
-                    Mark tried to solve the following formula: <span><strong>(a ^ b) v (c XOR D)</strong></span>, given the
+                    Mark tried to solve the following formula: <span><strong> `(a ^^ b) vv (c o+ d)`</strong></span>, given the
                     following variable assignments,
                     specify where mark has made a mistake.
                 </p>
                 <ul>
-                    <li>a->0</li>
-                    <li>b->1</li>
-                    <li>c->1</li>
-                    <li>d->1</li>
+                    <li>`a rarr 0`</li>
+                    <li>`b rarr 1`</li>
+                    <li>`c rarr 1`</li>
+                    <li>`d rarr 1`</li>
                 </ul>
 
                 <p>
@@ -23,7 +23,7 @@
                 <div class="row spacer-bottom">
                     <div class="col-md-1"></div>
                     <div class="col-md-4">
-                        (a ^ b) v (c XOR D)
+                        `(a ^^ b) vv (c o+ d)`
                     </div>
                     <div class="col-md-2">Original Formula</div>
                 </div>
@@ -32,7 +32,7 @@
                         <input type="radio" name="solution" value="1" ng-model="solution">
                     </div>
                     <div class="col-md-4">
-                        <span><strong>(0 ^ 1) v (1 XOR 1)</strong></span>
+                        <span><strong>`(0 ^^ 1) vv (1 o+ 1)`</strong></span>
                     </div>
                     <div class="col-md-2"> Step 1</div>
                 </div>
@@ -42,7 +42,7 @@
                         <input type="radio" name="solution" value="2" ng-model="solution">
                     </div>
                     <div class="col-md-4">
-                        <span><strong>1 v (1 XOR 1)</strong></span>
+                        <span><strong>`1 vv (1 o+ 1)`</strong></span>
                     </div>
                     <div class="col-md-2">Step 2</div>
                 </div>
@@ -51,7 +51,7 @@
                     <div class="col-md-1">
                         <input type="radio" name="solution" value="3" ng-model="solution">
                     </div>
-                    <div class="col-md-4"><strong>1 v 0</strong></div>
+                    <div class="col-md-4"><strong>`1 vv 0`</strong></div>
                     <div class="col-md-2">Step 3</div>
                 </div>
 
@@ -103,7 +103,7 @@
         </div>
     </div>
 
-    <div class="col-md-6 bg-info">
+    <div class="col-md-6 bg-info" mathmode>
         <h1>Storyboard</h1>
 
         <p><strong>Goal:</strong> This exercise type is useful to understand where a student has problems with the evaluation of a formula.</p>

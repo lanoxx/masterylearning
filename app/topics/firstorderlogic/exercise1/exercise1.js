@@ -26,4 +26,4 @@ angular.module('myApp.topics.firstorderlogic.exercise1', ['ui.router'])
 
             $scope.checked = true;
         };
-    }]);
+    }])

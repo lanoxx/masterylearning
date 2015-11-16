@@ -5,6 +5,7 @@ angular.module('myApp', [
     'ui.router',
     'ui.bootstrap',
     'common.exercise',
+    'common.mathmode',
     'myApp.profiles',
     'myApp.profiles.students',
     'myApp.profiles.teachers',
@@ -21,7 +22,13 @@ angular.module('myApp', [
     'myApp.version'
 ]).
     config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
-        $stateProvider.state('home', {
+        MathJax.Hub.Config({
+            asciimath2jax: {
+                delimiters: [['`','`'], ['$','$']]
+            }
+        });
+
+    $stateProvider.state('home', {
             url: '/home',
             templateUrl: 'app.html'
         });

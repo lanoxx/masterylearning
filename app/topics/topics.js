@@ -11,6 +11,9 @@ angular.module('myApp.topics', ['ui.router'])
         });
     }])
 
-    .controller('TopicsCtrl', ['$state', function ($state) {
-
+    .controller('TopicsCtrl', ['$state', '$rootScope', function ($state, $rootScope) {
+        $rootScope.$on ('$viewContentLoaded', function (event) {
+            //TODO: can we use this event to somehow render the math content in the template with MathJax?
+            console.log(event);
+        });
     }]);
