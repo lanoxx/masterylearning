@@ -1,0 +1,44 @@
+<div class="row">
+    <div class="col-md-6">
+        <h1>PL1 Terms and Signatures</h1>
+        <div class="row">
+            <div class="col-md-9" mathmode>
+                <p>In this exercise you learn to understand Terms and Signatures of first order logic. Sometimes also called PL1.</p>
+                <p>Given a set `VAR={x, y}` and `Sigma = {vv, ^^, not}`, please decide, which of the following statements are true</p>
+                <ul>
+                    <li><input type="checkbox" ng-model="model.check1"> `x` is an atom.</li>
+                    <li><input type="checkbox" ng-model="model.check2"> `x` and `not x` are both literals.</li>
+                    <li><input type="checkbox" ng-model="model.check3"> "`x ^^ y`" is a term.</li>
+                    <li><input type="checkbox" ng-model="model.check4"> Non of the above.</li>
+                </ul>
+            </div>
+            <div class="col-md-3">
+                <button ng-click="check(model)" class="btn btn-success">{{buttonMessage}}</button><br/><br>
+                <button class="btn btn-primary" data-toggle="tooltip" data-placement="left" title="When using hints questions do not count as answered successfully.">View Hint</button>
+                <p ng-if="checked && correct">Answer is correct.</p>
+
+                <div ng-show="checked && !correct">
+                    <p>Answer is wrong. </p>
+
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+    <div class="col-md-6 bg-info">
+        <h1>Storyboard</h1>
+        <p><strong>Goal:</strong> In this exercise the student learns to understand Terms and Signatures of first order logic. Sometimes also called PL1.</p>
+        <p>
+            <strong>Automation:</strong> This exercise can be automated in the following way:
+        </p>
+        <ul>
+            <li>We could randomly initialize a set of VAR and `Sigma` and then combine elements of the set to form terms, atoms, literals and also wrong expressions.</li>
+            <li>For each generated expression we store if its correct or wrong and then insert the expression into a template string that matches their type.</li>
+            <li>Templates would then be: "%s is an atom", "%s and %s are both literals.", "%s is a term." plus the generic "Non of the above." that is always present.</li>
+        </ul>
+        <p>
+            <strong>Usage:</strong> Please select option 3.
+        </p>
+    </div>
+</div>
