@@ -17,7 +17,9 @@ angular.module('myApp.view1', ['ui.router'])
       $scope.buttonMessage = "Check answer";
 
       function check(result) {
+          console.log("Clicked");
         if (result == "" || result == undefined) {
+            console.log("NOTHING");
           return;
         }
 
