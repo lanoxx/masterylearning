@@ -11,7 +11,9 @@ angular.module('myApp', [
     'myApp.profiles.teachers',
     'myApp.topics',
     'myApp.topics.proplogic',
-    'myApp.topics.overview',
+    'myApp.lectures2',
+    'myApp.lectures2.propositionallogic',
+    'myApp.content',
     'myApp.view1',
     'myApp.view2',
     'myApp.view3',
@@ -24,13 +26,33 @@ angular.module('myApp', [
     config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
         MathJax.Hub.Config({
             asciimath2jax: {
-                delimiters: [['`','`'], ['$','$']]
+                delimiters: [['`', '`'], ['$', '$']]
             }
         });
 
-    $stateProvider.state('home', {
+        $stateProvider.state('home', {
             url: '/home',
-            templateUrl: 'app.html'
+            views: {
+                'navigation@': {
+                    templateUrl: 'navigation.html'
+                },
+                '@': {
+                    templateUrl: 'app.html'
+                }
+            }
         });
         $urlRouterProvider.otherwise('home');
+    }])
+
+
+    .directive ('lecture-menu', function () {
+        return {
+            restrict: 'E',
+            templateUrl: 'app-lecturemenu.html',
+            transclude: true,
+            controller: 'LectureMenuCtrl'
+        }
+    })
+
+    .controller ('LectureMenuCtrl', ['$scope', '$templateCache', function ($scope, $templateCache) {
     }]);
