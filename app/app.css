@@ -14,10 +14,11 @@ body {
     min-height: 100%;
 }
 
-#main {
+/* Seems not necessary to push down the footer. Maybe older browsers need this? Tested with latest chrome */
+/*#main {
     overflow:auto;
-    padding-bottom:100px; /* this needs to be bigger than footer height*/
-}
+    padding-bottom:100px; !* this needs to be bigger than footer height*!
+}*/
 
 .spacer-bottom {
     margin-bottom: 20px;
@@ -31,4 +32,24 @@ body {
     height: 100px;
     clear:both;
     padding-top:20px;
+}
+
+
+.lectures.sidebar {
+    min-width: 200px;
+    background: #9cdd8a;
+    height: calc(100vh - 200px);
+    -webkit-border-bottom-right-radius: 4px;
+    -webkit-border-top-right-radius: 4px;
+    -moz-border-radius-bottomright: 4px;
+    -moz-border-radius-topright: 4px;
+    border-bottom-right-radius: 4px;
+    border-top-right-radius: 4px;
+}
+
+.lectures.sidebar .search {
+    position: absolute;
+    bottom: 5px;
+    left: 20px;
+    width: calc(100% - 40px)
 }
