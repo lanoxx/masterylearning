@@ -9,6 +9,7 @@ angular.module('myApp', [
     'myApp.profiles',
     'myApp.profiles.students',
     'myApp.profiles.teachers',
+    'myApp.practice',
     'myApp.topics',
     'myApp.topics.proplogic',
     'myApp.lectures2',
