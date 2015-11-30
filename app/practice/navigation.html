@@ -1,0 +1,40 @@
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+        <ul class="nav navbar-nav">
+            <li ui-sref-active="active"><a ui-sref="topics">Topics</a></li>
+            <li ui-sref-active="active"><a ui-sref="profiles">Profiles</a></li>
+            <li ui-sref-active="active"><a ui-sref="practice">Practice</a></li>
+            <li ui-sref-active="active" role="presentation" class="dropdown" data-target="#background">
+                <a id="mainmenu" class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false" ng-click="showmenu = !showmenu">Lectures <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <div class="row">
+                        <div class="col-md-4">Foo</div>
+                        <div class="col-md-4">Foo</div>
+                        <div class="col-md-4">Foo</div>
+                    </div>
+                    <!-- This draws the huge background -->
+                    <li style="
+                        min-width: 1000px;
+                        position: fixed;
+                        left: 0;
+                        right: 0;
+                        top: 50px;
+                        height: 495px;
+                        background: #FFF none repeat scroll 0 0;
+                        display: block;
+                        z-index: -500;
+                        box-shadow: 1px 1px 3px 1px rgba(0, 0, 0, 0.15);"  class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <div style="margin: 0 auto; max-width: 1200px;">
+                            <div style="position:absolute;left: 50%; right: 0; background: #1C758A none repeat scroll 0 0; height: 495px;"></div>
+                        </div>
+                    </li>
+                </ul>
+            </li>
+            <li ui-sref-active="active"><a ui-sref="lectures2">Lectures 2</a></li>
+            <li ui-sref-active="active"><a ui-sref="content">Content</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+            <li><a class="navbar-brand"><small>Signed in as</small> John Doe <small>(Student)</small></a></li>
+        </ul>
+    </div>
+</nav>
