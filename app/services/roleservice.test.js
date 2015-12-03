@@ -13,7 +13,7 @@ describe('my role service', function() {
     }));
 
     it ('should be able to switch between roles', function () {
-        expect(RoleService.currentRole).toEqual(RoleService.STUDENT);
+        expect(RoleService.currentRole).toEqual(RoleService.NONE);
 
         RoleService.setRole(2);
 
@@ -21,7 +21,7 @@ describe('my role service', function() {
     });
 
     it('should have a "student" property that can be used to set the role', function () {
-        expect(RoleService.currentRole).toEqual(RoleService.STUDENT);
+        expect(RoleService.currentRole).toEqual(RoleService.NONE);
 
         RoleService.setRole(RoleService.TEACHER);
 
@@ -29,7 +29,9 @@ describe('my role service', function() {
     });
 
     it('should have the properties of a student', function () {
-        expect(RoleService.currentRole).toEqual(RoleService.STUDENT);
+        expect(RoleService.currentRole).toEqual(RoleService.NONE);
+
+        RoleService.setRole(RoleService.STUDENT);
 
         expect(RoleService.properties[RoleService.currentRole].name).toEqual('student');
     });
