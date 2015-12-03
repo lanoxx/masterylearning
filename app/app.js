@@ -22,8 +22,9 @@ angular.module('myApp', [
     'myApp.topics.firstorderlogic.exercise1',
     'myApp.topics.kripkestructures',
     'myApp.version'
-]).
-    config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
+])
+
+    .config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
         MathJax.Hub.Config({
             asciimath2jax: {
                 delimiters: [['`', '`'], ['$', '$']]
@@ -75,16 +76,6 @@ angular.module('myApp', [
 
         $urlRouterProvider.otherwise('home');
     }])
-
-
-    .directive ('lecture-menu', function () {
-        return {
-            restrict: 'E',
-            templateUrl: 'app-lecturemenu.html',
-            transclude: true,
-            controller: 'LectureMenuCtrl'
-        }
-    })
 
     .controller ('LectureMenuCtrl', ['$scope', '$templateCache', function ($scope, $templateCache) {
 
