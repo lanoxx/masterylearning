@@ -5,7 +5,8 @@ angular.module ('myApp.practice', ['ui.router'])
             url: '/practice',
             views: {
                 'navigation@': {
-                    templateUrl: 'practice/navigation.html'
+                    templateUrl: 'navigation.html',
+                    controller: 'NavigationCtrl'
                 },
                 '': {
                     templateUrl: 'practice/practice.html'
@@ -13,13 +14,21 @@ angular.module ('myApp.practice', ['ui.router'])
             }
         })
 
-            .state('practice.propositionallogic', {
+            .state('practice.formalmethods', {
+                url: '/formalmethods',
+                templateUrl: 'practice/formalmethods.html'
+            })
+            .state('practice.formalmethods.propositionallogic', {
                 url: '/propositionallogic',
                 templateUrl: 'practice/propositionallogic.html'
             })
 
-            .state('practice.propositionallogic.unit1', {
+            .state('practice.formalmethods.propositionallogic.unit1', {
                 url: '/unit1',
                 templateUrl: 'practice/unit1.html'
+            })
+            .state('practice.manage', {
+                url: '/manage',
+                templateUrl: 'practice/manage.html'
             });
     }]);

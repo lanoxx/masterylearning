@@ -1,8 +1,8 @@
 angular.module('myApp.profiles.students', [])
 
     .config (['$stateProvider', function ($stateProvider) {
-    $stateProvider.state ('profiles.students', {
-        url: '/students',
+    $stateProvider.state ('student.profile', {
+        url: '/profile',
         templateUrl: 'profiles/students/students.html'
     })
 }]);
