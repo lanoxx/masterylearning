@@ -3,11 +3,13 @@
 
 html {
     height: 100%;
+    overflow-y: scroll;
 }
 
 body {
     height: 100%;
     padding-top: 70px;
+
 }
 
 #wrap {
@@ -73,4 +75,10 @@ body {
 
 .exercise.content {
     max-width: 70%;
+}
+
+.sidebar .hamburger {
+    position: absolute;
+    top: 20px;
+    right: 20px;
 }

@@ -6,7 +6,7 @@ angular.module('myApp', [
     'ui.bootstrap',
     'common.exercise',
     'common.mathmode',
-    'myApp.profiles',
+    'myApp.services.roles',
     'myApp.profiles.students',
     'myApp.profiles.teachers',
     'myApp.practice',
@@ -14,7 +14,6 @@ angular.module('myApp', [
     'myApp.topics.proplogic',
     'myApp.lectures2',
     'myApp.lectures2.propositionallogic',
-    'myApp.content',
     'myApp.view1',
     'myApp.view2',
     'myApp.view3',
@@ -31,17 +30,49 @@ angular.module('myApp', [
             }
         });
 
+        /**
+         * Currently this is the home, but at some point we need to rename it to 'welcome' or 'login'.
+         * For simplicity we have no user management now so we just leave it like this.
+         */
         $stateProvider.state('home', {
             url: '/home',
             views: {
                 'navigation@': {
-                    templateUrl: 'navigation.html'
+                    templateUrl: 'navigation.html',
+                    controller: 'NavigationCtrl'
                 },
                 '@': {
                     templateUrl: 'app.html'
                 }
             }
-        });
+        })
+
+            .state('student', {
+                url: '/student',
+                views: {
+                    'navigation@': {
+                        templateUrl: 'navigation.html',
+                        controller: 'NavigationCtrl'
+                    },
+                    '@': {
+                        templateUrl: 'student-home.html'
+                    }
+                }
+            })
+
+            .state('teacher', {
+                url: '/teacher',
+                views: {
+                    'navigation@': {
+                        templateUrl: 'navigation.html',
+                        controller: 'NavigationCtrl'
+                    },
+                    '@': {
+                        templateUrl: 'teacher-home.html'
+                    }
+                }
+            });
+
         $urlRouterProvider.otherwise('home');
     }])
 
@@ -56,4 +87,26 @@ angular.module('myApp', [
     })
 
     .controller ('LectureMenuCtrl', ['$scope', '$templateCache', function ($scope, $templateCache) {
+
+    }])
+
+    .controller ('NavigationCtrl', ['$scope', '$state', 'RoleService', function ($scope, $state, RoleService) {
+        $scope.roleService = RoleService;
+
+        /**
+         * This will attempt to set the new role in the role service and if successful switches the route
+         * according to the new role.
+         *
+         * @param role A valid role from the RoleService
+         */
+        $scope.switch_role = function (role) {
+            if (RoleService.setRole(role)) {
+                if (role == RoleService.STUDENT)
+                    $state.go('student');
+                if (role == RoleService.TEACHER)
+                    $state.go('teacher');
+                if (role == RoleService.NONE)
+                    $state.go('home');
+            }
+        }
     }]);

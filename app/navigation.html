@@ -1,67 +1,38 @@
 <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container">
-        <ul class="nav navbar-nav">
-            <li><a ui-sref="topics">Topics</a></li>
-            <li><a ui-sref="profiles">Profiles</a></li>
-            <li><a ui-sref="practice">Practice</a></li>
-            <li role="presentation" class="dropdown" data-target="#background">
-                <a id="mainmenu" class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false" ng-click="showmenu = !showmenu">Lectures <span class="caret"></span></a>
-                <ul class="dropdown-menu">
-                    <div class="row">
-                        <div class="col-md-4">Foo</div>
-                        <div class="col-md-4">Foo</div>
-                        <div class="col-md-4">Foo</div>
-                    </div>
-                    <!-- This draws the huge background -->
-                    <li style="
-                        min-width: 1000px;
-                        position: fixed;
-                        left: 0;
-                        right: 0;
-                        top: 50px;
-                        height: 495px;
-                        background: #FFF none repeat scroll 0 0;
-                        display: block;
-                        z-index: -500;
-                        box-shadow: 1px 1px 3px 1px rgba(0, 0, 0, 0.15);"  class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <div style="margin: 0 auto; max-width: 1200px;">
-                            <div style="position:absolute;left: 50%; right: 0; background: #1C758A none repeat scroll 0 0; height: 495px;"></div>
-                        </div>
-                    </li>
+        <ul class="nav navbar-nav" ng-if="roleService.currentRole === roleService.STUDENT">
+            <li><a class="navbar-brand" ui-sref="student">Home</a></li>
+            <li ui-sref-active="active"><a ui-sref="topics">Topics</a></li>
+            <li ui-sref-active="active"><a ui-sref="student.profile">Student Profile</a></li>
+            <li ui-sref-active="active"><a ui-sref="practice">Practice</a></li>
+            <li ui-sref-active="active"><a ui-sref="lectures2">Lectures</a></li>
+        </ul>
+        <ul class="nav navbar-nav" ng-if="roleService.currentRole === roleService.TEACHER">
+            <li><a class="navbar-brand" ui-sref="teacher">Home</a></li>
+            <li ui-sref-active="active"><a ui-sref="teacher.profile">Teacher Profile</a></li>
+            <li ui-sref-active="active"><a ui-sref="lectures2">Manage Lectures</a></li>
+        </ul>
+
+        <!-- Role switcher to switch between the student and teacher role -->
+        <ul class="nav navbar-nav navbar-right">
+            <li uib-dropdown is-open="status.isopen">
+                <a id="single-button" type="button" class="dropdown-toggle" uib-dropdown-toggle>
+                    <span ng-show="roleService.currentRole === roleService.NONE">
+                        <small>Sign in</small><span class="caret"></span>
+                    </span>
+                    <span ng-show="roleService.currentRole !== roleService.NONE">
+                        <small>Signed in as</small> John Doe
+                        <small style="text-transform: capitalize">({{roleService.getCurrentProperty().name}})</small><span class="caret"></span>
+                    </span>
+                </a>
+                <ul class="uib-dropdown-menu" role="menu" aria-labelledby="single-button">
+                    <li ng-class="{ active: roleService.currentRole === roleService.STUDENT }" role="menuitem" ng-click="switch_role (roleService.STUDENT)"><a href="">Student Role</a></li>
+                    <li ng-class="{ active: roleService.currentRole === roleService.TEACHER }" role="menuitem" ng-click="switch_role (roleService.TEACHER)"><a href="">Teacher Role</a></li>
                 </ul>
             </li>
-            <li><a ui-sref="lectures2">Lectures 2</a></li>
-            <!--<div class="btn-group" uib-dropdown is-open="status.isopen">
-                <button id="single-button" type="button" class="btn btn-primary" uib-dropdown-toggle ng-disabled="disabled">
-                    Button dropdown <span class="caret"></span>
-                </button>
-                <ul class="uib-dropdown-menu" role="menu" aria-labelledby="single-button">
-                    <li role="menuitem"><a href="#">Action</a></li>
-                    <li role="menuitem"><a href="#">Another action</a></li>
-                    <li role="menuitem"><a href="#">Something else here</a></li>
-                    <li class="divider"></li>
-                    <li role="menuitem"><a href="#">Separated link</a></li>
-                </ul>
-                <li style="
-                        min-width: 1000px;
-                        position: fixed;
-                        left: 0;
-                        right: 0;
-                        top: 50px;
-                        height: 495px;
-                        background: #FFF none repeat scroll 0 0;
-                        display: block;
-                        z-index: -500;
-                        box-shadow: 1px 1px 3px 1px rgba(0, 0, 0, 0.15);"  class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <div style="margin: 0 auto; max-width: 1200px;">
-                        <div style="position:absolute;left: 50%; right: 0; background: #1C758A none repeat scroll 0 0; height: 495px;"></div>
-                    </div>
-                </li>
-            </div>-->
-            <li ui-sref-active="active"><a ui-sref="content">Content</a></li>
-        </ul>
-        <ul class="nav navbar-nav navbar-right">
-            <li><a class="navbar-brand"><small>Signed in as</small> John Doe <small>(Student)</small></a></li>
+            <li ng-show="roleService.currentRole !== roleService.NONE" ng-click="switch_role (roleService.NONE)">
+                <a href="">Logout</a>
+            </li>
         </ul>
     </div>
 </nav>
