@@ -4,7 +4,7 @@ angular.module('myApp.lectures2', ['ui.router'])
 
     .config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
         $stateProvider.state('lectures2', {
-            url: '/lectures2',
+            url: '/lectures',
             views: {
                 'navigation@': {
                     templateUrl: 'navigation.html',
@@ -25,6 +25,10 @@ angular.module('myApp.lectures2', ['ui.router'])
             .state('lectures2.semanticsofpl', {
                 url: '/semanticsofpl',
                 templateUrl: 'lectures2/semanticsofprogramminglanguages.html'
+            })
+            .state ('lectures2.computeraidedverification', {
+                url: '/computeraidedverification',
+                templateUrl: 'lectures2/computeraidedverification.html'
             })
         ;
     }])
