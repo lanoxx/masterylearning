@@ -4,6 +4,7 @@
 angular.module('myApp', [
     'ui.router',
     'ui.bootstrap',
+    'ngCookies',
     'common.exercise',
     'common.mathmode',
     'myApp.services.roles',
@@ -24,6 +25,48 @@ angular.module('myApp', [
     'myApp.version'
 ])
 
+    .service ('UserService', [function () {
+        this.currentUser = null;
+        this.role = "ROLE_GUEST";
+    }])
+
+    .run (['$rootScope', '$state', '$cookies', 'UserService', 'RoleService', function ($rootScope, $state, $cookies, UserService, RoleService) {
+
+        var role = $cookies.get('role');
+        var currentUser = $cookies.get('currentUser');
+
+        if (role) {
+            if (role === 'ROLE_STUDENT') {
+                console.log ('[myApp].run: Switching application role to RoleService.STUDENT and security-role to ROLE_STUDENT');
+                RoleService.currentRole = RoleService.STUDENT;
+            }
+
+            if (role === 'ROLE_TEACHER') {
+                console.log ('[myApp].run: Switching application role to RoleService.TEACHER and security-role to ROLE_TEACHER');
+                RoleService.currentRole = RoleService.TEACHER;
+            }
+
+            UserService.role = role;
+        }
+
+        if (currentUser) {
+            UserService.currentUser = currentUser;
+        }
+
+        $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
+            console.log ("$stateChangeStart (" + toState.name + "; role: '" + toState.role + "'");
+            if (toState.role === 'ROLE_GUEST') {
+                // no need to check anything. We can always transition to an unsecured state.
+            } else if (toState.role === 'ROLE_STUDENT' || toState.role === 'ROLE_TEACHER') {
+                // we need to check that the user is authenticated and has the right role.
+                if (!(UserService.role === 'ROLE_STUDENT' || UserService.role === 'ROLE_TEACHER')) {
+                    event.preventDefault();
+                    $state.go ('home');
+                }
+            }
+        });
+    }])
+
     .config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
         MathJax.Hub.Config({
             asciimath2jax: {
@@ -43,45 +86,69 @@ angular.module('myApp', [
                     controller: 'NavigationCtrl'
                 },
                 '@': {
-                    templateUrl: 'app.html'
+                    templateUrl: 'app.html',
+                    controller: 'HomeCtrl'
                 }
-            }
+            },
+            role: 'ROLE_GUEST'
         })
 
-            .state('student', {
+            .state('home.student', {
                 url: '/student',
+                //templateUrl: 'student-home.html',
                 views: {
                     'navigation@': {
                         templateUrl: 'navigation.html',
                         controller: 'NavigationCtrl'
                     },
                     '@': {
-                        templateUrl: 'student-home.html'
+                        templateUrl: 'student-home.html',
+                        controller: 'StudentCtrl'
                     }
-                }
+                },
+                role: 'ROLE_STUDENT'
             })
 
-            .state('teacher', {
+            .state('home.teacher', {
                 url: '/teacher',
+                //templateUrl: 'teacher-home.html',
                 views: {
                     'navigation@': {
                         templateUrl: 'navigation.html',
                         controller: 'NavigationCtrl'
                     },
                     '@': {
-                        templateUrl: 'teacher-home.html'
+                        templateUrl: 'teacher-home.html',
+                        controller: 'TeacherCtrl'
                     }
-                }
+                },
+                role: 'ROLE_TEACHER'
             });
 
         $urlRouterProvider.otherwise('home');
     }])
 
-    .controller ('LectureMenuCtrl', ['$scope', '$templateCache', function ($scope, $templateCache) {
+    .controller ('HomeCtrl', ['$rootScope', function ($rootScope) {
+
+/*        $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
+            console.log ("[HomeCtrl] $stateChangeStart (" + toState + '; ' + fromState);
+        });*/
 
     }])
 
-    .controller ('NavigationCtrl', ['$scope', '$state', 'RoleService', function ($scope, $state, RoleService) {
+    .controller ('StudentCtrl', ['$rootScope', function ($rootScope) {
+        //$rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
+        //    console.log ("[StudentCtrl] $stateChangeStart (" + toState + '; ' + fromState);
+        //});
+    }])
+
+    .controller ('TeacherCtrl', ['$rootScope', function ($rootScope) {
+        /*$rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
+            console.log ("[TeacherCtrl] $stateChangeStart (" + toState + '; ' + fromState);
+        });*/
+    }])
+
+    .controller ('NavigationCtrl', ['$scope', '$state', '$cookies', 'RoleService', 'UserService', function ($scope, $state, $cookies, RoleService, UserService) {
         $scope.roleService = RoleService;
 
         /**
@@ -92,12 +159,27 @@ angular.module('myApp', [
          */
         $scope.switch_role = function (role) {
             if (RoleService.setRole(role)) {
-                if (role == RoleService.STUDENT)
-                    $state.go('student');
-                if (role == RoleService.TEACHER)
-                    $state.go('teacher');
-                if (role == RoleService.NONE)
+                if (role == RoleService.STUDENT) {
+                    UserService.role = 'ROLE_STUDENT';
+                    UserService.currentUser = 'maxmusterman';
+                    $cookies.put('role', 'ROLE_STUDENT');
+                    $cookies.put('currentUser', 'maxmusterman');
+                    $state.go('home.student');
+                }
+                if (role == RoleService.TEACHER) {
+                    UserService.role = 'ROLE_TEACHER';
+                    UserService.currentUser = 'maxmusterman';
+                    $cookies.put('role', 'ROLE_TEACHER');
+                    $cookies.put('currentUser', 'maxmusterman');
+                    $state.go('home.teacher');
+                }
+                if (role == RoleService.NONE) {
+                    UserService.role = 'ROLE_GUEST';
+                    UserService.currentUser = null;
+                    $cookies.remove('role');
+                    $cookies.remove('currentUser');
                     $state.go('home');
+                }
             }
         }
     }]);
