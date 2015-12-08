@@ -11,7 +11,8 @@ angular.module ('myApp.practice', ['ui.router'])
                 '': {
                     templateUrl: 'practice/practice.html'
                 }
-            }
+            },
+            role: 'ROLE_USER'
         })
 
             .state('practice.formalmethods', {
