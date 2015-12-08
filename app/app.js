@@ -54,14 +54,13 @@ angular.module('myApp', [
         }
 
         $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
-            console.log ("$stateChangeStart (" + toState.name + "; role: '" + toState.role + "'");
+            console.log ("$stateChangeStart (destination state: " + toState.name + "; requires role: '" + toState.role + "'");
             if (toState.role === 'ROLE_GUEST') {
                 // no need to check anything. We can always transition to an unsecured state.
             } else if (toState.role === 'ROLE_STUDENT' || toState.role === 'ROLE_TEACHER') {
                 // we need to check that the user is authenticated and has the right role.
                 if (!(UserService.role === 'ROLE_STUDENT' || UserService.role === 'ROLE_TEACHER')) {
                     event.preventDefault();
-                    $state.go ('home');
                 }
             }
         });
@@ -95,7 +94,6 @@ angular.module('myApp', [
 
             .state('home.student', {
                 url: '/student',
-                //templateUrl: 'student-home.html',
                 views: {
                     'navigation@': {
                         templateUrl: 'navigation.html',
@@ -111,7 +109,6 @@ angular.module('myApp', [
 
             .state('home.teacher', {
                 url: '/teacher',
-                //templateUrl: 'teacher-home.html',
                 views: {
                     'navigation@': {
                         templateUrl: 'navigation.html',
@@ -129,23 +126,12 @@ angular.module('myApp', [
     }])
 
     .controller ('HomeCtrl', ['$rootScope', function ($rootScope) {
-
-/*        $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
-            console.log ("[HomeCtrl] $stateChangeStart (" + toState + '; ' + fromState);
-        });*/
-
     }])
 
     .controller ('StudentCtrl', ['$rootScope', function ($rootScope) {
-        //$rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
-        //    console.log ("[StudentCtrl] $stateChangeStart (" + toState + '; ' + fromState);
-        //});
     }])
 
     .controller ('TeacherCtrl', ['$rootScope', function ($rootScope) {
-        /*$rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
-            console.log ("[TeacherCtrl] $stateChangeStart (" + toState + '; ' + fromState);
-        });*/
     }])
 
     .controller ('NavigationCtrl', ['$scope', '$state', '$cookies', 'RoleService', 'UserService', function ($scope, $state, $cookies, RoleService, UserService) {
@@ -174,6 +160,7 @@ angular.module('myApp', [
                     $state.go('home.teacher');
                 }
                 if (role == RoleService.NONE) {
+                    console.log ('[myApp].NavigationController: Logging out. Switching security role to ROLE_GUEST');
                     UserService.role = 'ROLE_GUEST';
                     UserService.currentUser = null;
                     $cookies.remove('role');
