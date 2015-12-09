@@ -1,5 +1,11 @@
 <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container">
+        <ul class="nav navbar-nav pull-left">
+            <li>
+                <a class="hamburger" ng-click="toggleSidebar()"><span class="glyphicon glyphicon-menu-hamburger"></span>
+                    <span class="sr-only">Collapse Menu</span></a>
+            </li>
+        </ul>
         <ul class="nav navbar-nav" ng-if="roleService.currentRole === roleService.STUDENT">
             <li><a class="navbar-brand" ui-sref="student">Home</a></li>
             <li ui-sref-active="active"><a ui-sref="topics">Topics</a></li>

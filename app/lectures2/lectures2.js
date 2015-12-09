@@ -11,10 +11,13 @@ angular.module('myApp.lectures2', ['ui.router'])
                     controller: 'NavigationCtrl'
                 },
                 '' : {
-                    templateUrl: 'lectures2/lectures2.html'
+                    templateUrl: 'lectures2/lectures2.html',
+                    controller: 'Lectures2Ctrl'
                 }
             },
-            controller: 'Lectures2Ctrl',
+            onEnter: ['SidebarService', function (SidebarService) {
+                SidebarService.collapsed = false;
+            }],
             role: 'ROLE_USER'
         })
 
@@ -33,7 +36,11 @@ angular.module('myApp.lectures2', ['ui.router'])
         ;
     }])
 
-    .controller('Lectures2Ctrl', ['$state', '$rootScope', function ($state, $rootScope) {
-
+    .controller('Lectures2Ctrl', ['$state', '$scope', 'SidebarService', function ($state, $scope, SidebarService) {
+        $scope.sidebarService = SidebarService;
+        $scope.toggleSidebar = function () {
+            SidebarService.collapsed = !SidebarService.collapsed;
+            console.log ('[Lectures2Ctrl] sidebar: ' + SidebarService.collapsed);
+        }
     }]);
 

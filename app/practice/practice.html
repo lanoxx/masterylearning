@@ -1,11 +1,9 @@
-<div class="row">
-    <div class="col-md-2 lectures sidebar">
+<div id="wrapper" ng-class="{toggled: sidebarService.collapsed}">
+    <div id="sidebar-wrapper">
         <h1>My Lectures</h1>
         <ul class="nav nav-pills nav-stacked">
-            <a class="btn btn-success hamburger"><span class="glyphicon glyphicon-menu-hamburger"></span>
-                <span class="sr-only">Collapse Menu</span></a>
             <li ui-sref-active="active"><a ui-sref="practice.formalmethods">Formal Methods in Computer Science <span class="pull-right glyphicon glyphicon-chevron-right"></span></a></li>
-            <li ui-sref-active="active"><a ui-sref="practice.manage">Manage your lectures</a></li>
+            <li ui-sref-active="active"><a ui-sref="practice.manage">Manage your lectures  <span class="pull-right glyphicon glyphicon-chevron-right"></span></a></li>
         </ul>
         <div class="form-group has-success has-feedback search">
             <label class="sr-only control-label" for="inputSuccess2">Input with success</label>
@@ -14,33 +12,39 @@
             <span id="inputSuccess2Status" class="sr-only">(success)</span>
         </div>
     </div>
-    <div class="col-md-10">
-        <ui-view>
-            <h1>Exercises in progress</h1>
-
+    <div id="page-content-wrapper">
+        <div class="container-fluid">
             <div class="row">
-                <div class="col-md-4">
-                    <div class="panel panel-default">
-                        <div class="panel-body">
-                            <h2>Propositional formulas</h2>
-                            <p>Learn the syntax and semantics of propositional logic.</p>
-                            <button class="btn btn-default" ui-sref="practice.formalmethods.propositionallogic.unit1">Continue to practice</button>
+                <div class="col-md-12">
+                    <ui-view>
+                        <h1>Exercises in progress</h1>
+
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="panel panel-default">
+                                    <div class="panel-body">
+                                        <h2>Propositional formulas</h2>
+                                        <p>Learn the syntax and semantics of propositional logic.</p>
+                                        <button class="btn btn-default" ui-sref="practice.formalmethods.propositionallogic.unit1">Continue to practice</button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                    </div>
+
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="panel panel-default">
+                                    <div class="panel-body">
+                                        <h2>First-order logic</h2>
+                                        <p>TBD</p>
+                                        <button class="btn btn-default">Continue to practice</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </ui-view>
                 </div>
             </div>
-
-            <div class="row">
-                <div class="col-md-4">
-                    <div class="panel panel-default">
-                        <div class="panel-body">
-                            <h2>First-order logic</h2>
-                            <p>TBD</p>
-                            <button class="btn btn-default">Continue to practice</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </ui-view>
+        </div>
     </div>
 </div>
