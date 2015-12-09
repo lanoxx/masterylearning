@@ -9,9 +9,13 @@ angular.module ('myApp.practice', ['ui.router'])
                     controller: 'NavigationCtrl'
                 },
                 '': {
-                    templateUrl: 'practice/practice.html'
+                    templateUrl: 'practice/practice.html',
+                    controller: 'PracticeCtrl'
                 }
             },
+            onEnter: ['SidebarService', function (SidebarService) {
+                SidebarService.collapsed = false;
+            }],
             role: 'ROLE_USER'
         })
 
@@ -33,6 +37,14 @@ angular.module ('myApp.practice', ['ui.router'])
                 url: '/manage',
                 templateUrl: 'practice/manage.html'
             });
+    }])
+
+    .controller ('PracticeCtrl', ['$scope', 'SidebarService', function ($scope, SidebarService) {
+        $scope.sidebarService = SidebarService;
+        $scope.toggleSidebar = function () {
+            SidebarService.collapsed = !SidebarService.collapsed;
+            console.log ('[Lectures2Ctrl] sidebar: ' + SidebarService.collapsed);
+        }
     }])
 
     .controller('Unit1Ctrl', ['$scope', '$uibModal', function ($scope, $uibModal) {

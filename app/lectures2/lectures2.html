@@ -1,21 +1,28 @@
-<div class="row">
-    <div class="col-md-2 lectures sidebar">
-        <h1>Lectures</h1>
-        <ul class="nav nav-pills nav-stacked">
-            <a class="btn btn-success hamburger"><span class="glyphicon glyphicon-menu-hamburger"></span>
-            <span class="sr-only">Collapse Menu</span></a>
-            <li ui-sref-active="active"><a ui-sref="lectures2.formalmethods">Formal Methods in Computer Science <span class="pull-right glyphicon glyphicon-chevron-right"></span></a></li>
-            <li ui-sref-active="active"><a ui-sref="lectures2.semanticsofpl">Semantics of Programming Languages <span class="pull-right glyphicon glyphicon-chevron-right"></span></a></li>
-            <li ui-sref-active="active"><a ui-sref="lectures2.computeraidedverification">Computer Aided Verification <span class="pull-right glyphicon glyphicon-chevron-right"></span></a></li>
-        </ul>
-        <div class="form-group has-success has-feedback search">
-            <label class="sr-only control-label" for="inputSuccess2">Input with success</label>
-            <input type="text" class="form-control" id="inputSuccess2" aria-describedby="inputSuccess2Status" placeholder="Search...">
-            <span class="glyphicon glyphicon-search form-control-feedback" aria-hidden="true"></span>
-            <span id="inputSuccess2Status" class="sr-only">(success)</span>
+<div id="wrapper" ng-class="{toggled: sidebarService.collapsed}">
+    <div id="sidebar-wrapper">
+        <div >
+            <h1>Lectures</h1>
+            <ul class="sidebar-nav nav nav-pills nav-stacked">
+                <li ui-sref-active="active"><a ui-sref="lectures2.formalmethods">Formal Methods in Computer Science <span class="pull-right glyphicon glyphicon-chevron-right"></span></a></li>
+                <li ui-sref-active="active"><a ui-sref="lectures2.semanticsofpl">Semantics of Programming Languages <span class="pull-right glyphicon glyphicon-chevron-right"></span></a></li>
+                <li ui-sref-active="active"><a ui-sref="lectures2.computeraidedverification">Computer Aided Verification <span class="pull-right glyphicon glyphicon-chevron-right"></span></a></li>
+            </ul>
+            <div class="form-group has-success has-feedback search">
+                <label class="sr-only control-label" for="inputSuccess2">Input with success</label>
+                <input type="text" class="form-control" id="inputSuccess2" aria-describedby="inputSuccess2Status" placeholder="Search...">
+                <span class="glyphicon glyphicon-search form-control-feedback" aria-hidden="true"></span>
+                <span id="inputSuccess2Status" class="sr-only">(success)</span>
+            </div>
         </div>
     </div>
-    <div class="col-md-10">
-        <ui-view></ui-view>
+
+    <div id="page-content-wrapper">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <ui-view></ui-view>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

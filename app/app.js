@@ -8,6 +8,7 @@ angular.module('myApp', [
     'common.exercise',
     'common.mathmode',
     'myApp.services.roles',
+    'myApp.services.sidebar',
     'myApp.profiles.students',
     'myApp.profiles.teachers',
     'myApp.practice',
@@ -134,8 +135,14 @@ angular.module('myApp', [
     .controller ('TeacherCtrl', ['$rootScope', function ($rootScope) {
     }])
 
-    .controller ('NavigationCtrl', ['$scope', '$state', '$cookies', 'RoleService', 'UserService', function ($scope, $state, $cookies, RoleService, UserService) {
+    .controller ('NavigationCtrl', ['$scope', '$state', '$cookies', 'RoleService', 'UserService', 'SidebarService',
+        function ($scope, $state, $cookies, RoleService, UserService, SidebarService)
+    {
         $scope.roleService = RoleService;
+        $scope.toggleSidebar = function () {
+            SidebarService.collapsed = !SidebarService.collapsed;
+            console.log ('Sidebar:' + SidebarService.collapsed);
+        };
 
         /**
          * This will attempt to set the new role in the role service and if successful switches the route
