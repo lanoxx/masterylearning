@@ -63,6 +63,7 @@ body {
 }
 
 .exercise.bottom {
+    margin-left: 20px;
     vertical-align: bottom;
 }
 
@@ -87,7 +88,7 @@ body {
 
 #sidebar-wrapper {
     z-index: 1000;
-    position: absolute; /* was fixed */
+    position: fixed; /* switch to absolute to make the sidebar scroll with the content*/
     /*left: 250px;*/
     width: 0;
     height: calc(100vh - 200px);
