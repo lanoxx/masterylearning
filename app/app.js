@@ -31,10 +31,10 @@ angular.module('myApp', [
         this.role = "ROLE_GUEST";
     }])
 
-    .run (['$rootScope', '$state', '$cookies', 'UserService', 'RoleService', function ($rootScope, $state, $cookies, UserService, RoleService) {
-
-        var role = $cookies.get('role');
-        var currentUser = $cookies.get('currentUser');
+    .run (['$rootScope', '$state', '$cookies', 'UserService', 'RoleService', '$log',
+        function ($rootScope, $state, $cookies, UserService, RoleService, $log) {
+            var role = $cookies.get('role');
+            var currentUser = $cookies.get('currentUser');
 
         if (role) {
             if (role === 'ROLE_STUDENT') {
@@ -55,15 +55,24 @@ angular.module('myApp', [
         }
 
         $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
-            console.log ("$stateChangeStart (destination state: " + toState.name + "; requires role: '" + toState.role + "'");
+            if (toState.role === undefined) {
+                // if no role is defined, then the route does not need to be secured and we can just continue to change
+                // to it
+                $log.info("[myApp] $stateChangeStart (Route change accepted)");
+                return;
+            }
+            console.log ("[myApp] $stateChangeStart (destination state: " + toState.name + "; requires role: '" + toState.role + "'");
             if (toState.role === 'ROLE_GUEST') {
                 // no need to check anything. We can always transition to an unsecured state.
             } else if (toState.role === 'ROLE_STUDENT' || toState.role === 'ROLE_TEACHER') {
                 // we need to check that the user is authenticated and has the right role.
                 if (!(UserService.role === 'ROLE_STUDENT' || UserService.role === 'ROLE_TEACHER')) {
                     event.preventDefault();
+                    $log.info ("[myApp] $stateChangeStart (Route change rejected)");
+                    return;
                 }
             }
+            $log.info("[myApp] $stateChangeStart (Route change accepted)");
         });
     }])
 
