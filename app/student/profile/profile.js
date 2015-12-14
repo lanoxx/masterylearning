@@ -1,9 +1,9 @@
-angular.module('myApp.profiles.students', [])
+angular.module('myApp.student.profile', [])
 
     .config (['$stateProvider', function ($stateProvider) {
     $stateProvider.state ('home.student.profile', {
         url: '/profile',
-        templateUrl: 'profiles/students/students.html',
+        templateUrl: 'student/profile/profile.html',
         role: 'ROLE_STUDENT'
     })
 }]);

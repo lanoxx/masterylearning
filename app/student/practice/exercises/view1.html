@@ -1,0 +1,71 @@
+<div class="row" stlye="border: 1px solid grey">
+    <div class="col-md-6">
+        <h1>Simple formula evaluation</h1>
+        <div class="row">
+            <div class="col-md-9" mathmode>
+                <p>
+                    Given the following variable assignments:
+                </p>
+                <ul>
+                    <li>`a rarr 0`</li>
+                    <li>`b rarr 1`</li>
+                    <li>`c rarr 1`</li>
+                    <li>`d rarr 1`</li>
+                </ul>
+                <p>
+                    Please specify the result for the following logical formula:
+                </p>
+
+                <p>
+                    <span>`(a ^^ b) vv (c o+ D) = `<input type="text" name="result" ng-model="result" style="width: 40px;"></span>
+                </p>
+
+                <p ng-show="checked && correct">Answer is correct.</p>
+
+                <div ng-show="checked && !correct">
+                    <p>Sorry, the answer is wrong.</p>
+
+                    <p>Please evaluate the following questions separately:</p>
+
+                    <div class="row">
+                        <div class="col-md-offset-1 col-md-3">`(0 ^^ 1)`</div>
+                        <div class="col-md-2"><input type="text" style="width: 40px;"></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-offset-1 col-md-3">`(1 ^^ 1)`</div>
+                        <div class="col-md-2"><input type="text" style="width: 40px;"></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-offset-1 col-md-3">`(1 o+ 1)`</div>
+                        <div class="col-md-2"><input type="text" style="width: 40px;"></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-offset-1 col-md-3">`(0 o+ 1)`</div>
+                        <div class="col-md-2"><input type="text" style="width: 40px;"></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-offset-1 col-md-3">`(0 o+ 0)`</div>
+                        <div class="col-md-2"><input type="text" style="width: 40px;"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <button class="btn btn-success" ng-click="check(result)">{{buttonMessage}}</button>
+                <br><br>
+                <button class="btn btn-primary" data-toggle="tooltip" data-placement="left" title="When using hints questions do not count as answered successfully.">View Hint</button>
+                <br><br>
+                <p>{{correct}}, {{checked}}</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 bg-info">
+        <h1>Storyboard</h1>
+        <p><strong>Question type:</strong>Simple propositional formula</p>
+        <p>In this exercise we give the student a simple propositional formula to evaluate. When answered correctly,
+            we just go on to the next question. When a mistake is made, then we split-up the original formula into
+            its parts and let the user evaluate each part separately. This allows us to build up a statistical model
+            of operators that the student has problems with. As a result we will let the student practice this
+            operator more often in future questions.</p>
+        <p><strong>Note:</strong> Please answer this question wrong to see how we break it up into its parts.</p>
+    </div>
+</div>
