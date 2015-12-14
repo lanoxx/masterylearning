@@ -9,9 +9,9 @@ angular.module('myApp', [
     'common.mathmode',
     'myApp.services.roles',
     'myApp.services.sidebar',
-    'myApp.profiles.students',
-    'myApp.profiles.teachers',
-    'myApp.practice',
+    'myApp.student',
+    'myApp.student.profile',
+    'myApp.teacher.profile',
     'myApp.topics',
     'myApp.topics.proplogic',
     'myApp.lectures2',
@@ -83,6 +83,8 @@ angular.module('myApp', [
             }
         });
 
+        $urlRouterProvider.when ('/home/student/unit1', '/home/student/unit1/content');
+
         /**
          * Currently this is the home, but at some point we need to rename it to 'welcome' or 'login'.
          * For simplicity we have no user management now so we just leave it like this.
@@ -110,11 +112,16 @@ angular.module('myApp', [
                         controller: 'NavigationCtrl'
                     },
                     '@': {
-                        templateUrl: 'student-home.html',
+                        templateUrl: 'student/student-home.html',
                         controller: 'StudentCtrl'
                     }
                 },
                 role: 'ROLE_STUDENT'
+            })
+
+            .state ('home.student.practice', {
+                url: '/practice',
+                templateUrl: 'student/practice/unit1.html'
             })
 
             .state('home.teacher', {
@@ -125,7 +132,7 @@ angular.module('myApp', [
                         controller: 'NavigationCtrl'
                     },
                     '@': {
-                        templateUrl: 'teacher-home.html',
+                        templateUrl: 'teacher/teacher-home.html',
                         controller: 'TeacherCtrl'
                     }
                 },
