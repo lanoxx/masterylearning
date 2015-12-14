@@ -4,50 +4,66 @@
         <li class="active">Formal Methods in Computer Science</li>
     </ol>
     <h1>Formal Methods in Computer Science <small>Signed up</small></h1>
-    <hr>
-    <div class="row">
-        <div class="col-md-4">
-            <h2>Preliminaries</h2>
-            <ul>
-                <li><a ui-sref="lectures2.formalmethods.propositionallogic">Propositional Logic <span>(50%)</span></a></li>
-                <li>First Order Logic <span>(0%)</span></li>
-            </ul>
-        </div>
-        <div class="col-md-4">
-            <h2>Temporal Model Checking</h2>
-            <ul>
-                <li>Kripke Structures <span>(0%)</span></li>
-                <li>Computation Tree Logic (CTL*) <span>(0%)</span></li>
-                <li>Linear Time Logic (LTL) <span>(0%)</span></li>
-                <li>Branching Time Logic (CTL) <span>(0%)</span></li>
-                <li>The Model Checking Problem <span>(0%)</span></li>
-                <li>Buechi Automata <span>(0%)</span></li>
-            </ul>
-        </div>
-        <div class="col-md-4">
-            <h2>Program Modeling</h2>
-            <ul>
-                <li>Toy Programming Language <span>(0%)</span></li>
-                <li>Labled Transition Systems (LTS) <span>(0%)</span></li>
-                <li>Translation <span>(0%)</span></li>
-            </ul>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-4">
+    <uib-tabset>
+        <uib-tab heading="Structure">
+            <div class="row">
+                <div class="col-md-4">
+                    <h2>Preliminaries</h2>
+                    <ul>
+                        <li><a ui-sref="lectures2.formalmethods.propositionallogic">Propositional Logic <span>(50%)</span></a></li>
+                        <li>First Order Logic <span>(0%)</span></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h2>Temporal Model Checking</h2>
+                    <ul>
+                        <li>Kripke Structures <span>(0%)</span></li>
+                        <li>Computation Tree Logic (CTL*) <span>(0%)</span></li>
+                        <li>Linear Time Logic (LTL) <span>(0%)</span></li>
+                        <li>Branching Time Logic (CTL) <span>(0%)</span></li>
+                        <li>The Model Checking Problem <span>(0%)</span></li>
+                        <li>Buechi Automata <span>(0%)</span></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h2>Program Modeling</h2>
+                    <ul>
+                        <li>Toy Programming Language <span>(0%)</span></li>
+                        <li>Labled Transition Systems (LTS) <span>(0%)</span></li>
+                        <li>Translation <span>(0%)</span></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
 
-        </div>
-        <div class="col-md-4">
-            <h2>Simulation</h2>
-            <ul>
-                <li>...</li>
-            </ul>
-        </div>
-        <div class="col-md-4">
-            <h2>Bounded Model Checking</h2>
-            <ul>
-                <li>...</li>
-            </ul>
-        </div>
-    </div>
+                </div>
+                <div class="col-md-4">
+                    <h2>Simulation</h2>
+                    <ul>
+                        <li>...</li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h2>Bounded Model Checking</h2>
+                    <ul>
+                        <li>...</li>
+                    </ul>
+                </div>
+            </div>
+        </uib-tab>
+        <uib-tab>
+            <uib-tab-heading>
+                <span class="glyphicon glyphicon-cog"></span> Settings
+            </uib-tab-heading>
+            <h1>Configure your lecture preferences</h1>
+            <div class="panel panel-danger">
+                <div class="panel-heading bg-danger"><strong>Manage Lecture Attendance</strong></div>
+                <div class="panel-body">
+                    <p>If you think you can't make it this term you may choose to leave this lecture. But be careful,
+                    this action cannot be undone.</p><button class="btn btn-danger">Leave lecture</button></div>
+            </div>
+            <h1></h1>
+        </uib-tab>
+    </uib-tabset>
 </ui-view>
