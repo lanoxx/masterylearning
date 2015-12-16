@@ -13,7 +13,7 @@ angular.module ('myApp.student', ['ui.router'])
             })
             .state('home.student.unit1.exercise1', {
                 url: '/exercise/:id',
-                templateUrl: 'student/practice/exercises/view1.html',
+                templateUrl: 'student/practice/exercises.html',
                 controller: 'ExerciseCtrl',
                 resolve: {
                     exerciseData: function ()
