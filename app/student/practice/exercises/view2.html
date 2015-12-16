@@ -1,0 +1,118 @@
+<div class="row">
+    <div class="col-md-6">
+        <h1>Tree-based formula evaluation</h1>
+
+        <div class="row">
+            <div class="col-md-9" mathmode>
+                <p>
+                    Given the following variable assignments:
+                </p>
+                <ul>
+                    <li>`a rarr 0`</li>
+                    <li>`b rarr 1`</li>
+                    <li>`c rarr 1`</li>
+                    <li>`d rarr 1`</li>
+                </ul>
+                <p>
+                    The following tree represents the boolean formula <span>`(a ^^ b) vv (c o+ D)`</span>. Please assign
+                    the values
+                    of the atoms and operators to the respective boxes.
+                </p>
+
+                <div class="col-md-6">
+                    <div class="row spacer-bottom">
+                        <div class="col-md-12 text-center">
+                            `vv` <input type="text" ng-model="bool.or" style="width: 40px;" name="root"/>
+                        </div>
+                    </div>
+                    <div class="row spacer-bottom">
+                        <div class="col-md-6 text-center">
+                            `^^` <input type="text" ng-model="bool.and" style="width: 40px;" name="v1"/>
+                        </div>
+                        <div class="col-md-6 text-center">
+                            `o+` <input type="text" ng-model="bool.xor" style="width: 40px;"/>
+                        </div>
+                    </div>
+                    <div class="row spacer-bottom">
+                        <div class="col-md-3 text-center">
+                            `a` <input type="text" ng-model="bool.a" style="width: 40px;" name="v1"/>
+                        </div>
+                        <div class="col-md-3 text-center">
+                            `b` <input type="text" ng-model="bool.b" style="width: 40px;"/>
+                        </div>
+                        <div class="col-md-3 text-center">
+                            `c` <input type="text" ng-model="bool.c" style="width: 40px;" name="v1"/>
+                        </div>
+                        <div class="col-md-3 text-center">
+                            `d` <input type="text" ng-model="bool.d" style="width: 40px;"/>
+                        </div>
+                    </div>
+
+                    <p ng-if="checked && correct">Answer is correct.</p>
+
+                    <div ng-show="checked && !correct">
+                        <p>Answer is wrong. Please take a look at the following truth table for the `vv` operator:</p>
+                        <table class="table">
+                            <tr>
+                                <td>`vv`</td>
+                                <td>0</td>
+                                <td>1</td>
+                            </tr>
+                            <tr>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>1</td>
+                            </tr>
+                            <tr>
+                                <td>1</td>
+                                <td>1</td>
+                                <td>1</td>
+                            </tr>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-md-3">
+                <button ng-click="check(bool)" class="btn btn-success">{{buttonMessage}}</button>
+                <br><br>
+                <button class="btn btn-primary" data-toggle="tooltip" data-placement="left" title="When using hints questions do not count as answered successfully.">View Hint</button>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 bg-info" mathmode>
+        <h1>Storyboard</h1>
+
+        <p><strong>Goal:</strong> This exercise demonstrates the evaluation of propositional logic in tree form.
+            The advantage over the exercise type 1 is, that the operator precedence and parentheses are already clear
+            through the tree form, so we can check directly if the student is able to evaluate the logical operators.
+            <br>
+            The disadvantage is, that we have already evaluated parentheses and operator precedences and thus this
+            exercise type is somewhat easier then the other ones.
+        </p>
+
+        <p><strong>Exercise Generation and Variations:</strong>
+            When generating this exercise, we can vary the following elements:
+        </p>
+        <ul>
+            <li>Number and letters of variables</li>
+            <li>Set of operators (e.g. `vv, ^^, o+, ...`)</li>
+            <li>Nesting depth, number of terms</li>
+            <li>We could also choose to generate only certain forms of formulas such as DNF, CNF, Horn clauses, etc.</li>
+        </ul>
+
+        <p><strong>Usage:</strong>
+            Please type `1` into the box of the `vv` operator and press check answer. You will the that the truth table for the `vv`-operator
+            is shown since the expected answer is 0.
+        </p>
+
+        <p><strong>Data collection:</strong>
+            For each operator that was evaluated incorrectly we keep a record of how many times the student made a
+            mistake with that operator. Then we can adjust further
+            questions to explicitly cover this operator.
+        </p>
+
+        <p><strong>Improvements:</strong> In the final version we plan to draw the tree on the left in a more graph-like
+            fashion by using an appropriate drawing library.</p>
+    </div>
+</div>

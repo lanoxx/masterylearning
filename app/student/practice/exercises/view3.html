@@ -1,0 +1,144 @@
+<div class="row">
+    <div class="col-md-6">
+        <h1>Step-wise formula evaluation</h1>
+
+        <div class="row">
+            <div class="col-md-9" mathmode>
+                <p>
+                    Mark tried to solve the following formula: <span><strong> `(a ^^ b) vv (c o+ d)`</strong></span>,
+                    given the
+                    following variable assignments,
+                    specify where mark has made a mistake.
+                </p>
+                <ul>
+                    <li>`a rarr 0`</li>
+                    <li>`b rarr 1`</li>
+                    <li>`c rarr 1`</li>
+                    <li>`d rarr 1`</li>
+                </ul>
+
+                <p>
+                    Did Mark make a mistake?
+                </p>
+
+
+                <div class="row spacer-bottom">
+                    <div class="col-md-1"></div>
+                    <div class="col-md-4">
+                        `(a ^^ b) vv (c o+ d)`
+                    </div>
+                    <div class="col-md-2">Original Formula</div>
+                </div>
+                <div class="row spacer-bottom">
+                    <div class="col-md-1">
+                        <input type="radio" name="solution" value="1" ng-model="solution">
+                    </div>
+                    <div class="col-md-4">
+                        <span><strong>`(0 ^^ 1) vv (1 o+ 1)`</strong></span>
+                    </div>
+                    <div class="col-md-2"> Step 1</div>
+                </div>
+
+                <div class="row spacer-bottom">
+                    <div class="col-md-1">
+                        <input type="radio" name="solution" value="2" ng-model="solution">
+                    </div>
+                    <div class="col-md-4">
+                        <span><strong>`1 vv (1 o+ 1)`</strong></span>
+                    </div>
+                    <div class="col-md-2">Step 2</div>
+                </div>
+
+                <div class="row spacer-bottom">
+                    <div class="col-md-1">
+                        <input type="radio" name="solution" value="3" ng-model="solution">
+                    </div>
+                    <div class="col-md-4"><strong>`1 vv 0`</strong></div>
+                    <div class="col-md-2">Step 3</div>
+                </div>
+
+                <div class="row spacer-bottom">
+                    <div class="col-md-1">
+                        <input type="radio" name="solution" value="4" ng-model="solution">
+                    </div>
+                    <div class="col-md-4"><strong>`1`</strong></div>
+                    <div class="col-md-2">Step 4</div>
+                </div>
+
+                <div class="row spacer-bottom">
+                    <div class="col-md-1">
+                        <input type="radio" name="solution" value="5" ng-model="solution">
+                    </div>
+                    <div class="col-md-5">Mark did not make a mistake.</div>
+                </div>
+
+                <div class="col-md-6">
+                    <p ng-if="checked && correct">Answer is correct.</p>
+
+                    <div ng-show="checked && !correct">
+                        <p>Answer is wrong. Take a look again that the following truth table to refresh your memory:</p>
+                        <table class="table text-center">
+                            <tr>
+                                <td>`o+`</td>
+                                <td>`0`</td>
+                                <td>`1`</td>
+                            </tr>
+                            <tr>
+                                <td>`0`</td>
+                                <td>`0`</td>
+                                <td>`1`</td>
+                            </tr>
+                            <tr>
+                                <td>`1`</td>
+                                <td>`1`</td>
+                                <td>`0`</td>
+                            </tr>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-md-3">
+                <button ng-click="check(solution)" class="btn btn-success">{{buttonMessage}}</button>
+                <br/><br>
+                <button class="btn btn-primary" data-toggle="tooltip" data-placement="left"
+                        title="When using hints questions do not count as answered successfully.">View Hint
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 bg-info" mathmode>
+        <h1>Storyboard</h1>
+
+        <p><strong>Goal:</strong> This exercise type is useful to understand where a student has problems with the
+            evaluation of a formula.</p>
+
+        <p><strong>Exercise Generation and Variations:</strong>
+            When generating this exercise, we can vary the following elements:
+        </p>
+        <ul>
+            <li>Number and letters of variables</li>
+            <li>Set of operators (e.g. `vv, ^^, o+, ...`)</li>
+            <li>Nesting depth, number of terms</li>
+            <li>We could also choose to generate only certain forms of formulas such as DNF, CNF, Horn clauses, etc.
+            </li>
+        </ul>
+        <p>
+            <strong>Evaluation:</strong>
+            Assuming the student choose Step 3 then we know two things:
+        </p>
+        <ul>
+            <li>The student did not catch the mistake in <em>Step 2</em>, so she probably has a problem<br/>
+                understanding the `^^` operator.
+            </li>
+            <li>She thinks that the evaluation of `(1 o+ 1)` to `0` is wrong, which means she does not understand the
+                `o+` operator.
+            </li>
+        </ul>
+        <p>
+            <strong>Usage:</strong> Please select step 3 and press 'Check answer' to see how we handle mistakes in
+            this question type.
+        </p>
+    </div>
+</div>
