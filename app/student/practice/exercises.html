@@ -1,11 +1,43 @@
-<h2>Exercises</h2>
+<div ng-if="showoverview">
+    <h2>Exercises</h2>
 
-<p>
-    Current exercise: {{ exerciseData.currentExercise }}
-</p>
+    <p>
+        Current exercise: {{ exerciseData.currentExercise }}
+    </p>
 
-<p>
-    Next exercise: {{ exerciseData.nextExercise }}
-</p>
+    <p>
+        Next exercise: {{ exerciseData.nextExercise }}
+    </p>
 
 
+    <h1>Exercise History</h1>
+
+    <ul>
+        <li><a ui-sref="home.student.unit1.exercises({id: 1})">Exercise 1</a></li>
+        <li><a ui-sref="home">Exercise 2</a></li>
+        <li><a ui-sref="home">Exercise 3</a></li>
+        <li>Exercise 4 <span><img src="images/icons/lock-closed-icon.svg" height="16px;" alt="Locked"></span></li>
+        <li>Exercise 5 <span><img src="images/icons/lock-closed-icon.svg" height="16px;" alt="Locked"></span></li>
+        <li>Exercise 6 <span><img src="images/icons/lock-closed-icon.svg" height="16px;" alt="Locked"></span></li>
+        <li>Exercise 7 <span><img src="images/icons/lock-closed-icon.svg" height="16px;" alt="Locked"></span></li>
+        <li>Exercise 8 <span><img src="images/icons/lock-closed-icon.svg" height="16px;" alt="Locked"></span></li>
+    </ul>
+</div>
+
+<div ng-if="!showoverview">
+    <p></p>
+    <div ng-repeat="exercise in exercises">
+        <div ng-class="{well: !answered[$index], alert: answered[$index], 'alert-success': answered[$index]}">
+            <p><strong>Exercise {{exercise.id}}</strong></p>
+            <p mathmode>{{exercise.text}}
+                <span ng-if="exercise.type=='yesno'">
+                    <!--item as item.label for item in items track by item.id-->
+                    <select ng-options="item as item.label disable when answered[$index] == true for item in yesNoOptions track by item.id" ng-model="answer" ng-change="answered_cb($index)">
+                        <option value="">-- select --</option>
+                    </select>
+                </span>
+            </p>
+        </div>
+    </div>
+
+</div>
