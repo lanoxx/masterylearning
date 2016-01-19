@@ -1,3 +1,7 @@
+# Notes
+
+We are using ascii math: http://asciimath.org/ with MathJax
+
 # angular-seed — the seed for AngularJS apps
 
 This project is an application skeleton for a typical [AngularJS](http://angularjs.org/) web app.
