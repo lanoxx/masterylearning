@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="13.3">
+  <zoom_level>10</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>470</x>
+      <y>250</y>
+      <w>140</w>
+      <h>150</h>
+    </coordinates>
+    <panel_attributes>Course
+--
+- id
+- title
+- period
+- description
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1010</x>
+      <y>290</y>
+      <w>100</w>
+      <h>100</h>
+    </coordinates>
+    <panel_attributes>Entry
+--
+- id
+- type</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>710</x>
+      <y>520</y>
+      <w>220</w>
+      <h>170</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Entry&gt;&gt;
+Unit
+--
+- id : FK @entry
+- section_id
+- full_title
+- breadcrumb_title
+- next_unit_id
+- prev_unit_id
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1280</x>
+      <y>520</y>
+      <w>220</w>
+      <h>170</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Entry&gt;&gt;
+Paragraph
+--
+- id : @entry
+- section_id
+- text
+- number
+- tag
+- paragraph_type</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1100</x>
+      <y>350</y>
+      <w>320</w>
+      <h>190</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-
+type=paragraph</panel_attributes>
+    <additional_attributes>10.0;20.0;300.0;20.0;300.0;170.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>860</x>
+      <y>350</y>
+      <w>170</w>
+      <h>190</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-
+type=unit</panel_attributes>
+    <additional_attributes>150.0;20.0;10.0;20.0;10.0;170.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>950</x>
+      <y>520</y>
+      <w>220</w>
+      <h>170</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Entry&gt;&gt;
+Section
+--
+- id : FK @entry
+- course_id
+- title
+- description
+- parent_secton_id
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1050</x>
+      <y>380</y>
+      <w>120</w>
+      <h>160</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-
+type=section</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;140.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>530</x>
+      <y>390</y>
+      <w>550</w>
+      <h>410</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;
+m1=1
+m2=n</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;390.0;530.0;390.0;530.0;300.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>750</x>
+      <y>680</y>
+      <w>240</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;
+m1=1
+m2=n</panel_attributes>
+    <additional_attributes>220.0;10.0;220.0;50.0;10.0;50.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1120</x>
+      <y>470</y>
+      <w>110</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-
+subsection</panel_attributes>
+    <additional_attributes>10.0;50.0;10.0;20.0;90.0;20.0;90.0;100.0;50.0;100.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>660</x>
+      <y>470</y>
+      <w>110</w>
+      <h>130</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+m1=0..1
+m2=1
+next</panel_attributes>
+    <additional_attributes>70.0;50.0;70.0;20.0;10.0;20.0;10.0;100.0;50.0;100.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>620</x>
+      <y>430</y>
+      <w>200</w>
+      <h>230</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+m1=0..1
+m2=1
+prev</panel_attributes>
+    <additional_attributes>160.0;90.0;160.0;20.0;10.0;20.0;10.0;200.0;90.0;200.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1120</x>
+      <y>680</y>
+      <w>240</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+m1=n
+m2=1</panel_attributes>
+    <additional_attributes>220.0;10.0;220.0;50.0;10.0;50.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLNote</id>
+    <coordinates>
+      <x>810</x>
+      <y>820</y>
+      <w>520</w>
+      <h>290</h>
+    </coordinates>
+    <panel_attributes>**Note**
+
+I want to point out a few things in this design:
+
+1. The entry relation does not have a reference to the course,
+   the reason is, that both paragraphs and units must be contained
+   in a section. So only sections are connected with a course.
+2. Sections can be recursively nested through their
+   parent_section_id
+3. I have consolidated paragraphs, definitions, examples, theorems,
+   etc. into a single Paragrahp relation that is discriminated by
+   a paragraph_type field. The tag can be used as a short
+   keyword to describe the element. e.g. in "Definition 1 (Alphabet)",
+   "Alphabet" would be the tag.</panel_attributes>
+    <additional_attributes/>
+  </element>
+</diagram>
