@@ -73,6 +73,13 @@ angular.module('myApp', [
             }
             $log.info("[myApp] $stateChangeStart (Route change accepted)");
         });
+
+        $rootScope.$on ('$stateChangeError', function (event, toState, toParams, fromState, fromParams) {
+            $log.info ("[myApp] $stateChangeError (toState: " + toState.name + ")");
+        });
+        $rootScope.$on ('$stateNotFound', function (event, toState, toParams, fromState, fromParams) {
+            $log.info ("[myApp] $stateNotFound (state: " + toState.name + ")");
+        });
     }])
 
     .config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
