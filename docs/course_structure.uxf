@@ -65,10 +65,9 @@ Unit
 Paragraph
 --
 - id : @entry
-- section_id
-- text
 - number
-- tag
+- title
+- text
 - paragraph_type</panel_attributes>
     <additional_attributes/>
   </element>
