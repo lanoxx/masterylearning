@@ -16,15 +16,12 @@ angular.module('myApp', [
     'myApp.teacher.profile',
     'myApp.topics',
     'myApp.topics.proplogic',
-    'myApp.lectures2',
-    'myApp.lectures2.propositionallogic',
     'myApp.view1',
     'myApp.view2',
     'myApp.view3',
     'myApp.view4',
     'myApp.topics.firstorderlogic',
     'myApp.topics.firstorderlogic.exercise1',
-    'myApp.topics.kripkestructures',
     'myApp.version'
 ])
 
