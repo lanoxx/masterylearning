@@ -1,6 +1,16 @@
 # Notes
 
-We are using ascii math: http://asciimath.org/ with MathJax
+I originally used the [AsciiMath][1] module from MathJax, but due to the asynchronous nature of MathJax
+it was difficult to integrate it properly into the AngularJS $compile and $digest cycle. So I decided to
+switch to [KaTex][2]. A comparison of the two can be found [on intmath.com][3].
+
+[1]: http://asciimath.org/
+[2]: https://github.com/Khan/KaTeX/blob/master/README.md
+[3]: http://www.intmath.com/cg5/katex-mathjax-comparison.php?processor=MathJax
+
+I still plan to enhance the [logging][4] in my application.
+
+[4]: http://solutionoptimist.com/2013/10/07/enhance-angularjs-logging-using-decorators/
 
 # angular-seed — the seed for AngularJS apps
 
