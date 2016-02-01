@@ -59,7 +59,7 @@ angular.module('myApp', [
             if (toState.role === undefined) {
                 // if no role is defined, then the route does not need to be secured and we can just continue to change
                 // to it
-                $log.info("[myApp] $stateChangeStart (Route change accepted)");
+                $log.info("[myApp] $stateChangeStart (route change accepted)");
                 return;
             }
             console.log ("[myApp] $stateChangeStart (destination state: " + toState.name + "; requires role: '" + toState.role + "'");
@@ -69,11 +69,11 @@ angular.module('myApp', [
                 // we need to check that the user is authenticated and has the right role.
                 if (!(UserService.role === 'ROLE_STUDENT' || UserService.role === 'ROLE_TEACHER')) {
                     event.preventDefault();
-                    $log.info ("[myApp] $stateChangeStart (Route change rejected)");
+                    $log.info ("[myApp] $stateChangeStart (route change rejected)");
                     return;
                 }
             }
-            $log.info("[myApp] $stateChangeStart (Route change accepted)");
+            $log.info("[myApp] $stateChangeStart (route change accepted)");
         });
 
         $rootScope.$on ('$stateChangeError', function (event, toState, toParams, fromState, fromParams) {
