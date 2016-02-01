@@ -1,0 +1,57 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <ui-view>
+                <h1>{{course.title}} {{course.period}}</h1>
+                <p>{{course.description}}</p>
+                <uib-tabset>
+                    <uib-tab>
+                        <uib-tab-heading>Structure</uib-tab-heading>
+                        <div ng-repeat="entry in course.entries">
+                            <div ng-if="entry.type=='section'">
+                                <h2>{{ entry.title }}</h2>
+                                <p>{{ entry.description }}</p>
+                            </div>
+                            <div ng-if="entry.type !='section'" class="entry">
+                                <div class="alert alert-danger">Not implemented! A course can only have sub entries of type section.</div>
+                            </div>
+                            <div ng-repeat="subentry in entry.entries" class="subsection">
+                                <div ng-if="subentry.type=='section'">
+                                    <h3>{{subentry.title}}</h3>
+                                    <p>{{subentry.description}}</p>
+                                    <div ng-repeat="unit in subentry.entries">
+                                        <h4><a ui-sref="home.student.courses.entries({course_id: course.id, entry_id: unit.id})">{{unit.full_title}}</a></h4>
+                                    </div>
+                                </div>
+                                <div ng-if="subentry.type=='unit'">
+                                    <h3><a ui-sref="home.student.courses.entries({course_id: course.id, entry_id: subentry.id})">{{subentry.full_title}}</a></h3>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="alert alert-info">
+                            <p>The above course structure is dynamically generated from content that is currently hardcoded in <code>student/courses/courses.js</code>.</p>
+                            <ul>
+                                <li>A <strong>course</strong> has a <strong>title</strong>, a <strong>period</strong> and a <strong>description</strong> and contains <strong>sections</strong>.</li>
+                                <li>A <strong>section</strong> has a <strong>title</strong> and a <strong>description</strong> and contains <strong>subsections</strong>.</li>
+                                <li>A <strong>subsection</strong> has a <strong>title</strong>, a <strong>description</strong> and a link to a <strong>unit</strong>.</li>
+                            </ul>
+                        </div>
+                    </uib-tab>
+                    <uib-tab>
+                        <uib-tab-heading>
+                            <span class="glyphicon glyphicon-cog"></span> Settings
+                        </uib-tab-heading>
+                        <h1>Configure your lecture preferences</h1>
+                        <div class="panel panel-danger">
+                            <div class="panel-heading bg-danger"><strong>Manage Lecture Attendance</strong></div>
+                            <div class="panel-body">
+                                <p>If you think you can't make it this term you may choose to leave this lecture. But be careful,
+                                    this action cannot be undone.</p><button class="btn btn-danger">Leave lecture</button></div>
+                        </div>
+                    </uib-tab>
+                </uib-tabset>
+            </ui-view>
+        </div>
+    </div>
+</div>
