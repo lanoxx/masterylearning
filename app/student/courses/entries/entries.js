@@ -145,11 +145,4 @@ angular.module('myapp.student.courses.entries', ['ui.router'])
             $scope.unit = entry;
         else
             $scope.entry = entry;
-        var i;
-        for (i=0; i < entry.entries.length; i++) {
-            var current_entry = entry.entries[i];
-            MathJax.Hub.Typeset(current_entry.text);
-        }
-
-        $scope.expression="\\frac{5}{4} \\div \\frac{1}{6}";
     }]);
