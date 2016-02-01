@@ -24,7 +24,7 @@
                 </form>
             </ul>
             <ul class="nav navbar-nav" ng-if="roleService.currentRole === roleService.TEACHER">
-                <li><a class="navbar-brand" ui-sref="teacher">Home</a></li>
+                <li ui-sref-active="active"><a ui-sref="home.teacher">Home</a></li>
                 <li ui-sref-active="active"><a ui-sref="lectures2">Manage Lectures</a></li>
                 <form class="navbar-form navbar-left" role="search">
                     <div class="form-group">
