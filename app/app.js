@@ -10,6 +10,7 @@ angular.module('myApp', [
     'myApp.services.roles',
     'myApp.student',
     'myApp.student.profile',
+    'myapp.teacher',
     'myApp.teacher.profile',
     'myApp.topics',
     'myApp.topics.proplogic',
@@ -128,21 +129,6 @@ angular.module('myApp', [
             .state ('home.student.practice', {
                 url: '/practice',
                 templateUrl: 'student/practice/unit1.html'
-            })
-
-            .state('home.teacher', {
-                url: '/teacher',
-                views: {
-                    'navigation@': {
-                        templateUrl: 'navigation.html',
-                        controller: 'NavigationCtrl'
-                    },
-                    '@': {
-                        templateUrl: 'teacher/teacher-home.html',
-                        controller: 'TeacherCtrl'
-                    }
-                },
-                role: 'ROLE_TEACHER'
             });
 
         $urlRouterProvider.otherwise('home');
@@ -152,9 +138,6 @@ angular.module('myApp', [
     }])
 
     .controller ('StudentCtrl', ['$rootScope', function ($rootScope) {
-    }])
-
-    .controller ('TeacherCtrl', ['$rootScope', function ($rootScope) {
     }])
 
     .controller ('NavigationCtrl', ['$scope', '$state', '$cookies', 'RoleService', 'UserService',
