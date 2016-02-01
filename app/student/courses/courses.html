@@ -30,11 +30,12 @@
                         </div>
 
                         <div class="alert alert-info">
-                            <p>The above course structure is dynamically generated from content that is currently hardcoded in <code>student/courses/courses.js</code>.</p>
+                            <p>The above course structure is dynamically generated in <code>student/courses/courses.js</code>. The corresponding content can be found in <code>services/database.js</code>.</p>
                             <ul>
                                 <li>A <strong>course</strong> has a <strong>title</strong>, a <strong>period</strong> and a <strong>description</strong> and contains <strong>sections</strong>.</li>
                                 <li>A <strong>section</strong> has a <strong>title</strong> and a <strong>description</strong> and contains <strong>subsections</strong>.</li>
                                 <li>A <strong>subsection</strong> has a <strong>title</strong>, a <strong>description</strong> and a link to a <strong>unit</strong>.</li>
+                                <li>A <strong>unit</strong> can also be an immediate child of a <strong>course</strong> or a <strong>section</strong></li>
                             </ul>
                         </div>
                     </uib-tab>
