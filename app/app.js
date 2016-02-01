@@ -5,6 +5,7 @@ angular.module('myApp', [
     'ui.router',
     'ui.bootstrap',
     'ngCookies',
+    'katex',
     'common.exercise',
     'common.mathmode',
     'myApp.services.roles',
@@ -83,7 +84,14 @@ angular.module('myApp', [
         });
     }])
 
-    .config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
+    .config(['$stateProvider', '$urlRouterProvider', 'katexConfigProvider', '$logProvider', function ($stateProvider, $urlRouterProvider, katexConfigProvider, $logProvider) {
+        var $log =  angular.injector(['ng']).get('$log');
+        katexConfigProvider.errorHandler = function (error, expression, element)
+        {
+            $log.info(error);
+        };
+
+
         MathJax.Hub.Config({
             asciimath2jax: {
                 delimiters: [['`', '`'], ['$', '$']]
