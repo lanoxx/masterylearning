@@ -7,7 +7,6 @@ angular.module('myApp', [
     'ngCookies',
     'katex',
     'common.exercise',
-    'common.mathmode',
     'myApp.services.roles',
     'myApp.student',
     'myApp.student.courses',
@@ -92,13 +91,6 @@ angular.module('myApp', [
         {
             $log.info(error);
         };
-
-
-        MathJax.Hub.Config({
-            asciimath2jax: {
-                delimiters: [['`', '`'], ['$', '$']]
-            }
-        });
 
         $urlRouterProvider.when ('/home/student/unit1', '/home/student/unit1/content');
 
