@@ -10,6 +10,8 @@ angular.module('myApp', [
     'common.mathmode',
     'myApp.services.roles',
     'myApp.student',
+    'myApp.student.courses',
+    'myapp.student.courses.entries',
     'myApp.student.profile',
     'myapp.teacher',
     'myApp.teacher.profile',

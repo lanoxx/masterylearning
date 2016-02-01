@@ -1,0 +1,37 @@
+<ol class="breadcrumb text-center">
+    <li ng-if="unit.prev != null" class="prev pull-left">Prev: <a ui-sref="home.student.courses.entries({course_id: 'fmi', entry_id: unit.prev})">Last Unit</a></li>
+    <li><a ui-sref="home.student.courses({course_id: 'fmi'})">FMI</a></li>
+    <li class="active">{{unit.breadcrumb_title}}</li>
+    <li ng-if="unit.next != null" class="next pull-right">Next: <a ui-sref="home.student.courses.entries({course_id: 'fmi', entry_id: unit.next})">Next Unit</a></li>
+</ol>
+
+<uib-tabset>
+    <uib-tab>
+        <uib-tab-heading>Structure</uib-tab-heading>
+        <h1>{{unit.full_title}}</h1>
+        <div ng-repeat="entry in unit.entries">
+            <div ng-if="entry.type == 'paragraph'">
+                <div ng-if="entry.paragraph_type == 'text'" class="text">
+                    <p>{{entry.text}}</p>
+                </div>
+                <div ng-if="entry.paragraph_type == 'definition'" class="definition">
+                    <p><strong>Definition {{entry.number}} ({{entry.title}})</strong></p>
+                    <div ng-if="entry.mode == 'math'">
+                        <p katex-bind="entry.text" auto-render></p>
+                    </div>
+                    <div ng-if="entry.mode != 'math'">
+                        <p>{{entry.text}}</p>
+                    </div>
+                </div>
+            </div>
+
+            <div ng-if="entry.type == 'section'">
+                <h2>{{entry.title}}</h2>
+                <p>{{entry.description}}</p>
+            </div>
+        </div>
+    </uib-tab>
+    <uib-tab>
+        <uib-tab-heading>Exercises</uib-tab-heading>
+            <h1>Nothing to see here...</h1>
+    </uib-tab>

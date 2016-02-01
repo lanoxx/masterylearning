@@ -175,3 +175,7 @@ a.btn.hamburger {
 .lectures .entry {
     margin-bottom: 10px;
 }
+
+.breadcrumb > li.next:before {
+    content: "";
+}
