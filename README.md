@@ -12,6 +12,14 @@ I still plan to enhance the [logging][4] in my application.
 
 [4]: http://solutionoptimist.com/2013/10/07/enhance-angularjs-logging-using-decorators/
 
+For rendering recursive data structures I need to take a look at [angular-tree][5]
+
+[5]: https://github.com/dotJEM/angular-tree
+
+Evaluate [ui.router.extras][6] by Christopher Thielen
+
+[6]: https://github.com/christopherthielen/ui-router-extras
+
 # angular-seed — the seed for AngularJS apps
 
 This project is an application skeleton for a typical [AngularJS](http://angularjs.org/) web app.
