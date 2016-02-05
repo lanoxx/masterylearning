@@ -20,7 +20,7 @@
                                     <h3>{{subentry.title}}</h3>
                                     <p>{{subentry.description}}</p>
                                     <div ng-repeat="unit in subentry.entries">
-                                        <h4><a ui-sref="home.student.courses.entries({course_id: course.id, entry_id: unit.id})">{{unit.full_title}}</a></h4>
+                                        <h4><a ui-sref="home.student.courses.entries.structure({course_id: course.id, entry_id: unit.id})">{{unit.full_title}}</a></h4>
                                     </div>
                                 </div>
                                 <div ng-if="subentry.type=='unit'">
