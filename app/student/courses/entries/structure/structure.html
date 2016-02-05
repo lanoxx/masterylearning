@@ -1,0 +1,22 @@
+<h1>{{unit.full_title}}</h1>
+<div ng-repeat="entry in unit.entries">
+    <div ng-if="entry.type == 'paragraph'">
+        <div ng-if="entry.paragraph_type == 'text'" class="text">
+            <p>{{entry.text}}</p>
+        </div>
+        <div ng-if="entry.paragraph_type == 'definition'" class="definition">
+            <p><strong>Definition {{entry.number}} ({{entry.title}})</strong></p>
+            <div ng-if="entry.mode == 'math'">
+                <p katex-bind="entry.text" auto-render></p>
+            </div>
+            <div ng-if="entry.mode != 'math'">
+                <p>{{entry.text}}</p>
+            </div>
+        </div>
+    </div>
+
+    <div ng-if="entry.type == 'section'">
+        <h2>{{entry.title}}</h2>
+        <p>{{entry.description}}</p>
+    </div>
+</div>

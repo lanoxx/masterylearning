@@ -174,6 +174,24 @@ angular.module('myapp.services.database', [])
 
         /* --- END PARAGRAPH --- */
 
+        /* --- START YESNOEXERCISE --- */
+        function YesNoExercise (title, text, answer, blocks, prev)
+        {
+            Entry.call (this, 'yesnoexercise');
+            this.title = title;
+            this.text = text;
+            this.answer = answer;
+            this.blocks = blocks;
+            if (typeof prev !== "undefined" && prev) {
+                prev.next = this;
+            }
+            this.next = null;
+        }
+
+        YesNoExercise.prototype = Object.create(Entry.prototype);
+        YesNoExercise.prototype.constructor = YesNoExercise;
+        /* --- END YESNOEXERCISE--- */
+
         /* --- START DATABASE --- */
         function Database()
         {
@@ -256,6 +274,12 @@ angular.module('myapp.services.database', [])
 
         var unit_section = new Section("Parentheses", "Explains handling of parantheses in logical formulas.");
         unit.add_entry(unit_section);
+
+        var exercise = new YesNoExercise("Evaluate Syntax", "Is \\((P \\wedge Q)\\) a subformula of the formula \\((R \\vee (P \\wedge Q))\\)?", true, true, null);
+        unit.add_entry (exercise);
+
+        exercise = new YesNoExercise("Evaluate Syntax", "Is \\((Q \\wedge P)\\) a subformula of the formula \\((R \\vee (P \\wedge Q))\\)?", false, true, exercise);
+        unit.add_entry (exercise);
 
         var unit2 = new Unit("Unit 2", "Unit 2", "Unit 2 description", unit);
         subsection.add_entry(unit2);

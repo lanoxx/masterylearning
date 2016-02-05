@@ -14,6 +14,10 @@ angular.module('myApp.student.courses', ['ui.router', 'myapp.services.database']
 
                     $log.debug("[myApp] $stateProvider (resolved course(id=" + course.id + ", title=" + course.title + "))");
                     return course;
+                }],
+                course_id: ['$stateParams', function ($stateParams)
+                {
+                    return $stateParams.course_id;
                 }]
             },
             templateUrl: 'student/courses/courses.html',

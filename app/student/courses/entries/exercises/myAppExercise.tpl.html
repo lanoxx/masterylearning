@@ -1,0 +1,11 @@
+<div ng-class="{alert: true, 'alert-success': showAlertClass('alert-success'), 'alert-danger': showAlertClass('alert-danger') }">
+    <h2>{{exercise.title}}</h2>
+    <p katex-bind="exercise.text" auto-render></p>
+    <label for="answer_{{$index}}">Answer:</label>
+    <select ng-model="answer.value" id="answer_{{$index}}"
+            ng-options="option.value as option.label for option in [
+                {value: true, label: 'Yes'},
+                {value: false, label: 'No'}]"
+            ng-change="answered_cb()">
+    </select>
+</div>
