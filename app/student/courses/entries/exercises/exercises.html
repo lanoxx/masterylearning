@@ -5,3 +5,27 @@
 
 <my-app-exercise data-my-app-type exercise="exercises[1]" answer="result[1]" onanswered="answered_cb(1, answer)">
 </my-app-exercise>
+
+<my-app-exercise data-my-app-type exercise="exercises[2]" answer="result[2]" onanswered="answered_cb(2, answer)">
+</my-app-exercise>
+
+<div class="alert alert-info">
+    <p><strong>Notes:</strong></p>
+    <p>
+        This page currently demonstrates two exercise types: <code>YesNoExercises</code>, which produce a dropdown, with
+        a 'Yes' and 'No' answer and <code>MultiAnswerExercises</code>, which produce a list of checkboxes. Simple
+        yes-no exercises start out with an empty dropdown selection and are considered answered as soon as the user
+        selects an answer from the dropdown. For multi answer exercises the user can tick multiple checkboxes and
+        needs to confirm his answer through a button when he is done.
+    </p>
+    <p>
+        Once an exercise has been answered, its answer cannot be changed again. And the answers background changes to
+        give visual feedback.
+    </p>
+
+    <p class="bg-danger">
+        Currently this mock has no user persistence, so the answer is lost when the page is refreshed. In the future this mock will be extended,
+        so that the previous answer is stored for in the personal history of the user and loaded when the answer is
+        loaded.
+    </p>
+</div>

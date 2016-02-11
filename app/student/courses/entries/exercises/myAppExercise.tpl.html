@@ -1,11 +1,20 @@
 <div ng-class="{alert: true, 'alert-success': showAlertClass('alert-success'), 'alert-danger': showAlertClass('alert-danger') }">
-    <h2>{{exercise.title}}</h2>
+    <p><strong>{{exercise.title}}</strong></p>
     <p katex-bind="exercise.text" auto-render></p>
-    <label for="answer_{{$index}}">Answer:</label>
-    <select ng-model="answer.value" id="answer_{{$index}}"
-            ng-options="option.value as option.label for option in [
-                {value: true, label: 'Yes'},
-                {value: false, label: 'No'}]"
-            ng-change="answered_cb()">
-    </select>
+    <label for="answer">Answer:</label>
+    <div ng-if="exercise.type === 'yesnoexercise'">
+        <select ng-model="results[0]" id="answer"
+                ng-options="option.value as option.label for option in [
+                    {value: true, label: 'Yes'},
+                    {value: false, label: 'No'}]"
+                ng-disabled="answered"
+                ng-change="answered_cb()">
+        </select>
+    </div>
+    <div ng-if="exercise.type === 'multianswerexercise'">
+        <div ng-repeat="candidate in exercise.answer_candidates">
+            <input ng-model="results[$index]" ng-disabled="answered" type="checkbox" id="checkbox_{{$index}}"> <label for="checkbox_{{$index}}" katex-bind="candidate.text" auto-render></label>
+        </div>
+        <button ng-click="check_answer()" class="btn btn-success">Check</button>
+    </div>
 </div>
