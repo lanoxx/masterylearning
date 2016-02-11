@@ -20,8 +20,6 @@ angular.module('myApp', [
     'myApp.view2',
     'myApp.view3',
     'myApp.view4',
-    'myApp.topics.firstorderlogic',
-    'myApp.topics.firstorderlogic.exercise1',
     'myApp.version'
 ])
 
