@@ -192,6 +192,24 @@ angular.module('myapp.services.database', [])
         YesNoExercise.prototype.constructor = YesNoExercise;
         /* --- END YESNOEXERCISE--- */
 
+        /* --- START YESNOEXERCISE --- */
+        function MultiAnswerExercise (title, text, answer_candidates, blocks, prev)
+        {
+            Entry.call (this, 'multianswerexercise');
+            this.title = title;
+            this.text = text;
+            this.answer_candidates = answer_candidates;
+            this.blocks = blocks;
+            if (typeof prev !== "undefined" && prev) {
+                prev.next = this;
+            }
+            this.next = null;
+        }
+
+        MultiAnswerExercise.prototype = Object.create(Entry.prototype);
+        MultiAnswerExercise.prototype.constructor = MultiAnswerExercise;
+        /* --- END YESNOEXERCISE--- */
+
         /* --- START DATABASE --- */
         function Database()
         {
@@ -280,6 +298,17 @@ angular.module('myapp.services.database', [])
 
         exercise = new YesNoExercise("Evaluate Syntax", "Is \\((Q \\wedge P)\\) a subformula of the formula \\((R \\vee (P \\wedge Q))\\)?", false, true, exercise);
         unit.add_entry (exercise);
+
+        exercise = new MultiAnswerExercise("Multiple Answers", "Which of the following answeres is syntactically right:",
+                                           [
+                                               { text: "\\(Q \\wedge P\\)", key: true },
+                                               { text: "\\(Q \\wedge \\wedge P\\)", key: false },
+                                               { text: "\\(\\wedge P\\)", key: false },
+                                               { text: "\\((Q \\wedge P)\\)", key: true }
+                                           ],
+                                           true,
+                                           exercise);
+        unit.add_entry(exercise);
 
         var unit2 = new Unit("Unit 2", "Unit 2", "Unit 2 description", unit);
         subsection.add_entry(unit2);
