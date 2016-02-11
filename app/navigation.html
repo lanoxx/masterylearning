@@ -46,10 +46,18 @@
                         </span>
                     </a>
                     <ul class="uib-dropdown-menu" role="menu" aria-labelledby="single-button">
-                        <li ng-class="{ active: roleService.currentRole === roleService.STUDENT }" role="menuitem" ng-click="switch_role (roleService.STUDENT)"><a href="">Student Role</a></li>
-                        <li ng-class="{ active: roleService.currentRole === roleService.TEACHER }" role="menuitem" ng-click="switch_role (roleService.TEACHER)"><a href="">Teacher Role</a></li>
-                        <li ui-sref-active="active"><a ui-sref="home.student.profile" ng-if="roleService.currentRole === roleService.STUDENT">Profile</a></li>
-                        <li ui-sref-active="active"><a ui-sref="home.teacher.profile" ng-if="roleService.currentRole === roleService.TEACHER">Profile</a></li>
+                        <li ng-class="{ active: roleService.currentRole === roleService.STUDENT }" role="menuitem" ng-if="roleService.currentRole === roleService.NONE" ng-click="switch_role (roleService.STUDENT)">
+                            <a href="">Student Role</a>
+                        </li>
+                        <li ng-class="{ active: roleService.currentRole === roleService.TEACHER }" role="menuitem" ng-if="roleService.currentRole === roleService.NONE" ng-click="switch_role (roleService.TEACHER)">
+                            <a href="">Teacher Role</a>
+                        </li>
+                        <li ui-sref-active="active" ng-if="roleService.currentRole === roleService.STUDENT">
+                            <a ui-sref="home.student.profile">Profile</a>
+                        </li>
+                        <li ui-sref-active="active" ng-if="roleService.currentRole === roleService.TEACHER">
+                            <a ui-sref="home.teacher.profile">Profile</a>
+                        </li>
                         <li ng-show="roleService.currentRole !== roleService.NONE" ng-click="switch_role (roleService.NONE)">
                             <a href="">Logout</a>
                         </li>
