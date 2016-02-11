@@ -1,13 +1,9 @@
 <h1>Exercises for this Unit</h1>
 
-<my-app-exercise data-my-app-type exercise="exercises[0]" answer="result[0]" onanswered="answered_cb(0, answer)">
-</my-app-exercise>
-
-<my-app-exercise data-my-app-type exercise="exercises[1]" answer="result[1]" onanswered="answered_cb(1, answer)">
-</my-app-exercise>
-
-<my-app-exercise data-my-app-type exercise="exercises[2]" answer="result[2]" onanswered="answered_cb(2, answer)">
-</my-app-exercise>
+<div ng-repeat="exercise in exercises">
+    <my-app-exercise data-my-app-type exercise="exercises[$index]" answer="result[$index]" onanswered="answered_cb($index, answer)">
+    </my-app-exercise>
+</div>
 
 <div class="alert alert-info">
     <p><strong>Notes:</strong></p>

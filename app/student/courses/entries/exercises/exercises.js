@@ -25,17 +25,29 @@ angular.module ('myapp.student.courses.entries.exercises', ['ui.router'])
 
     .controller ('ExerciseController', ['$scope', 'exercises', '$log', function ($scope, exercises, $log)
     {
-        $scope.exercises = exercises;
+        var exercise_count = 0;
+
+        var load_next_exercise = function ()
+        {
+            exercise_count++;
+            $scope.exercises = exercises.slice(0, exercise_count);
+        };
+
         $log.info ("[myApp] ExerciseController: Loaded " + exercises.length + " exercises");
+
 
         $scope.answered_cb = function (index, answer)
         {
             $log.info ("Answered exercise " + index + ", answer=" + answer);
 
-            //TODO: when a multi answer is answered, I still need to connect the result[index].value with the answer object
-            //      since we are getting an array and not a single boolean value we also need to handle this different
-            //      from the yesnoanswers.
+            load_next_exercise ();
+
+            //TODO: when a multi answer is answered, I still need to connect the result[index].value with the answer
+            // object since we are getting an array and not a single boolean value we also need to handle this
+            // different from the yesnoanswers.
         };
+
+        load_next_exercise();
     }])
 
     /**
