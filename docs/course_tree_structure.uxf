@@ -1,0 +1,344 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="14.1.1">
+  <zoom_level>10</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>430</x>
+      <y>260</y>
+      <w>200</w>
+      <h>170</h>
+    </coordinates>
+    <panel_attributes>Entry
+--
+- id
+- index
+
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>370</x>
+      <y>210</y>
+      <w>110</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+parent</panel_attributes>
+    <additional_attributes>90.0;50.0;90.0;20.0;10.0;20.0;10.0;100.0;60.0;100.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>340</x>
+      <y>180</y>
+      <w>180</w>
+      <h>190</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-
+children
+m1=n
+m2=1</panel_attributes>
+    <additional_attributes>160.0;80.0;160.0;20.0;10.0;20.0;10.0;160.0;90.0;160.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>70</x>
+      <y>260</y>
+      <w>180</w>
+      <h>170</h>
+    </coordinates>
+    <panel_attributes>Course
+--
+- id
+- title
+- subtitle
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>810</x>
+      <y>290</y>
+      <w>180</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>EntryData
+--
+id
+type</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>620</x>
+      <y>300</y>
+      <w>210</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+data
+</panel_attributes>
+    <additional_attributes>190.0;20.0;10.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>590</x>
+      <y>500</y>
+      <w>220</w>
+      <h>170</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;EntryData&gt;&gt;
+Unit
+--
+- id : FK @entry
+- section_id
+- full_title
+- breadcrumb_title
+- next_unit_id
+- prev_unit_id
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>840</x>
+      <y>500</y>
+      <w>220</w>
+      <h>170</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;EntryData&gt;&gt;
+Section
+--
+- id : FK @entry
+- title
+- description
+- parent_entries_id
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1120</x>
+      <y>500</y>
+      <w>200</w>
+      <h>170</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;EntryData&gt;&gt;
+Paragraph
+--
+- id : @entry
+- number
+- title
+- text
+- paragraph_type</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1410</x>
+      <y>500</y>
+      <w>220</w>
+      <h>170</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Exercise&gt;&gt;
+YesNoExercise
+--
+- title
+- text
+- answer : boolean
+- blocks : boolean
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1670</x>
+      <y>500</y>
+      <w>260</w>
+      <h>170</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Exercise&gt;&gt;
+MultiAnswerExercise
+--
+- title
+- text
+- blocks : boolean
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1690</x>
+      <y>780</y>
+      <w>220</w>
+      <h>180</h>
+    </coordinates>
+    <panel_attributes>AnswerCandidate
+--
+- id
+- text
+- key : boolean
+
+--
+The key determines
+whether this candidate's
+text represents a correct
+solution.</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1790</x>
+      <y>660</y>
+      <w>160</w>
+      <h>140</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-
+answer_candidates
+m1=n
+m2=1</panel_attributes>
+    <additional_attributes>10.0;120.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>980</x>
+      <y>340</y>
+      <w>210</w>
+      <h>180</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-
+type=paragraph</panel_attributes>
+    <additional_attributes>10.0;20.0;190.0;20.0;190.0;160.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>870</x>
+      <y>360</y>
+      <w>120</w>
+      <h>160</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-
+type=section</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;140.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>680</x>
+      <y>330</y>
+      <w>150</w>
+      <h>190</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-
+type=unit</panel_attributes>
+    <additional_attributes>130.0;20.0;10.0;20.0;10.0;170.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1340</x>
+      <y>360</y>
+      <w>410</w>
+      <h>160</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-
+exercise_type=multianswerexercise</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;40.0;390.0;40.0;390.0;140.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1300</x>
+      <y>360</y>
+      <w>280</w>
+      <h>160</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-
+exercise_type=yesnoexercise</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;70.0;260.0;70.0;260.0;140.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1250</x>
+      <y>290</y>
+      <w>180</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;EntryData&gt;&gt;
+Exercise
+--
+exercise_type</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>980</x>
+      <y>300</y>
+      <w>290</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-
+type=exercise</panel_attributes>
+    <additional_attributes>10.0;20.0;270.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>520</x>
+      <y>180</y>
+      <w>910</w>
+      <h>130</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-
+incorrect
+m1=n
+m2=1</panel_attributes>
+    <additional_attributes>10.0;80.0;10.0;20.0;890.0;20.0;890.0;110.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>550</x>
+      <y>200</y>
+      <w>850</w>
+      <h>110</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-
+correct
+m1=n
+m2=1</panel_attributes>
+    <additional_attributes>10.0;60.0;10.0;20.0;830.0;20.0;830.0;90.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>240</x>
+      <y>350</y>
+      <w>210</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-
+entries
+m1=n
+m2=1</panel_attributes>
+    <additional_attributes>190.0;20.0;10.0;20.0</additional_attributes>
+  </element>
+</diagram>
