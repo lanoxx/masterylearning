@@ -1,4 +1,4 @@
-angular.module ('myapp.student.courses.entries.exercises', ['ui.router'])
+angular.module ('myapp.student.courses.entries.exercises', ['ui.router', 'ngSanitize'])
 
     .config (['$stateProvider', function ($stateProvider)
     {
@@ -57,7 +57,7 @@ angular.module ('myapp.student.courses.entries.exercises', ['ui.router'])
      *            { title:String, text:String, answer:boolean }
      * @onanswered: A callback to be called by the directive when the user has selected an answer.
      */
-    .directive ('myAppExercise', ['$log', function ($log)
+    .directive ('myAppExercise', ['$log', '$sanitize', function ($log, $sanitize)
     {
         return {
             scope: {
@@ -82,6 +82,11 @@ angular.module ('myapp.student.courses.entries.exercises', ['ui.router'])
                 $scope.type = get_type ($scope.exercise.type);
                 $scope.results = [];
                 $scope.answered = false;
+
+                $scope.sanitize = function (text)
+                {
+                    return $sanitize (text);
+                };
 
                 $scope.answered_cb = function ()
                 {

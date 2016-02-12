@@ -299,6 +299,9 @@ angular.module('myapp.services.database', [])
         exercise = new YesNoExercise("Evaluate Syntax", "Is \\((Q \\wedge P)\\) a subformula of the formula \\((R \\vee (P \\wedge Q))\\)?", false, true, exercise);
         unit.add_entry (exercise);
 
+        exercise = new YesNoExercise ("Evaluate Semantics", "Given the following variable assignments: <ul><li>\\(a \\rightarrow 0\\)</li><li>\\(b \\rightarrow 1\\)</li><li>\\(c \\rightarrow 1\\)</li><li>\\(d \\rightarrow 1\\)</li></ul>Please specify the result for the following logical formula: <strong>\\((a \\land b) \\lor (c \\oplus D) \\)</strong>", true, true, exercise);
+        unit.add_entry(exercise);
+
         exercise = new MultiAnswerExercise("Multiple Answers", "Which of the following answeres is syntactically right:",
                                            [
                                                { text: "\\(Q \\wedge P\\)", key: true },
