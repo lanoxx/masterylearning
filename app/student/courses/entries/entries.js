@@ -1,4 +1,4 @@
-angular.module('myapp.student.courses.entries', ['ui.router'])
+angular.module('myapp.student.courses.entries', ['ui.router', 'ngSanitize'])
 
     .config (['$stateProvider', function ($stateProvider)
     {
@@ -45,11 +45,16 @@ angular.module('myapp.student.courses.entries', ['ui.router'])
             $scope.entry = entry;
     }])
 
-    .controller ('StructureController', ['$scope', 'entry', '$log', function ($scope, entry, $log)
+    .controller ('StructureController', ['$scope', 'entry', '$log', '$sanitize', function ($scope, entry, $log, $sanitize)
     {
         $log.info ('[myApp] StructureController running');
         if (entry.type == 'unit')
             $scope.unit = entry;
         else
             $scope.entry = entry;
+
+        $scope.sanitize = function (text)
+        {
+            return $sanitize (text);
+        }
     }]);
