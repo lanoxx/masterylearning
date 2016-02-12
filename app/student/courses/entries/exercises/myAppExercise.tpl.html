@@ -1,6 +1,6 @@
 <div ng-class="{alert: true, 'alert-success': showAlertClass('alert-success'), 'alert-danger': showAlertClass('alert-danger') }">
     <p><strong>{{exercise.title}}</strong></p>
-    <p katex-bind="exercise.text" auto-render></p>
+    <p data-katex data-bind="sanitize(exercise.text)" data-auto-render></p>
     <label for="answer">Answer:</label>
     <div ng-if="exercise.type === 'yesnoexercise'">
         <select ng-model="results[0]" id="answer"
@@ -13,7 +13,8 @@
     </div>
     <div ng-if="exercise.type === 'multianswerexercise'">
         <div ng-repeat="candidate in exercise.answer_candidates">
-            <input ng-model="results[$index]" ng-disabled="answered" type="checkbox" id="checkbox_{{$index}}"> <label for="checkbox_{{$index}}" katex-bind="candidate.text" auto-render></label>
+            <input ng-model="results[$index]" ng-disabled="answered" type="checkbox" id="checkbox_{{$index}}">
+            <label for="checkbox_{{$index}}" data-katex data-bind="sanitize(candidate.text)" data-auto-render></label>
         </div>
         <button ng-click="check_answer()" class="btn btn-success">Check</button>
     </div>
