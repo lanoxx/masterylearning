@@ -4,7 +4,7 @@
  * This database module stores and loads the course structure. Currently its non-persistent, later I will interface
  * this object with the backend.
  *
- * @author: Sebastian Geiger
+ * @author Sebastian Geiger
  */
 angular.module('myapp.services.database', [])
 
