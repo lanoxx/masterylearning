@@ -31,8 +31,9 @@ body {
 }
 
 .footer {
-    background: #CCC;
-    padding: 30px;
+    background: #222229;
+    color: #ccc;
+    padding: 50px;
     position: relative;
     margin-top: -100px; /* negative value of footer height */
     height: 100px;
