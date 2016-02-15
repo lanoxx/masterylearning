@@ -94,29 +94,31 @@ angular.module ('myapp.student.courses.entries.exercises', ['ui.router', 'ngSani
                     $scope.onanswered ({answer: $scope.results[0]});
                 };
 
-                $scope.showAlertClass = function (name)
+                $scope.showAlertClass = function (success, index)
                 {
                     var result = true;
+                    var results = [];
 
                     if ($scope.type === 'dropdown')
+                    {
                         result = $scope.results[0] !== undefined && $scope.results[0] === $scope.exercise.answer;
+
+                        if (success)
+                            return $scope.answered && result;
+                        else
+                            return $scope.answered && !result;
+                    }
                     else if ($scope.type === 'checkboxes')
                     {
                         $scope.exercise.answer_candidates.forEach (function (candidate, i)
                         {
-                            result = result && $scope.results[i] === candidate.key;
+                            results[i] = result && $scope.results[i] === candidate.key;
                         });
-                    }
 
-                    switch (name) {
-                        case 'alert-success':
-                        {
-                            return $scope.answered && result;
-                        }
-                        case 'alert-danger':
-                        {
-                            return $scope.answered && !result;
-                        }
+                        if (success)
+                            return $scope.answered && results[index];
+                        else
+                            return $scope.answered && !results[index];
                     }
                 };
 
