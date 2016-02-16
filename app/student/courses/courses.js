@@ -13,6 +13,7 @@ angular.module('myApp.student.courses', ['ui.router', 'myapp.services.database']
                     var course = database.courses[$stateParams.course_id];
 
                     $log.debug("[myApp] $stateProvider (resolved course(id=" + course.id + ", title=" + course.title + "))");
+
                     return course;
                 }],
                 course_id: ['$stateParams', function ($stateParams)

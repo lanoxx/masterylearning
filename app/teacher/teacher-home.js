@@ -46,6 +46,7 @@ angular.module('myapp.teacher', ['ui.router', 'myapp.services.database'])
     {
         $scope.section = {};
         $scope.courses = database.courses;
+
         $scope.get_sections = function () {
             return database.get_entries('section');
         };
@@ -57,7 +58,7 @@ angular.module('myapp.teacher', ['ui.router', 'myapp.services.database'])
             $log.info (db_section.toString());
             $log.debug ("Section.course_id: " + section.course_id);
 
-            database.courses[section.course_id].add_entry(db_section);
+            database.courses[section.course_id].insert (db_section);
 
             $log.info('[myApp] SectionStorageController: Section saved');
         }
@@ -66,8 +67,8 @@ angular.module('myapp.teacher', ['ui.router', 'myapp.services.database'])
     .controller('UnitStorageController', ['$scope', 'database', '$log', function ($scope, database, $log)
     {
         $scope.section = {};
-
         $scope.courses = database.courses;
+
         $scope.get_sections = function (course_id)
         {
             var sections = database.get_entries('section');
@@ -93,7 +94,7 @@ angular.module('myapp.teacher', ['ui.router', 'myapp.services.database'])
         {
             var db_unit = new database.Unit(unit.full_title, unit.breadcrumb_title);
 
-            unit.section.add_entry(db_unit);
+            unit.section.insert (db_unit);
 
             $log.info('[myApp] UnitStorageController: Unit saved');
         }

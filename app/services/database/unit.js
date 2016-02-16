@@ -1,6 +1,6 @@
-angular.module ('myapp.factories.unit', ['myapp.factories.entry'])
+angular.module ('myapp.factories.unit', ['myapp.factories.entrydata'])
 
-    .factory ('Unit', ['$log', 'Entry', function ($log, Entry)
+    .factory ('Unit', ['$log', 'EntryData', function ($log, EntryData)
     {
         "use strict";
 
@@ -17,7 +17,7 @@ angular.module ('myapp.factories.unit', ['myapp.factories.entry'])
          */
         function Unit (full_title, breadcrumb_title, description, prev)
         {
-            Entry.call (this, 'unit');
+            EntryData.call (this, null, 'unit');
             this.full_title = full_title;
             this.breadcrumb_title = breadcrumb_title;
             this.description = description;
@@ -30,23 +30,10 @@ angular.module ('myapp.factories.unit', ['myapp.factories.entry'])
             }
 
             this.next = null;
-            this.entries = [];
         }
 
-        Unit.prototype = Object.create (Entry.prototype);
+        Unit.prototype = Object.create (EntryData.prototype);
         Unit.prototype.constructor = Unit;
-
-        Unit.prototype.add_entry = function (entry)
-        {
-            if (this.course_id === null)
-                throw new Error ("Unit " + this.id + " not yet added to a course.");
-
-            this.entries.push (entry);
-            entry.course_id = this.course_id;
-            entry.parent_entry_id = this.id;
-
-            return this;
-        };
 
         Unit.prototype.toString = function (prefix)
         {
@@ -55,14 +42,7 @@ angular.module ('myapp.factories.unit', ['myapp.factories.entry'])
             var prev_id = this.prev ? this.prev.id : "null";
             var next_id = this.next ? this.next.id : "null";
 
-            result += ", prev=" + prev_id + ", next=" + next_id + ", course_id=" + this.course_id + ", entries=[\n";
-
-            this.entries.forEach (function (entry)
-            {
-                result += prefix + "\t" + entry.toString (prefix + "\t") + "\n";
-            });
-
-            result += prefix + "])";
+            result += ", prev=" + prev_id + ", next=" + next_id + ", course_id=" + this.container.course_id + ")";
             return result;
         };
 

@@ -1,6 +1,6 @@
-angular.module ('myapp.factories.section', ['myapp.factories.entry'])
+angular.module ('myapp.factories.section', ['myapp.factories.entrydata'])
 
-    .factory ('Section', ['$log', 'Entry', function ($log, Entry)
+    .factory ('Section', ['$log', 'EntryData', function ($log, EntryData)
     {
         "use strict";
 
@@ -16,39 +16,19 @@ angular.module ('myapp.factories.section', ['myapp.factories.entry'])
          */
         function Section (title, description)
         {
-            Entry.call (this, 'section');
+            EntryData.call (this, null, 'section');
             this.title = title;
             this.description = description;
-            this.entries = [];
-            this.parent_entry_id = null;
         }
 
-        Section.prototype = Object.create (Entry.prototype);
+        Section.prototype = Object.create (EntryData.prototype);
         Section.prototype.constructor = Section;
-
-        Section.prototype.add_entry = function (entry)
-        {
-            if (this.course_id === null)
-                throw new Error ("Section " + this.id + " not yet added to a course.");
-
-            this.entries.push (entry);
-            entry.course_id = this.course_id;
-            entry.parent_entry_id = this.id;
-
-            return this;
-        };
 
         Section.prototype.toString = function (prefix)
         {
-            var result = "Section (id=" + this.id + ", type=" + this.type + ", title=" + this.title + ", description=" + this.description + ", course_id=" + this.course_id + ", entries=[\n";
-
-            this.entries.forEach (function (entry)
-            {
-                result += prefix + "\t" + entry.toString (prefix + "\t") + "\n";
-            });
-
-            result += prefix + "])";
-            return result;
+            prefix = prefix || "";
+            return "Section (id=" + this.id + ", type=" + this.type + ", course_id=" + this.course_id +
+                         ", title=" + this.title + ", description=" + this.description + ")";
         };
 
         return Section;

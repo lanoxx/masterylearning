@@ -37,7 +37,7 @@
                 <form>
                     <div class="form-group">
                         <label for="section_course">Course</label>
-                        <select ng-model="section.course_id" ng-options="course.course_id as course.title for (course_id, course) in courses" id="section_course"></select>
+                        <select ng-model="section.course_id" ng-options="course.id as course.title for (course_id, course) in courses" id="section_course"></select>
                     </div>
                     <div class="form-group">
                         <label for="section_title">Title</label>
@@ -52,7 +52,7 @@
 
                     <p><strong>Existing Sections:</strong></p>
                     <div ng-repeat="section in get_sections()">
-                        <strong>{{section.id}}: </strong>{{section.title}}<br>
+                        <strong>{{section.data.id}}: </strong>{{section.data.title}}<br>
                     </div>
                 </form>
             </div>
@@ -65,12 +65,12 @@
                 <form>
                     <div class="form-group">
                         <label for="unit_course">Course</label>
-                        <select ng-model="unit.course_id" ng-options="course.course_id as course.title for (course_id, course) in courses" id="unit_course"></select>
+                        <select ng-model="unit.course_id" ng-options="course.id as course.title for (course_id, course) in courses" id="unit_course"></select>
                     </div>
 
                     <div class="form-group">
                         <label for="unit_section">Section</label>
-                        <select ng-model="unit.section" ng-options="section as section.title for section in get_sections(unit.course_id)" id="unit_section"></select>
+                        <select ng-model="unit.section" ng-options="section as section.data.title for section in get_sections(unit.course_id)" id="unit_section"></select>
                     </div>
 
                     <div class="form-group">
@@ -87,7 +87,7 @@
 
                     <p><strong>Existing units:</strong></p>
                     <div ng-repeat="unit in get_units()">
-                        <strong>{{unit.id}}: </strong>{{unit.full_title}}<br>
+                        <strong>{{unit.data.id}}: </strong>{{unit.data.full_title}}<br>
                     </div>
                 </form>
             </div>
