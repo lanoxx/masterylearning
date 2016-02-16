@@ -179,4 +179,12 @@ angular.module('myApp', [
                 }
             }
         }
+    }])
+
+    .controller ('FooterController', ['$scope', 'RoleService', '$log', function ($scope, RoleService, $log)
+    {
+        $scope.show_footer = function ()
+        {
+            return RoleService.currentRole === RoleService.NONE;
+        };
     }]);
