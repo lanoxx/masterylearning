@@ -1,10 +1,10 @@
-angular.module ('myapp.factories.exercise', ['myapp.factories.entry'])
+angular.module ('myapp.factories.exercise', ['myapp.factories.entrydata'])
 
-    .factory ('YesNoExercise', ['$log', 'Entry', function ($log, Entry)
+    .factory ('YesNoExercise', ['$log', 'EntryData', function ($log, EntryData)
     {
         function YesNoExercise (title, text, answer, blocks, prev)
         {
-            Entry.call (this, 'yesnoexercise');
+            EntryData.call (this, null, 'yesnoexercise');
             this.title = title;
             this.text = text;
             this.answer = answer;
@@ -15,13 +15,18 @@ angular.module ('myapp.factories.exercise', ['myapp.factories.entry'])
             this.next = null;
         }
 
-        YesNoExercise.prototype = Object.create(Entry.prototype);
+        YesNoExercise.prototype = Object.create(EntryData.prototype);
         YesNoExercise.prototype.constructor = YesNoExercise;
+
+        YesNoExercise.prototype.toString = function (prefix)
+        {
+            return "[YesNoExercise]";
+        };
 
         return YesNoExercise;
     }])
 
-    .factory ('MultiAnswerExercise', ['$log', 'Entry', function ($log, Entry)
+    .factory ('MultiAnswerExercise', ['$log', 'EntryData', function ($log, EntryData)
     {
         "use strict";
 
@@ -36,7 +41,7 @@ angular.module ('myapp.factories.exercise', ['myapp.factories.entry'])
          */
         function MultiAnswerExercise (title, text, answer_candidates, blocks, prev)
         {
-            Entry.call (this, 'multianswerexercise');
+            EntryData.call (this, null, 'multianswerexercise');
             this.title = title;
             this.text = text;
             this.answer_candidates = answer_candidates;
@@ -47,8 +52,13 @@ angular.module ('myapp.factories.exercise', ['myapp.factories.entry'])
             this.next = null;
         }
 
-        MultiAnswerExercise.prototype = Object.create(Entry.prototype);
+        MultiAnswerExercise.prototype = Object.create(EntryData.prototype);
         MultiAnswerExercise.prototype.constructor = MultiAnswerExercise;
+
+        MultiAnswerExercise.prototype.toString = function (prefix)
+        {
+            return "[MultiAnswerExercise";
+        };
 
         return MultiAnswerExercise;
     }]);

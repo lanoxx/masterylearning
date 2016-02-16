@@ -1,6 +1,6 @@
-angular.module ('myapp.factories.course', [])
+angular.module ('myapp.factories.course', ['myapp.factories.entry'])
 
-    .factory ('Course', ['$log', function ($log)
+    .factory ('Course', ['$log', 'Entry', function ($log, Entry)
     {
         /**
          * Course is a database entity that represents the content of a univerity course for a certain semester.
@@ -22,24 +22,30 @@ angular.module ('myapp.factories.course', [])
             this.entries = [];
         }
 
-        Course.prototype.add_entry = function (entry)
+        Course.prototype.insert = function (entrydata)
         {
-            this.entries.push (entry);
+            var entry = new Entry(null, entrydata);
+
+            entry.index = this.entries.length;
+            this.entries.push(entry);
             entry.course_id = this.id;
+
+            return entry;
         };
 
         Course.prototype.print = function ()
         {
-            var result = "[myApp] Course (id=" + this.id + ", title=" + this.title + ", period=" + this.period + ", description=" + this.description;
+            var result = "[myApp] Course (id=" + this.id + ", title=" + this.title + ", period=" + this.period + ", description=" + this.description + ",\n";
+            var prefix = "                ";
 
-            result += ", entries=[\n";
+            result += prefix + "entry=[\n";
 
-            this.entries.forEach (function (entry)
+            this.entries.forEach(function (entry)
             {
-                result += "\t" + entry.toString ("\t") + "\n"
-            });
+                result += entry.toString (prefix + "    ") + "\n";
+            }, this);
 
-            result += "])";
+            result += prefix + "])";
 
             $log.info (result);
         };

@@ -33,12 +33,11 @@ angular.module('myapp.services.database', [
         Database.prototype.get_entries = function (type)
         {
             var entries = [];
-            var that = this;
             Object.keys(this.courses).forEach(function (key)
             {
-                var course = that.courses[key];
+                var course = this.courses[key];
                 entries.push.apply(entries, collect(course.entries, type));
-            });
+            }, this);
 
             function collect(entries, type)
             {
@@ -51,11 +50,11 @@ angular.module('myapp.services.database', [
                 {
                     if (!type)
                         result.push(entry);
-                    else if (type && entry.type === type)
+                    else if (type && entry.data.type === type)
                         result.push(entry);
 
-                    if (entry.hasOwnProperty("entries")) {
-                        result.push.apply(result, collect(entry.entries, type));
+                    if (entry.hasOwnProperty("children")) {
+                        result.push.apply(result, collect(entry.children, type));
                     }
                 });
                 return result;
@@ -75,111 +74,80 @@ angular.module('myapp.services.database', [
         var course = new Course("fmi", "Formal Methods in Computer Science", "(SS'16)", "A short description of the lecture's content");
         database.insert_course(course);
 
-        var section = new Section("Preliminaries: Propositional Logic", "A short description of propositional logic");
-        course.add_entry(section);
+        var section = course.insert (new Section("Preliminaries: Propositional Logic", "A short description of propositional logic"));
 
-        var subsection = new Section("Syntax", "Subsection 1 Description");
-        section.add_entry(subsection);
+        var subsection = section.insert (new Section("Syntax", "Subsection 1 Description"));
 
-        var unit = new Unit("Unit 1", "Unit 1", "Unit 1 description", null);
-        subsection.add_entry(unit);
+        var unit = subsection.insert (new Unit("Unit 1", "Unit 1", "Unit 1 description", null));
 
-        var paragraph = new Paragraph("text", "Lorem ipsum dolor sit amet, consectetur adipisicing elit. A accusamus aliquam dolore harum iusto maiores maxime, minus modi molestiae, natus nisi non obcaecati porro quis quos reprehenderit repudiandae tempore temporibus!");
-        unit.add_entry(paragraph);
+        var paragraph = unit.insert (new Paragraph("text", "Lorem ipsum dolor sit amet, consectetur adipisicing elit. A accusamus aliquam dolore harum iusto maiores maxime, minus modi molestiae, natus nisi non obcaecati porro quis quos reprehenderit repudiandae tempore temporibus!"));
 
-        paragraph = new Paragraph("definition", "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores aspernatur atque libero magnam maiores perspiciatis quibusdam, repellat sapiente sunt tempora? Aperiam assumenda dolor ducimus eos officia quisquam rerum sapiente voluptatibus.",
-            'text', 1, "Syntax");
-        unit.add_entry(paragraph);
+        paragraph = unit.insert (new Paragraph("definition", "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores aspernatur atque libero magnam maiores perspiciatis quibusdam, repellat sapiente sunt tempora? Aperiam assumenda dolor ducimus eos officia quisquam rerum sapiente voluptatibus.",
+            'text', 1, "Syntax"));
 
-        paragraph = new Paragraph("definition", "Atomic propositions are symbols \\(a\\), \\(b\\), \\(c\\), ..., which can either have the value true or false.",
-            'math', 2, "Propositions");
-        unit.add_entry(paragraph);
+        paragraph = unit.insert (new Paragraph("definition", "Atomic propositions are symbols \\(a\\), \\(b\\), \\(c\\), ..., which can either have the value true or false.",
+            'math', 2, "Propositions"));
 
-        paragraph = new Paragraph("definition", "A formula G is a subformula ... if ... \\( sub(\\top) = {\\top} \\)",
-            'math', 3, "Propositions");
-        unit.add_entry(paragraph);
+        paragraph = unit.insert (new Paragraph("definition", "A formula G is a subformula ... if ... \\( sub(\\top) = {\\top} \\)",
+            'math', 3, "Propositions"));
 
-        var unit_section = new Section("Parentheses", "Explains handling of parantheses in logical formulas.");
-        unit.add_entry(unit_section);
+        var unit_section = unit.insert (new Section("Parentheses", "Explains handling of parantheses in logical formulas."));
 
-        var exercise = new YesNoExercise("Evaluate Syntax", "Is \\((P \\wedge Q)\\) a subformula of the formula \\((R \\vee (P \\wedge Q))\\)?", true, true, null);
-        unit.add_entry (exercise);
+        var exercise = unit.insert (new YesNoExercise("Evaluate Syntax", "Is \\((P \\wedge Q)\\) a subformula of the formula \\((R \\vee (P \\wedge Q))\\)?", true, true, null));
 
-        exercise = new YesNoExercise("Evaluate Syntax", "Is \\((Q \\wedge P)\\) a subformula of the formula \\((R \\vee (P \\wedge Q))\\)?", false, true, exercise);
-        unit.add_entry (exercise);
+        exercise = unit.insert (new YesNoExercise("Evaluate Syntax", "Is \\((Q \\wedge P)\\) a subformula of the formula \\((R \\vee (P \\wedge Q))\\)?", false, true, exercise.data));
 
-        exercise = new YesNoExercise ("Evaluate Semantics", "Given the following variable assignments: <ul><li>\\(a \\rightarrow 0\\)</li><li>\\(b \\rightarrow 1\\)</li><li>\\(c \\rightarrow 1\\)</li><li>\\(d \\rightarrow 1\\)</li></ul>Please specify the result for the following logical formula: <strong>\\((a \\land b) \\lor (c \\oplus D) \\)</strong>", true, true, exercise);
-        unit.add_entry(exercise);
+        exercise = unit.insert (new YesNoExercise ("Evaluate Semantics", "Given the following variable assignments: <ul><li>\\(a \\rightarrow 0\\)</li><li>\\(b \\rightarrow 1\\)</li><li>\\(c \\rightarrow 1\\)</li><li>\\(d \\rightarrow 1\\)</li></ul>Please specify the result for the following logical formula: <strong>\\((a \\land b) \\lor (c \\oplus D) \\)</strong>", true, true, exercise.data));
 
-        exercise = new MultiAnswerExercise("Multiple Answers", "Which of the following answeres is syntactically right:",
-                                           [
-                                               { text: "\\(Q \\wedge P\\)", key: true },
-                                               { text: "\\(Q \\wedge \\wedge P\\)", key: false },
-                                               { text: "\\(\\wedge P\\)", key: false },
-                                               { text: "\\((Q \\wedge P)\\)", key: true }
-                                           ],
-                                           true,
-                                           exercise);
-        unit.add_entry(exercise);
+        exercise = unit.insert (new MultiAnswerExercise("Multiple Answers", "Which of the following answeres is syntactically right:",
+            [
+                { text: "\\(Q \\wedge P\\)", key: true },
+                { text: "\\(Q \\wedge \\wedge P\\)", key: false },
+                { text: "\\(\\wedge P\\)", key: false },
+                { text: "\\((Q \\wedge P)\\)", key: true }
+            ],
+            true,
+            exercise));
 
-        var unit2 = new Unit("Unit 2", "Unit 2", "Unit 2 description", unit);
-        subsection.add_entry(unit2);
+        var unit2 = subsection.insert(new Unit("Unit 2", "Unit 2", "Unit 2 description", unit.data));
 
-        subsection = new Section("Semantic", "Subsection 2 Description");
-        section.add_entry(subsection);
+        subsection = section.insert(new Section("Semantic", "Subsection 2 Description"));
 
-        unit = new Unit("Unit 1", "Unit 1", "Unit 1 description", null);
-        subsection.add_entry(unit);
+        unit = subsection.insert(new Unit("Unit 1", "Unit 1", "Unit 1 description", null));
 
-        unit2 = new Unit("Unit 2", "Unit 2", "Unit 2 description", unit);
-        subsection.add_entry(unit2);
+        unit2 = subsection.insert(new Unit("Unit 2", "Unit 2", "Unit 2 description", unit.data));
 
-        subsection = new Section("Subsection 3", "Subsection 3 Description");
-        section.add_entry(subsection);
+        subsection = section.insert(new Section("Subsection 3", "Subsection 3 Description"));
 
-        unit = new Unit("Unit 1", "Unit 1", "Unit 1 description", null);
-        subsection.add_entry(unit);
+        unit = subsection.insert(new Unit("Unit 1", "Unit 1", "Unit 1 description", null));
 
-        unit2 = new Unit("Unit 2", "Unit 2", "Unit 2 description", unit);
-        subsection.add_entry(unit2);
+        unit2 = subsection.insert(new Unit("Unit 2", "Unit 2", "Unit 2 description", unit.data));
 
-        unit = new Unit("Unit 1: Propositional Logic Formulas", "Unit 1", "Unit 1 description", null);
-        section.add_entry(unit);
+        unit = section.insert(new Unit("Unit 1: Propositional Logic Formulas", "Unit 1", "Unit 1 description", null));
 
-        unit2 = new Unit("Unit 2: Propositional Logic Formulas", "Unit 1", "Unit 1 description", unit);
-        section.add_entry(unit2);
+        unit2 = section.insert(new Unit("Unit 2: Propositional Logic Formulas", "Unit 1", "Unit 1 description", unit.data));
 
-        section = new Section("Section 2", "Section 2 Description");
-        course.add_entry(section);
+        section = course.insert(new Section("Section 2", "Section 2 Description"));
 
-        subsection = new Section("Subsection 1", "Subsection 1 Description");
-        section.add_entry(subsection);
+        subsection = section.insert(new Section("Subsection 1", "Subsection 1 Description"));
 
-        subsection = new Section("Subsection 2", "Subsection 2 Description");
-        section.add_entry(subsection);
+        subsection = section.insert(new Section("Subsection 2", "Subsection 2 Description"));
 
-        section = new Section("Section 3", "Section 3 Description");
-        course.add_entry(section);
+        section = course.insert(new Section("Section 3", "Section 3 Description"));
 
-        subsection = new Section("Subsection 1", "Subsection 1 Description");
-        section.add_entry(subsection);
+        subsection = section.insert(new Section("Subsection 1", "Subsection 1 Description"));
 
-        unit = new Unit("Unit 1", "Unit 1", "Unit 1 description", null);
-        subsection.add_entry(unit);
+        unit = subsection.insert(new Unit("Unit 1", "Unit 1", "Unit 1 description", null));
 
-        unit = new Unit("Unit 2", "Unit 2", "Unit 2 description", null);
-        subsection.add_entry(unit);
+        unit = subsection.insert(new Unit("Unit 2", "Unit 2", "Unit 2 description", null));
 
-        subsection = new Section("Subsection 2", "Subsection 2 Description");
-        section.add_entry(subsection);
+        subsection = section.insert(new Section("Subsection 2", "Subsection 2 Description"));
 
-        unit = new Unit("Unit 1", "Unit 1", "Unit 1 description", null);
-        subsection.add_entry(unit);
+        unit = subsection.insert(new Unit("Unit 1", "Unit 1", "Unit 1 description", null));
 
-        unit = new Unit("Unit 2", "Unit 2", "Unit 2 description", null);
-        subsection.add_entry(unit);
+        unit = subsection.insert(new Unit("Unit 2", "Unit 2", "Unit 2 description", null));
 
-        //$log.debug(database.courses['fmi'].print());
+        $log.debug(database.courses['fmi'].print());
 
         return database;
     }]);

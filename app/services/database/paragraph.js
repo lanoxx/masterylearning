@@ -1,6 +1,6 @@
-angular.module ('myapp.factories.paragraph', ['myapp.factories.entry'])
+angular.module ('myapp.factories.paragraph', ['myapp.factories.entrydata'])
 
-    .factory ('Paragraph', ['$log', 'Entry', function ($log, Entry)
+    .factory ('Paragraph', ['$log', 'EntryData', function ($log, EntryData)
     {
         "use strict";
 
@@ -17,13 +17,21 @@ angular.module ('myapp.factories.paragraph', ['myapp.factories.entry'])
          */
         function Paragraph (paragraph_type, text, mode, number, title)
         {
-            Entry.call (this, 'paragraph');
+            EntryData.call (this, null, 'paragraph');
             this.text = text;
             this.number = number;
             this.title = title;
             this.paragraph_type = paragraph_type;
             this.mode = mode;
         }
+
+        Paragraph.prototype = Object.create (EntryData.prototype);
+        Paragraph.prototype.constructor = Paragraph;
+
+        Paragraph.prototype.toString = function (prefix)
+        {
+            return "[Paragraph]";
+        };
 
         return Paragraph;
     }]);
