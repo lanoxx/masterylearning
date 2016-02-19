@@ -8,13 +8,13 @@ angular.module ('myapp.student.courses.entries.exercises', ['ui.router', 'ngSani
                 exercises: ['$stateParams', 'course_id', 'entry_id', 'entry', 'database', '$log', function ($stateParams, course_id, entry_id, entry, database, $log)
                 {
                     var entries = [];
-                    if (entry.type === 'unit' || entry.type === 'section') {
-                        entries = entry.entries;
+                    if (entry.data.type === 'unit' || entry.data.type === 'section') {
+                        entries = entry.children;
                     }
 
                     return entries.filter(function (entry)
                     {
-                        return entry.type === 'yesnoexercise' || entry.type === 'multianswerexercise';
+                        return entry.data.type === 'yesnoexercise' || entry.data.type === 'multianswerexercise';
                     });
                 }]
             },
