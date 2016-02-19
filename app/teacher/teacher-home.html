@@ -70,7 +70,7 @@
 
                     <div class="form-group">
                         <label for="unit_section">Section</label>
-                        <select ng-model="unit.section" ng-options="section as section.data.title for section in get_sections(unit.course_id)" id="unit_section"></select>
+                        <select ng-model="unit.section" ng-options="section as get_section_title(section) for section in get_sections(unit.course_id)" id="unit_section"></select>
                     </div>
 
                     <div class="form-group">

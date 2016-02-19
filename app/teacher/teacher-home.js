@@ -86,6 +86,11 @@ angular.module('myapp.teacher', ['ui.router', 'myapp.services.database'])
             return result;
         };
 
+        $scope.get_section_title = function (section)
+        {
+            return section.getIndex() + " " + section.data.title;
+        };
+
         $scope.get_units = function() {
             return database.get_entries ('unit');
         };
