@@ -80,6 +80,19 @@ angular.module ('myapp.factories.entry', [])
             }
         };
 
+        Entry.prototype.getIndex = function ()
+        {
+            var index;
+
+            index = this.index !== -1 ?  this.index + 1 : "";
+
+            if (this.parent === null)
+                return index;
+
+
+            return this.parent.getIndex() + "." + index;
+        };
+
         Entry.prototype.toString = function (prefix)
         {
             var child_strings = "";
