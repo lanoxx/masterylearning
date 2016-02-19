@@ -39,7 +39,7 @@ angular.module('myapp.student.courses.entries', ['ui.router', 'ngSanitize'])
     .controller ('EntriesCtrl', ['$scope', 'entry', '$log', function ($scope, entry, $log)
     {
         $log.info ('[myApp] EntriesCtrl running');
-        if (entry.type == 'unit')
+        if (entry.data.type == 'unit')
             $scope.unit = entry;
         else
             $scope.entry = entry;
@@ -48,7 +48,7 @@ angular.module('myapp.student.courses.entries', ['ui.router', 'ngSanitize'])
     .controller ('StructureController', ['$scope', 'entry', '$log', '$sanitize', function ($scope, entry, $log, $sanitize)
     {
         $log.info ('[myApp] StructureController running');
-        if (entry.type == 'unit')
+        if (entry.data.type == 'unit')
             $scope.unit = entry;
         else
             $scope.entry = entry;

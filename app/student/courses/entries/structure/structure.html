@@ -1,22 +1,22 @@
-<h1>{{unit.full_title}}</h1>
-<div ng-repeat="entry in unit.entries">
-    <div ng-if="entry.type == 'paragraph'">
-        <div ng-if="entry.paragraph_type == 'text'" class="text">
-            <p>{{sanitize (entry.text)}}</p>
+<h1>{{unit.data.full_title}}</h1>
+<div ng-repeat="entry in unit.children">
+    <div ng-if="entry.data.type == 'paragraph'">
+        <div ng-if="entry.data.paragraph_type == 'text'" class="text">
+            <p>{{sanitize (entry.data.text)}}</p>
         </div>
-        <div ng-if="entry.paragraph_type == 'definition'" class="definition">
-            <p><strong>Definition {{entry.number}} ({{sanitize (entry.title)}})</strong></p>
-            <div ng-if="entry.mode == 'math'">
-                <p data-katex data-bind="sanitize (entry.text)" data-auto-render></p>
+        <div ng-if="entry.data.paragraph_type == 'definition'" class="definition">
+            <p><strong>Definition {{entry.data.number}} ({{sanitize (entry.data.title)}})</strong></p>
+            <div ng-if="entry.data.mode == 'math'">
+                <p data-katex data-bind="sanitize (entry.data.text)" data-auto-render></p>
             </div>
-            <div ng-if="entry.mode != 'math'">
-                <p>{{entry.text}}</p>
+            <div ng-if="entry.data.mode != 'math'">
+                <p>{{entry.data.text}}</p>
             </div>
         </div>
     </div>
 
-    <div ng-if="entry.type == 'section'">
-        <h2>{{sanitize (entry.title)}}</h2>
-        <p>{{sanitize (entry.description)}}</p>
+    <div ng-if="entry.data.type == 'section'">
+        <h2>{{sanitize (entry.data.title)}}</h2>
+        <p>{{sanitize (entry.data.description)}}</p>
     </div>
 </div>
