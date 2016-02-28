@@ -1,0 +1,45 @@
+<div ng-repeat="entry in entries">
+
+    <div ng-if="entry.data.type == 'paragraph'">
+        <div ng-if="entry.data.paragraph_type == 'text'" class="text">
+            <p>{{sanitize (entry.data.text)}}</p>
+        </div>
+        <div ng-if="entry.data.paragraph_type == 'definition'" class="definition">
+            <p><strong>Definition {{entry.data.number}} ({{sanitize (entry.data.title)}})</strong></p>
+            <div ng-if="entry.data.mode == 'math'">
+                <p data-katex data-bind="sanitize (entry.data.text)" data-auto-render></p>
+            </div>
+            <div ng-if="entry.data.mode != 'math'">
+                <p>{{entry.data.text}}</p>
+            </div>
+        </div>
+    </div>
+
+    <div ng-if="entry.data.type == 'section'">
+        <h1 ng-if="entry.depth - depth <= 0">{{sanitize (entry.data.title)}}</h1>
+        <h2 ng-if="entry.depth - depth == 1">{{sanitize (entry.data.title)}}</h2>
+        <h3 ng-if="entry.depth - depth == 2">{{sanitize (entry.data.title)}}</h3>
+        <h4 ng-if="entry.depth - depth >= 3">{{sanitize (entry.data.title)}}</h4>
+        <p>{{sanitize (entry.data.description)}}</p>
+    </div>
+
+    <div ng-if="entry.data.type == 'unit'">
+        <h1 ng-if="entry.depth - depth == 0">{{sanitize (entry.data.full_title)}}</h1>
+        <h2 ng-if="entry.depth - depth == 1">{{sanitize (entry.data.full_title)}}</h2>
+        <h3 ng-if="entry.depth - depth == 2">{{sanitize (entry.data.full_title)}}</h3>
+        <h4 ng-if="entry.depth - depth >= 3">{{sanitize (entry.data.full_title)}}</h4>
+    </div>
+
+    <div ng-if="entry.data.type == 'yesnoexercise'">
+        <my-app-exercise exercise="entry.data" onanswered="answered_cb(entry.id, answer)"></my-app-exercise>
+    </div>
+
+    <div ng-if="entry.data.type == 'multianswerexercise'">
+        <my-app-exercise exercise="entry.data" onanswered="answered_cb(entry.id, answer)"></my-app-exercise>
+    </div>
+
+    <div ng-if="entry.data.type == 'continue-button'">
+        <button class="btn btn-default" style="width: 100%" ng-click="continue_cb()">Continue</button>
+    </div>
+
+</div>
