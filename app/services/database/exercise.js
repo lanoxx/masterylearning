@@ -4,6 +4,11 @@ angular.module ('myapp.factories.exercise', ['myapp.factories.entrydata'])
     {
         function YesNoExercise (title, text, answer, blocks, prev)
         {
+            if (prev && !(prev instanceof EntryData))
+            {
+                throw new Error ("[YesNoExercise] The prev object must be an instance of EntryData.");
+            }
+
             EntryData.call (this, null, 'yesnoexercise');
             this.title = title;
             this.text = text;
@@ -41,6 +46,11 @@ angular.module ('myapp.factories.exercise', ['myapp.factories.entrydata'])
          */
         function MultiAnswerExercise (title, text, answer_candidates, blocks, prev)
         {
+            if (prev && !(prev instanceof EntryData))
+            {
+                throw new Error ("[YesNoExercise] The prev object must be an instance of EntryData.");
+            }
+
             EntryData.call (this, null, 'multianswerexercise');
             this.title = title;
             this.text = text;
