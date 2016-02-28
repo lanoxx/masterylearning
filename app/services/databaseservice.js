@@ -30,37 +30,9 @@ angular.module('myapp.services.database', [
             this.courses[course.id] = course;
         };
 
-        Database.prototype.get_entries = function (type)
+        Database.prototype.get_course = function (course_id)
         {
-            var entries = [];
-            Object.keys(this.courses).forEach(function (key)
-            {
-                var course = this.courses[key];
-                entries.push.apply(entries, collect(course.entries, type));
-            }, this);
-
-            function collect(entries, type)
-            {
-                var result = [];
-
-                if (!entries || entries.length === 0)
-                    return [];
-
-                entries.forEach(function (entry)
-                {
-                    if (!type)
-                        result.push(entry);
-                    else if (type && entry.data.type === type)
-                        result.push(entry);
-
-                    if (entry.hasOwnProperty("children")) {
-                        result.push.apply(result, collect(entry.children, type));
-                    }
-                });
-                return result;
-            }
-
-            return entries;
+            return this.courses[course_id];
         };
         /* --- END DATABASE --- */
 
