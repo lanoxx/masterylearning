@@ -1,7 +1,7 @@
 <h1>Exercises for this Unit</h1>
 
 <div ng-repeat="exercise in exercises">
-    <my-app-exercise data-my-app-type exercise="exercises[$index].data" answer="result[$index]" onanswered="answered_cb($index, answer)">
+    <my-app-exercise exercise="exercises[$index].data" onanswered="answered_cb($index, answer)">
     </my-app-exercise>
 </div>
 
