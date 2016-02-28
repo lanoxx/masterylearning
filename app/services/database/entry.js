@@ -21,6 +21,7 @@ angular.module ('myapp.factories.entry', [])
             else
                 this.id = id;
             this.index = -1;
+            this.depth = 0;
             this.course_id = null;
             this.data = data;
             this.parent = null;
@@ -54,6 +55,7 @@ angular.module ('myapp.factories.entry', [])
 
             entry.index = this.children.length - 1;
             entry.course_id = this.id;
+            entry.depth = this.depth + 1;
             entry.parent = this;
 
             entrydata.container = entry;
