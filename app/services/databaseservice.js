@@ -84,7 +84,7 @@ angular.module('myapp.services.database', [
                 { text: "\\((Q \\wedge P)\\)", key: true }
             ],
             true,
-            exercise));
+            exercise.data));
 
         var unit2 = subsection.insert(new Unit("Unit 2", "Unit 2", "Unit 2 description", unit.data));
 
