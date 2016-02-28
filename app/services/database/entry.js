@@ -53,6 +53,48 @@ angular.module ('myapp.factories.entry', [])
             return entry;
         };
 
+        Entry.prototype.next_sibling = function ()
+        {
+            if (this.parent)
+            {
+                if (this.parent.children.length > this.index + 1)
+                    return this.parent.children[this.index + 1];
+                else
+                    return this.parent.next_sibling ();
+            }
+
+            return null;
+        };
+
+        Entry.prototype.prev_sibling = function ()
+        {
+            if (parent)
+            {
+                if (this.index > 0)
+                    return parent.children[this.index - 1];
+                else
+                    return parent.prev_sibling ();
+            }
+
+            return null;
+        };
+
+        Entry.prototype.next = function ()
+        {
+            if (this.children.length > 0)
+                return this.children[0];
+            else
+                return this.next_sibling();
+        };
+
+        Entry.prototype.prev = function ()
+        {
+            if (this.index > 0)
+                return this.prev_sibling ();
+            else
+                return this.parent;
+        };
+
         Entry.prototype.getIndex = function ()
         {
             var index;
