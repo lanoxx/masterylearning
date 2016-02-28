@@ -38,16 +38,6 @@ angular.module ('myapp.factories.entry', [])
             };
         }) ();
 
-        Entry.prototype.add_entry = function (entry)
-        {
-            if (!entry instanceof Entry)
-                throw new Error ("[Entry] All children of an entry must be entries as well.");
-            this.index = this.children.length;
-            this.children.push (entry);
-            entry.parent = this;
-            entry.course_id = this.course_id;
-        };
-
         Entry.prototype.insert = function (entrydata)
         {
             var entry = new Entry (null, entrydata);
@@ -61,25 +51,6 @@ angular.module ('myapp.factories.entry', [])
             entrydata.container = entry;
 
             return entry;
-        };
-
-        Entry.prototype.remove_entry = function (entry)
-        {
-            var entry_id;
-            if (typeof entry === "object") {
-                entry_id = entry.id;
-            } else {
-                entry_id = entry;
-            }
-
-            for (var index = 0, n = this.children.length; i < n; i++)
-            {
-                if (child.id === entry_id)
-                {
-                    this.children.splice (index, 1);
-                    return;
-                }
-            }
         };
 
         Entry.prototype.getIndex = function ()
