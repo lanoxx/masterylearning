@@ -12,6 +12,7 @@ angular.module('myApp', [
     'myApp.student.courses',
     'myapp.student.courses.entries',
     'myapp.student.courses.entries.exercises',
+    'myapp.student.courses.entries.flow',
     'myApp.student.profile',
     'myapp.teacher',
     'myApp.teacher.profile',

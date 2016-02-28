@@ -12,10 +12,11 @@ angular.module('myapp.services.database', [
         'myapp.factories.section',
         'myapp.factories.unit',
         'myapp.factories.paragraph',
-        'myapp.factories.exercise'])
+        'myapp.factories.exercise',
+        'myapp.factories.continue-button'])
 
-    .factory('database', ['$log', 'Course', 'Entry', 'Section', 'Unit', 'Paragraph', 'YesNoExercise', 'MultiAnswerExercise',
-        function ($log, Course, Entry, Section, Unit, Paragraph, YesNoExercise, MultiAnswerExercise)
+    .factory('database', ['$log', 'Course', 'Entry', 'Section', 'Unit', 'Paragraph', 'YesNoExercise', 'MultiAnswerExercise', 'ContinueButton',
+        function ($log, Course, Entry, Section, Unit, Paragraph, YesNoExercise, MultiAnswerExercise, ContinueButton)
     {
         var database;
 
@@ -57,6 +58,8 @@ angular.module('myapp.services.database', [
         paragraph = unit.insert (new Paragraph("definition", "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores aspernatur atque libero magnam maiores perspiciatis quibusdam, repellat sapiente sunt tempora? Aperiam assumenda dolor ducimus eos officia quisquam rerum sapiente voluptatibus.",
             'text', 1, "Syntax"));
 
+        paragraph.insert (new ContinueButton());
+
         paragraph = unit.insert (new Paragraph("definition", "Atomic propositions are symbols \\(a\\), \\(b\\), \\(c\\), ..., which can either have the value true or false.",
             'math', 2, "Propositions"));
 
@@ -64,6 +67,8 @@ angular.module('myapp.services.database', [
             'math', 3, "Propositions"));
 
         var unit_section = unit.insert (new Section("Parentheses", "Explains handling of parantheses in logical formulas."));
+
+        paragraph = unit_section.insert (new Paragraph ("text", "A paragrahp of a section."));
 
         var exercise = unit.insert (new YesNoExercise("Evaluate Syntax", "Is \\((P \\wedge Q)\\) a subformula of the formula \\((R \\vee (P \\wedge Q))\\)?", true, true, null));
 
