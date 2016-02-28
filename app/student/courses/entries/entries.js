@@ -5,9 +5,9 @@ angular.module('myapp.student.courses.entries', ['ui.router', 'ngSanitize'])
         $stateProvider.state ('home.student.courses.entries', {
             url: '/entries/:entry_id',
             resolve: {
-                entry: ['$stateParams', 'database', '$log', function ($stateParams, database, $log)
+                entry: ['$stateParams', 'database', 'course_id','$log', function ($stateParams, database, course_id, $log)
                 {
-                    var db_entries = database.get_entries();
+                    var db_entries = database.get_course (course_id).get_entries();
 
                     return db_entries[$stateParams.entry_id];
                 }],
@@ -26,7 +26,7 @@ angular.module('myapp.student.courses.entries', ['ui.router', 'ngSanitize'])
             resolve: {
                 entry: ['$stateParams', 'course_id', 'entry_id', 'database', '$log', function ($stateParams, course_id, entry_id, database, $log)
                 {
-                    var db_entries = database.get_entries();
+                    var db_entries = database.get_course (course_id).get_entries();
 
                     return db_entries[entry_id];
                 }]
