@@ -1,0 +1,13 @@
+<div>
+    <p><strong>Exercise: {{exercise.title}}</strong></p>
+    <p data-katex data-bind="sanitize(exercise.text)" data-auto-render></p>
+    <p><strong>Answers:</strong></p>
+
+    <ul class="list-group">
+        <li ng-repeat="candidate in exercise.answer_candidates" ng-class="{'list-group-item-danger': is_answer_wrong ($index), 'list-group-item-success': is_answer_correct ($index)}" class="list-group-item" >
+            <input ng-model="answers[$index]" ng-disabled="answered" ng-change="check_cb ($index)" type="checkbox" id="checkbox_{{$index}}">
+            <label for="checkbox_{{$index}}" data-katex data-bind="sanitize(candidate.text)" data-auto-render></label>
+        </li>
+        <li class="list-group-item"><button ng-click="check_answer()" ng-disabled="answered" class="btn btn-success">Check</button></li>
+    </ul>
+</div>

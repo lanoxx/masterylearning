@@ -30,12 +30,12 @@
         <h4 ng-if="entry.depth - depth >= 3">{{sanitize (entry.data.full_title)}}</h4>
     </div>
 
-    <div ng-if="entry.data.type == 'yesnoexercise'">
-        <my-app-exercise exercise="entry.data" onanswered="answered_cb(entry.id, answer)"></my-app-exercise>
+    <div ng-if="entry.data.type == 'exercise' && entry.data.exercise_type == 'yesnoexercise'">
+        <my-app-yes-no-exercise exercise="entry.data" onanswered="answered_cb(entry, answer_model, answer)"></my-app-yes-no-exercise>
     </div>
 
-    <div ng-if="entry.data.type == 'multianswerexercise'">
-        <my-app-exercise exercise="entry.data" onanswered="answered_cb(entry.id, answer)"></my-app-exercise>
+    <div ng-if="entry.data.type == 'exercise' && entry.data.exercise_type == 'multianswerexercise'">
+        <my-app-multi-answer-exercise exercise="entry.data" onanswered="answered_cb(entry, answer_model, answer)"></my-app-multi-answer-exercise>
     </div>
 
     <div ng-if="entry.data.type == 'continue-button'">
