@@ -86,8 +86,11 @@ angular.module('myapp.services.database', [
             true,
             exercise.data));
 
-        exercise.data.insert_correct (new Paragraph ('text', "Your answer is correct."));
-        exercise.data.insert_incorrect (new Paragraph ('text', "Your answer is wrong."));
+        var exercise_section = exercise.data.insert_correct (new Section ("Exercise Section title", "Section description."));
+        exercise_section.insert (new Paragraph ('text', "Your answer is correct."));
+
+        exercise_section = exercise.data.insert_incorrect (new Section ("Exercise Section title", "Section description."));
+        exercise_section.insert (new Paragraph ('text', "Your answer is wrong."));
 
         var unit2 = subsection.insert(new Unit("Unit 2", "Unit 2", "Unit 2 description", unit.data));
 

@@ -31,16 +31,18 @@ angular.module ('myapp.factories.exercise', ['myapp.factories.entry', 'myapp.fac
             entry.index = 0;
             entry.course_id = this.container.course_id;
             entry.depth = this.container.depth + 1;
+
+            return entry;
         }
 
         Exercise.prototype.insert_correct = function (entrydata)
         {
-            insert.call (this, entrydata, true);
+            return insert.call (this, entrydata, true);
         };
 
         Exercise.prototype.insert_incorrect = function (entrydata)
         {
-            insert.call (this, entrydata, false);
+            return insert.call (this, entrydata, false);
         };
 
         return Exercise;
