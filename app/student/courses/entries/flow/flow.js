@@ -38,7 +38,9 @@ angular.module ('myapp.student.courses.entries.flow', ['ui.router', 'ngSanitize'
                     || current_entry.data.type === 'continue-button')
                 {
                     entries.push (current_entry);
-                    $log.info ("blocking here");
+
+                    $log.info ("[myApp] FlowController: enumeration was blocked by entry type: " + current_entry.data.type);
+
                     return entries;
                 }
 
@@ -52,14 +54,14 @@ angular.module ('myapp.student.courses.entries.flow', ['ui.router', 'ngSanitize'
         $scope.depth = entry.depth;
         $scope.entries = enumerate_entries (entry, true);
 
-        $log.info ("Rendering " + $scope.entries.length + " entries.");
+        $log.info ("[myApp] FlowController: Rendering " + $scope.entries.length + " entries.");
 
-        function load_next_content (entry)
+        function load_next_content (entry, include_first)
         {
             if (!entry)
                 entry = $scope.entries[$scope.entries.length - 1];
 
-            $scope.entries.push.apply ($scope.entries, enumerate_entries (entry));
+            $scope.entries.push.apply ($scope.entries, enumerate_entries (entry, include_first));
         }
 
         $scope.continue_cb = function ()
@@ -68,17 +70,25 @@ angular.module ('myapp.student.courses.entries.flow', ['ui.router', 'ngSanitize'
             load_next_content (continue_button);
         };
 
-        $scope.answered_cb = function (entry_id, answer)
+        $scope.answered_cb = function (entry, answer_model, answer)
         {
-            //TODO: store (entry_id, answer) somewhere in the user context
+            //TODO: store (entry.id, answer) somewhere in the user context
 
-            load_next_content();
+            var next;
+            if (answer)
+                // get the correct entry of the exercise
+                next = entry.data.correct || entry;
+            else
+                next = entry.data.incorrect || entry;
+
+            if (next !== entry)
+                load_next_content(next, true);
+            else
+                load_next_content(next);
         };
 
         $scope.sanitize = function (text)
         {
             return $sanitize (text);
         };
-
-        $log.info ($scope.entries);
     }]);
