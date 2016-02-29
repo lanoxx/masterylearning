@@ -1,8 +1,12 @@
 <h1>Exercises for this Unit</h1>
 
 <div ng-repeat="exercise in exercises">
-    <my-app-exercise exercise="exercises[$index].data" onanswered="answered_cb($index, answer)">
-    </my-app-exercise>
+    <div ng-if="exercise.data.exercise_type === 'yesnoexercise'">
+        <my-app-yes-no-exercise exercise="exercises[$index].data" onanswered="answered_cb($index, answer)"></my-app-yes-no-exercise>
+    </div>
+    <div ng-if="exercise.data.exercise_type === 'multianswerexercise'">
+        <my-app-multi-answer-exercise exercise="exercises[$index].data" onanswered="answered_cb($index, answer)"></my-app-multi-answer-exercise>
+    </div>
 </div>
 
 <div class="alert alert-info">

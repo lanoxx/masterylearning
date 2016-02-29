@@ -1,4 +1,4 @@
-angular.module ('myapp.student.courses.entries.flow', ['ui.router', 'ngSanitize'])
+angular.module ('myapp.student.courses.entries.flow', ['ui.router', 'ngSanitize', 'myapp.student.courses.entries.exercises'])
 
     .config (['$stateProvider', function ($stateProvider)
     {
@@ -34,8 +34,7 @@ angular.module ('myapp.student.courses.entries.flow', ['ui.router', 'ngSanitize'
             while ((current_entry = current_entry.next ()))
             {
                 // check if blocking condition applies
-                if (current_entry.data.type === 'yesnoexercise'
-                    || current_entry.data.type === 'multianswerexercise'
+                if (current_entry.data.type === 'exercise'
                     || current_entry.data.type === 'continue-button')
                 {
                     entries.push (current_entry);
