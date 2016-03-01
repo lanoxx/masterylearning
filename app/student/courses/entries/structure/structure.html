@@ -1,5 +1,9 @@
-<h1>{{unit.data.full_title}}</h1>
-<div ng-repeat="entry in unit.children">
+<div ng-repeat="entry in entries">
+
+    <div ng-if="entry.data.type === 'unit'">
+        <h1>{{entry.data.full_title}}</h1>
+    </div>
+
     <div ng-if="entry.data.type == 'paragraph'">
         <div ng-if="entry.data.paragraph_type == 'text'" class="text">
             <p>{{sanitize (entry.data.text)}}</p>
