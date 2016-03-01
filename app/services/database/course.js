@@ -36,6 +36,12 @@ angular.module ('myapp.factories.course', ['myapp.factories.entry'])
         Course.prototype.get_entry = function (id)
         {
             var entry;
+
+            id = Number(id);
+
+            if (!id == id)
+                throw new Error ("Id is not a number");
+
             for (var i = 0, n = this.entries.length; i < n; i++)
             {
                 entry = search (this.entries[i], id);
