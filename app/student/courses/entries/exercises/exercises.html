@@ -1,11 +1,38 @@
 <h1>Exercises for this Unit</h1>
 
-<div ng-repeat="exercise in exercises">
-    <div ng-if="exercise.data.exercise_type === 'yesnoexercise'">
-        <my-app-yes-no-exercise exercise="exercises[$index].data" onanswered="answered_cb($index, answer)"></my-app-yes-no-exercise>
+<div ng-repeat="entry in entries">
+    <div ng-if="entry.data.exercise_type === 'yesnoexercise'">
+        <my-app-yes-no-exercise exercise="entry.data"
+                                onanswered="answered_cb(entry, answer_model, answer)">
+        </my-app-yes-no-exercise>
     </div>
-    <div ng-if="exercise.data.exercise_type === 'multianswerexercise'">
-        <my-app-multi-answer-exercise exercise="exercises[$index].data" onanswered="answered_cb($index, answer)"></my-app-multi-answer-exercise>
+    <div ng-if="entry.data.exercise_type === 'multianswerexercise'">
+        <my-app-multi-answer-exercise exercise="entry.data"
+                                      onanswered="answered_cb(entry, answer_model, answer)">
+        </my-app-multi-answer-exercise>
+    </div>
+
+    <div ng-if="entry.data.type == 'paragraph'">
+        <div ng-if="entry.data.paragraph_type == 'text'" class="text">
+            <p>{{sanitize (entry.data.text)}}</p>
+        </div>
+        <div ng-if="entry.data.paragraph_type == 'definition'" class="definition">
+            <p><strong>Definition {{entry.data.number}} ({{sanitize (entry.data.title)}})</strong></p>
+            <div ng-if="entry.data.mode == 'math'">
+                <p data-katex data-bind="sanitize (entry.data.text)" data-auto-render></p>
+            </div>
+            <div ng-if="entry.data.mode != 'math'">
+                <p>{{entry.data.text}}</p>
+            </div>
+        </div>
+    </div>
+
+    <div ng-if="entry.data.type == 'section'">
+        <h1 ng-if="entry.depth - depth <= 0">{{sanitize (entry.data.title)}}</h1>
+        <h2 ng-if="entry.depth - depth == 1">{{sanitize (entry.data.title)}}</h2>
+        <h3 ng-if="entry.depth - depth == 2">{{sanitize (entry.data.title)}}</h3>
+        <h4 ng-if="entry.depth - depth >= 3">{{sanitize (entry.data.title)}}</h4>
+        <p>{{sanitize (entry.data.description)}}</p>
     </div>
 </div>
 
