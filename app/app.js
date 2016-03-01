@@ -139,14 +139,12 @@ angular.module('myApp', [
     .controller ('StudentCtrl', ['$rootScope', function ($rootScope) {
     }])
 
-    .controller ('NavigationCtrl', ['$scope', '$state', '$cookies', 'RoleService', 'UserService',
-        function ($scope, $state, $cookies, RoleService, UserService)
+    .controller ('NavigationCtrl', ['$scope', '$state', '$cookies', 'RoleService', 'UserService', '$log',
+        function ($scope, $state, $cookies, RoleService, UserService, $log)
     {
+        $log.info ("[myApp] NavigationCtrl running");
+
         $scope.roleService = RoleService;
-        $scope.toggleSidebar = function () {
-            SidebarService.collapsed = !SidebarService.collapsed;
-            console.log ('Sidebar:' + SidebarService.collapsed);
-        };
 
         /**
          * This will attempt to set the new role in the role service and if successful switches the route
