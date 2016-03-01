@@ -1,8 +1,8 @@
 <ol class="breadcrumb text-center">
-    <li ng-if="unit.prev != null" class="prev pull-left">Prev: <a ui-sref="home.student.courses.entries.structure({course_id: 'fmi', entry_id: unit.prev})">Last Unit</a></li>
+    <li ng-if="unit.data.prev != null" class="prev pull-left">Prev: <a ui-sref="home.student.courses.entries.structure({course_id: 'fmi', entry_id: unit.data.prev})">Last Unit</a></li>
     <li><a ui-sref="home.student.courses({course_id: 'fmi'})">FMI</a></li>
     <li class="active">{{unit.breadcrumb_title}}</li>
-    <li ng-if="unit.next != null" class="next pull-right">Next: <a ui-sref="home.student.courses.entries.structure({course_id: 'fmi', entry_id: unit.next})">Next Unit</a></li>
+    <li ng-if="unit.data.next != null" class="next pull-right">Next: <a ui-sref="home.student.courses.entries.structure({course_id: 'fmi', entry_id: unit.data.next})">Next Unit</a></li>
 </ol>
 
 <ul class="nav nav-tabs">
