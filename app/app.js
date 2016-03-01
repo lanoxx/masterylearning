@@ -100,7 +100,7 @@ angular.module('myApp', [
             views: {
                 'navigation@': {
                     templateUrl: 'navigation.html',
-                    controller: 'NavigationCtrl'
+                    controller: 'NavigationController'
                 },
                 '@': {
                     templateUrl: 'app.html',
@@ -115,7 +115,7 @@ angular.module('myApp', [
                 views: {
                     'navigation@': {
                         templateUrl: 'navigation.html',
-                        controller: 'NavigationCtrl'
+                        controller: 'NavigationController'
                     },
                     '@': {
                         templateUrl: 'student/student-home.html',
@@ -139,10 +139,10 @@ angular.module('myApp', [
     .controller ('StudentCtrl', ['$rootScope', function ($rootScope) {
     }])
 
-    .controller ('NavigationCtrl', ['$scope', '$state', '$cookies', 'RoleService', 'UserService', '$log',
+    .controller ('NavigationController', ['$scope', '$state', '$cookies', 'RoleService', 'UserService', '$log',
         function ($scope, $state, $cookies, RoleService, UserService, $log)
     {
-        $log.info ("[myApp] NavigationCtrl running");
+        $log.info ("[myApp] NavigationController running");
 
         $scope.roleService = RoleService;
 
