@@ -59,11 +59,18 @@ angular.module ('myapp.factories.entry', [])
             {
                 if (this.parent.children.length > this.index + 1)
                     return this.parent.children[this.index + 1];
-                else
-                    return this.parent.next_sibling ();
             }
 
             return null;
+        };
+
+        Entry.prototype.has_next_sibling = function ()
+        {
+            if (this.parent)
+                if (this.parent.children.length > this.index + 1)
+                    return true;
+
+            return false;
         };
 
         Entry.prototype.prev_sibling = function ()
@@ -83,8 +90,23 @@ angular.module ('myapp.factories.entry', [])
         {
             if (this.children.length > 0)
                 return this.children[0];
-            else
+            else if (this.has_next_sibling())
                 return this.next_sibling();
+            else {
+                var parent = this.parent;
+                var self = this;
+                while (parent)
+                {
+                    if (parent.children.length > self.index + 1)
+                        return self.parent.children[self.index + 1];
+                    else {
+                        self = parent;
+                        parent = parent.parent;
+                    }
+                }
+            }
+
+            return null;
         };
 
         Entry.prototype.prev = function ()
@@ -93,6 +115,11 @@ angular.module ('myapp.factories.entry', [])
                 return this.prev_sibling ();
             else
                 return this.parent;
+        };
+
+        Entry.prototype.has_children = function ()
+        {
+            return this.children.length > 0;
         };
 
         Entry.prototype.getIndex = function ()
