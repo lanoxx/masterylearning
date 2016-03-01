@@ -8,6 +8,7 @@ angular.module('myApp', [
     'katex',
     'common.exercise',
     'myApp.services.roles',
+    'myapp.services.user',
     'myApp.student',
     'myApp.student.courses',
     'myapp.student.courses.entries',
@@ -18,11 +19,6 @@ angular.module('myApp', [
     'myApp.teacher.profile',
     'myApp.version'
 ])
-
-    .service ('UserService', [function () {
-        this.currentUser = null;
-        this.role = "ROLE_GUEST";
-    }])
 
     .run (['$rootScope', '$state', '$cookies', 'UserService', 'RoleService', '$log',
         function ($rootScope, $state, $cookies, UserService, RoleService, $log) {
