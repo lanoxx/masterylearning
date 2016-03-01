@@ -1,70 +1,61 @@
 <div class="container-fluid maxwidth">
     <div class="row">
         <div class="col-lg-12 col-md-12">
+
             <ui-view>
-                <h1>Recent Activities</h1>
 
-                <div class="row">
-                    <div class="col-md-10 col-lg-8">
+                <uib-tabset active="active">
+                    <uib-tab index="0">
+                        <uib-tab-heading>Active Courses</uib-tab-heading>
 
-                        <div class="panel panel-info">
-                            <div class="panel-heading">
-                                <button type="button" class="close" data-tooltip="Remove" aria-label="Remove"><span aria-hidden="true">&times;</span></button>
-                                <!-- TODO: We are forwarding to unit1 here, but in a functional version 'unit1' should be a placeholder
-                                           for the specific unit that is being accessed, which should then provide subroute content
-                                           for 'content' and 'exercises'.
-                                -->
-                                <strong>
-                                    <a>Learn to identify well-formed propositional formulas</a><br>
-                                    <small class="text-info">Formal Methods in Computer Science (SS'16)</small>
-                                </strong>
+                        <h1><a ui-sref="home.student.courses({course_id: 'fmi'})">Formal Methods of Computer Science (SS'16)</a></h1>
+
+                        <!-- TODO: we need a user object that has a list of active courses for the student -->
+                        <div class="lectures">
+                            <div class="entry">
+                                <strong></strong>
                             </div>
                         </div>
-                    </div>
-                </div>
 
-                <div class="row">
-                    <div class="col-md-10 col-lg-8">
-                        <div class="panel panel-info">
-                            <div class="panel-heading">
-                                <button type="button" class="close" data-tooltip="Remove" aria-label="Remove"><span aria-hidden="true">&times;</span></button>
-                                <strong>
-                                    <a>Learn to distinguish syntax from semantic.</a><br>
-                                    <small class="text-info">Formal Methods in Computer Science (SS'16)</small>
-                                </strong>
+                    </uib-tab>
+                    <uib-tab index="1">
+                        <uib-tab-heading>Retire Courses</uib-tab-heading>
+
+                        <h1>Retired Courses</h1>
+
+                        <div class="lectures">
+                            <div class="entry">
+                                <strong><a>Introduction to programming (WS'15)</a></strong>
+                            </div>
+                            <div class="entry">
+                                <strong><a>Procedural Content Generation in Computer Games (WS'15)</a></strong>
+                            </div>
+                            <div class="entry">
+                                <strong><a>Decision Procedures (WS'15)</a></strong>
                             </div>
                         </div>
-                    </div>
-                </div>
 
-                <h1>Shortcuts</h1>
-                <p>
-                    You have not yet added shortcuts. Go to a lecture or unit and click on the 'shortcut' icon next to the title
-                    to add it to this list.
-                </p>
-                <div class="well">Dummy Entry</div>
+                        <div class="alert alert-info">
+                            <p>In the initial version of this application there will be only one course: <strong>Formal Methods in Computer Science (SS'16)</strong>.
+                                Therefore there are simply no retired courses yet. We have added just some demo entries to demonstrate future extensions of this
+                                application.
+                            </p>
+                        </div>
 
-                <h1>Active Courses</h1>
+                    </uib-tab>
+                    <uib-tab index="2">
+                        <uib-tab-heading>Course List</uib-tab-heading>
 
-                <div class="lectures">
-                    <div class="entry">
-                        <strong><a ui-sref="home.student.courses({course_id: 'fmi'})">Formal Methods of Computer Science (SS'16)</a></strong>
-                    </div>
-                </div>
+                        <h1>Course List</h1>
 
-                <h1>Retired Courses</h1>
+                        <div class="alert alert-info">
+                            <p>In the initial version of this application there will be only one course: <strong>Formal Methods in Computer Science (SS'16)</strong>.
+                                Therefore this view is deactivated and exists only to demonstrate how this application can be extended in the future.
+                            </p>
+                        </div>
 
-                <div class="lectures">
-                    <div class="entry">
-                        <strong><a>Introduction to programming (WS'15)</a></strong>
-                    </div>
-                    <div class="entry">
-                        <strong><a>Procedural Content Generation in Computer Games (WS'15)</a></strong>
-                    </div>
-                    <div class="entry">
-                        <strong><a>Decision Procedures (WS'15)</a></strong>
-                    </div>
-                </div>
+                    </uib-tab>
+                </uib-tabset>
 
             </ui-view>
         </div>
