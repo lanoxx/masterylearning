@@ -7,7 +7,7 @@ angular.module('myapp.teacher', ['ui.router', 'myapp.services.database'])
             views: {
                 'navigation@': {
                     templateUrl: 'navigation.html',
-                    controller: 'NavigationCtrl'
+                    controller: 'NavigationController'
                 },
                 '@': {
                     templateUrl: 'teacher/teacher-home.html',
