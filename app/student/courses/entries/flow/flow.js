@@ -21,7 +21,20 @@ angular.module ('myapp.student.courses.entries.flow', ['ui.router', 'ngSanitize'
 
         $log.info ('[myApp] FlowController running');
 
-        function enumerate_entries (entry, include_first)
+        function block_on_exercise_or_continue (entry) {
+            "use strict";
+            var blocks;
+
+            blocks = entry.data.type === 'exercise'
+                || entry.data.type === 'continue-button';
+
+            if (blocks)
+                $log.info ("[myApp] FlowController: enumeration was blocked by entry type: " + entry.data.type);
+
+            return blocks;
+        }
+
+        function enumerate_entries (entry, blocks, include_first)
         {
             var entries;
             if (include_first)
@@ -34,12 +47,9 @@ angular.module ('myapp.student.courses.entries.flow', ['ui.router', 'ngSanitize'
             while ((current_entry = current_entry.next ()))
             {
                 // check if blocking condition applies
-                if (current_entry.data.type === 'exercise'
-                    || current_entry.data.type === 'continue-button')
+                if (blocks (current_entry))
                 {
                     entries.push (current_entry);
-
-                    $log.info ("[myApp] FlowController: enumeration was blocked by entry type: " + current_entry.data.type);
 
                     return entries;
                 }
@@ -50,9 +60,8 @@ angular.module ('myapp.student.courses.entries.flow', ['ui.router', 'ngSanitize'
             return entries;
         }
 
-
         $scope.depth = entry.depth;
-        $scope.entries = enumerate_entries (entry, true);
+        $scope.entries = enumerate_entries (entry, block_on_exercise_or_continue, true);
 
         $log.info ("[myApp] FlowController: Rendering " + $scope.entries.length + " entries.");
 
@@ -61,7 +70,7 @@ angular.module ('myapp.student.courses.entries.flow', ['ui.router', 'ngSanitize'
             if (!entry)
                 entry = $scope.entries[$scope.entries.length - 1];
 
-            $scope.entries.push.apply ($scope.entries, enumerate_entries (entry, include_first));
+            $scope.entries.push.apply ($scope.entries, enumerate_entries (entry, block_on_exercise_or_continue, include_first));
         }
 
         $scope.continue_cb = function ()
