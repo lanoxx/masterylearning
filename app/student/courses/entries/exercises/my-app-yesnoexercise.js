@@ -25,9 +25,12 @@ angular.module ('myapp.student.courses.entries.exercises')
                     return $sanitize (text);
                 };
 
-                $scope.answered_cb = function ()
+                $scope.check_cb = function ()
                 {
                     $scope.answered = true;
+
+                    $scope.correct = $scope.answer === $scope.exercise.answer;
+
                     $scope.onanswered ({answer_model: $scope.answer, answer: $scope.correct});
                 };
 
@@ -40,25 +43,6 @@ angular.module ('myapp.student.courses.entries.exercises')
                 {
                     return $scope.answered && $scope.answer !== $scope.exercise.answer;
                 };
-
-                $scope.showAlertClass = function (success)
-                {
-                    var result = $scope.answer === $scope.exercise.answer;
-
-                    if (success)
-                        return $scope.answered && result;
-                    else
-                        return $scope.answered && !result;
-                };
-
-                $scope.check_answer = function ()
-                {
-                    $scope.answered = true;
-                    for (var i = 0, n = $scope.exercise.answer_candidates.length; i < n; i++) {
-                        $scope.results[i] = $scope.results[i] || false;
-                    }
-                    $scope.onanswered ({answer: $scope.results});
-                }
             }],
             templateUrl: 'student/courses/entries/exercises/my-app-yesnoexercise.tpl.html'
         };
