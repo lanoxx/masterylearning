@@ -33,5 +33,7 @@ angular.module('myApp.student.courses', ['ui.router', 'myapp.services.database']
          * it can be rendered in the template.
          */
         $scope.course = course;
+
+        $scope.mode = UserService.mode;
     }]);
 

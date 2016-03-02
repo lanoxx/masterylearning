@@ -1,14 +1,15 @@
-<ol class="breadcrumb text-center">
-    <li ng-if="unit.data.prev != null" class="prev pull-left">Prev: <a ui-sref="home.student.courses.entries.structure({course_id: 'fmi', entry_id: unit.data.prev})">Last Unit</a></li>
-    <li><a ui-sref="home.student.courses({course_id: 'fmi'})">FMI</a></li>
-    <li class="active">{{unit.breadcrumb_title}}</li>
-    <li ng-if="unit.data.next != null" class="next pull-right">Next: <a ui-sref="home.student.courses.entries.structure({course_id: 'fmi', entry_id: unit.data.next})">Next Unit</a></li>
-</ol>
+<div ng-if="mode == 'structure'">
+    <ol class="breadcrumb text-center">
+        <li ng-if="unit.data.prev != null" class="prev pull-left">Prev: <a ui-sref="home.student.courses.entries.structure({course_id: 'fmi', entry_id: unit.data.prev})">Last Unit</a></li>
+        <li><a ui-sref="home.student.courses({course_id: 'fmi'})">FMI</a></li>
+        <li class="active">{{unit.breadcrumb_title}}</li>
+        <li ng-if="unit.data.next != null" class="next pull-right">Next: <a ui-sref="home.student.courses.entries.structure({course_id: 'fmi', entry_id: unit.data.next})">Next Unit</a></li>
+    </ol>
 
-<ul class="nav nav-tabs">
-    <li role="presentation" ui-sref-active="active"><a ui-sref="home.student.courses.entries.structure">Structured Content</a></li>
-    <li role="presentation" ui-sref-active="active"><a ui-sref="home.student.courses.entries.exercises">Exercises</a></li>
-    <li role="presentation" ui-sref-active="active"><a ui-sref="home.student.courses.entries.flow">Flow</a></li>
-</ul>
+    <ul class="nav nav-tabs">
+        <li role="presentation" ui-sref-active="active"><a ui-sref="home.student.courses.entries.structure">Course Content</a></li>
+        <li role="presentation" ui-sref-active="active"><a ui-sref="home.student.courses.entries.exercises">Exercises</a></li>
+    </ul>
+</div>
 
 <ui-view></ui-view>

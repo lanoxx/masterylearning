@@ -1,15 +1,27 @@
 angular.module ('myapp.services.user', [])
 
-    .service ('UserService', [function UserService()
+    .factory ('UserService', [function UserServiceFactory()
     {
-        this.currentUser = null;
-        this.role = "ROLE_GUEST";
+        function UserService()
+        {
+            this.currentUser = null;
+            this.role = "ROLE_GUEST";
 
-        /**
-         *
-         * @type {Array.<CourseHistory>}
-         */
-        this.active_courses = [];
+            /**
+             *
+             * @type {Array.<CourseHistory>}
+             */
+            this.active_courses = [];
+
+            this.mode = "flow";
+        }
+
+        UserService.prototype.set_mode = function (mode)
+        {
+            this.mode = mode;
+        };
+
+        return new UserService();
     }])
 
     .factory ('CourseHistory', ['EntryHistory', function CourseHistoryFactory(EntryHistory)

@@ -44,8 +44,13 @@
                         </span>
                     </a>
                     <ul class="uib-dropdown-menu" role="menu" aria-labelledby="single-button">
-                        <li ng-class="{ active: roleService.currentRole === roleService.STUDENT }" role="menuitem" ng-if="roleService.currentRole === roleService.NONE" ng-click="switch_role (roleService.STUDENT)">
-                            <a href="">Student Role</a>
+                        <li ng-class="{ active: roleService.currentRole === roleService.STUDENT }" role="menuitem" ng-if="roleService.currentRole === roleService.NONE"
+                            ng-click="activate_structure (); switch_role (roleService.STUDENT)">
+                            <a href="">Student Role (Structure)</a>
+                        </li>
+                        <li ng-class="{ active: roleService.currentRole === roleService.STUDENT }" role="menuitem" ng-if="roleService.currentRole === roleService.NONE"
+                            ng-click="activate_flow (); switch_role (roleService.STUDENT)">
+                            <a href="">Student Role (Flow)</a>
                         </li>
                         <li ng-class="{ active: roleService.currentRole === roleService.TEACHER }" role="menuitem" ng-if="roleService.currentRole === roleService.NONE" ng-click="switch_role (roleService.TEACHER)">
                             <a href="">Teacher Role</a>

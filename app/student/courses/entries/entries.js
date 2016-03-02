@@ -22,11 +22,13 @@ angular.module('myapp.student.courses.entries', ['ui.router', 'ngSanitize', 'mya
         });
     }])
 
-    .controller ('EntriesCtrl', ['$scope', 'entry', '$log', function ($scope, entry, $log)
+    .controller ('EntriesCtrl', ['$scope', 'entry', 'UserService', '$log', function ($scope, entry, UserService, $log)
     {
         $log.info ('[myApp] EntriesCtrl running');
         if (entry.data.type == 'unit')
             $scope.unit = entry;
         else
             $scope.entry = entry;
+
+        $scope.mode = UserService.mode;
     }]);

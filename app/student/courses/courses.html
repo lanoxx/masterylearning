@@ -20,11 +20,17 @@
                                     <h3>{{subentry.data.title}}</h3>
                                     <p>{{subentry.data.description}}</p>
                                     <div ng-repeat="unit in subentry.children">
-                                        <h4><a ui-sref="home.student.courses.entries.structure({course_id: course.id, entry_id: unit.id})">{{unit.data.full_title}}</a></h4>
+                                        <h4>
+                                            <a ng-if="mode === 'structure'" ui-sref="home.student.courses.entries.structure({course_id: course.id, entry_id: unit.id})">{{unit.data.full_title}}</a>
+                                            <a ng-if="mode === 'flow'" ui-sref="home.student.courses.entries.flow({course_id: course.id, entry_id: unit.id})">{{unit.data.full_title}}</a>
+                                        </h4>
                                     </div>
                                 </div>
                                 <div ng-if="subentry.data.type=='unit'">
-                                    <h3><a ui-sref="home.student.courses.entries.structure({course_id: course.id, entry_id: subentry.id})">{{subentry.data.full_title}}</a></h3>
+                                    <h3>
+                                        <a ng-if="mode === 'structure'" ui-sref="home.student.courses.entries.structure({course_id: course.id, entry_id: subentry.id})">{{subentry.data.full_title}}</a>
+                                        <a ng-if="mode === 'flow'" ui-sref="home.student.courses.entries.flow({course_id: course.id, entry_id: subentry.id})">{{subentry.data.full_title}}</a>
+                                    </h3>
                                 </div>
                             </div>
                         </div>
