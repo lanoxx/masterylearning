@@ -8,14 +8,7 @@
                     <uib-tab index="0">
                         <uib-tab-heading>Active Courses</uib-tab-heading>
 
-                        <h1><a ui-sref="home.student.courses({course_id: 'fmi'})">Formal Methods of Computer Science (SS'16)</a></h1>
-
-                        <!-- TODO: we need a user object that has a list of active courses for the student -->
-                        <div class="lectures">
-                            <div class="entry">
-                                <strong></strong>
-                            </div>
-                        </div>
+                        <h1 ng-repeat="course in active_courses"><a ui-sref="home.student.courses({course_id: course.course_id})">{{get_course_title (course.course_id)}}</a></h1>
 
                     </uib-tab>
                     <uib-tab index="1">
