@@ -103,21 +103,6 @@ angular.module('myApp', [
             role: 'ROLE_GUEST'
         })
 
-            .state('home.student', {
-                url: '/student',
-                views: {
-                    'navigation@': {
-                        templateUrl: 'navigation.html',
-                        controller: 'NavigationController'
-                    },
-                    '@': {
-                        templateUrl: 'student/student-home.html',
-                        controller: 'StudentCtrl'
-                    }
-                },
-                role: 'ROLE_STUDENT'
-            })
-
             .state ('home.student.practice', {
                 url: '/practice',
                 templateUrl: 'student/practice/unit1.html'
@@ -127,9 +112,6 @@ angular.module('myApp', [
     }])
 
     .controller ('HomeCtrl', ['$rootScope', function ($rootScope) {
-    }])
-
-    .controller ('StudentCtrl', ['$rootScope', function ($rootScope) {
     }])
 
     .controller ('NavigationController', ['$scope', '$state', '$cookies', 'RoleService', 'UserService', '$log',
