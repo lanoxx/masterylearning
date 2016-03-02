@@ -20,8 +20,8 @@ angular.module('myApp', [
     'myApp.version'
 ])
 
-    .run (['$rootScope', '$state', '$cookies', 'UserService', 'RoleService', '$log',
-        function ($rootScope, $state, $cookies, UserService, RoleService, $log) {
+    .run (['$rootScope', '$state', '$cookies', 'UserService', 'RoleService', 'CourseHistory', '$log',
+        function ($rootScope, $state, $cookies, UserService, RoleService, CourseHistory, $log) {
             var role = $cookies.get('role');
             var currentUser = $cookies.get('currentUser');
 
@@ -42,6 +42,9 @@ angular.module('myApp', [
         if (currentUser) {
             UserService.currentUser = currentUser;
         }
+
+        //TODO: Hard code our active course here for the moment, this needs to be replaced by loading from the backend later
+        UserService.active_courses.push (new CourseHistory ('fmi'));
 
         $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
             if (toState.role === undefined) {
