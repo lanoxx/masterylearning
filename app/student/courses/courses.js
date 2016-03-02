@@ -22,16 +22,13 @@ angular.module('myApp.student.courses', ['ui.router', 'myapp.services.database']
                 }]
             },
             templateUrl: 'student/courses/courses.html',
-            controller: 'LecturesCtrl',
+            controller: 'CourseController',
             role: 'ROLE_STUDENT'
         });
     }])
 
-    .controller('LecturesCtrl', ['$state', '$scope', 'course', 'database', function ($state, $scope, course, database) {
-        /**
-         * We bind the current lecture that was resolved in the 'student.lecture' state to the scope, so
-         * it can be rendered in the template.
-         */
+    .controller('CourseController', ['$scope', 'course', 'UserService', function ($scope, course, UserService) {
+
         $scope.course = course;
 
         $scope.mode = UserService.mode;

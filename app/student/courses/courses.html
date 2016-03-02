@@ -6,7 +6,7 @@
                 <p>{{course.description}}</p>
                 <uib-tabset>
                     <uib-tab>
-                        <uib-tab-heading>Structure</uib-tab-heading>
+                        <uib-tab-heading>Table of Contents</uib-tab-heading>
                         <div ng-repeat="entry in course.entries">
                             <div ng-if="entry.data.type=='section'">
                                 <h2>{{ entry.data.title }}</h2>
@@ -45,7 +45,7 @@
                             </ul>
                         </div>
                     </uib-tab>
-                    <uib-tab>
+                    <uib-tab disable="true">
                         <uib-tab-heading>
                             <span class="glyphicon glyphicon-cog"></span> Settings
                         </uib-tab-heading>
