@@ -122,6 +122,16 @@ angular.module('myApp', [
 
         $scope.roleService = RoleService;
 
+        $scope.activate_flow = function ()
+        {
+            UserService.set_mode("flow");
+        };
+
+        $scope.activate_structure = function ()
+        {
+            UserService.set_mode("structure");
+        };
+
         /**
          * This will attempt to set the new role in the role service and if successful switches the route
          * according to the new role.
