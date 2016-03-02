@@ -43,7 +43,8 @@ angular.module('myApp', [
             UserService.currentUser = currentUser;
         }
 
-        //TODO: Hard code our active course here for the moment, this needs to be replaced by loading from the backend later
+        //TODO: Hard code our active course here for the moment, this needs to be replaced by loading from the backend
+        // later
         UserService.active_courses.push (new CourseHistory ('fmi'));
 
         $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
