@@ -19,15 +19,16 @@ angular.module ('myapp.factories.course', ['myapp.factories.entry'])
             this.title = title;
             this.period = period;
             this.description = description;
-            this.entries = [];
+            this.children = [];
         }
 
         Course.prototype.insert = function (entrydata)
         {
             var entry = new Entry(null, entrydata);
 
-            entry.index = this.entries.length;
-            this.entries.push(entry);
+            entry.parent = this;
+            entry.index = this.children.length;
+            this.children.push(entry);
             entry.course_id = this.id;
 
             return entry;
@@ -42,9 +43,9 @@ angular.module ('myapp.factories.course', ['myapp.factories.entry'])
             if (!id == id)
                 throw new Error ("Id is not a number");
 
-            for (var i = 0, n = this.entries.length; i < n; i++)
+            for (var i = 0, n = this.children.length; i < n; i++)
             {
-                entry = search (this.entries[i], id);
+                entry = search (this.children[i], id);
                 if (entry !== null)
                     break;
             }
@@ -73,7 +74,7 @@ angular.module ('myapp.factories.course', ['myapp.factories.entry'])
         {
             var entries = [];
 
-            entries.push.apply (entries, collect(this.entries, type));
+            entries.push.apply (entries, collect(this.children, type));
 
             function collect(entries, type)
             {
@@ -106,7 +107,7 @@ angular.module ('myapp.factories.course', ['myapp.factories.entry'])
 
             result += prefix + "entry=[\n";
 
-            this.entries.forEach(function (entry)
+            this.children.forEach(function (entry)
             {
                 result += entry.toString (prefix + "    ") + "\n";
             }, this);

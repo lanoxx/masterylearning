@@ -7,7 +7,7 @@
                 <uib-tabset>
                     <uib-tab>
                         <uib-tab-heading>Table of Contents</uib-tab-heading>
-                        <div ng-repeat="entry in course.entries">
+                        <div ng-repeat="entry in course.children">
                             <div ng-if="entry.data.type=='section'">
                                 <h2>{{ entry.data.title }}</h2>
                                 <p>{{ entry.data.description }}</p>
