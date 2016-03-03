@@ -7,9 +7,7 @@ angular.module('myapp.student.courses.entries', ['ui.router', 'ngSanitize', 'mya
             resolve: {
                 entry: ['$stateParams', 'database', 'course_id','$log', function ($stateParams, database, course_id, $log)
                 {
-                    var db_entries = database.get_course (course_id).get_entries();
-
-                    return db_entries[$stateParams.entry_id];
+                    return database.get_course (course_id).get_entry($stateParams.entry_id);
                 }],
                 entry_id: ['$stateParams', function ($stateParams)
                 {
@@ -25,10 +23,9 @@ angular.module('myapp.student.courses.entries', ['ui.router', 'ngSanitize', 'mya
     .controller ('EntriesCtrl', ['$scope', 'entry', 'UserService', '$log', function ($scope, entry, UserService, $log)
     {
         $log.info ('[myApp] EntriesCtrl running');
+
         if (entry.data.type == 'unit')
             $scope.unit = entry;
-        else
-            $scope.entry = entry;
 
         $scope.mode = UserService.mode;
     }]);
