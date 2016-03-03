@@ -24,7 +24,7 @@
     </div>
 
     <div ng-if="entry.data.type == 'unit'">
-        <h1 ng-if="entry.depth - depth == 0">{{sanitize (entry.data.full_title)}}</h1>
+        <h1 ng-if="entry.depth - depth <= 0">{{sanitize (entry.data.full_title)}}</h1>
         <h2 ng-if="entry.depth - depth == 1">{{sanitize (entry.data.full_title)}}</h2>
         <h3 ng-if="entry.depth - depth == 2">{{sanitize (entry.data.full_title)}}</h3>
         <h4 ng-if="entry.depth - depth >= 3">{{sanitize (entry.data.full_title)}}</h4>
