@@ -47,11 +47,11 @@ angular.module('myapp.services.database', [
         var course = new Course("fmi", "Formal Methods in Computer Science", "(SS'16)", "A short description of the lecture's content");
         database.insert_course(course);
 
-        var section = course.insert (new Section("Preliminaries: Propositional Logic", "A short description of propositional logic"));
+        var section = course.insert (new Section("1. Preliminaries: Propositional Logic", "A short description of propositional logic"));
 
-        var subsection = section.insert (new Section("Syntax", "Subsection 1 Description"));
+        var subsection = section.insert (new Section("1.1 Syntax", "Subsection 1 Description"));
 
-        var unit = subsection.insert (new Unit("Unit 1", "Unit 1", "Unit 1 description", null));
+        var unit = subsection.insert (new Unit("1.1.1 Unit 1", "Unit 1", "Unit 1 description", null));
 
         var paragraph = unit.insert (new Paragraph("text", "Lorem ipsum dolor sit amet, consectetur adipisicing elit. A accusamus aliquam dolore harum iusto maiores maxime, minus modi molestiae, natus nisi non obcaecati porro quis quos reprehenderit repudiandae tempore temporibus!"));
 
@@ -66,7 +66,7 @@ angular.module('myapp.services.database', [
         paragraph = unit.insert (new Paragraph("definition", "A formula G is a subformula ... if ... \\( sub(\\top) = {\\top} \\)",
             'math', 3, "Propositions"));
 
-        var unit_section = unit.insert (new Section("Parentheses", "Explains handling of parantheses in logical formulas."));
+        var unit_section = unit.insert (new Section("1.1.1.1 Parentheses", "Explains handling of parantheses in logical formulas."));
 
         paragraph = unit_section.insert (new Paragraph ("text", "A paragrahp of a section."));
 
@@ -92,23 +92,23 @@ angular.module('myapp.services.database', [
         exercise_section = exercise.data.insert_incorrect (new Section ("Exercise Section title", "Section description."));
         exercise_section.insert (new Paragraph ('text', "Your answer is wrong."));
 
-        var unit2 = subsection.insert(new Unit("Unit 2", "Unit 2", "Unit 2 description", unit.data));
+        var unit2 = subsection.insert(new Unit("1.1.2 Unit 2", "Unit 2", "Unit 2 description", unit.data));
 
-        subsection = section.insert(new Section("Semantic", "Subsection 2 Description"));
+        subsection = section.insert(new Section("1.2 Semantic", "Subsection 2 Description"));
 
-        unit = subsection.insert(new Unit("Unit 1", "Unit 1", "Unit 1 description", null));
+        unit = subsection.insert(new Unit("1.2.1 Unit 1", "Unit 1", "Unit 1 description", null));
 
-        unit2 = subsection.insert(new Unit("Unit 2", "Unit 2", "Unit 2 description", unit.data));
+        unit2 = subsection.insert(new Unit("1.2.2 Unit 2", "Unit 2", "Unit 2 description", unit.data));
 
-        subsection = section.insert(new Section("Subsection 3", "Subsection 3 Description"));
+        subsection = section.insert(new Section("1.3 Subsection 3", "Subsection 3 Description"));
 
-        unit = subsection.insert(new Unit("Unit 1", "Unit 1", "Unit 1 description", null));
+        unit = subsection.insert(new Unit("1.3.1 Unit 1", "Unit 1", "Unit 1 description", null));
 
-        unit2 = subsection.insert(new Unit("Unit 2", "Unit 2", "Unit 2 description", unit.data));
+        unit2 = subsection.insert(new Unit("1.3.2 Unit 2", "Unit 2", "Unit 2 description", unit.data));
 
-        unit = section.insert(new Unit("Unit 1: Propositional Logic Formulas", "Unit 1", "Unit 1 description", null));
+        unit = section.insert(new Unit("1.4 Unit 1: Propositional Logic Formulas", "Unit 1", "Unit 1 description", null));
 
-        unit2 = section.insert(new Unit("Unit 2: Propositional Logic Formulas", "Unit 1", "Unit 1 description", unit.data));
+        unit2 = section.insert(new Unit("1.5 Unit 2: Propositional Logic Formulas", "Unit 1", "Unit 1 description", unit.data));
 
         section = course.insert(new Section("Section 2", "Section 2 Description"));
 
