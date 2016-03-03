@@ -23,7 +23,7 @@ angular.module ('myapp.factories.unit', ['myapp.factories.entrydata'])
             this.description = description;
 
             if (prev != null) {
-                this.prev = prev.id;
+                this.prev = prev.container.id;
                 prev.next = this.id;
             } else {
                 this.prev = null;
