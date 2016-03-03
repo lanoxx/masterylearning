@@ -24,6 +24,7 @@ angular.module('myApp', [
         function ($rootScope, $state, $cookies, UserService, RoleService, CourseHistory, $log) {
             var role = $cookies.get('role');
             var currentUser = $cookies.get('currentUser');
+            var currentMode = $cookies.get('mode');
 
         if (role) {
             if (role === 'ROLE_STUDENT') {
@@ -41,6 +42,10 @@ angular.module('myApp', [
 
         if (currentUser) {
             UserService.currentUser = currentUser;
+        }
+
+        if (currentMode) {
+            UserService.set_mode (currentMode);
         }
 
         //TODO: Hard code our active course here for the moment, this needs to be replaced by loading from the backend
@@ -124,12 +129,18 @@ angular.module('myApp', [
 
         $scope.activate_flow = function ()
         {
-            UserService.set_mode("flow");
+            var mode = "flow";
+
+            UserService.set_mode(mode);
+            $cookies.put ('mode', mode);
         };
 
         $scope.activate_structure = function ()
         {
-            UserService.set_mode("structure");
+            var mode = "structure";
+
+            UserService.set_mode(mode);
+            $cookies.put ('mode', mode);
         };
 
         /**
@@ -160,6 +171,7 @@ angular.module('myApp', [
                     UserService.currentUser = null;
                     $cookies.remove('role');
                     $cookies.remove('currentUser');
+                    $cookies.remove('mode');
                     $state.go('home');
                 }
             }
