@@ -1,4 +1,4 @@
-angular.module ('myapp.student.courses.entries.flow', ['ui.router', 'ngSanitize', 'myapp.student.courses.entries.exercises'])
+angular.module ('myapp.student.courses.entries.flow', ['ui.router', 'ngSanitize', 'myapp.student.courses.entries.exercises', 'myapp.services.content'])
 
     .config (['$stateProvider', function ($stateProvider)
     {
@@ -15,11 +15,13 @@ angular.module ('myapp.student.courses.entries.flow', ['ui.router', 'ngSanitize'
         });
     }])
 
-    .controller ('FlowController', ['$scope', 'entry', '$sanitize', '$log', function ($scope, entry, $sanitize, $log)
+    .controller ('FlowController', ['$scope', 'entry', 'ContentService', '$sanitize', '$log', function ($scope, entry, ContentService, $sanitize, $log)
     {
         "use strict";
 
         $log.info ('[myApp] FlowController running');
+
+        var content = new ContentService (entry, block_on_exercise_or_continue, null);
 
         function block_on_exercise_or_continue (entry) {
             "use strict";
@@ -34,49 +36,20 @@ angular.module ('myapp.student.courses.entries.flow', ['ui.router', 'ngSanitize'
             return blocks;
         }
 
-        function enumerate_entries (entry, blocks, include_first)
-        {
-            var entries;
-            if (include_first)
-                entries = [entry];
-            else
-                entries = [];
-
-            var current_entry = entry;
-
-            while ((current_entry = current_entry.next ()))
-            {
-                // check if blocking condition applies
-                if (blocks (current_entry))
-                {
-                    entries.push (current_entry);
-
-                    return entries;
-                }
-
-                entries.push (current_entry);
-            }
-
-            return entries;
-        }
-
         $scope.depth = entry.depth;
-        $scope.entries = enumerate_entries (entry, block_on_exercise_or_continue, true);
+        $scope.entries = content.enumerate_tree();
 
         $log.info ("[myApp] FlowController: Rendering " + $scope.entries.length + " entries.");
 
-        function load_next_content (entry, include_first)
+        function load_next_content ()
         {
-            if (!entry)
-                entry = $scope.entries[$scope.entries.length - 1];
-
-            $scope.entries.push.apply ($scope.entries, enumerate_entries (entry, block_on_exercise_or_continue, include_first));
+            $scope.entries.push.apply ($scope.entries, content.enumerate_tree());
         }
 
         $scope.continue_cb = function ()
         {
-            var continue_button = $scope.entries.pop ();
-            load_next_content (continue_button);
+            $scope.entries.pop ();
+            load_next_content ();
         };
 
         $scope.answered_cb = function (entry, answer_model, answer)
@@ -86,14 +59,14 @@ angular.module ('myapp.student.courses.entries.flow', ['ui.router', 'ngSanitize'
             var next;
             if (answer)
                 // get the correct entry of the exercise
-                next = entry.data.correct || entry;
+                next = entry.data.correct;
             else
-                next = entry.data.incorrect || entry;
+                next = entry.data.incorrect;
 
-            if (next !== entry)
-                load_next_content(next, true);
-            else
-                load_next_content(next);
+            if (next)
+                content.push (next);
+
+            load_next_content();
         };
 
         $scope.sanitize = function (text)

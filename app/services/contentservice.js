@@ -28,14 +28,23 @@ angular.module ('myapp.services.content', [])
             current_entry = this.entry_stack.pop();
             entries.push(current_entry);
 
+            if (this.blocking_strategy (current_entry))
+            {
+                var next = current_entry.next ();
+                if (next)
+                    this.entry_stack.push(next);
+                return entries;
+            }
+
             while ((current_entry = current_entry.next ()))
             {
                 entries.push (current_entry);
 
                 if (this.blocking_strategy (current_entry))
                 {
-                    if (current_entry.has_next_sibling())
-                        this.entry_stack.push(current_entry.next_sibling());
+                    next = current_entry.next ();
+                    if (next)
+                        this.entry_stack.push(next);
                     return entries;
                 }
             }
