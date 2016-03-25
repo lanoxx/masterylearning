@@ -31,6 +31,11 @@ angular.module('myApp.student.courses', ['ui.router', 'myapp.services.database']
 
         $scope.course = course;
 
+        // TODO: depending on the mode we need two strategies for enumerating the entries:
+        //       For structure mode we enumerate until units
+        //       For flow mode we enumerate only sections and subsections
+        $scope.entries = [];
+
         $scope.mode = UserService.mode;
     }]);
 

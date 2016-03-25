@@ -1,0 +1,43 @@
+[
+  {
+    "id": 17,
+    "parent": null,
+    "depth": 0,
+    "index": 0,
+    "type": "section",
+    "title": "Section 1",
+    "description": "Description"
+  },
+  {
+    "id": 12,
+    "parent": 12,
+    "depth": 1,
+    "index": 0,
+    "type": "paragraph",
+    "number": 0,
+    "title": "Paragraph title",
+    "text": "lorem ipsum",
+    "paragraphType": "text"
+  },
+  {
+    "id": 13,
+    "parent": 12,
+    "depth": 1,
+    "index": 1,
+    "type": "paragraph",
+    "number": 0,
+    "title": "Paragraph title",
+    "text": "lorem ipsum",
+    "paragraphType": "text"
+  },
+  {
+    "id": 14,
+    "parent": 12,
+    "depth": 1,
+    "index": 2,
+    "type": "exercise",
+    "exerciseType": "yesnoexercise",
+    "correctId": 16,
+    "incorrectId": 17
+  }
+]

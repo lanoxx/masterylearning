@@ -7,6 +7,16 @@
                 <uib-tabset>
                     <uib-tab>
                         <uib-tab-heading>Table of Contents</uib-tab-heading>
+
+                        <div ng-repeat="entry in entries">
+
+                            <!-- type Section -->
+
+                            <!-- type Unit -->
+
+                        </div>
+
+
                         <div ng-repeat="entry in course.children">
                             <div ng-if="entry.data.type=='section'">
                                 <h2>{{ entry.data.title }}</h2>
@@ -45,6 +55,7 @@
                             </ul>
                         </div>
                     </uib-tab>
+
                     <uib-tab disable="true">
                         <uib-tab-heading>
                             <span class="glyphicon glyphicon-cog"></span> Settings
