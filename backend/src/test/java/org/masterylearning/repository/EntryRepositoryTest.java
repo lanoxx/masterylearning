@@ -1,6 +1,7 @@
 package org.masterylearning.repository;
 
 import org.hibernate.Hibernate;
+import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.masterylearning.App;
@@ -84,28 +85,10 @@ public class EntryRepositoryTest {
 
         YesNoExercise exercise = new YesNoExercise ();
         exercise.type = "exercise";
+    }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    @After
+    public void deleteAll () {
+        entryRepository.deleteAll ();
     }
 }

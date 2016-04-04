@@ -1,6 +1,7 @@
 package org.masterylearning.repository;
 
 import org.hibernate.Hibernate;
+import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.masterylearning.App;
@@ -142,5 +143,10 @@ public class CourseRepositoryTest {
 
         assertTrue (paragraph.id == 1);
         assertTrue (paragraph.container == entry2);
+    }
+
+    @After
+    public void deleteAll () {
+        courseRepository.deleteAll ();
     }
 }
