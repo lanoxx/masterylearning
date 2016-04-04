@@ -1,7 +1,5 @@
-logs/*
-!.gitkeep
-node_modules/
-bower_components/
-tmp
-.DS_Store
+client/node_modules
+client/app/bower_components
+target/
 .idea
+**/*.iml
