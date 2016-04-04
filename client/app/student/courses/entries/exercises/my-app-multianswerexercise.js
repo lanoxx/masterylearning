@@ -23,7 +23,7 @@ angular.module ('myapp.student.courses.entries.exercises')
              */
             $scope.answers = [];
 
-            $scope.exercise.answer_candidates.forEach(function (candidate, index)
+            $scope.exercise.answerCandidates.forEach(function (candidate, index)
             {
                 results[index] = false;
                 $scope.answers[index] = false;
@@ -50,7 +50,7 @@ angular.module ('myapp.student.courses.entries.exercises')
             {
                 results.forEach(function (result, index)
                 {
-                    results[index] = $scope.answers[index] === $scope.exercise.answer_candidates[index].key;
+                    results[index] = $scope.answers[index] === $scope.exercise.answerCandidates[index].correct;
                 });
             };
 

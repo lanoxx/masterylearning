@@ -5,9 +5,9 @@ angular.module ('myapp.student.courses.entries.flow', ['ui.router', 'ngSanitize'
         $stateProvider.state ('home.student.courses.entries.flow', {
             url: '/flow',
             resolve: {
-                entry: ['database', 'course_id', 'entry_id', '$log', function (database, course_id, entry_id, $log)
+                entries: ['course_id', 'entry_id', 'RestService','$log', function (course_id, entry_id, RestService, $log)
                 {
-                    return database.get_course(course_id).get_entry (parseInt(entry_id, 10));
+                    return RestService.enumerateEntries ().get( {courseId: course_id, entryId: entry_id });
                 }]
             },
             templateUrl: 'student/courses/entries/flow/flow.html',
@@ -15,58 +15,64 @@ angular.module ('myapp.student.courses.entries.flow', ['ui.router', 'ngSanitize'
         });
     }])
 
-    .controller ('FlowController', ['$scope', 'entry', 'ContentService', '$sanitize', '$log', function ($scope, entry, ContentService, $sanitize, $log)
+    .controller ('FlowController', ['$scope', 'course_id', 'entries', 'RestService', '$sanitize', '$log', function ($scope, course_id, entries, RestService, $sanitize, $log)
     {
         "use strict";
 
         $log.info ('[myApp] FlowController running');
 
-        var content = new ContentService (entry, block_on_exercise_or_continue, null);
+        $scope.depth = 0;
+        $scope.entries = [];
 
-        function block_on_exercise_or_continue (entry) {
-            "use strict";
-            var blocks;
+        var next = [];
 
-            blocks = entry.data.type === 'exercise'
-                || entry.data.type === 'continue-button';
-
-            if (blocks)
-                $log.info ("[myApp] FlowController: enumeration was blocked by entry type: " + entry.data.type);
-
-            return blocks;
-        }
-
-        $scope.depth = entry.depth;
-        $scope.entries = content.enumerate_tree();
-
-        $log.info ("[myApp] FlowController: Rendering " + $scope.entries.length + " entries.");
-
-        function load_next_content ()
+        entries.$promise.then (function ()
         {
-            $scope.entries.push.apply ($scope.entries, content.enumerate_tree());
+            $scope.entries = entries.entries;
+            next.push(entries.nextId);
+            $log.info ("[myApp] FlowController: Rendering " + $scope.entries.length + " entries.");
+        });
+
+        function load_next_content (nextEntryId)
+        {
+            var enumerationPromise = RestService.enumerateEntries ()
+                .get( {courseId: course_id, entryId: nextEntryId })
+                .$promise;
+
+            enumerationPromise.then (function (enumerationResult)
+            {
+                $scope.entries.push.apply ($scope.entries, enumerationResult.entries);
+                next.push (enumerationResult.nextId);
+            });
         }
 
         $scope.continue_cb = function ()
         {
             $scope.entries.pop ();
-            load_next_content ();
+
+            var nextEntryId = next.pop ();
+
+            load_next_content (nextEntryId);
         };
 
         $scope.answered_cb = function (entry, answer_model, answer)
         {
             //TODO: store (entry.id, answer) somewhere in the user context
 
-            var next;
+            var nextEntryId;
             if (answer)
                 // get the correct entry of the exercise
-                next = entry.data.correct;
+                nextEntryId = entry.correct;
             else
-                next = entry.data.incorrect;
+                nextEntryId = entry.incorrect;
 
-            if (next)
-                content.push (next);
+            if (!nextEntryId)
+                nextEntryId = next.pop();
+            else {
+                next.push (entries.nextId);
+            }
 
-            load_next_content();
+            load_next_content(nextEntryId);
         };
 
         $scope.sanitize = function (text)

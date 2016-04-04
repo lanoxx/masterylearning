@@ -24,13 +24,14 @@ angular.module ('myapp.services.content', [])
         {
             var entries = [];
             var current_entry;
+            var next;
 
             current_entry = this.entry_stack.pop();
             entries.push(current_entry);
 
             if (this.blocking_strategy (current_entry))
             {
-                var next = current_entry.next ();
+                next = current_entry.next ();
                 if (next)
                     this.entry_stack.push(next);
                 return entries;

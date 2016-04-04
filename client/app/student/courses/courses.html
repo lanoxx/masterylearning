@@ -7,44 +7,30 @@
                 <uib-tabset>
                     <uib-tab>
                         <uib-tab-heading>Table of Contents</uib-tab-heading>
-                        <div ng-repeat="entry in course.children">
+
+                        <div ng-repeat="entry in entries">
+
+                            <!-- type Section -->
                             <div ng-if="entry.data.type=='section'">
-                                <h2>{{ entry.data.title }}</h2>
+                                <h2>
+                                    <a ng-if="mode === 'structure'" ui-sref="home.student.courses.entries.structure({course_id: course.id, entry_id: entry.id})">{{ entry.data.title }}</a>
+                                    <a ng-if="mode === 'flow'" ui-sref="home.student.courses.entries.flow({course_id: course.id, entry_id: entry.id})">{{ entry.data.title }}</a>
+                                </h2>
                                 <p>{{ entry.data.description }}</p>
                             </div>
-                            <div ng-if="entry.data.type !='section'" class="entry">
-                                <div class="alert alert-danger">Not implemented! A course can only have sub entries of type section.</div>
+                            <!-- type Unit -->
+                            <div ng-if="entry.data.type=='unit'">
+                                <p><strong>TODO: Rendering unit</strong></p>
                             </div>
-                            <div ng-repeat="subentry in entry.children" class="subsection">
-                                <div ng-if="subentry.data.type=='section'">
-                                    <h3>{{subentry.data.title}}</h3>
-                                    <p>{{subentry.data.description}}</p>
-                                    <div ng-repeat="unit in subentry.children">
-                                        <h4>
-                                            <a ng-if="mode === 'structure'" ui-sref="home.student.courses.entries.structure({course_id: course.id, entry_id: unit.id})">{{unit.data.full_title}}</a>
-                                            <a ng-if="mode === 'flow'" ui-sref="home.student.courses.entries.flow({course_id: course.id, entry_id: unit.id})">{{unit.data.full_title}}</a>
-                                        </h4>
-                                    </div>
-                                </div>
-                                <div ng-if="subentry.data.type=='unit'">
-                                    <h3>
-                                        <a ng-if="mode === 'structure'" ui-sref="home.student.courses.entries.structure({course_id: course.id, entry_id: subentry.id})">{{subentry.data.full_title}}</a>
-                                        <a ng-if="mode === 'flow'" ui-sref="home.student.courses.entries.flow({course_id: course.id, entry_id: subentry.id})">{{subentry.data.full_title}}</a>
-                                    </h3>
-                                </div>
+
+                            <div ng-if="entry.data.type !='section' && entry.data.type != 'unit'" class="entry">
+                                <div class="alert alert-danger">An error occurred. A course can contain only sections and units as its immediate children. Please notify the administrator.</div>
                             </div>
+
                         </div>
 
-                        <div class="alert alert-info">
-                            <p>The above course structure is dynamically generated in <code>student/courses/courses.js</code>. The corresponding content can be found in <code>services/database.js</code>.</p>
-                            <ul>
-                                <li>A <strong>course</strong> has a <strong>title</strong>, a <strong>period</strong> and a <strong>description</strong> and contains <strong>sections</strong>.</li>
-                                <li>A <strong>section</strong> has a <strong>title</strong> and a <strong>description</strong> and contains <strong>subsections</strong>.</li>
-                                <li>A <strong>subsection</strong> has a <strong>title</strong>, a <strong>description</strong> and a link to a <strong>unit</strong>.</li>
-                                <li>A <strong>unit</strong> can also be an immediate child of a <strong>course</strong> or a <strong>section</strong></li>
-                            </ul>
-                        </div>
                     </uib-tab>
+
                     <uib-tab disable="true">
                         <uib-tab-heading>
                             <span class="glyphicon glyphicon-cog"></span> Settings
