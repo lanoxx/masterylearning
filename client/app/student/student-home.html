@@ -8,7 +8,9 @@
                     <uib-tab index="0">
                         <uib-tab-heading>Active Courses</uib-tab-heading>
 
-                        <h1 ng-repeat="course in active_courses"><a ui-sref="home.student.courses({course_id: course.course_id})">{{get_course_title (course.course_id)}}</a></h1>
+                        <h1 ng-repeat="course in active_courses"><a ui-sref="home.student.courses({course_id: course.id})">{{get_course_title (course)}}</a></h1>
+
+                        <h1 ng-if="active_courses.length === 0">There are no active courses in the data base. Please create a course first.</h1>
 
                     </uib-tab>
                     <uib-tab index="1">

@@ -1,44 +1,44 @@
 <div ng-repeat="entry in entries">
 
-    <div ng-if="entry.data.type == 'paragraph'">
-        <div ng-if="entry.data.paragraph_type == 'text'" class="text">
-            <p>{{sanitize (entry.data.text)}}</p>
+    <div ng-if="entry.type == 'paragraph'">
+        <div ng-if="entry.paragraphType == 'text'" class="text">
+            <p>{{sanitize (entry.text)}}</p>
         </div>
-        <div ng-if="entry.data.paragraph_type == 'definition'" class="definition">
-            <p><strong>Definition {{entry.data.number}} ({{sanitize (entry.data.title)}})</strong></p>
-            <div ng-if="entry.data.mode == 'math'">
-                <p data-katex data-bind="sanitize (entry.data.text)" data-auto-render></p>
+        <div ng-if="entry.paragraphType == 'definition'" class="definition">
+            <p><strong>Definition {{entry.number}} ({{sanitize (entry.title)}})</strong></p>
+            <div ng-if="entry.mode == 'math'">
+                <p data-katex data-bind="sanitize (entry.text)" data-auto-render></p>
             </div>
-            <div ng-if="entry.data.mode != 'math'">
-                <p>{{entry.data.text}}</p>
+            <div ng-if="entry.mode != 'math'">
+                <p>{{entry.text}}</p>
             </div>
         </div>
     </div>
 
-    <div ng-if="entry.data.type == 'section'">
-        <h1 ng-if="entry.depth - depth <= 0">{{sanitize (entry.data.title)}}</h1>
-        <h2 ng-if="entry.depth - depth == 1">{{sanitize (entry.data.title)}}</h2>
-        <h3 ng-if="entry.depth - depth == 2">{{sanitize (entry.data.title)}}</h3>
-        <h4 ng-if="entry.depth - depth >= 3">{{sanitize (entry.data.title)}}</h4>
-        <p>{{sanitize (entry.data.description)}}</p>
+    <div ng-if="entry.type == 'section'">
+        <h1 ng-if="entry.depth - depth <= 0">{{sanitize (entry.title)}}</h1>
+        <h2 ng-if="entry.depth - depth == 1">{{sanitize (entry.title)}}</h2>
+        <h3 ng-if="entry.depth - depth == 2">{{sanitize (entry.title)}}</h3>
+        <h4 ng-if="entry.depth - depth >= 3">{{sanitize (entry.title)}}</h4>
+        <p>{{sanitize (entry.description)}}</p>
     </div>
 
-    <div ng-if="entry.data.type == 'unit'">
-        <h1 ng-if="entry.depth - depth <= 0">{{sanitize (entry.data.full_title)}}</h1>
-        <h2 ng-if="entry.depth - depth == 1">{{sanitize (entry.data.full_title)}}</h2>
-        <h3 ng-if="entry.depth - depth == 2">{{sanitize (entry.data.full_title)}}</h3>
-        <h4 ng-if="entry.depth - depth >= 3">{{sanitize (entry.data.full_title)}}</h4>
+    <div ng-if="entry.type == 'unit'">
+        <h1 ng-if="entry.depth - depth <= 0">{{sanitize (entry.fullTitle)}}</h1>
+        <h2 ng-if="entry.depth - depth == 1">{{sanitize (entry.fullTitle)}}</h2>
+        <h3 ng-if="entry.depth - depth == 2">{{sanitize (entry.fullTitle)}}</h3>
+        <h4 ng-if="entry.depth - depth >= 3">{{sanitize (entry.fullTitle)}}</h4>
     </div>
 
-    <div ng-if="entry.data.type == 'exercise' && entry.data.exercise_type == 'yesnoexercise'">
-        <my-app-yes-no-exercise exercise="entry.data" onanswered="answered_cb(entry, answer_model, answer)"></my-app-yes-no-exercise>
+    <div ng-if="entry.type == 'yesnoexercise'">
+        <my-app-yes-no-exercise exercise="entry" onanswered="answered_cb(entry, answer_model, answer)"></my-app-yes-no-exercise>
     </div>
 
-    <div ng-if="entry.data.type == 'exercise' && entry.data.exercise_type == 'multianswerexercise'">
-        <my-app-multi-answer-exercise exercise="entry.data" onanswered="answered_cb(entry, answer_model, answer)"></my-app-multi-answer-exercise>
+    <div ng-if="entry.type == 'multianswerexercise'">
+        <my-app-multi-answer-exercise exercise="entry" onanswered="answered_cb(entry, answer_model, answer)"></my-app-multi-answer-exercise>
     </div>
 
-    <div ng-if="entry.data.type == 'continue-button'">
+    <div ng-if="entry.type == 'continue-button'">
         <button class="btn btn-default" style="width: 100%" ng-click="continue_cb()">Continue</button>
     </div>
 
