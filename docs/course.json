@@ -1,0 +1,100 @@
+{
+  "title": "Formal Methods",
+  "subtitle": "Formal Methods in Computer Science",
+  "period":"(SS'16)",
+  "description": "This course teaches block 4 of Formal Methods in Computer Science.",
+  "children": [
+    {
+      "index": 0,
+      "depth": 0,
+      "data": {
+        "type": "section",
+        "title": "Section 1",
+        "description": "Description"
+      },
+      "children": [
+        {
+          "index": 0,
+          "depth": 1,
+          "data": {
+            "type": "paragraph",
+            "title": "Paragraph title",
+            "text": "lorem ipsum",
+            "paragraphType": "text"
+          },
+          "children": []
+        },
+        {
+          "index": 1,
+          "depth": 1,
+          "data": {
+            "type": "paragraph",
+            "title": "Paragraph title",
+            "text": "lorem ipsum",
+            "paragraphType": "text"
+          },
+          "children": []
+        },
+        {
+          "index": 2,
+          "depth": 1,
+          "data": {
+            "type": "exercise",
+            "exerciseType": "yesnoexercise",
+            "text": "lorem ipsum",
+            "answer": true,
+            "correct": {
+              "data": {
+                "type": "section",
+                "title": "Section 1"
+              }
+            },
+            "incorrect": {
+              "data": {
+                "type": "section",
+                "title": "Section 2"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "index": 1,
+      "depth": 0,
+      "data": {
+        "type": "exercise",
+        "exerciseType":"yesnoexercise",
+        "text": "foo exercise",
+        "answer": true,
+        "correct": {
+          "data": {
+            "type": "section",
+            "title": "Correct Exercise Section 1"
+          }
+        },
+        "incorrect": {
+          "data": {
+            "type": "section",
+            "title": "Incorrect Exercise Section 1"
+          },
+          "children": [
+            {
+              "data": {
+                "type": "paragraph",
+                "text": "lorem ipsum"
+              }
+            },
+            {
+              "data": {
+                "type": "paragraph",
+                "text": "lorem ipsum"
+              }
+            }
+          ]
+        }
+      },
+      "children": []
+    }
+  ]
+}
