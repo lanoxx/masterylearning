@@ -1,0 +1,273 @@
+{
+	"id": "df7dd008-c003-2016-74b4-5a7991dfc888",
+	"name": "MasteryLearning",
+	"description": "",
+	"order": [],
+	"folders": [
+		{
+			"id": "f7278666-9db1-81f1-1008-662db8ba865f",
+			"name": "Courses",
+			"description": "",
+			"order": [
+				"4daed9a6-be50-68c8-6dd3-27b17eb0b0e7",
+				"481d9de5-ffd9-caac-f625-55bad3f2a9ab",
+				"a135da97-06b6-69ec-8c80-3682a6e3a055",
+				"122706d8-b9b2-157d-2de8-9c29bf397c02",
+				"63a2a50e-990e-1a3b-753b-c1ac03cf7658",
+				"41ca3048-6754-9bbf-3cdc-c193ce8706c9",
+				"79856efc-f26d-249f-4a5f-23bce2fbe62e"
+			],
+			"owner": 0,
+			"collectionId": "df7dd008-c003-2016-74b4-5a7991dfc888"
+		},
+		{
+			"id": "bf616676-e89b-20ef-78fe-f3915cc9c02e",
+			"name": "Entries",
+			"description": "",
+			"order": [
+				"e90cd89f-c80e-b01e-45dd-913f6ea3c3ee"
+			],
+			"owner": 0
+		},
+		{
+			"id": "9158a507-2f66-35ca-7e1b-d92603af0680",
+			"name": "Users",
+			"description": "",
+			"order": [
+				"a74eb100-0920-907a-abc8-fb16c4bbed26"
+			],
+			"owner": 0
+		}
+	],
+	"timestamp": 1458318002138,
+	"owner": 0,
+	"remoteLink": "",
+	"public": false,
+	"requests": [
+		{
+			"id": "122706d8-b9b2-157d-2de8-9c29bf397c02",
+			"headers": "Content-Type: application/json\nAuthorization: Basic dXNlcjoxMjM0NTY=\n",
+			"url": "localhost:8080/courses/1",
+			"preRequestScript": null,
+			"pathVariables": {},
+			"method": "GET",
+			"data": [],
+			"dataMode": "raw",
+			"version": 2,
+			"tests": null,
+			"currentHelper": "basicAuth",
+			"helperAttributes": {
+				"id": "basic",
+				"username": "user",
+				"password": "123456",
+				"saveToRequest": true
+			},
+			"time": 1459767916980,
+			"name": "Get Course TOC",
+			"description": "",
+			"collectionId": "df7dd008-c003-2016-74b4-5a7991dfc888",
+			"responses": [],
+			"folder": "f7278666-9db1-81f1-1008-662db8ba865f",
+			"rawModeData": "{\n    title: \"Formal Methods\"\n}"
+		},
+		{
+			"id": "41ca3048-6754-9bbf-3cdc-c193ce8706c9",
+			"headers": "Authorization: Basic dXNlcjoxMjM0NTY=\n",
+			"url": "localhost:8080/courses/2/enumerate/51",
+			"preRequestScript": null,
+			"pathVariables": {},
+			"method": "GET",
+			"data": [],
+			"dataMode": "params",
+			"version": 2,
+			"tests": null,
+			"currentHelper": "basicAuth",
+			"helperAttributes": {
+				"id": "basic",
+				"username": "user",
+				"password": "123456",
+				"saveToRequest": true
+			},
+			"time": 1460064211518,
+			"name": "Enumerate Course by Id",
+			"description": "",
+			"collectionId": "df7dd008-c003-2016-74b4-5a7991dfc888",
+			"responses": []
+		},
+		{
+			"id": "481d9de5-ffd9-caac-f625-55bad3f2a9ab",
+			"headers": "Content-Type: application/json\nAuthorization: Basic dXNlcjoxMjM0NTY=\n",
+			"url": "localhost:8080/courses",
+			"preRequestScript": null,
+			"pathVariables": {},
+			"method": "POST",
+			"data": [],
+			"dataMode": "raw",
+			"version": 2,
+			"tests": null,
+			"currentHelper": "basicAuth",
+			"helperAttributes": {
+				"id": "basic",
+				"username": "user",
+				"password": "123456",
+				"saveToRequest": true
+			},
+			"time": 1460043088966,
+			"name": "Add Large Course",
+			"description": "",
+			"collectionId": "df7dd008-c003-2016-74b4-5a7991dfc888",
+			"responses": [],
+			"rawModeData": "{\n    \"title\": \"Formal Methods in Computer Science\",\n        \"subtitle\": \"Formal Methods Block 4\",\n        \"period\": \"(SS'16)\",\n        \"description\": \"A short description of the lecture's content\",\n        \"children\": [\n    {\n        \"data\": {\n            \"type\": \"section\",\n            \"title\": \"1. Preliminaries: Propositional Logic\",\n            \"description\": \"A short description of propositional logic\"\n        },\n        \"children\": [{\n            \"data\": {\n                \"type\": \"section\",\n                \"title\": \"1.1 Syntax\",\n                \"description\": \"Subsection 1 Description\"\n            },\n            \"children\": [{\n                \"data\": {\n                    \"type\": \"unit\",\n                    \"fullTitle\": \"1.1.1 Unit 1\",\n                    \"breadcrumbTitle\": \"Unit 1\",\n                    \"description\": \"Unit 1 description\"\n                },\n                \"children\": [{\n                    \"data\": {\n                        \"type\": \"paragraph\",\n                        \"text\": \"Lorem ipsum dolor sit amet, consectetur adipisicing elit. A accusamus aliquam dolore harum iusto maiores maxime, minus modi molestiae, natus nisi non obcaecati porro quis quos reprehenderit repudiandae tempore temporibus!\",\n                        \"paragraphType\": \"text\"\n                    },\n                    \"children\": []\n                }, {\n                    \"data\": {\n                        \"type\": \"paragraph\",\n                        \"text\": \"Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores aspernatur atque libero magnam maiores perspiciatis quibusdam, repellat sapiente sunt tempora? Aperiam assumenda dolor ducimus eos officia quisquam rerum sapiente voluptatibus.\",\n                        \"number\": 1,\n                        \"title\": \"Syntax\",\n                        \"paragraphType\": \"definition\",\n                        \"mode\": \"text\"\n                    },\n                    \"children\": [{\n                        \"data\": {\n                            \"type\": \"continue-button\"\n                        },\n                        \"children\": []\n                    }]\n                }, {\n                    \"data\": {\n                        \"type\": \"paragraph\",\n                        \"text\": \"Atomic propositions are symbols \\\\(a\\\\), \\\\(b\\\\), \\\\(c\\\\), ..., which can either have the value true or false.\",\n                        \"number\": 2,\n                        \"title\": \"Propositions\",\n                        \"paragraphType\": \"definition\",\n                        \"mode\": \"math\"\n                    },\n                    \"children\": []\n                }, {\n                    \"data\": {\n                        \"type\": \"paragraph\",\n                        \"text\": \"A formula G is a subformula ... if ... \\\\( sub(\\\\top) = {\\\\top} \\\\)\",\n                        \"number\": 3,\n                        \"title\": \"Propositions\",\n                        \"paragraphType\": \"definition\",\n                        \"mode\": \"math\"\n                    },\n                    \"children\": []\n                }, {\n                    \"data\": {\n                        \"type\": \"section\",\n                        \"title\": \"1.1.1.1 Parentheses\",\n                        \"description\": \"Explains handling of parantheses in logical formulas.\"\n                    },\n                    \"children\": [{\n                        \"data\": {\n                            \"type\": \"paragraph\",\n                            \"text\": \"A paragrahp of a section.\",\n                            \"paragraphType\": \"text\"\n                        },\n                        \"children\": []\n                    }]\n                }, {\n                    \"data\": {\n                        \"type\": \"yesnoexercise\",\n                        \"correct\": null,\n                        \"incorrect\": null,\n                        \"title\": \"Evaluate Syntax\",\n                        \"text\": \"Is \\\\((P \\\\wedge Q)\\\\) a subformula of the formula \\\\((R \\\\vee (P \\\\wedge Q))\\\\)?\",\n                        \"answer\": true,\n                        \"blocks\": true\n                    },\n                    \"children\": []\n                }, {\n                    \"data\": {\n                        \"type\": \"yesnoexercise\",\n                        \"correct\": null,\n                        \"incorrect\": null,\n                        \"title\": \"Evaluate Syntax\",\n                        \"text\": \"Is \\\\((Q \\\\wedge P)\\\\) a subformula of the formula \\\\((R \\\\vee (P \\\\wedge Q))\\\\)?\",\n                        \"answer\": false,\n                        \"blocks\": true\n                    },\n                    \"children\": []\n                }, {\n                    \"data\": {\n                        \"type\": \"yesnoexercise\",\n                        \"correct\": null,\n                        \"incorrect\": null,\n                        \"title\": \"Evaluate Semantics\",\n                        \"text\": \"Given the following variable assignments: <ul><li>\\\\(a \\\\rightarrow 0\\\\)</li><li>\\\\(b \\\\rightarrow 1\\\\)</li><li>\\\\(c \\\\rightarrow 1\\\\)</li><li>\\\\(d \\\\rightarrow 1\\\\)</li></ul>Please specify the result for the following logical formula: <strong>\\\\((a \\\\land b) \\\\lor (c \\\\oplus D) \\\\)</strong>\",\n                        \"answer\": true,\n                        \"blocks\": true\n                    },\n                    \"children\": []\n                }, {\n                    \"data\": {\n                        \"type\": \"multianswerexercise\",\n                        \"correct\": {\n                            \"data\": {\n                                \"type\": \"section\",\n                                \"title\": \"Exercise Section title\",\n                                \"description\": \"Section description.\"\n                            },\n                            \"children\": [{\n                                \"data\": {\n                                    \"type\": \"paragraph\",\n                                    \"text\": \"Your answer is correct.\",\n                                    \"paragraphType\": \"text\"\n                                },\n                                \"children\": []\n                            }]\n                        },\n                        \"incorrect\": {\n                            \"data\": {\n                                \"type\": \"section\",\n                                \"title\": \"Exercise Section title\",\n                                \"description\": \"Section description.\"\n                            },\n                            \"children\": [{\n                                \"data\": {\n                                    \"type\": \"paragraph\",\n                                    \"text\": \"Your answer is wrong.\",\n                                    \"paragraphType\": \"text\"\n                                },\n                                \"children\": []\n                            }]\n                        },\n                        \"title\": \"Multiple Answers\",\n                        \"text\": \"Which of the following answeres is syntactically right:\",\n                        \"answerCandidates\": [{\n                            \"text\": \"\\\\(Q \\\\wedge P\\\\)\",\n                            \"correct\": true\n                        }, {\"text\": \"\\\\(Q \\\\wedge \\\\wedge P\\\\)\", \"correct\": false}, {\n                            \"text\": \"\\\\(\\\\wedge P\\\\)\",\n                            \"correct\": false\n                        }, {\"text\": \"\\\\((Q \\\\wedge P)\\\\)\", \"correct\": true}],\n                        \"blocks\": true,\n                        \"next\": null\n                    },\n                    \"children\": []\n                }]\n            }, {\n                \"data\": {\n                    \"type\": \"unit\",\n                    \"fullTitle\": \"1.1.2 Unit 2\",\n                    \"breadcrumbTitle\": \"Unit 2\",\n                    \"description\": \"Unit 2 description\",\n                    \"prev\": 2,\n                    \"next\": null\n                },\n                \"children\": []\n            }]\n        }, {\n            \"data\": {\n                \"type\": \"section\",\n                \"title\": \"1.2 Semantic\",\n                \"description\": \"Subsection 2 Description\"\n            },\n            \"children\": [{\n                \"data\": {\n                    \"type\": \"unit\",\n                    \"fullTitle\": \"1.2.1 Unit 1\",\n                    \"breadcrumbTitle\": \"Unit 1\",\n                    \"description\": \"Unit 1 description\",\n                    \"prev\": null,\n                    \"next\": 21\n                },\n                \"children\": []\n            }, {\n                \"data\": {\n                    \"type\": \"unit\",\n                    \"fullTitle\": \"1.2.2 Unit 2\",\n                    \"breadcrumbTitle\": \"Unit 2\",\n                    \"description\": \"Unit 2 description\",\n                    \"prev\": 20,\n                    \"next\": null\n                },\n                \"children\": []\n            }]\n        }, {\n            \"data\": {\n                \"type\": \"section\",\n                \"title\": \"1.3 Subsection 3\",\n                \"description\": \"Subsection 3 Description\"\n            },\n            \"children\": [{\n                \"data\": {\n                    \"type\": \"unit\",\n                    \"fullTitle\": \"1.3.1 Unit 1\",\n                    \"breadcrumbTitle\": \"Unit 1\",\n                    \"description\": \"Unit 1 description\",\n                    \"prev\": null,\n                    \"next\": 24\n                },\n                \"children\": []\n            }, {\n                \"data\": {\n                    \"type\": \"unit\",\n                    \"fullTitle\": \"1.3.2 Unit 2\",\n                    \"breadcrumbTitle\": \"Unit 2\",\n                    \"description\": \"Unit 2 description\",\n                    \"prev\": 23,\n                    \"next\": null\n                },\n                \"children\": []\n            }]\n        }, {\n            \"data\": {\n                \"type\": \"unit\",\n                \"fullTitle\": \"1.4 Unit 1: Propositional Logic Formulas\",\n                \"breadcrumbTitle\": \"Unit 1\",\n                \"description\": \"Unit 1 description\",\n                \"prev\": null,\n                \"next\": 26\n            },\n            \"children\": []\n        }, {\n            \"data\": {\n                \"type\": \"unit\",\n                \"fullTitle\": \"1.5 Unit 2: Propositional Logic Formulas\",\n                \"breadcrumbTitle\": \"Unit 1\",\n                \"description\": \"Unit 1 description\",\n                \"prev\": 25,\n                \"next\": null\n            },\n            \"children\": []\n        }]\n    }, {\n        \"data\": {\n            \"type\": \"section\",\n            \"title\": \"Section 2\",\n            \"description\": \"Section 2 Description\"\n        },\n        \"children\": [{\n            \"data\": {\n                \"type\": \"section\",\n                \"title\": \"Subsection 1\",\n                \"description\": \"Subsection 1 Description\"\n            },\n            \"children\": []\n        }, {\n            \"data\": {\n                \"type\": \"section\",\n                \"title\": \"Subsection 2\",\n                \"description\": \"Subsection 2 Description\"\n            },\n            \"children\": []\n        }]\n    }, {\n        \"data\": {\n            \"type\": \"section\",\n            \"title\": \"Section 3\",\n            \"description\": \"Section 3 Description\"\n        },\n        \"children\": [{\n            \"data\": {\n                \"type\": \"section\",\n                \"title\": \"Subsection 1\",\n                \"description\": \"Subsection 1 Description\"\n            },\n            \"children\": [{\n                \"data\": {\n                    \"type\": \"unit\",\n                    \"fullTitle\": \"Unit 1\",\n                    \"breadcrumbTitle\": \"Unit 1\",\n                    \"description\": \"Unit 1 description\",\n                    \"prev\": null,\n                    \"next\": null\n                },\n                \"children\": []\n            }, {\n                \"data\": {\n                    \"type\": \"unit\",\n                    \"fullTitle\": \"Unit 2\",\n                    \"breadcrumbTitle\": \"Unit 2\",\n                    \"description\": \"Unit 2 description\",\n                    \"prev\": null,\n                    \"next\": null\n                },\n                \"children\": []\n            }]\n        }, {\n            \"data\": {\n                \"type\": \"section\",\n                \"title\": \"Subsection 2\",\n                \"description\": \"Subsection 2 Description\"\n            },\n            \"children\": [{\n                \"data\": {\n                    \"type\": \"unit\",\n                    \"fullTitle\": \"Unit 1\",\n                    \"breadcrumbTitle\": \"Unit 1\",\n                    \"description\": \"Unit 1 description\",\n                    \"prev\": null,\n                    \"next\": null\n                },\n                \"children\": []\n            }, {\n                \"data\": {\n                    \"type\": \"unit\",\n                    \"fullTitle\": \"Unit 2\",\n                    \"breadcrumbTitle\": \"Unit 2\",\n                    \"description\": \"Unit 2 description\",\n                    \"prev\": null,\n                    \"next\": null\n                },\n                \"children\": []\n            }]\n        }]\n    }]\n}\n"
+		},
+		{
+			"id": "4daed9a6-be50-68c8-6dd3-27b17eb0b0e7",
+			"headers": "Content-Type: application/json\nAuthorization: Basic dXNlcjoxMjM0NTY=\n",
+			"url": "localhost:8080/courses",
+			"preRequestScript": null,
+			"pathVariables": {},
+			"method": "POST",
+			"data": [],
+			"dataMode": "raw",
+			"version": 2,
+			"tests": null,
+			"currentHelper": "basicAuth",
+			"helperAttributes": {
+				"id": "basic",
+				"username": "user",
+				"password": "123456",
+				"saveToRequest": true
+			},
+			"time": 1459767919755,
+			"name": "Add Course",
+			"description": "",
+			"collectionId": "df7dd008-c003-2016-74b4-5a7991dfc888",
+			"responses": [],
+			"folder": "f7278666-9db1-81f1-1008-662db8ba865f",
+			"rawModeData": "{\n    \"title\": \"Formal Methods\",\n    \"subtitle\": \"Formal Methods in Computer Science\",\n    \"period\":\"(SS'16)\",\n    \"description\": \"This course teaches block 4 of Formal Methods in Computer Science.\",\n    \"children\": [\n        {\n            \"data\": {\n                \"type\": \"section\",\n                \"title\": \"Section 1\",\n                \"description\": \"Description\"\n            },\n            \"children\": [\n                {\n                    \"data\": {\n                        \"type\": \"paragraph\",\n                        \"title\": \"Paragraph title\",\n                        \"text\": \"lorem ipsum\",\n                        \"paragraphType\": \"text\"\n                    },\n                    \"children\": []\n                },\n                {\n                    \"data\": {\n                        \"type\": \"paragraph\",\n                        \"title\": \"Paragraph title\",\n                        \"text\": \"lorem ipsum\",\n                        \"paragraphType\": \"text\"\n                    },\n                    \"children\": []\n                },\n                {\n                    \"data\": {\n                        \"type\": \"yesnoexercise\",\n                        \"text\": \"lorem ipsum\",\n                        \"answer\": true,\n                        \"correct\": {\n                            \"data\": {\n                                \"type\": \"section\",\n                                \"title\": \"Section 1\"\n                            }\n                        },\n                        \"incorrect\": {\n                            \"data\": {\n                                \"type\": \"section\",\n                                \"title\": \"Section 2\"\n                            }\n                        }\n                    }\n                }\n            ]\n        },\n        {\n            \"data\": {\n                \"type\": \"yesnoexercise\",\n                \"text\": \"foo exercise\",\n                \"answer\": true,\n                \"correct\": {\n                    \"data\": {\n                        \"type\": \"section\",\n                        \"title\": \"Correct Exercise Section 1\"\n                    }\n                },\n                \"incorrect\": {\n                    \"data\": {\n                        \"type\": \"section\",\n                        \"title\": \"Incorrect Exercise Section 1\"\n                    },\n                    \"children\": [\n                        {\n                            \"data\": {\n                                \"type\": \"paragraph\",\n                                \"text\": \"lorem ipsum\"\n                            }\n                        },\n                        {\n                            \"data\": {\n                                \"type\": \"paragraph\",\n                                \"text\": \"lorem ipsum\"\n                            }\n                        }\n                    ]\n                }\n            },\n            \"children\": []\n        }\n    ]\n}"
+		},
+		{
+			"id": "63a2a50e-990e-1a3b-753b-c1ac03cf7658",
+			"headers": "Authorization: Basic dXNlcjoxMjM0NTY=\n",
+			"url": "localhost:8080/courses/2/enumerate",
+			"preRequestScript": null,
+			"pathVariables": {},
+			"method": "GET",
+			"data": [],
+			"dataMode": "params",
+			"version": 2,
+			"tests": null,
+			"currentHelper": "basicAuth",
+			"helperAttributes": {
+				"id": "basic",
+				"username": "user",
+				"password": "123456",
+				"saveToRequest": true
+			},
+			"time": 1460064198501,
+			"name": "Enumerate Course",
+			"description": "",
+			"collectionId": "df7dd008-c003-2016-74b4-5a7991dfc888",
+			"responses": []
+		},
+		{
+			"id": "79856efc-f26d-249f-4a5f-23bce2fbe62e",
+			"headers": "Content-Type: application/json\n",
+			"url": "localhost:8080/bootstrap/users",
+			"pathVariables": {},
+			"preRequestScript": null,
+			"method": "GET",
+			"collectionId": "df7dd008-c003-2016-74b4-5a7991dfc888",
+			"data": [],
+			"dataMode": "raw",
+			"name": "Bootstrap Users",
+			"description": "",
+			"descriptionFormat": "html",
+			"time": 1460111770275,
+			"version": 2,
+			"responses": [],
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"folder": "f7278666-9db1-81f1-1008-662db8ba865f",
+			"rawModeData": "{\n    \"title\": \"Formal Methods in Computer Science\",\n        \"subtitle\": \"Formal Methods Block 4\",\n        \"period\": \"(SS'16)\",\n        \"description\": \"A short description of the lecture's content\",\n        \"children\": [\n    {\n        \"data\": {\n            \"type\": \"section\",\n            \"title\": \"1. Preliminaries: Propositional Logic\",\n            \"description\": \"A short description of propositional logic\"\n        },\n        \"children\": [{\n            \"data\": {\n                \"type\": \"section\",\n                \"title\": \"1.1 Syntax\",\n                \"description\": \"Subsection 1 Description\"\n            },\n            \"children\": [{\n                \"data\": {\n                    \"type\": \"unit\",\n                    \"fullTitle\": \"1.1.1 Unit 1\",\n                    \"breadcrumbTitle\": \"Unit 1\",\n                    \"description\": \"Unit 1 description\"\n                },\n                \"children\": [{\n                    \"data\": {\n                        \"type\": \"paragraph\",\n                        \"text\": \"Lorem ipsum dolor sit amet, consectetur adipisicing elit. A accusamus aliquam dolore harum iusto maiores maxime, minus modi molestiae, natus nisi non obcaecati porro quis quos reprehenderit repudiandae tempore temporibus!\",\n                        \"paragraphType\": \"text\"\n                    },\n                    \"children\": []\n                }, {\n                    \"data\": {\n                        \"type\": \"paragraph\",\n                        \"text\": \"Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores aspernatur atque libero magnam maiores perspiciatis quibusdam, repellat sapiente sunt tempora? Aperiam assumenda dolor ducimus eos officia quisquam rerum sapiente voluptatibus.\",\n                        \"number\": 1,\n                        \"title\": \"Syntax\",\n                        \"paragraphType\": \"definition\",\n                        \"mode\": \"text\"\n                    },\n                    \"children\": [{\n                        \"data\": {\n                            \"type\": \"continue-button\"\n                        },\n                        \"children\": []\n                    }]\n                }, {\n                    \"data\": {\n                        \"type\": \"paragraph\",\n                        \"text\": \"Atomic propositions are symbols \\\\(a\\\\), \\\\(b\\\\), \\\\(c\\\\), ..., which can either have the value true or false.\",\n                        \"number\": 2,\n                        \"title\": \"Propositions\",\n                        \"paragraphType\": \"definition\",\n                        \"mode\": \"math\"\n                    },\n                    \"children\": []\n                }, {\n                    \"data\": {\n                        \"type\": \"paragraph\",\n                        \"text\": \"A formula G is a subformula ... if ... \\\\( sub(\\\\top) = {\\\\top} \\\\)\",\n                        \"number\": 3,\n                        \"title\": \"Propositions\",\n                        \"paragraphType\": \"definition\",\n                        \"mode\": \"math\"\n                    },\n                    \"children\": []\n                }, {\n                    \"data\": {\n                        \"type\": \"section\",\n                        \"title\": \"1.1.1.1 Parentheses\",\n                        \"description\": \"Explains handling of parantheses in logical formulas.\"\n                    },\n                    \"children\": [{\n                        \"data\": {\n                            \"type\": \"paragraph\",\n                            \"text\": \"A paragrahp of a section.\",\n                            \"paragraphType\": \"text\"\n                        },\n                        \"children\": []\n                    }]\n                }, {\n                    \"data\": {\n                        \"type\": \"yesnoexercise\",\n                        \"correct\": null,\n                        \"incorrect\": null,\n                        \"title\": \"Evaluate Syntax\",\n                        \"text\": \"Is \\\\((P \\\\wedge Q)\\\\) a subformula of the formula \\\\((R \\\\vee (P \\\\wedge Q))\\\\)?\",\n                        \"answer\": true,\n                        \"blocks\": true\n                    },\n                    \"children\": []\n                }, {\n                    \"data\": {\n                        \"type\": \"yesnoexercise\",\n                        \"correct\": null,\n                        \"incorrect\": null,\n                        \"title\": \"Evaluate Syntax\",\n                        \"text\": \"Is \\\\((Q \\\\wedge P)\\\\) a subformula of the formula \\\\((R \\\\vee (P \\\\wedge Q))\\\\)?\",\n                        \"answer\": false,\n                        \"blocks\": true\n                    },\n                    \"children\": []\n                }, {\n                    \"data\": {\n                        \"type\": \"yesnoexercise\",\n                        \"correct\": null,\n                        \"incorrect\": null,\n                        \"title\": \"Evaluate Semantics\",\n                        \"text\": \"Given the following variable assignments: <ul><li>\\\\(a \\\\rightarrow 0\\\\)</li><li>\\\\(b \\\\rightarrow 1\\\\)</li><li>\\\\(c \\\\rightarrow 1\\\\)</li><li>\\\\(d \\\\rightarrow 1\\\\)</li></ul>Please specify the result for the following logical formula: <strong>\\\\((a \\\\land b) \\\\lor (c \\\\oplus D) \\\\)</strong>\",\n                        \"answer\": true,\n                        \"blocks\": true\n                    },\n                    \"children\": []\n                }, {\n                    \"data\": {\n                        \"type\": \"multianswerexercise\",\n                        \"correct\": {\n                            \"data\": {\n                                \"type\": \"section\",\n                                \"title\": \"Exercise Section title\",\n                                \"description\": \"Section description.\"\n                            },\n                            \"children\": [{\n                                \"data\": {\n                                    \"type\": \"paragraph\",\n                                    \"text\": \"Your answer is correct.\",\n                                    \"paragraphType\": \"text\"\n                                },\n                                \"children\": []\n                            }]\n                        },\n                        \"incorrect\": {\n                            \"data\": {\n                                \"type\": \"section\",\n                                \"title\": \"Exercise Section title\",\n                                \"description\": \"Section description.\"\n                            },\n                            \"children\": [{\n                                \"data\": {\n                                    \"type\": \"paragraph\",\n                                    \"text\": \"Your answer is wrong.\",\n                                    \"paragraphType\": \"text\"\n                                },\n                                \"children\": []\n                            }]\n                        },\n                        \"title\": \"Multiple Answers\",\n                        \"text\": \"Which of the following answeres is syntactically right:\",\n                        \"answerCandidates\": [{\n                            \"text\": \"\\\\(Q \\\\wedge P\\\\)\",\n                            \"correct\": true\n                        }, {\"text\": \"\\\\(Q \\\\wedge \\\\wedge P\\\\)\", \"correct\": false}, {\n                            \"text\": \"\\\\(\\\\wedge P\\\\)\",\n                            \"correct\": false\n                        }, {\"text\": \"\\\\((Q \\\\wedge P)\\\\)\", \"correct\": true}],\n                        \"blocks\": true,\n                        \"next\": null\n                    },\n                    \"children\": []\n                }]\n            }, {\n                \"data\": {\n                    \"type\": \"unit\",\n                    \"fullTitle\": \"1.1.2 Unit 2\",\n                    \"breadcrumbTitle\": \"Unit 2\",\n                    \"description\": \"Unit 2 description\",\n                    \"prev\": 2,\n                    \"next\": null\n                },\n                \"children\": []\n            }]\n        }, {\n            \"data\": {\n                \"type\": \"section\",\n                \"title\": \"1.2 Semantic\",\n                \"description\": \"Subsection 2 Description\"\n            },\n            \"children\": [{\n                \"data\": {\n                    \"type\": \"unit\",\n                    \"fullTitle\": \"1.2.1 Unit 1\",\n                    \"breadcrumbTitle\": \"Unit 1\",\n                    \"description\": \"Unit 1 description\",\n                    \"prev\": null,\n                    \"next\": 21\n                },\n                \"children\": []\n            }, {\n                \"data\": {\n                    \"type\": \"unit\",\n                    \"fullTitle\": \"1.2.2 Unit 2\",\n                    \"breadcrumbTitle\": \"Unit 2\",\n                    \"description\": \"Unit 2 description\",\n                    \"prev\": 20,\n                    \"next\": null\n                },\n                \"children\": []\n            }]\n        }, {\n            \"data\": {\n                \"type\": \"section\",\n                \"title\": \"1.3 Subsection 3\",\n                \"description\": \"Subsection 3 Description\"\n            },\n            \"children\": [{\n                \"data\": {\n                    \"type\": \"unit\",\n                    \"fullTitle\": \"1.3.1 Unit 1\",\n                    \"breadcrumbTitle\": \"Unit 1\",\n                    \"description\": \"Unit 1 description\",\n                    \"prev\": null,\n                    \"next\": 24\n                },\n                \"children\": []\n            }, {\n                \"data\": {\n                    \"type\": \"unit\",\n                    \"fullTitle\": \"1.3.2 Unit 2\",\n                    \"breadcrumbTitle\": \"Unit 2\",\n                    \"description\": \"Unit 2 description\",\n                    \"prev\": 23,\n                    \"next\": null\n                },\n                \"children\": []\n            }]\n        }, {\n            \"data\": {\n                \"type\": \"unit\",\n                \"fullTitle\": \"1.4 Unit 1: Propositional Logic Formulas\",\n                \"breadcrumbTitle\": \"Unit 1\",\n                \"description\": \"Unit 1 description\",\n                \"prev\": null,\n                \"next\": 26\n            },\n            \"children\": []\n        }, {\n            \"data\": {\n                \"type\": \"unit\",\n                \"fullTitle\": \"1.5 Unit 2: Propositional Logic Formulas\",\n                \"breadcrumbTitle\": \"Unit 1\",\n                \"description\": \"Unit 1 description\",\n                \"prev\": 25,\n                \"next\": null\n            },\n            \"children\": []\n        }]\n    }, {\n        \"data\": {\n            \"type\": \"section\",\n            \"title\": \"Section 2\",\n            \"description\": \"Section 2 Description\"\n        },\n        \"children\": [{\n            \"data\": {\n                \"type\": \"section\",\n                \"title\": \"Subsection 1\",\n                \"description\": \"Subsection 1 Description\"\n            },\n            \"children\": []\n        }, {\n            \"data\": {\n                \"type\": \"section\",\n                \"title\": \"Subsection 2\",\n                \"description\": \"Subsection 2 Description\"\n            },\n            \"children\": []\n        }]\n    }, {\n        \"data\": {\n            \"type\": \"section\",\n            \"title\": \"Section 3\",\n            \"description\": \"Section 3 Description\"\n        },\n        \"children\": [{\n            \"data\": {\n                \"type\": \"section\",\n                \"title\": \"Subsection 1\",\n                \"description\": \"Subsection 1 Description\"\n            },\n            \"children\": [{\n                \"data\": {\n                    \"type\": \"unit\",\n                    \"fullTitle\": \"Unit 1\",\n                    \"breadcrumbTitle\": \"Unit 1\",\n                    \"description\": \"Unit 1 description\",\n                    \"prev\": null,\n                    \"next\": null\n                },\n                \"children\": []\n            }, {\n                \"data\": {\n                    \"type\": \"unit\",\n                    \"fullTitle\": \"Unit 2\",\n                    \"breadcrumbTitle\": \"Unit 2\",\n                    \"description\": \"Unit 2 description\",\n                    \"prev\": null,\n                    \"next\": null\n                },\n                \"children\": []\n            }]\n        }, {\n            \"data\": {\n                \"type\": \"section\",\n                \"title\": \"Subsection 2\",\n                \"description\": \"Subsection 2 Description\"\n            },\n            \"children\": [{\n                \"data\": {\n                    \"type\": \"unit\",\n                    \"fullTitle\": \"Unit 1\",\n                    \"breadcrumbTitle\": \"Unit 1\",\n                    \"description\": \"Unit 1 description\",\n                    \"prev\": null,\n                    \"next\": null\n                },\n                \"children\": []\n            }, {\n                \"data\": {\n                    \"type\": \"unit\",\n                    \"fullTitle\": \"Unit 2\",\n                    \"breadcrumbTitle\": \"Unit 2\",\n                    \"description\": \"Unit 2 description\",\n                    \"prev\": null,\n                    \"next\": null\n                },\n                \"children\": []\n            }]\n        }]\n    }]\n}\n"
+		},
+		{
+			"id": "a135da97-06b6-69ec-8c80-3682a6e3a055",
+			"headers": "Content-Type: application/json\nAuthorization: Basic dXNlcjoxMjM0NTY=\n",
+			"url": "localhost:8080/courses",
+			"pathVariables": {},
+			"preRequestScript": null,
+			"method": "GET",
+			"collectionId": "df7dd008-c003-2016-74b4-5a7991dfc888",
+			"data": [],
+			"dataMode": "raw",
+			"name": "Get Active Courses",
+			"description": "",
+			"descriptionFormat": "html",
+			"time": 1459768373781,
+			"version": 2,
+			"responses": [],
+			"tests": null,
+			"currentHelper": "basicAuth",
+			"helperAttributes": {
+				"id": "basic",
+				"username": "user",
+				"password": "123456",
+				"saveToRequest": true
+			},
+			"folder": "f7278666-9db1-81f1-1008-662db8ba865f",
+			"rawModeData": "{\n    title: \"Formal Methods\"\n}"
+		},
+		{
+			"id": "a74eb100-0920-907a-abc8-fb16c4bbed26",
+			"headers": "Authorization: Basic dXNlcjoxMjM0NTY=\nContent-Type: application/json\n",
+			"url": "localhost:8080/users",
+			"preRequestScript": null,
+			"pathVariables": {},
+			"method": "POST",
+			"data": [],
+			"dataMode": "raw",
+			"version": 2,
+			"tests": null,
+			"currentHelper": "basicAuth",
+			"helperAttributes": {
+				"id": "basic",
+				"username": "user",
+				"password": "123456",
+				"saveToRequest": true
+			},
+			"time": 1460116469904,
+			"name": "Add user",
+			"description": "",
+			"collectionId": "df7dd008-c003-2016-74b4-5a7991dfc888",
+			"responses": [],
+			"rawModeData": "{\n    \"username\": \"johndoe\",\n    \"password\": \"123456\"\n}"
+		},
+		{
+			"id": "e90cd89f-c80e-b01e-45dd-913f6ea3c3ee",
+			"headers": "Authorization: Basic dXNlcjoxMjM0NTY=\n",
+			"url": "localhost:8080/entry?entryId=1",
+			"pathVariables": {},
+			"preRequestScript": null,
+			"method": "GET",
+			"collectionId": "df7dd008-c003-2016-74b4-5a7991dfc888",
+			"data": [],
+			"dataMode": "params",
+			"name": "Get Entry Data",
+			"description": "",
+			"descriptionFormat": "html",
+			"time": 1458856230144,
+			"version": 2,
+			"responses": [],
+			"tests": null,
+			"currentHelper": "basicAuth",
+			"helperAttributes": {
+				"id": "basic",
+				"username": "user",
+				"password": "123456",
+				"saveToRequest": true
+			},
+			"folder": "bf616676-e89b-20ef-78fe-f3915cc9c02e"
+		}
+	]
+}
