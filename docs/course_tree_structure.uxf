@@ -13,7 +13,6 @@
 --
 - id
 - index
-- course_id
 - depth</panel_attributes>
     <additional_attributes/>
   </element>
@@ -55,7 +54,6 @@ m2=1</panel_attributes>
 --
 - id
 - title
-- subtitle
 - period
 - description</panel_attributes>
     <additional_attributes/>
@@ -68,7 +66,7 @@ m2=1</panel_attributes>
       <w>180</w>
       <h>100</h>
     </coordinates>
-    <panel_attributes>EntryData
+    <panel_attributes>/EntryData/
 --
 id
 type</panel_attributes>
@@ -98,10 +96,11 @@ data
     <panel_attributes>&lt;&lt;EntryData&gt;&gt;
 Unit
 --
-- full_title
-- breadcrumb_title
-- next_unit_id
-- prev_unit_id
+- fullTitle
+- breadcrumbTitle
+- description
+- nextUnitId
+- prevUnitId
 </panel_attributes>
     <additional_attributes/>
   </element>
@@ -136,8 +135,9 @@ Paragraph
 - number
 - title
 - text
-- paragraph_type 
-  {text, definition}</panel_attributes>
+- paragraphType 
+  {text, definition}
+- mode</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
@@ -205,7 +205,7 @@ solution.</panel_attributes>
       <h>140</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-
-answer_candidates
+answerCandidates
 m1=n
 m2=1</panel_attributes>
     <additional_attributes>10.0;120.0;10.0;10.0</additional_attributes>
@@ -255,7 +255,7 @@ type=unit</panel_attributes>
       <h>160</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-
-exercise_type=multianswerexercise</panel_attributes>
+tpye=multianswerexercise</panel_attributes>
     <additional_attributes>10.0;10.0;10.0;40.0;390.0;40.0;390.0;140.0</additional_attributes>
   </element>
   <element>
@@ -267,7 +267,7 @@ exercise_type=multianswerexercise</panel_attributes>
       <h>160</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-
-exercise_type=yesnoexercise</panel_attributes>
+type=yesnoexercise</panel_attributes>
     <additional_attributes>10.0;10.0;10.0;70.0;260.0;70.0;260.0;140.0</additional_attributes>
   </element>
   <element>
@@ -279,9 +279,8 @@ exercise_type=yesnoexercise</panel_attributes>
       <h>80</h>
     </coordinates>
     <panel_attributes>&lt;&lt;EntryData&gt;&gt;
-Exercise
---
-exercise_type</panel_attributes>
+/Exercise/
+--</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
@@ -292,9 +291,8 @@ exercise_type</panel_attributes>
       <w>340</w>
       <h>40</h>
     </coordinates>
-    <panel_attributes>lt=&lt;&lt;-
-type=exercise</panel_attributes>
-    <additional_attributes>10.0;20.0;320.0;20.0</additional_attributes>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;320.0;10.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
@@ -331,7 +329,7 @@ correct</panel_attributes>
     <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-
 m1=n
 m2=1
-entries</panel_attributes>
+children</panel_attributes>
     <additional_attributes>190.0;20.0;10.0;20.0</additional_attributes>
   </element>
   <element>
@@ -399,8 +397,8 @@ role {guest, student, teacher}</panel_attributes>
     <panel_attributes>CourseHistory
 --
 id
-course_id
-last_entry</panel_attributes>
+courseId
+lastEntry</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
@@ -414,7 +412,7 @@ last_entry</panel_attributes>
     <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-
 m1=n
 m2=1
-active_courses</panel_attributes>
+activeCourses</panel_attributes>
     <additional_attributes>250.0;20.0;10.0;20.0</additional_attributes>
   </element>
   <element>
@@ -427,8 +425,8 @@ active_courses</panel_attributes>
     </coordinates>
     <panel_attributes>EntryHistory
 --
-course_id
-entry_id
+courseId
+entryId
 state : string</panel_attributes>
     <additional_attributes/>
   </element>
@@ -443,7 +441,7 @@ state : string</panel_attributes>
     <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-
 m1=n
 m2=1
-visited_entries</panel_attributes>
+visitedEntries</panel_attributes>
     <additional_attributes>250.0;20.0;10.0;20.0</additional_attributes>
   </element>
 </diagram>
