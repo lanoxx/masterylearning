@@ -1,18 +1,15 @@
 package org.masterylearning.service;
 
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.masterylearning.App;
 import org.masterylearning.domain.Course;
 import org.masterylearning.domain.Entry;
 import org.masterylearning.domain.data.Section;
-import org.masterylearning.repository.CourseRepository;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.inject.Inject;
-import javax.transaction.Transactional;
 
 import static org.junit.Assert.assertTrue;
 
@@ -23,17 +20,10 @@ import static org.junit.Assert.assertTrue;
 public class CourseServiceTest {
 
     @Inject CourseService courseService;
-    @Inject CourseRepository courseRepository;
-
-    @Before
-    public void before () {
-        createCourse ();
-    }
 
     @Test
-    @Transactional
     public void testFind () {
-        Course course = courseRepository.findOne (1L);
+        Course course = createCourse ();
 
         Entry entry = courseService.find (course, 3L);
 
@@ -52,22 +42,27 @@ public class CourseServiceTest {
         assertTrue (checkSectionTitle (entry, "D"));
     }
 
-    private void createCourse () {
+    private Course createCourse () {
         Course course = new Course ();
+        course.id = 1L;
 
         Entry a = course.insert (new Section ("A"));
+        a.id = 1L;
 
         Entry b = a.insert (new Section ("B"));
+        b.id = 2L;
 
         Entry c = b.insert (new Section ("C"));
+        c.id = 3L;
 
         Entry d = b.insert (new Section ("D"));
+        d.id = 4L;
 
-        courseRepository.save (course);
+        return course;
     }
 
     private boolean checkSectionTitle (Entry entry, String title) {
-        if ("section".equals (entry.data.type) &&entry.data instanceof Section) {
+        if (entry.getData () instanceof Section && "section".equals (entry.getData ().type)) {
             Section section = (Section) entry.data;
             return section.title.equals (title);
         }
