@@ -34,6 +34,7 @@ public class CourseController {
     @Inject EntryRepository entryRepository;
     @Inject CourseService courseService;
 
+    @CrossOrigin
     @RequestMapping (method = RequestMethod.GET)
     public List<CourseOutDto>
     getCourseList () {
