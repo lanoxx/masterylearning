@@ -5,8 +5,9 @@ import org.hibernate.annotations.Type;
 import org.masterylearning.dto.out.EntryDataOutDto;
 import org.masterylearning.dto.out.data.MultiAnswerExerciseDto;
 
-import javax.persistence.ElementCollection;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import java.util.List;
 
 @Entity (name = "MultiAnswerExercise")
@@ -18,7 +19,7 @@ public class MultiAnswerExercise extends Exercise {
     public String text;
     public boolean blocks;
 
-    @ElementCollection
+    @OneToMany (cascade = CascadeType.PERSIST)
     public List<AnswerCandidate> answerCandidates;
 
     public MultiAnswerExercise () {
