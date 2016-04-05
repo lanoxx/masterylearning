@@ -9,6 +9,7 @@ import javax.persistence.Entity;
 public class Unit extends EntryData {
     public String fullTitle;
     public String breadcrumbTitle;
+    public String description;
     public Long prevUnitId;
     public Long nextUnitId;
 
