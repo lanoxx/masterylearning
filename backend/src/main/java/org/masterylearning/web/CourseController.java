@@ -109,6 +109,11 @@ public class CourseController {
 
         Course course = courseRepository.getOne (courseId);
 
+        if (course == null) {
+            //TODO return error
+            return null;
+        }
+
         root = courseService.find (course, entryId);
 
         TreeEnumerator treeEnumerator = new TreeEnumerator (root, entry -> entry.data instanceof ContinueButton || entry.data instanceof Exercise);
