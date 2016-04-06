@@ -48,10 +48,6 @@ angular.module('myApp', [
             UserService.set_mode (currentMode);
         }
 
-        //TODO: Hard code our active course here for the moment, this needs to be replaced by loading from the backend
-        // later
-        UserService.active_courses.push (new CourseHistory ('fmi'));
-
         $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
             if (toState.role === undefined) {
                 // if no role is defined, then the route does not need to be secured and we can just continue to change
