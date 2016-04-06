@@ -15,9 +15,10 @@ public class EntryDataOutDto {
     public EntryDataOutDto () {}
 
     public EntryDataOutDto (EntryData data) {
-        this.id = data.id;
 
         if (data.container != null) {
+            this.id = data.container.id;
+
             if (data.container.parent != null) {
                 this.parent = data.container.parent.id;
             }
