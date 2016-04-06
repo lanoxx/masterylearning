@@ -1,7 +1,6 @@
 package org.masterylearning.service;
 
 import org.masterylearning.domain.Entry;
-import org.masterylearning.domain.data.EntryData;
 import org.masterylearning.dto.out.EntryDataOutDto;
 
 import java.util.ArrayList;
@@ -28,16 +27,12 @@ public class TreeEnumerator {
 
         currentEntry = this.entryStack.pop();
 
-        EntryData data = currentEntry.getData ();
-
-        entries.add (data.toDto ());
-
-        while ((currentEntry = currentEntry.next ()) != null)
+        while (currentEntry != null)
         {
+            entries.add (currentEntry.getData ().toDto ());
+
             if (this.blockingStrategy.blocks (currentEntry))
             {
-                entries.add (currentEntry.getData ().toDto ());
-
                 next = currentEntry.next ();
                 if (next != null)
                     this.entryStack.push (next);
@@ -45,7 +40,7 @@ public class TreeEnumerator {
                 return entries;
             }
 
-            entries.add (currentEntry.getData ().toDto ());
+            currentEntry = currentEntry.next ();
         }
 
         return entries;
