@@ -4,6 +4,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.masterylearning.domain.Course;
 import org.masterylearning.domain.Entry;
+import org.masterylearning.domain.data.ContinueButton;
+import org.masterylearning.domain.data.Exercise;
 import org.masterylearning.dto.out.CourseOutDto;
 import org.masterylearning.dto.out.CreateCourseOutDto;
 import org.masterylearning.dto.out.EnumerationOutDto;
@@ -109,7 +111,7 @@ public class CourseController {
 
         root = courseService.find (course, entryId);
 
-        TreeEnumerator treeEnumerator = new TreeEnumerator (root, entry -> "continue-button".equals (entry.data.type) || "exercise".equals (entry.data.type));
+        TreeEnumerator treeEnumerator = new TreeEnumerator (root, entry -> entry.data instanceof ContinueButton || entry.data instanceof Exercise);
 
         dto.entries = treeEnumerator.enumerateTree ();
 
@@ -133,7 +135,7 @@ public class CourseController {
         Course course = courseRepository.getOne (courseId);
         root = course.next ();
 
-        TreeEnumerator treeEnumerator = new TreeEnumerator (root, entry -> "continue-button".equals (entry.data.type) || "exercise".equals (entry.data.type));
+        TreeEnumerator treeEnumerator = new TreeEnumerator (root, entry -> entry.data instanceof ContinueButton || entry.data instanceof Exercise);
 
         dto.entries = treeEnumerator.enumerateTree ();
         Entry next = treeEnumerator.entryStack.peek ();
