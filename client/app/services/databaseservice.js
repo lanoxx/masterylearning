@@ -70,11 +70,11 @@ angular.module('myapp.services.database', [
 
         paragraph = unit_section.insert (new Paragraph ("text", "A paragrahp of a section."));
 
-        var exercise = unit.insert (new YesNoExercise("Evaluate Syntax", "Is \\((P \\wedge Q)\\) a subformula of the formula \\((R \\vee (P \\wedge Q))\\)?", true, true, null));
+        var exercise = unit.insert (new YesNoExercise("Evaluate Syntax", "Is \\((P \\wedge Q)\\) a subformula of the formula \\((R \\vee (P \\wedge Q))\\)?", true, true));
 
-        exercise = unit.insert (new YesNoExercise("Evaluate Syntax", "Is \\((Q \\wedge P)\\) a subformula of the formula \\((R \\vee (P \\wedge Q))\\)?", false, true, exercise.data));
+        exercise = unit.insert (new YesNoExercise("Evaluate Syntax", "Is \\((Q \\wedge P)\\) a subformula of the formula \\((R \\vee (P \\wedge Q))\\)?", false, true));
 
-        exercise = unit.insert (new YesNoExercise ("Evaluate Semantics", "Given the following variable assignments: <ul><li>\\(a \\rightarrow 0\\)</li><li>\\(b \\rightarrow 1\\)</li><li>\\(c \\rightarrow 1\\)</li><li>\\(d \\rightarrow 1\\)</li></ul>Please specify the result for the following logical formula: <strong>\\((a \\land b) \\lor (c \\oplus D) \\)</strong>", true, true, exercise.data));
+        exercise = unit.insert (new YesNoExercise ("Evaluate Semantics", "Given the following variable assignments: <ul><li>\\(a \\rightarrow 0\\)</li><li>\\(b \\rightarrow 1\\)</li><li>\\(c \\rightarrow 1\\)</li><li>\\(d \\rightarrow 1\\)</li></ul>Please specify the result for the following logical formula: <strong>\\((a \\land b) \\lor (c \\oplus D) \\)</strong>", true, true));
 
         exercise = unit.insert (new MultiAnswerExercise("Multiple Answers", "Which of the following answeres is syntactically right:",
             [
@@ -83,8 +83,7 @@ angular.module('myapp.services.database', [
                 { text: "\\(\\wedge P\\)", key: false },
                 { text: "\\((Q \\wedge P)\\)", key: true }
             ],
-            true,
-            exercise.data));
+            true));
 
         var exercise_section = exercise.data.insert_correct (new Section ("Exercise Section title", "Section description."));
         exercise_section.insert (new Paragraph ('text', "Your answer is correct."));

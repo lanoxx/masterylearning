@@ -62,10 +62,6 @@ angular.module ('myapp.factories.exercise', ['myapp.factories.entry', 'myapp.fac
             this.text = text;
             this.answer = answer;
             this.blocks = blocks;
-            if (typeof prev !== "undefined" && prev) {
-                prev.next = this;
-            }
-            this.next = null;
         }
 
         YesNoExercise.prototype = Object.create(Exercise.prototype);
