@@ -78,10 +78,10 @@ angular.module('myapp.services.database', [
 
         exercise = unit.insert (new MultiAnswerExercise("Multiple Answers", "Which of the following answeres is syntactically right:",
             [
-                { text: "\\(Q \\wedge P\\)", key: true },
-                { text: "\\(Q \\wedge \\wedge P\\)", key: false },
-                { text: "\\(\\wedge P\\)", key: false },
-                { text: "\\((Q \\wedge P)\\)", key: true }
+                { text: "\\(Q \\wedge P\\)", correct: true },
+                { text: "\\(Q \\wedge \\wedge P\\)", correct: false },
+                { text: "\\(\\wedge P\\)", correct: false },
+                { text: "\\((Q \\wedge P)\\)", correct: true }
             ],
             true));
 
