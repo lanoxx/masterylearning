@@ -98,6 +98,7 @@ public class CourseController {
     }
 
     //TODO: add security role user
+    @CrossOrigin
     @RequestMapping(path = "/{courseId}/enumerate/{entryId}", method = RequestMethod.GET)
     @Transactional
     public EnumerationOutDto enumerateEntries (@PathVariable Long courseId, @PathVariable Long entryId) {
@@ -121,6 +122,7 @@ public class CourseController {
     }
 
     //TODO: add security role user
+    @CrossOrigin
     @RequestMapping(path = "/{courseId}/enumerate", method = RequestMethod.GET)
     @Transactional
     public EnumerationOutDto enumerateEntries (@PathVariable Long courseId)
