@@ -1,0 +1,66 @@
+{
+	"id": "2832b3d9-5c52-baaa-7c5c-60ba801fadd0",
+	"name": "MasteryLearning AWS",
+	"description": "",
+	"order": [
+		"1a74558d-d866-6041-7e3f-ae2b2900cb05",
+		"cf5eabf4-bf87-ec68-5e2e-3b8b525aeae5"
+	],
+	"folders": [],
+	"timestamp": 1459796381514,
+	"owner": 0,
+	"remoteLink": "",
+	"public": false,
+	"requests": [
+		{
+			"id": "1a74558d-d866-6041-7e3f-ae2b2900cb05",
+			"headers": "Content-Type: application/json\nAuthorization: Basic dXNlcjoxMjM0NTY=\n",
+			"url": "54.200.211.0:8080/courses",
+			"preRequestScript": null,
+			"pathVariables": {},
+			"method": "POST",
+			"data": [],
+			"dataMode": "raw",
+			"version": 2,
+			"tests": null,
+			"currentHelper": "basicAuth",
+			"helperAttributes": {
+				"id": "basic",
+				"username": "user",
+				"password": "123456",
+				"saveToRequest": true
+			},
+			"time": 1459796424717,
+			"name": "Add Course",
+			"description": "",
+			"collectionId": "2832b3d9-5c52-baaa-7c5c-60ba801fadd0",
+			"responses": [],
+			"rawModeData": "{\n    \"title\": \"Formal Methods\",\n    \"subtitle\": \"Formal Methods in Computer Science\",\n    \"period\":\"(SS'16)\",\n    \"description\": \"This course teaches block 4 of Formal Methods in Computer Science.\",\n    \"children\": [\n        {\n            \"data\": {\n                \"type\": \"section\",\n                \"title\": \"Section 1\",\n                \"description\": \"Description\"\n            },\n            \"children\": [\n                {\n                    \"data\": {\n                        \"type\": \"paragraph\",\n                        \"title\": \"Paragraph title\",\n                        \"text\": \"lorem ipsum\",\n                        \"paragraphType\": \"text\"\n                    },\n                    \"children\": []\n                },\n                {\n                    \"data\": {\n                        \"type\": \"paragraph\",\n                        \"title\": \"Paragraph title\",\n                        \"text\": \"lorem ipsum\",\n                        \"paragraphType\": \"text\"\n                    },\n                    \"children\": []\n                },\n                {\n                    \"data\": {\n                        \"type\": \"yesnoexercise\",\n                        \"text\": \"lorem ipsum\",\n                        \"answer\": true,\n                        \"correct\": {\n                            \"data\": {\n                                \"type\": \"section\",\n                                \"title\": \"Section 1\"\n                            }\n                        },\n                        \"incorrect\": {\n                            \"data\": {\n                                \"type\": \"section\",\n                                \"title\": \"Section 2\"\n                            }\n                        }\n                    }\n                }\n            ]\n        },\n        {\n            \"data\": {\n                \"type\": \"yesnoexercise\",\n                \"text\": \"foo exercise\",\n                \"answer\": true,\n                \"correct\": {\n                    \"data\": {\n                        \"type\": \"section\",\n                        \"title\": \"Correct Exercise Section 1\"\n                    }\n                },\n                \"incorrect\": {\n                    \"data\": {\n                        \"type\": \"section\",\n                        \"title\": \"Incorrect Exercise Section 1\"\n                    },\n                    \"children\": [\n                        {\n                            \"data\": {\n                                \"type\": \"paragraph\",\n                                \"text\": \"lorem ipsum\"\n                            }\n                        },\n                        {\n                            \"data\": {\n                                \"type\": \"paragraph\",\n                                \"text\": \"lorem ipsum\"\n                            }\n                        }\n                    ]\n                }\n            },\n            \"children\": []\n        }\n    ]\n}"
+		},
+		{
+			"id": "cf5eabf4-bf87-ec68-5e2e-3b8b525aeae5",
+			"headers": "Content-Type: application/json\nAuthorization: Basic dXNlcjoxMjM0NTY=\n",
+			"url": "54.200.211.0:8080/courses",
+			"preRequestScript": null,
+			"pathVariables": {},
+			"method": "GET",
+			"data": [],
+			"dataMode": "raw",
+			"version": 2,
+			"tests": null,
+			"currentHelper": "basicAuth",
+			"helperAttributes": {
+				"id": "basic",
+				"username": "user",
+				"password": "123456",
+				"saveToRequest": true
+			},
+			"time": 1459796447538,
+			"name": "Get Course",
+			"description": "",
+			"collectionId": "2832b3d9-5c52-baaa-7c5c-60ba801fadd0",
+			"responses": [],
+			"rawModeData": ""
+		}
+	]
+}
