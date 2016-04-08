@@ -80,3 +80,11 @@ You can check if everything works by running
 
 The rest endpoints should now be available on the host through
 `http://localhost:8080`.
+
+# TODOs
+
+Add email sending to our application:
+
+http://www.baeldung.com/registration-verify-user-by-email
+http://www.baeldung.com/spring-security-registration-i-forgot-my-password
+
