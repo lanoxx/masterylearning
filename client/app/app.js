@@ -77,7 +77,7 @@ angular.module('myApp', [
         });
     }])
 
-    .config(['$stateProvider', '$urlRouterProvider', 'katexConfigProvider', '$logProvider', function ($stateProvider, $urlRouterProvider, katexConfigProvider, $logProvider) {
+    .config(['$stateProvider', '$urlRouterProvider', 'katexConfigProvider', '$httpProvider', '$logProvider', function ($stateProvider, $urlRouterProvider, katexConfigProvider, $httpProvider, $logProvider) {
         var $log =  angular.injector(['ng']).get('$log');
         katexConfigProvider.errorHandler = function (error, expression, element)
         {
@@ -111,6 +111,10 @@ angular.module('myApp', [
             });
 
         $urlRouterProvider.otherwise('home');
+
+        //For now we use static login information until the security module is working as expected
+        // 'dXNlcjoxMjM0NTY=' --> 'user:123456'
+        $httpProvider.defaults.headers.common['Authorization'] = 'Basic dXNlcjoxMjM0NTY=';
     }])
 
     .controller ('HomeCtrl', ['$rootScope', function ($rootScope) {
