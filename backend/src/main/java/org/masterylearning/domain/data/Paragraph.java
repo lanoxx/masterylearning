@@ -20,6 +20,11 @@ public class Paragraph extends EntryData {
         this.type = "paragraph";
     }
 
+    /* Supported modes are 'math' and 'text'. This defines if the text field is to be rendered
+     * in math mode or normal html mode.
+     */
+    public String mode;
+
     @Override
     public EntryDataOutDto toDto () {
         return new ParagraphDto (this);

@@ -10,6 +10,7 @@ public class ParagraphDto extends EntryDataOutDto {
     public String title;
     public String text;
     public String paragraphType;
+    public String mode;
 
     public ParagraphDto () { }
 
@@ -21,5 +22,6 @@ public class ParagraphDto extends EntryDataOutDto {
         this.title = data.title;
         this.text = data.text;
         this.paragraphType = data.paragraphType;
+        this.mode = data.mode;
     }
 }
