@@ -19,7 +19,6 @@ public class Course implements Container<Entry> {
     public Long id;
 
     public String title;
-    public String subtitle;
     public String period;
     public String description;
 
