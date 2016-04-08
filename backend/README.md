@@ -11,3 +11,10 @@ So far I have done the following configuration:
  4. After starting the docker instance I used the mysql command to connect to
     the mysql inside the docker instance.
 
+# TODO
+
+Add email sending to our application:
+
+http://www.baeldung.com/registration-verify-user-by-email
+http://www.baeldung.com/spring-security-registration-i-forgot-my-password
+
