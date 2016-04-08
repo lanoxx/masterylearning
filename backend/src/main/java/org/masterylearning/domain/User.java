@@ -42,6 +42,9 @@ public class User implements UserDetails {
     @OneToMany
     public List<Role> roles;
 
+    @OneToMany
+    public List<CourseHistory> courseHistoryList;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities () {
         List<GrantedAuthority> authorities = new ArrayList<> ();
