@@ -54,7 +54,6 @@ m2=1</panel_attributes>
 --
 - id
 - title
-- subtitle
 - period
 - description</panel_attributes>
     <additional_attributes/>
@@ -137,7 +136,8 @@ Paragraph
 - title
 - text
 - paragraphType 
-  {text, definition}</panel_attributes>
+  {text, definition}
+- mode</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
