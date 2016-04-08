@@ -25,6 +25,7 @@ import javax.inject.Inject;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping (value = "/courses")
@@ -42,9 +43,7 @@ public class CourseController {
     getCourseList () {
         List<CourseOutDto> results = new ArrayList<> ();
         List<Course> all = courseRepository.findAll ();
-        for (Course course : all) {
-            results.add (new CourseOutDto (course));
-        }
+        results.addAll (all.stream ().map (CourseOutDto::new).collect (Collectors.toList ()));
         return results;
     }
 
