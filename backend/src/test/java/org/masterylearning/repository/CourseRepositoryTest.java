@@ -37,7 +37,6 @@ public class CourseRepositoryTest {
     public void createCourse () {
         Course course = new Course();
         course.title = "Formal Methods";
-        course.subtitle = "Subtitle";
         course.period = "2016";
         course.description = "Formal Methods description";
 
@@ -50,7 +49,6 @@ public class CourseRepositoryTest {
         Hibernate.initialize (course.children);
 
         assertTrue (course.title != null);
-        assertTrue (course.subtitle != null);
         assertTrue (course.period != null);
         assertTrue (course.description != null);
         assertTrue (course.children != null);

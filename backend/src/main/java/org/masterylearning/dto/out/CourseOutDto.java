@@ -24,7 +24,6 @@ public class CourseOutDto {
         this.id = data.id;
 
         this.title = data.title;
-        this.subtitle = data.subtitle;
         this.period = data.period;
         this.description = data.description;
 

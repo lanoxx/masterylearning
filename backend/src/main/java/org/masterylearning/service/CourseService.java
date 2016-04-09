@@ -23,7 +23,6 @@ public class CourseService {
 
         // Validate course
         validationDto.validate (course.title != null, "Course title must not be empty.");
-        validationDto.validate (course.subtitle != null, "Course subtitle must not be empty.");
         validationDto.validate (course.period != null, "Course period must not be empty.");
         validationDto.validate (course.description != null, "Course description must not be empty.");
 
