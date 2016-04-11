@@ -2,15 +2,12 @@ package org.masterylearning.configuration;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.authentication.www.BasicAuthenticationEntryPoint;
 
@@ -21,6 +18,7 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationEn
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     Logger logger = LogManager.getLogger (SecurityConfiguration.class);
+
     @Override
     protected void configure (HttpSecurity http) throws Exception {
         http.csrf().disable();
@@ -47,11 +45,5 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         BasicAuthenticationEntryPoint entryPoint = new BasicAuthenticationEntryPoint();
         entryPoint.setRealmName("MasteryLearning");
         return entryPoint;
-    }
-
-    @Bean
-    public PasswordEncoder
-    getPasswordEncoder () {
-        return new BCryptPasswordEncoder ();
     }
 }
