@@ -31,7 +31,11 @@ angular.module ('myapp.services.user', ['ngResource', 'base64'])
                     this.role = "ROLE_STUDENT";
                     this.currentUser = result;
                     loggedIn = true;
-                }.bind (this));
+                }.bind (this),
+                    function ()
+                    {
+                        $log.error ("[myApp] UserService.login failed.");
+                    });
             };
 
             this.changePassword = function (oldpassword, newpassword)
