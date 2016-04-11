@@ -1,9 +1,44 @@
-angular.module('myApp.student.profile', [])
+angular.module ('myApp.student.profile', [])
 
-    .config (['$stateProvider', function ($stateProvider) {
-    $stateProvider.state ('home.student.profile', {
-        url: '/profile',
-        templateUrl: 'student/profile/profile.html',
-        role: 'ROLE_STUDENT'
-    })
-}]);
+    .config (['$stateProvider', function ($stateProvider)
+    {
+        $stateProvider.state ('home.student.profile', {
+            url: '/profile',
+            templateUrl: 'student/profile/profile.html',
+            controller: 'ProfileController',
+            role: 'ROLE_STUDENT'
+        })
+    }])
+
+    .controller ('ProfileController', ['$scope', 'UserService', '$log', function ($scope, UserService, $log)
+    {
+        $scope.currentUser = UserService.currentUser;
+        $scope.errors = {};
+
+        $scope.changePassword = function ()
+        {
+            $log.info ("[myApp] Profile: Attempting to change user password");
+
+            if ($scope.newpassword === $scope.newpasswordrepeat) {
+                var changePasswordPromise = UserService.changePassword ($scope.oldpassword, $scope.newpassword);
+
+                changePasswordPromise.then (function (result)
+                {
+                    $scope.passwordChangeSuccess = result.passwordChanged;
+                }, function ()
+                {
+                    $scope.errors['passwordChange'] = true;
+                });
+            } else {
+                $scope.errors['newpasswordrepeat'] = true;
+            }
+        };
+
+        $scope.newpassword_changed_cb = function ()
+        {
+            var different = $scope.newpassword !== $scope.newpasswordrepeat;
+            $scope.errors['newpasswordrepeat'] = different;
+
+            $scope.passwordsMatch = $scope.newpassword.length > 0 && !different;
+        };
+    }]);

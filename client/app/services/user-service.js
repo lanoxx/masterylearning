@@ -32,6 +32,24 @@ angular.module ('myapp.services.user', ['ngResource', 'base64'])
                     loggedIn = true;
                 }.bind (this));
             };
+
+            this.changePassword = function (oldpassword, newpassword)
+            {
+                var changePasswordResource = $resource ("http://localhost:8080/users/current/password");
+                var success = changePasswordResource.save ( { oldPassword: oldpassword, newPassword: newpassword } );
+
+                return success.$promise.then (function (result)
+                    {
+                        $http.defaults.headers.common['Authorization'] = 'Basic ' + $base64.encode (this.currentUser.username + ":" + newpassword);
+
+                        return result;
+                    }.bind (this),
+                    function ()
+                    {
+                        $log.error ("[myApp] UserService.changePassword failed.")
+                    }
+                )
+            };
         }
 
         UserService.prototype.set_mode = function (mode)

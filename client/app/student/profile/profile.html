@@ -1,102 +1,96 @@
 <h1>Profile</h1>
 
 <div class="row">
-    <div class="col-md-6">
+    <div class="col-md-12">
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-6">
                 <div class="well">
                     <h2>Max Mustermann</h2>
-                    <img src="images/profile/avatar.png" alt="Avatar" width="70px" height="70px" style="float:left; margin-right: 40px;">
-                    <ul>
-                        <li>Matr. Nr: 1111111</li>
-                        <li>Username: maxmusterman</li>
-                        <li>Role: Student</li>
-                    </ul>
-                    <button class="btn btn-default">
-                        Change Avatar...
-                    </button>
-                    <button class="btn btn-default">
-                        Edit Profile...
-                    </button>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <p>
+                                <img src="images/profile/avatar.png" alt="Avatar" width="70px" height="70px" style="float:left; margin-right: 40px; margin-top: 5px;">
+                            </p>
+                        </div>
+                        <div class="col-md-9">
+                            <form>
+                                <div class="form-group">
+                                    <label for="fullname">Full Name:</label>
+                                    <input ng-model="currentUser.fullname" type="text" id="fullname" class="form-control" ng-disabled="true">
+                                </div>
+                                <div class="form-group">
+                                    <label for="username">Username:</label>
+                                    <input ng-model="currentUser.username" type="text" id="username" class="form-control" ng-disabled="true">
+                                </div>
+                                <p>You are registered as a <strong>student</strong></p>
+                                <button class="btn btn-default">
+                                    Change picture
+                                </button>
+                            </form>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-6">
                 <div class="well">
                     <h2>Account</h2>
                     <p>Change your accounts password:</p>
-                    <input class="form-control" type="text" placeholder="Enter password..."><br>
-                    <input class="form-control" type="text" placeholder="Repeat your password"><br>
-                    <button class="btn btn-default">Save new password</button>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <h2>Your lectures</h2>
-                <p>You are currently attending the following lecture. Select one to view your detailed progress
-                for that lecture.</p>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <div class="well">
-                    <h2>Formal Methods of Computer Science</h2>
-                    <p>Progress: 30%</p>
-                    <div class="progress">
-                        <div class="progress-bar" role="progressbar" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100" style="width: 30%;">
-                            <span class="sr-only">30% Complete</span>
-                        </div>
+                    <div class="form-group">
+                        <label for="oldpassword" class="control-label">Old password:</label>
+                        <input ng-model="oldpassword" id="oldpassword" class="form-control" type="password" placeholder="Enter old password">
                     </div>
-                    <p>You are currently studying <a>first-order logic</a>.</p>
-                    <p>Your next exercise: <a>Solving nested formulas with XOR</a>.</p>
-                    <p>Solve <strong>3 more exercises</strong> to finish your current unit.</p>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <div class="well">
-                    <h2>Semantics of Programming Languages</h2>
-                    <p>Progress: 10%</p>
-                    <div class="progress">
-                        <div class="progress-bar" role="progressbar" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100" style="width: 10%;">
-                            <span class="sr-only">10% Complete</span>
-                        </div>
+                    <div class="form-group has-feedback">
+                        <label for="newpassword" class="control-label">New Password:</label>
+                        <input ng-model="newpassword" id="newpassword" class="form-control" type="password" placeholder="Enter new password"
+                               ng-change="newpassword_changed_cb ()">
                     </div>
-                    <p>You are currently studying <a>Hoare Calculus</a>.</p>
-                    <p>Your next exercise: <a>recursion in the untyped lambda calculus</a>.</p>
-                    <p>Solve <strong>5 more exercises</strong> to finish your current unit.</p>
+                    <div class="form-group has-feedback" ng-class="{ 'has-error': errors['newpasswordrepeat'], 'has-success': passwordsMatch }">
+                        <label for="newpasswordrepeat" class="control-label">Repeat new password:</label>
+                        <input ng-model="newpasswordrepeat" id="newpasswordrepeat" class="form-control" type="password" placeholder="Repeat your password"
+                               ng-change="newpassword_changed_cb ()">
+                        <span ng-show="errors['newpasswordrepeat']" class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
+                        <span ng-show="passwordsMatch"
+                              class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
+                    </div>
+
+                    <p ng-if="errors['passwordChanged']" class="alert alert-danger">
+                        An error occurred while changing the password. The password was not changed.
+                    </p>
+                    <p ng-if="passwordChangeSuccess" class="alert alert-success">
+                        Password successfully changed.
+                    </p>
+
+                    <button class="btn btn-default" ng-disabled="!passwordsMatch" ng-click="changePassword ()">Save</button>
                 </div>
             </div>
         </div>
     </div>
-    <div class="col-md-6 bg-info">
-        <h1>Storyboard</h1>
-        <p>This is the profile view for the student. It includes information about the student. There will not be an overall
-            progress for the student since progress can only be made in the individual lectures and their respective units.
-        </p>
-        <p>For now we do not include <strong>gamification</strong> elements but they could possibly be added later.
-        </p>
-        <p>For the student we are showing some data of his profile such as:</p>
-        <ul>
-            <li>Information about the student, e.g. name, username, avatar icon</li>
-            <li>Clicking on "Change avatar" will open a dialog where the user can upload a new avatar icon or select one
-            of several predefined icons.</li>
-            <li>For the "edit profile" button there are still some open questions:
-                <ul>
-                    <li>Should the user be able to change his full name?</li>
-                    <li>Should the user be able to change his Matrikelnumber?</li>
-                    <li>Are there any other profile related settings that we might want to let the student edit?</li>
-                    <li>Depending on how we decide this, the "edit profile" button could either be removed again, or
-                        it could open a dialog where the user can make the respective adjustments to his profile.
-                    </li>
-                </ul>
-            </li>
-        </ul>
-        <h2>Your lectures:</h2>
-        <p>Here we show a list of lectures that the student is currently
-           attending and how much progress the student has already made.</p>
-        <p>If the student is attending a lot of lectures we would only show those in which he was active recently
-        (such as in the last three days).</p>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="alert alert-info">
+            <h1>Storyboard</h1>
+            <p>This is the profile view for the student. It includes information about the student. There will not be an overall
+                progress for the student since progress can only be made in the individual lectures and their respective units.
+            </p>
+            <p>For now we do not include <strong>gamification</strong> elements but they could possibly be added later.
+            </p>
+            <p>For the student we are showing some data of his profile such as:</p>
+            <ul>
+                <li>Information about the student, e.g. name, username, avatar icon</li>
+                <li>Clicking on "Change avatar" will open a dialog where the user can upload a new avatar icon or select one
+                    of several predefined icons.</li>
+                <li>For the "edit profile" button there are still some open questions:
+                    <ul>
+                        <li>Should the user be able to change his full name?</li>
+                        <li>Should the user be able to change his Matrikelnumber?</li>
+                        <li>Are there any other profile related settings that we might want to let the student edit?</li>
+                        <li>Depending on how we decide this, the "edit profile" button could either be removed again, or
+                            it could open a dialog where the user can make the respective adjustments to his profile.
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
     </div>
 </div>
