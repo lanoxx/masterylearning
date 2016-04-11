@@ -1,7 +1,9 @@
 package org.masterylearning.web;
 
 import org.masterylearning.domain.User;
+import org.masterylearning.dto.in.ChangePasswordDto;
 import org.masterylearning.dto.in.CreateUserDto;
+import org.masterylearning.dto.out.ChangePasswordOutDto;
 import org.masterylearning.dto.out.CreateUserOutDto;
 import org.masterylearning.dto.out.UserOutDto;
 import org.masterylearning.repository.UserRepository;
@@ -78,5 +80,31 @@ public class UserController {
         }
 
         return false;
+    }
+
+    @CrossOrigin
+    @RequestMapping (method = RequestMethod.POST, path = "/current/password")
+    @Transactional
+    public ChangePasswordOutDto
+    changePassword (@RequestBody ChangePasswordDto dto) {
+        ChangePasswordOutDto outDto = new ChangePasswordOutDto ();
+
+        Object principal = SecurityContextHolder.getContext ().getAuthentication ().getPrincipal ();
+
+        if (principal instanceof User) {
+            User currentUser = (User) principal;
+
+            if (passwordEncoder.matches (dto.oldPassword, currentUser.password)) {
+                currentUser.password = passwordEncoder.encode (dto.newPassword);
+                userRepository.save (currentUser);
+
+                outDto.passwordChanged = true;
+
+            } else {
+                outDto.passwordChanged = false;
+            }
+        }
+
+        return outDto;
     }
 }
