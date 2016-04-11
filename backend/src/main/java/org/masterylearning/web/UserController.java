@@ -5,6 +5,7 @@ import org.masterylearning.dto.in.CreateUserDto;
 import org.masterylearning.dto.out.CreateUserOutDto;
 import org.masterylearning.dto.out.UserOutDto;
 import org.masterylearning.repository.UserRepository;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -39,8 +40,8 @@ public class UserController {
         return null;
     }
 
-    //TODO: add security role 'ADMIN'
     @CrossOrigin
+    @PreAuthorize (value = "hasRole('ADMIN')")
     @RequestMapping (method = RequestMethod.POST)
     public CreateUserOutDto
     createUser (@RequestBody CreateUserDto dto) {
@@ -64,6 +65,7 @@ public class UserController {
     }
 
     @CrossOrigin
+    @PreAuthorize (value = "hasRole('ADMIN')")
     @RequestMapping (method = RequestMethod.DELETE, path = "{username}")
     public Boolean
     deleteUser (@PathVariable String username)
