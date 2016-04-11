@@ -4,8 +4,10 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
@@ -40,8 +42,8 @@ public class User implements UserDetails {
         this.password = password;
     }
 
-    @OneToMany
-    public List<Role> roles;
+    @OneToMany (fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private List<Role> roles = new ArrayList<> ();
 
     @OneToMany
     public List<CourseHistory> courseHistoryList;
@@ -79,5 +81,9 @@ public class User implements UserDetails {
     @Override
     public boolean isEnabled () {
         return true;
+    }
+
+    public List<Role> getRoles () {
+        return roles;
     }
 }
