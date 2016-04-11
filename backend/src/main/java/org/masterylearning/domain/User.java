@@ -12,6 +12,7 @@ import javax.persistence.OneToMany;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 public class User implements UserDetails {
@@ -47,9 +48,7 @@ public class User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities () {
-        List<GrantedAuthority> authorities = new ArrayList<> ();
-        authorities.add ((GrantedAuthority) () -> "ROLE_USER");
-        return authorities;
+        return getRoles ().stream ().map (role -> (GrantedAuthority) () -> "ROLE_" + role.name).collect (Collectors.toList ());
     }
 
     @Override

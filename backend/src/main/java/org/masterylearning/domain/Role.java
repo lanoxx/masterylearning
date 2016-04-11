@@ -13,6 +13,7 @@ public class Role {
     @GeneratedValue
     public Long id;
 
-    public String role;
+    public String name;
+
     public String description;
 }
