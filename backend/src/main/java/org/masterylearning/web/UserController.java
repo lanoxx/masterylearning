@@ -54,7 +54,7 @@ public class UserController {
 
         String encodedPassword = passwordEncoder.encode (dto.password);
 
-        User user = new User (dto.username, encodedPassword);
+        User user = new User (dto.fullname, dto.username, encodedPassword);
 
         userRepository.save (user);
 

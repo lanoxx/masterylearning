@@ -13,11 +13,11 @@ public class UserService {
     @Inject PasswordEncoder passwordEncoder;
     @Inject UserRepository userRepository;
 
-    public User createUser (String username, String password) {
+    public User createUser (String fullname, String username, String password) {
 
         String encodedPassword = passwordEncoder.encode (password);
 
-        User user = new User (username, encodedPassword);
+        User user = new User (fullname, username, encodedPassword);
 
         userRepository.save (user);
 

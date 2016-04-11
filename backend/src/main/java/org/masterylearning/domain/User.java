@@ -26,6 +26,9 @@ public class User implements UserDetails {
     @Column(nullable = false, unique = true)
     public String username;
 
+    @Column (nullable = false)
+    public String fullname;
+
     /**
      * WARNING: do not remove JsonIgnore flag or else the password will be visible to the user when
      * the user object is serialized. In general the User object should not be directly returned
@@ -36,8 +39,9 @@ public class User implements UserDetails {
 
     protected User () { }
 
-    public User (String username, String password)
+    public User (String fullname, String username, String password)
     {
+        this.fullname = fullname;
         this.username = username;
         this.password = password;
     }
