@@ -3,6 +3,7 @@ package org.masterylearning.web;
 import org.masterylearning.domain.User;
 import org.masterylearning.dto.in.CreateUserDto;
 import org.masterylearning.dto.out.CreateUserOutDto;
+import org.masterylearning.dto.out.UserOutDto;
 import org.masterylearning.repository.UserRepository;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.inject.Inject;
+import javax.transaction.Transactional;
 
 /**
  */
@@ -26,11 +28,12 @@ public class UserController {
 
     @CrossOrigin
     @RequestMapping (method = RequestMethod.GET, path = "/current")
-    public User
+    @Transactional
+    public UserOutDto
     getUser () {
         Object principal = SecurityContextHolder.getContext ().getAuthentication ().getPrincipal ();
         if (principal instanceof User) {
-            return (User) principal;
+            return new UserOutDto ((User) principal);
         }
 
         return null;
