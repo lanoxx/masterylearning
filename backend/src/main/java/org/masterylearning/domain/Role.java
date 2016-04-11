@@ -1,5 +1,7 @@
 package org.masterylearning.domain;
 
+import org.hibernate.annotations.Type;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -15,5 +17,6 @@ public class Role {
 
     public String name;
 
+    @Type(type = "text")
     public String description;
 }
