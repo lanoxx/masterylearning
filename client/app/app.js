@@ -112,9 +112,6 @@ angular.module('myApp', [
 
         $urlRouterProvider.otherwise('home');
 
-        //For now we use static login information until the security module is working as expected
-        // 'dXNlcjoxMjM0NTY=' --> 'user:123456'
-        $httpProvider.defaults.headers.common['Authorization'] = 'Basic dXNlcjoxMjM0NTY=';
     }])
 
     .controller ('HomeCtrl', ['$rootScope', function ($rootScope) {
@@ -184,4 +181,17 @@ angular.module('myApp', [
         {
             return RoleService.currentRole === RoleService.NONE;
         };
+    }])
+
+    .controller ('LoginController', ['$scope', 'UserService', 'RoleService', function ($scope, UserService, RoleService)
+    {
+        $scope.login = function ()
+        {
+            var loginResult = UserService.login ($scope.username, $scope.password);
+
+            loginResult.then (function ()
+            {
+                UserService.switchRole (RoleService.STUDENT);
+            });
+        }
     }]);

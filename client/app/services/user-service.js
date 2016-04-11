@@ -1,19 +1,37 @@
-angular.module ('myapp.services.user', [])
+angular.module ('myapp.services.user', ['ngResource', 'base64'])
 
-    .factory ('UserService', [function UserServiceFactory()
+    .factory ('UserService', ['$resource', '$http', '$base64', function UserServiceFactory($resource, $http, $base64)
     {
         function UserService()
         {
+            var loggedIn = false;
+
             this.currentUser = null;
             this.role = "ROLE_GUEST";
 
-            /**
-             *
-             * @type {Array.<CourseHistory>}
-             */
-            this.active_courses = [];
-
             this.mode = "flow";
+            this.isLoggedIn = function ()
+            {
+                return loggedIn;
+            };
+
+            this.logout = function ()
+            {
+                loggedIn = false;
+            };
+
+            this.login = function (username, password)
+            {
+                $http.defaults.headers.common['Authorization'] = 'Basic ' + $base64.encode(username + ":" + password);
+
+                var userOutDto = $resource ("http://localhost:8080/users/current", null, {method: 'GET' }).get();
+                return userOutDto.$promise.then (function (result)
+                {
+                    this.role = "ROLE_STUDENT";
+                    this.currentUser = result;
+                    loggedIn = true;
+                }.bind (this));
+            };
         }
 
         UserService.prototype.set_mode = function (mode)
