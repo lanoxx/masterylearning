@@ -1,6 +1,7 @@
 angular.module ('myapp.services.user', ['ngResource', 'base64'])
 
-    .factory ('UserService', ['$resource', '$http', '$base64', function UserServiceFactory($resource, $http, $base64)
+    .factory ('UserService', ['$state', '$cookies', '$resource', '$http', '$base64', 'RoleService', '$log',
+        function UserServiceFactory($state, $cookies, $resource, $http, $base64, RoleService, $log)
     {
         function UserService()
         {
@@ -50,6 +51,41 @@ angular.module ('myapp.services.user', ['ngResource', 'base64'])
                     }
                 )
             };
+
+            /**
+             * This will attempt to set the new role in the role service and if successful switches the route
+             * according to the new role.
+             *
+             * @param role A valid role from the RoleService
+             */
+            this.switchRole = function (role)
+            {
+                $log.info ("[myApp] Switching application role to " + role);
+
+                if (RoleService.setRole(role)) {
+                    if (role == RoleService.STUDENT) {
+                        UserService.role = 'ROLE_STUDENT';
+                        $cookies.put('role', 'ROLE_STUDENT');
+                        $cookies.put('currentUser', this.currentUser.username);
+                        $state.go('home.student');
+                    }
+                    if (role == RoleService.TEACHER) {
+                        UserService.role = 'ROLE_TEACHER';
+                        $cookies.put('role', 'ROLE_TEACHER');
+                        $cookies.put('currentUser', this.currentUser.username);
+                        $state.go('home.teacher');
+                    }
+                    if (role == RoleService.NONE) {
+                        console.log ('[myApp].NavigationController: Logging out. Switching security role to ROLE_GUEST');
+                        UserService.role = 'ROLE_GUEST';
+                        UserService.currentUser = null;
+                        $cookies.remove('role');
+                        $cookies.remove('currentUser');
+                        $cookies.remove('mode');
+                        $state.go('home');
+                    }
+                }
+            }.bind(this);
         }
 
         UserService.prototype.set_mode = function (mode)
