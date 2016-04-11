@@ -1,4 +1,4 @@
-package org.masterylearning.service;
+package org.masterylearning.web;
 
 import org.masterylearning.domain.User;
 import org.masterylearning.repository.UserRepository;
