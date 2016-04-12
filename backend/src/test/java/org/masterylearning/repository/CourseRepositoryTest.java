@@ -130,16 +130,16 @@ public class CourseRepositoryTest {
 
         assertTrue(course.children.size() == 1);
 
-        assertTrue (entry1.id == 1);
+        assertTrue ("Expected entry1.id to equal 1 but got " + entry1.id, entry1.id == 1);
         assertTrue (entry1.children.size() == 2);
 
-        assertTrue (section.id == 3);
+        assertTrue ("Expected section.id to equal 3 but got " + section.id, section.id == 3);
         assertTrue (section.container == entry1);
 
-        assertTrue (entry2.id == 2);
+        assertTrue ("Expected entry2.id to equal 2 but got " + entry2.id, entry2.id == 2);
         assertTrue (entry2.parent == entry1);
 
-        assertTrue (paragraph.id == 1);
+        assertTrue ("Expected paragraph.id to equal 1 but got " + paragraph.id, paragraph.id == 1);
         assertTrue (paragraph.container == entry2);
     }
 
