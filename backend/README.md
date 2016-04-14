@@ -36,11 +36,16 @@ I use a docker mysql instance to run the database but it is also
 possible to install mysql directly on the system. To create and
 run a new docker container with mysql use the following command:
 
-    docker run --name masterylearning-mysql -e MYSQL_ROOT_PASSWORD=masterylearning -d mysql:latest
+    docker network create mlnet
+
+    docker run --name masterylearning-mysql --net mlnet --net-alias backend -p 4000:3306 \
+               --env MYSQL_ROOT_PASSWORD=masterylearning \
+               --env MYSQL_DATABASE=masterylearning -d mysql:latest
 
 If you use an alternative password instead of `masterylearning` you
 should overwrite the password datasource option when starting the
-backend.
+backend. The above command also creates a default database named
+`masterylearning`.
 
 # Building and Deployment
 
@@ -67,7 +72,7 @@ Replace `foo` and `bar` with the respective property name and value.
 
 Alternatively you can create and start a new docker container:
 
-    docker create --name backend --link masterylearning-mysql:mysql -p 8080:8080 <imageId>
+    docker create --name masterylearning-backend --net mlnet --net-alias=backend -p 8080:8080 <imageId>
 
 This has the following effect, the name for our new container is
 `backend`, it is linked with an existing mysql container named `masterylearning-mysql`,
@@ -80,11 +85,3 @@ You can check if everything works by running
 
 The rest endpoints should now be available on the host through
 `http://localhost:8080`.
-
-# TODOs
-
-Add email sending to our application:
-
-http://www.baeldung.com/registration-verify-user-by-email
-http://www.baeldung.com/spring-security-registration-i-forgot-my-password
-
