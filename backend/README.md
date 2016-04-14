@@ -14,7 +14,7 @@ list gives an overview of the other dependencies used:
    endpoints.
  * Spring Data JPA and Hibernate for persistence
  * Mysql JDBC driver to connect with MySQL
- * Log4j2 for loggingd
+ * Log4j2 for logging
 
 We also use the Spring Web MVC layer for our REST endpoints and Jackson
 for data serialization.
