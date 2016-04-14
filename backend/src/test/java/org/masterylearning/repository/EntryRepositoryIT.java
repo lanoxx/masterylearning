@@ -8,6 +8,7 @@ import org.masterylearning.App;
 import org.masterylearning.domain.Entry;
 import org.masterylearning.domain.data.Section;
 import org.masterylearning.domain.data.YesNoExercise;
+import org.springframework.boot.test.IntegrationTest;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -21,8 +22,9 @@ import static org.junit.Assert.assertTrue;
  * might be to configure an in-memory hsqldb to test against.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
+@IntegrationTest
 @SpringApplicationConfiguration(App.class)
-public class EntryRepositoryTest {
+public class EntryRepositoryIT {
 
     @Inject EntryRepository entryRepository;
 
