@@ -2,24 +2,19 @@ package org.masterylearning.service;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.masterylearning.App;
+import org.junit.runners.BlockJUnit4ClassRunner;
 import org.masterylearning.domain.Course;
 import org.masterylearning.domain.Entry;
 import org.masterylearning.domain.data.Section;
-import org.springframework.boot.test.SpringApplicationConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-
-import javax.inject.Inject;
 
 import static org.junit.Assert.assertTrue;
 
 /**
  */
-@RunWith (SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(App.class)
+@RunWith (BlockJUnit4ClassRunner.class)
 public class CourseServiceTest {
 
-    @Inject CourseService courseService;
+    private CourseService courseService = new CourseService ();
 
     @Test
     public void testFind () {
