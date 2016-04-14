@@ -23,6 +23,7 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <java.version>1.8</java.version>
+    <docker.image.prefix>masterylearning</docker.image.prefix>
   </properties>
 
   <dependencyManagement>
@@ -36,4 +37,16 @@
 
     </dependencies>
   </dependencyManagement>
+
+  <build>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>com.spotify</groupId>
+          <artifactId>docker-maven-plugin</artifactId>
+          <version>0.4.5</version>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+  </build>
 </project>

@@ -17,7 +17,6 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <docker.image.prefix>masterylearning</docker.image.prefix>
   </properties>
 
   <dependencies>
@@ -98,10 +97,17 @@
       <plugin>
         <groupId>com.spotify</groupId>
         <artifactId>docker-maven-plugin</artifactId>
-        <version>0.4.1</version>
+        <executions>
+          <execution>
+            <phase>install</phase>
+            <goals>
+              <goal>build</goal>
+            </goals>
+          </execution>
+        </executions>
         <configuration>
           <imageName>${docker.image.prefix}/${project.artifactId}</imageName>
-          <dockerDirectory>src/main/docker</dockerDirectory>
+          <dockerDirectory>${project.basedir}/src/main/docker</dockerDirectory>
           <resources>
             <resource>
               <targetPath>/</targetPath>
