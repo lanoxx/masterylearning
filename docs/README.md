@@ -69,3 +69,12 @@ http://www.baeldung.com/registration-verify-user-by-email
 http://www.baeldung.com/spring-security-registration-i-forgot-my-password
 
 [1]: http://docs.spring.io/spring/docs/4.2.5.RELEASE/spring-framework-reference/htmlsingle/#mail
+
+# Separating unit tests and integration tests
+
+http://g00glen00b.be/spring-boot-rest-assured/
+http://calenlegaspi.blogspot.co.at/
+
+# Maven Phase and Goal overview
+
+http://stackoverflow.com/questions/1709625/maven-command-to-list-lifecycle-phases-along-with-bound-goals
