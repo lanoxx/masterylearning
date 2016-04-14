@@ -9,7 +9,7 @@
   </parent>
 
   <artifactId>client</artifactId>
-  <packaging>jar</packaging>
+  <packaging>pom</packaging>
 
   <name>client</name>
   <url>http://maven.apache.org</url>
