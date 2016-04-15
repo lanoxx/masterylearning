@@ -1,7 +1,7 @@
 angular.module ('myapp.services.user', ['ngResource', 'base64'])
 
-    .factory ('UserService', ['$state', '$cookies', '$resource', '$http', '$base64', 'RoleService', '$log',
-        function UserServiceFactory($state, $cookies, $resource, $http, $base64, RoleService, $log)
+    .factory ('UserService', ['$state', '$cookies', '$resource', '$http', '$base64', 'RoleService', '$q', '$log',
+        function UserServiceFactory($state, $cookies, $resource, $http, $base64, RoleService, $q, $log)
     {
         function UserService()
         {
@@ -26,16 +26,22 @@ angular.module ('myapp.services.user', ['ngResource', 'base64'])
                 $http.defaults.headers.common['Authorization'] = 'Basic ' + $base64.encode(username + ":" + password);
 
                 var userOutDto = $resource ("http://localhost:8080/users/current", null, {method: 'GET' }).get();
-                return userOutDto.$promise.then (function (result)
+
+                var loginSuccess = function LoginSuccess(result)
                 {
                     this.role = "ROLE_STUDENT";
                     this.currentUser = result;
                     loggedIn = true;
-                }.bind (this),
-                    function ()
-                    {
-                        $log.error ("[myApp] UserService.login failed.");
-                    });
+                }.bind (this);
+
+                var loginFailed = function (result)
+                {
+                    $log.error ("[myApp] UserService.login failed.");
+
+                    return $q.reject ("Login Failed");
+                };
+
+                return userOutDto.$promise.then (loginSuccess, loginFailed);
             };
 
             this.changePassword = function (oldpassword, newpassword)

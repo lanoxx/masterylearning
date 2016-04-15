@@ -151,15 +151,23 @@ angular.module('myApp', [
         };
     }])
 
-    .controller ('LoginController', ['$scope', 'UserService', 'RoleService', function ($scope, UserService, RoleService)
+    .controller ('LoginController', ['$scope', 'UserService', 'RoleService', '$log', function ($scope, UserService, RoleService, $log)
     {
+        $scope.loginError = false;
+
         $scope.login = function ()
         {
             var loginResult = UserService.login ($scope.username, $scope.password);
 
-            loginResult.then (function ()
-            {
-                UserService.switchRole (RoleService.STUDENT);
-            });
+            loginResult.then (
+                function success (result) {
+                    if (UserService.isLoggedIn())
+                        UserService.switchRole (RoleService.STUDENT);
+                    },
+                function error (result) {
+                    $log.error("[myApp] LoginController: Error logging in.");
+                    $scope.loginError = true;
+                }
+            );
         }
     }]);

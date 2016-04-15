@@ -58,6 +58,8 @@
                             <input ng-model="password" type="password" id="password" class="form-control" placeholder="Enter password">
                         </div>
 
+                        <p ng-if="loginError" class="alert alert-danger">Error logging in, please check username and password and make sure that the user exists on the server.</p>
+
                         <div class="form-group">
                             <button class="btn btn-default" ng-click="login()">Login</button>
                         </div>
