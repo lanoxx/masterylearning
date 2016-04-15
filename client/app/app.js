@@ -20,6 +20,43 @@ angular.module('myApp', [
     'myApp.version'
 ])
 
+    .config(['$stateProvider', '$urlRouterProvider', 'katexConfigProvider', '$httpProvider', '$logProvider', function ($stateProvider, $urlRouterProvider, katexConfigProvider, $httpProvider, $logProvider) {
+        var $log =  angular.injector(['ng']).get('$log');
+        katexConfigProvider.errorHandler = function (error, expression, element)
+        {
+            $log.info(error);
+        };
+
+        $urlRouterProvider.when ('/home/student/unit1', '/home/student/unit1/content');
+
+        /**
+         * Currently this is the home, but at some point we need to rename it to 'welcome' or 'login'.
+         * For simplicity we have no user management now so we just leave it like this.
+         */
+        $stateProvider.state('home', {
+            url: '/home',
+            views: {
+                'navigation@': {
+                    templateUrl: 'navigation.html',
+                    controller: 'NavigationController'
+                },
+                '@': {
+                    templateUrl: 'app.html',
+                    controller: 'HomeCtrl'
+                }
+            },
+            role: 'ROLE_GUEST'
+        })
+
+            .state ('home.student.practice', {
+                url: '/practice',
+                templateUrl: 'student/practice/unit1.html'
+            });
+
+        $urlRouterProvider.otherwise('home');
+
+    }])
+
     .run (['$rootScope', '$state', '$cookies', 'UserService', 'RoleService', 'CourseHistory', '$log',
         function ($rootScope, $state, $cookies, UserService, RoleService, CourseHistory, $log) {
             var role = $cookies.get('role');
@@ -75,43 +112,6 @@ angular.module('myApp', [
         $rootScope.$on ('$stateNotFound', function (event, toState, toParams, fromState, fromParams) {
             $log.info ("[myApp] $stateNotFound (state: " + toState.name + ")");
         });
-    }])
-
-    .config(['$stateProvider', '$urlRouterProvider', 'katexConfigProvider', '$httpProvider', '$logProvider', function ($stateProvider, $urlRouterProvider, katexConfigProvider, $httpProvider, $logProvider) {
-        var $log =  angular.injector(['ng']).get('$log');
-        katexConfigProvider.errorHandler = function (error, expression, element)
-        {
-            $log.info(error);
-        };
-
-        $urlRouterProvider.when ('/home/student/unit1', '/home/student/unit1/content');
-
-        /**
-         * Currently this is the home, but at some point we need to rename it to 'welcome' or 'login'.
-         * For simplicity we have no user management now so we just leave it like this.
-         */
-        $stateProvider.state('home', {
-            url: '/home',
-            views: {
-                'navigation@': {
-                    templateUrl: 'navigation.html',
-                    controller: 'NavigationController'
-                },
-                '@': {
-                    templateUrl: 'app.html',
-                    controller: 'HomeCtrl'
-                }
-            },
-            role: 'ROLE_GUEST'
-        })
-
-            .state ('home.student.practice', {
-                url: '/practice',
-                templateUrl: 'student/practice/unit1.html'
-            });
-
-        $urlRouterProvider.otherwise('home');
-
     }])
 
     .controller ('HomeCtrl', ['$rootScope', function ($rootScope) {
