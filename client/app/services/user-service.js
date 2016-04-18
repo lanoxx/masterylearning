@@ -1,8 +1,10 @@
-angular.module ('myapp.services.user', ['ngResource', 'base64'])
+angular.module ('myapp.services.user', ['ngResource', 'base64', 'myapp.config'])
 
-    .factory ('UserService', ['$state', '$cookies', '$resource', '$http', '$base64', 'RoleService', '$q', '$log',
-        function UserServiceFactory($state, $cookies, $resource, $http, $base64, RoleService, $q, $log)
+    .factory ('UserService', ['Configuration', '$state', '$cookies', '$resource', '$http', '$base64', 'RoleService', '$q', '$log',
+        function UserServiceFactory(Configuration, $state, $cookies, $resource, $http, $base64, RoleService, $q, $log)
     {
+        var apiUrlPrefix = Configuration.getApiUrl() || "";
+
         function UserService()
         {
             var loggedIn = false;
@@ -25,7 +27,7 @@ angular.module ('myapp.services.user', ['ngResource', 'base64'])
             {
                 $http.defaults.headers.common['Authorization'] = 'Basic ' + $base64.encode(username + ":" + password);
 
-                var userOutDto = $resource ("http://localhost:8080/users/current", null, {method: 'GET' }).get();
+                var userOutDto = $resource (apiUrlPrefix + "/users/current", null, {method: 'GET' }).get();
 
                 var loginSuccess = function LoginSuccess(result)
                 {
@@ -46,7 +48,7 @@ angular.module ('myapp.services.user', ['ngResource', 'base64'])
 
             this.changePassword = function (oldpassword, newpassword)
             {
-                var changePasswordResource = $resource ("http://localhost:8080/users/current/password");
+                var changePasswordResource = $resource (apiUrlPrefix + "/users/current/password");
                 var success = changePasswordResource.save ( { oldPassword: oldpassword, newPassword: newpassword } );
 
                 return success.$promise.then (function (result)

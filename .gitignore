@@ -1,5 +1,6 @@
 client/node_modules
 client/app/bower_components
+client/app/config.js
 target/
 .idea
 **/*.iml

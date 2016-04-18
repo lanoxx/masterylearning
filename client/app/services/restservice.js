@@ -2,29 +2,12 @@
  * Created by sebastiangeiger on 30/03/16.
  */
 
-angular.module ('myapp.services.rest', ['ngResource'])
+angular.module ('myapp.services.rest', ['ngResource', 'myapp.config'])
 
     //
     .provider ('RestService', function RestServiceProvider ()
     {
-        var apiAddress;
-        var apiPort;
-        var apiPath;
-
-        this.setAddress = function (address)
-        {
-            apiAddress = address;
-        };
-
-        this.setPort = function (port)
-        {
-            apiPort = port;
-        };
-
-        this.setPath = function (path)
-        {
-            apiPath = path;
-        };
+        var apiUrlPrefix = "";
 
         function RestService ($resource) {
             this.$resource = $resource;
@@ -32,22 +15,23 @@ angular.module ('myapp.services.rest', ['ngResource'])
 
             this.getCourseTableOfContents = function (id)
             {
-                return $resource ("http://localhost:8080/courses/:courseId", {courseId: '@courseId'}, { get: { method: 'GET', isArray: true } } );
+                return $resource (apiUrlPrefix + "/courses/:courseId", {courseId: '@courseId'}, { get: { method: 'GET', isArray: true } } );
             };
 
             this.getCourseList = function ()
             {
-                return $resource ("http://localhost:8080/courses", null, { get: { method: 'GET', isArray: true } } );
+                return $resource (apiUrlPrefix + "/courses", null, { get: { method: 'GET', isArray: true } } );
             };
 
             this.enumerateEntries = function ()
             {
-                return $resource ("http://localhost:8080/courses/:courseId/enumerate/:entryId", null, { get: { method: 'GET' } } )
+                return $resource (apiUrlPrefix + "/courses/:courseId/enumerate/:entryId", null, { get: { method: 'GET' } } )
             }
         }
 
-        this.$get = ['$resource', function ($resource)
+        this.$get = ['Configuration', '$resource', function (Configuration, $resource)
         {
+            apiUrlPrefix = Configuration.getApiUrl ();
             return new RestService($resource);
         }]
 
