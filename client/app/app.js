@@ -27,6 +27,15 @@ angular.module('myApp', [
             $log.info(error);
         };
 
+        katexConfigProvider.defaultOptions = {
+            delimiters: [
+                {left: "$$", right: "$$", display: true},
+                {left: "\\[", right: "\\]", display: true},
+                {left: "$", right: "$", display: false},
+                {left: "\\(", right: "\\)", display: false}
+            ]
+        };
+
         $urlRouterProvider.when ('/home/student/unit1', '/home/student/unit1/content');
 
         /**
