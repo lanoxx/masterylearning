@@ -2,7 +2,8 @@
 
     <div ng-if="entry.type == 'paragraph'">
         <div ng-if="entry.paragraphType == 'text'" class="text">
-            <p>{{sanitize (entry.text)}}</p>
+            <p data-katex data-bind="sanitize (entry.text)" data-auto-render>
+            </p>
         </div>
         <div ng-if="entry.paragraphType == 'definition'" class="definition">
             <p><strong>Definition {{entry.number}} ({{sanitize (entry.title)}})</strong></p>
@@ -10,7 +11,7 @@
                 <p data-katex data-bind="sanitize (entry.text)" data-auto-render></p>
             </div>
             <div ng-if="entry.mode != 'math'">
-                <p>{{entry.text}}</p>
+                <p ng-bind-html="sanitize (entry.text)"></p>
             </div>
         </div>
     </div>
