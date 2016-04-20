@@ -2,33 +2,33 @@
 
     <div ng-if="entry.type == 'paragraph'">
         <div ng-if="entry.paragraphType == 'text'" class="text">
-            <p data-katex data-bind="sanitize (entry.text)" data-auto-render>
+            <p data-katex data-bind="trust (entry.text)" data-auto-render>
             </p>
         </div>
         <div ng-if="entry.paragraphType == 'definition'" class="definition">
-            <p><strong>Definition {{entry.number}} ({{sanitize (entry.title)}})</strong></p>
+            <p><strong>Definition {{entry.number}} ({{trust (entry.title)}})</strong></p>
             <div ng-if="entry.mode == 'math'">
-                <p data-katex data-bind="sanitize (entry.text)" data-auto-render></p>
+                <p data-katex data-bind="trust (entry.text)" data-auto-render></p>
             </div>
             <div ng-if="entry.mode != 'math'">
-                <p ng-bind-html="sanitize (entry.text)"></p>
+                <p ng-bind-html="trust (entry.text)"></p>
             </div>
         </div>
     </div>
 
     <div ng-if="entry.type == 'section'">
-        <h1 ng-if="entry.depth - depth <= 0">{{sanitize (entry.title)}}</h1>
-        <h2 ng-if="entry.depth - depth == 1">{{sanitize (entry.title)}}</h2>
-        <h3 ng-if="entry.depth - depth == 2">{{sanitize (entry.title)}}</h3>
-        <h4 ng-if="entry.depth - depth >= 3">{{sanitize (entry.title)}}</h4>
-        <p>{{sanitize (entry.description)}}</p>
+        <h1 ng-if="entry.depth - depth <= 0">{{trust (entry.title)}}</h1>
+        <h2 ng-if="entry.depth - depth == 1">{{trust (entry.title)}}</h2>
+        <h3 ng-if="entry.depth - depth == 2">{{trust (entry.title)}}</h3>
+        <h4 ng-if="entry.depth - depth >= 3">{{trust (entry.title)}}</h4>
+        <p>{{trust (entry.description)}}</p>
     </div>
 
     <div ng-if="entry.type == 'unit'">
-        <h1 ng-if="entry.depth - depth <= 0">{{sanitize (entry.fullTitle)}}</h1>
-        <h2 ng-if="entry.depth - depth == 1">{{sanitize (entry.fullTitle)}}</h2>
-        <h3 ng-if="entry.depth - depth == 2">{{sanitize (entry.fullTitle)}}</h3>
-        <h4 ng-if="entry.depth - depth >= 3">{{sanitize (entry.fullTitle)}}</h4>
+        <h1 ng-if="entry.depth - depth <= 0">{{trust (entry.fullTitle)}}</h1>
+        <h2 ng-if="entry.depth - depth == 1">{{trust (entry.fullTitle)}}</h2>
+        <h3 ng-if="entry.depth - depth == 2">{{trust (entry.fullTitle)}}</h3>
+        <h4 ng-if="entry.depth - depth >= 3">{{trust (entry.fullTitle)}}</h4>
     </div>
 
     <div ng-if="entry.type == 'yesnoexercise'">
