@@ -53,6 +53,7 @@ public class UserController {
         if (existingUser != null) {
             outDto.message = "User exists";
             outDto.userId = null;
+            return outDto;
         }
 
         String encodedPassword = passwordEncoder.encode (dto.password);
