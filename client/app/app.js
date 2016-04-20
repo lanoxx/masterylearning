@@ -6,7 +6,6 @@ angular.module('myApp', [
     'ui.bootstrap',
     'ngCookies',
     'katex',
-    'common.exercise',
     'myApp.services.roles',
     'myapp.services.user',
     'myApp.student',
