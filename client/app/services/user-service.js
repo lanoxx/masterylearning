@@ -64,6 +64,48 @@ angular.module ('myapp.services.user', ['ngResource', 'base64', 'myapp.config'])
                 )
             };
 
+            this.requestResetToken = function (username)
+            {
+                "use strict";
+
+                var url = apiUrlPrefix + "password/resetToken";
+
+                $log.debug ("[myApp] UserService: requesting resetToken at: " + url + " for username: " + username);
+
+                var resetResult = $resource (url).save ({ username: username });
+
+                return resetResult.$promise.then (
+                    function onSuccess (result)
+                    {
+                        $log.info ("[myApp] UserService: " + result.message);
+                        return result;
+                    }
+                );
+            };
+
+            this.resetPassword = function (newPassword, userId, token) {
+                "use strict";
+
+                var url = apiUrlPrefix + 'password/resetToken/' + token;
+
+                $log.debug ("[myApp] UserService: requesting password reset at url: " + url);
+
+                var resetPasswordResult = $resource (url).save ( {userId: userId, password: newPassword} );
+
+                return resetPasswordResult.$promise.then (
+                    function onSuccess (result)
+                    {
+                        $log.info ("[myApp] UserService: " + (result.message || "Passwort Reset successful"));
+                        return result;
+                    },
+                    function onError (result)
+                    {
+                        $log.error ("[myApp] UserService: " + (result.message || "Error while resetting the password."));
+                        return result;
+                    }
+                )
+            };
+
             /**
              * This will attempt to set the new role in the role service and if successful switches the route
              * according to the new role.
