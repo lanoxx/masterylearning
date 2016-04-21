@@ -56,6 +56,12 @@ public class UserController {
             return outDto;
         }
 
+        if (dto.fullname == null) {
+            outDto.message = "You must specify a 'fullname'.";
+            outDto.userId = null;
+            return outDto;
+        }
+
         String encodedPassword = passwordEncoder.encode (dto.password);
 
         User user = new User (dto.fullname, dto.username, encodedPassword);
