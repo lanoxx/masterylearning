@@ -8,6 +8,7 @@ angular.module('myApp', [
     'katex',
     'myApp.services.roles',
     'myapp.services.user',
+    'myapp.services.history',
     'myApp.student',
     'myApp.student.courses',
     'myapp.student.courses.entries',
