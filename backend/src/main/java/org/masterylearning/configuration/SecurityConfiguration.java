@@ -38,6 +38,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers (HttpMethod.OPTIONS, "/**").permitAll ()
                 .antMatchers (HttpMethod.GET, "/bootstrap/**").permitAll ()
+                .antMatchers (HttpMethod.POST, "/password/resetToken/**").permitAll ()
                 .anyRequest().authenticated();
     }
 
