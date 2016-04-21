@@ -106,10 +106,11 @@ angular.module('myApp', [
             if (toState.role === undefined) {
                 // if no role is defined, then the route does not need to be secured and we can just continue to change
                 // to it
-                $log.info("[myApp] $stateChangeStart (route change accepted)");
+                $log.info ("[myApp] $stateChangeStart (destination state: " + toState.name + ")");
+                $log.info("[myApp] $stateChangeStart (route change accepted, requires no role)");
                 return;
             }
-            console.log ("[myApp] $stateChangeStart (destination state: " + toState.name + "; requires role: '" + toState.role + "'");
+            $log.info ("[myApp] $stateChangeStart (destination state: " + toState.name + "; requires role: '" + toState.role + "'");
             if (toState.role === 'ROLE_GUEST') {
                 // no need to check anything. We can always transition to an unsecured state.
             } else if (toState.role === 'ROLE_STUDENT' || toState.role === 'ROLE_TEACHER') {
