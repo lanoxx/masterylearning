@@ -9,6 +9,10 @@
 
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="main-navigation">
+            <ul class="nav navbar-nav" ng-if="roleService.currentRole === roleService.NONE">
+                <li ui-sref-active-eq="active"><a ui-sref="home">Home</a></li>
+            </ul>
+
             <ul class="nav navbar-nav navbar-right">
                 <li ui-sref-active-eq="active"><a ui-sref="about">About</a></li>
             </ul>
