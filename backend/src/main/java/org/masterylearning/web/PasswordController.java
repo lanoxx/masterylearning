@@ -10,6 +10,7 @@ import org.masterylearning.dto.out.PasswordResetOutDto;
 import org.masterylearning.repository.PasswordResetTokenRepository;
 import org.masterylearning.repository.UserRepository;
 import org.masterylearning.service.UserService;
+import org.springframework.core.env.Environment;
 import org.springframework.mail.MailException;
 import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
@@ -36,6 +37,8 @@ import java.util.UUID;
 public class PasswordController {
 
     Logger logger = LogManager.getLogger (PasswordController.class);
+
+    @Inject Environment environment;
 
     @Inject UserRepository userRepository;
     @Inject UserService userService;
@@ -66,7 +69,9 @@ public class PasswordController {
 
         passwordResetTokenRepository.save (resetToken);
 
-        String url = "http://" + request.getServerName() + "/password/resetToken/" + token + "/user/" + user.id;
+        String hostname = environment.getProperty ("email.hostname");
+        hostname = hostname != null ? hostname : request.getServerName();
+        String url = "http://" + hostname + "/password/resetToken/" + token + "/user/" + user.id;
 
         SimpleMailMessage email = new SimpleMailMessage();
         email.setTo(user.username);
