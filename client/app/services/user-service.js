@@ -68,7 +68,7 @@ angular.module ('myapp.services.user', ['ngResource', 'base64', 'myapp.config'])
             {
                 "use strict";
 
-                var url = apiUrlPrefix + "password/resetToken";
+                var url = apiUrlPrefix + "/password/resetToken";
 
                 $log.debug ("[myApp] UserService: requesting resetToken at: " + url + " for username: " + username);
 
@@ -86,7 +86,7 @@ angular.module ('myapp.services.user', ['ngResource', 'base64', 'myapp.config'])
             this.resetPassword = function (newPassword, userId, token) {
                 "use strict";
 
-                var url = apiUrlPrefix + 'password/resetToken/' + token;
+                var url = apiUrlPrefix + '/password/resetToken/' + token;
 
                 $log.debug ("[myApp] UserService: requesting password reset at url: " + url);
 
