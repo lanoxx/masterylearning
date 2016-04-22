@@ -3,7 +3,7 @@ angular.module ('myapp.user', ['common.password'])
     .config (['$stateProvider', function ($stateProvider)
     {
         $stateProvider.state ('user', {
-            url:         '/password/resetToken/:token/user/:userId/',
+            url:         '/password/resetToken/:token/user/:userId',
             views: {
                 'navigation@': {
                     templateUrl: 'navigation.html',
