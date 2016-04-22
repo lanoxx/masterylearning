@@ -74,10 +74,10 @@ public class PasswordController {
         String url = "http://" + hostname + "/password/resetToken/" + token + "/user/" + user.id;
 
         SimpleMailMessage email = new SimpleMailMessage();
+        email.setFrom ("smartlecture1@gmail.com");
         email.setTo(user.username);
         email.setSubject("Reset Password");
         email.setText("Click here to rest your password for the system: " + url);
-        email.setFrom("support@masterylearning.com");
 
         try {
             mailSender.send (email);
