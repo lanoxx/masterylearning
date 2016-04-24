@@ -24,8 +24,8 @@ angular.module ('common.config', [])
                     result += ':' + api_port;
                 }
             }
-            result += '/';
             if (api_path) {
+                result += '/';
                 result += api_path;
             } else {
 
