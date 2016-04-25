@@ -1,5 +1,14 @@
 angular.module ('myapp.services.user', ['ngResource', 'base64', 'myapp.config'])
 
+    .run (['$rootScope', 'UserService', '$log', function ($rootScope, UserService, $log)
+    {
+        $rootScope.$on ('myapp.logout', function (reason)
+        {
+            $log.info ("[myapp.services.user] run: logout signal received. Logging out current user.");
+            UserService.logout ();
+        });
+    }])
+
     .factory ('UserService', ['Configuration', '$state', '$cookies', '$resource', '$http', '$base64', 'Role', 'RoleManager', '$q', '$log',
         function UserServiceFactory(Configuration, $state, $cookies, $resource, $http, $base64, Role, RoleManager, $q, $log)
     {

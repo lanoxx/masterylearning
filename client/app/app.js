@@ -9,6 +9,7 @@ angular.module('myApp', [
     'myapp.services.roles',
     'myapp.services.user',
     'myapp.services.history',
+    'myapp.services.http',
     'myApp.student',
     'myApp.student.courses',
     'myapp.student.courses.entries',
@@ -23,6 +24,9 @@ angular.module('myApp', [
 
     .config(['$stateProvider', '$urlRouterProvider', 'katexConfigProvider', '$httpProvider', 'RoleProvider', function ($stateProvider, $urlRouterProvider, katexConfigProvider, $httpProvider, RoleProvider) {
         var $log =  angular.injector(['ng']).get('$log');
+
+        $httpProvider.interceptors.push ('ResponseInterceptor');
+
         katexConfigProvider.errorHandler = function (error, expression, element)
         {
             $log.info(error);
