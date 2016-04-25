@@ -108,6 +108,8 @@ angular.module('myApp', [
 
         $rootScope.$on ('$stateChangeError', function (event, toState, toParams, fromState, fromParams, error) {
             $log.info ("[myApp] $stateChangeError (toState: " + toState.name + ") with error: " + error);
+            event.preventDefault ();
+            $state.go ('home');
         });
         $rootScope.$on ('$stateNotFound', function (event, toState, toParams, fromState, fromParams) {
             $log.info ("[myApp] $stateNotFound (state: " + toState.name + ")");
