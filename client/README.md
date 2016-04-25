@@ -20,6 +20,14 @@ Evaluate [ui.router.extras][6] by Christopher Thielen
 
 [6]: https://github.com/christopherthielen/ui-router-extras
 
+## Starting the web server:
+
+To start a local development webserver with proxying use:
+
+    ws -p 8082 -r '/api/*->http://localhost:8080/$1' -d app
+
+You should `cd` into the `client/` folder first.
+
 # angular-seed — the seed for AngularJS apps
 
 This project is an application skeleton for a typical [AngularJS](http://angularjs.org/) web app.
