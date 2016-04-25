@@ -8,6 +8,7 @@
                     <uib-tab index="0">
                         <uib-tab-heading>Active Courses</uib-tab-heading>
 
+                        <button ng-click="refreshActiveCourses()" class="btn btn-default pull-right">Refresh</button>
                         <h1>Active Courses</h1>
 
                         <h2 ng-repeat="course in active_courses"><a ui-sref="home.student.courses({course_id: course.id})">{{get_course_title (course)}}</a></h2>

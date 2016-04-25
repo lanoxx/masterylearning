@@ -25,7 +25,7 @@ angular.module ('myApp.student', ['ui.router', 'ngSanitize'])
             })
     }])
 
-    .controller ('StudentController', ['$scope', 'courseList', '$log', function ($scope, courseList, $log)
+    .controller ('StudentController', ['$scope', 'RestService', 'courseList', '$log', function ($scope, RestService, courseList, $log)
     {
         $log.info ("[myApp] StudentController running");
 
@@ -37,4 +37,17 @@ angular.module ('myApp.student', ['ui.router', 'ngSanitize'])
 
             return title;
         };
+
+        $scope.refreshActiveCourses = function ()
+        {
+            var courseListPromise = RestService.getCourseList ().get();
+
+            courseListPromise.$promise.then (
+                function onSuccess (result)
+                {
+                    "use strict";
+                    $scope.active_courses = result;
+                }
+            );
+        }
     }]);
