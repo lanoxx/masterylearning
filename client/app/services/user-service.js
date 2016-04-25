@@ -11,6 +11,7 @@ angular.module ('myapp.services.user', ['ngResource', 'base64', 'myapp.config'])
             var currentRole = Role.NONE;
 
             this.currentUser = null;
+            this.mode = null;
 
             function setCurrentRole (role)
             {
@@ -54,6 +55,7 @@ angular.module ('myapp.services.user', ['ngResource', 'base64', 'myapp.config'])
                     });
 
                     this.setCurrentRole (Role.fromName (result.roles[0]));
+                    this.mode = result.mode || "flow";
                     this.currentUser = result;
                     loggedIn = true;
 

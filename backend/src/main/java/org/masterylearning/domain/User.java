@@ -30,6 +30,11 @@ public class User implements UserDetails {
     public String fullname;
 
     /**
+     * The ui mode that we are going to use, defaults to flow mode.
+     */
+    public String mode = "flow";
+
+    /**
      * WARNING: do not remove JsonIgnore flag or else the password will be visible to the user when
      * the user object is serialized. In general the User object should not be directly returned
      * from endpoints but a dto object should be used.
