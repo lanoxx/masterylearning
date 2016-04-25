@@ -23,7 +23,7 @@ angular.module('myApp', [
 ])
 
     .config(['$stateProvider', '$urlRouterProvider', 'katexConfigProvider', '$httpProvider', 'RoleProvider', function ($stateProvider, $urlRouterProvider, katexConfigProvider, $httpProvider, RoleProvider) {
-        var $log =  angular.injector(['ng']).get('$log');
+        var $log =  angular.injector(['ng'], true).get('$log');
 
         $httpProvider.interceptors.push ('ResponseInterceptor');
 
