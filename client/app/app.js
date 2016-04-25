@@ -41,8 +41,6 @@ angular.module('myApp', [
             ]
         };
 
-        $urlRouterProvider.when ('/home/student/unit1', '/home/student/unit1/content');
-
         /**
          * Currently this is the home, but at some point we need to rename it to 'welcome' or 'login'.
          * For simplicity we have no user management now so we just leave it like this.
