@@ -53,6 +53,10 @@ angular.module('myApp', [
                 '@': {
                     templateUrl: 'app.html',
                     controller: 'HomeCtrl'
+                },
+                'footer@': {
+                    templateUrl: 'footer.html',
+                    controller: 'FooterController'
                 }
             },
             role: 'ROLE_GUEST'
@@ -162,11 +166,12 @@ angular.module('myApp', [
         $scope.switch_role = UserService.switchRole;
     }])
 
-    .controller ('FooterController', ['$scope', 'RoleService', '$log', function ($scope, RoleService, $log)
+    .controller ('FooterController', ['$scope', 'UserService', '$log', function ($scope, UserService, $log)
     {
+        $log.info ("[myApp] FooterController running");
         $scope.show_footer = function ()
         {
-            return RoleService.currentRole === RoleService.NONE;
+            return !UserService.isLoggedIn ();
         };
     }])
 
