@@ -10,7 +10,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.AuthenticationEntryPoint;
-import org.springframework.security.web.authentication.www.BasicAuthenticationEntryPoint;
 
 /**
  */
@@ -45,7 +44,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     }
 
     private AuthenticationEntryPoint entryPoint() {
-        BasicAuthenticationEntryPoint entryPoint = new BasicAuthenticationEntryPoint();
+        RestAuthenticationEntryPoint entryPoint = new RestAuthenticationEntryPoint ();
         entryPoint.setRealmName("MasteryLearning");
         return entryPoint;
     }
