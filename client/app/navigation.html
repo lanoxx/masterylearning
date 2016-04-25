@@ -9,16 +9,16 @@
 
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="main-navigation">
-            <ul class="nav navbar-nav" ng-if="roleService.currentRole === roleService.NONE">
-                <li ui-sref-active-eq="active"><a ui-sref="home">Home</a></li>
+            <ul ng-if="getCurrentRole() === Role.NONE"  class="nav navbar-nav">
+                <li ui-sref-active-eq="active"><a ui-sref="home" data-ui-sref-opts="{reload: true}">Home</a></li>
             </ul>
 
-            <ul class="nav navbar-nav navbar-right">
+            <ul ng-if="getCurrentRole() === Role.NONE" class="nav navbar-nav navbar-right">
                 <li ui-sref-active-eq="active"><a ui-sref="about">About</a></li>
             </ul>
 
-            <ul class="nav navbar-nav" ng-if="roleService.currentRole === roleService.STUDENT">
-                <li ui-sref-active-eq="active"><a ui-sref="home.student">Home</a></li>
+            <ul ng-if="getCurrentRole() === Role.STUDENT" class="nav navbar-nav">
+                <li ui-sref-active-eq="active"><a ui-sref="home.student" data-ui-sref-opts="{reload: true}">Home</a></li>
                 <form class="navbar-form navbar-left" role="search">
                     <div class="form-group">
                         <input type="text" class="form-control" placeholder="Search">
@@ -26,7 +26,7 @@
                     <button type="submit" class="btn btn-default">Submit</button>
                 </form>
             </ul>
-            <ul class="nav navbar-nav" ng-if="roleService.currentRole === roleService.TEACHER">
+            <ul ng-if="getCurrentRole() === Role.TEACHER" class="nav navbar-nav">
                 <li ui-sref-active-eq="active"><a ui-sref="home.teacher">Home</a></li>
                 <form class="navbar-form navbar-left" role="search">
                     <div class="form-group">
@@ -36,8 +36,8 @@
                 </form>
             </ul>
 
-            <!-- Role switcher to switch between the student and teacher role -->
-            <ul ng-if="roleService.currentRole !== roleService.NONE" class="nav navbar-nav navbar-right">
+            <!-- User menu with profile, logout and links to switch between roles -->
+            <ul ng-if="getCurrentRole() !== Role.NONE" class="nav navbar-nav navbar-right">
                 <li uib-dropdown>
                     <a id="single-button" type="button" class="dropdown-toggle" uib-dropdown-toggle>
                         <span >
@@ -46,13 +46,22 @@
                         </span>
                     </a>
                     <ul class="uib-dropdown-menu" role="menu" aria-labelledby="single-button">
-                        <li ui-sref-active="active" ng-if="roleService.currentRole === roleService.STUDENT">
+                        <li ui-sref-active="active" ng-if="getCurrentRole() === Role.STUDENT">
                             <a ui-sref="home.student.profile">Profile</a>
                         </li>
-                        <li ui-sref-active="active" ng-if="roleService.currentRole === roleService.TEACHER">
+                        <li ui-sref-active="active" ng-if="getCurrentRole() === Role.TEACHER">
                             <a ui-sref="home.teacher.profile">Profile</a>
                         </li>
-                        <li ng-show="roleService.currentRole !== roleService.NONE" ng-click="switch_role (roleService.NONE)">
+
+                        <li ng-if="getCurrentRole() !== Role.TEACHER && hasRole (Role.TEACHER)">
+                            <a ng-click="switchRole (Role.TEACHER)">Teacher View</a>
+                        </li>
+
+                        <li ng-if="getCurrentRole() !== Role.STUDENT && hasRole (Role.STUDENT)">
+                            <a ng-click="switchRole (Role.STUDENT)">Student View</a>
+                        </li>
+
+                        <li ng-show="getCurrentRole() !== Role.NONE" ng-click="logout ()">
                             <a href="">Logout</a>
                         </li>
                     </ul>

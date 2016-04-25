@@ -1,6 +1,6 @@
 angular.module ('myApp.student', ['ui.router', 'ngSanitize'])
 
-    .config (['$stateProvider', function ($stateProvider)
+    .config (['$stateProvider', 'RoleProvider', function ($stateProvider, RoleProvider)
     {
         $stateProvider.state ('home.student',
             {
@@ -21,7 +21,7 @@ angular.module ('myApp.student', ['ui.router', 'ngSanitize'])
                         controller: 'StudentController'
                     }
                 },
-                role: 'ROLE_STUDENT'
+                role: RoleProvider.STUDENT
             })
     }])
 

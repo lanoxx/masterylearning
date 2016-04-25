@@ -4,45 +4,48 @@
 
 describe('my role service', function() {
 
-    beforeEach(module('myApp.services.roles'));
+    beforeEach(module('myapp.services.roles'));
 
-    var RoleService;
+    var Role;
+    var RoleManager;
 
-    beforeEach(inject(function (_RoleService_) {
-        RoleService = _RoleService_;
+    beforeEach(inject(function (_Role_, _RoleManager_) {
+        Role = _Role_;
+        RoleManager = _RoleManager_;
     }));
-
-    it ('should be able to switch between roles', function () {
-        expect(RoleService.currentRole).toEqual(RoleService.NONE);
-
-        RoleService.setRole(2);
-
-        expect(RoleService.currentRole).toEqual(RoleService.TEACHER);
+    
+    it ('should be able to add roles by symbol', function ()
+    {
+        RoleManager.addRole (Role.STUDENT);
+        
+        expect (RoleManager.hasRole (Role.STUDENT)).toBeTruthy();
     });
 
-    it('should have a "student" property that can be used to set the role', function () {
-        expect(RoleService.currentRole).toEqual(RoleService.NONE);
+    it ('should be able to add roles by symbol', function ()
+    {
+        RoleManager.addRole ('STUDENT');
 
-        RoleService.setRole(RoleService.TEACHER);
-
-        expect(RoleService.currentRole).toEqual(RoleService.TEACHER);
+        expect (RoleManager.hasRole (Role.STUDENT)).toBeTruthy();
     });
 
-    it('should have the properties of a student', function () {
-        expect(RoleService.currentRole).toEqual(RoleService.NONE);
+    it ('should be able to handle multiple roles', function ()
+    {
+        expect (RoleManager.hasRole(Role.STUDENT)).toBeFalsy();
+        expect (RoleManager.hasRole(Role.TEACHER)).toBeFalsy();
 
-        RoleService.setRole(RoleService.STUDENT);
+        RoleManager.addRole (Role.STUDENT);
+        RoleManager.addRole (Role.TEACHER);
 
-        expect(RoleService.properties[RoleService.currentRole].name).toEqual('student');
+        expect (RoleManager.hasRole(Role.STUDENT)).toBeTruthy();
+        expect (RoleManager.hasRole(Role.TEACHER)).toBeTruthy();
     });
 
-    it('should fail when a wrong role is set', function () {
-        expect(RoleService.setRole(RoleService.LAST)).toBeFalsy();
-    });
+    it ('should have a route property of each valid role', function ()
+    {
+        expect (Role.getRoute (Role.STUDENT)).not.toEqual ('');
+        expect (Role.getRoute (Role.STUDENT)).not.toEqual (null);
 
-    it('should return the right property for the current role', function () {
-        expect(RoleService.setRole(RoleService.TEACHER)).toBeTruthy();
-
-        expect(RoleService.getCurrentProperty().name).toEqual('teacher');
+        expect (Role.getRoute (Role.TEACHER)).not.toEqual ('');
+        expect (Role.getRoute (Role.TEACHER)).not.toEqual (null);
     });
 });

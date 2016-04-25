@@ -1,12 +1,12 @@
 angular.module ('myApp.student.profile', [])
 
-    .config (['$stateProvider', function ($stateProvider)
+    .config (['$stateProvider', 'RoleProvider', function ($stateProvider, RoleProvider)
     {
         $stateProvider.state ('home.student.profile', {
             url: '/profile',
             templateUrl: 'student/profile/profile.html',
             controller: 'ProfileController',
-            role: 'ROLE_STUDENT'
+            role: RoleProvider.STUDENT
         })
     }])
 

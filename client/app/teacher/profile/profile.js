@@ -1,11 +1,11 @@
 angular.module('myApp.teacher.profile', [])
 
-.config (['$stateProvider', function ($stateProvider) {
+.config (['$stateProvider', 'RoleProvider', function ($stateProvider, RoleProvider) {
     $stateProvider.state ('home.teacher.profile', {
         url: '/profile',
         templateUrl: 'teacher/profile/profile.html',
         controller: 'TeachersCtrl',
-        role: 'ROLE_TEACHER'
+        role: RoleProvider.TEACHER
     })
 }])
 

@@ -2,7 +2,7 @@
 
 angular.module('myApp.student.courses', ['ui.router', 'myapp.services.rest'])
 
-    .config (['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
+    .config (['$stateProvider', 'RoleProvider', function ($stateProvider, RoleProvider) {
         $stateProvider.state ('home.student.courses', {
             url: '/courses/:course_id',
             resolve: {
@@ -23,7 +23,7 @@ angular.module('myApp.student.courses', ['ui.router', 'myapp.services.rest'])
             },
             templateUrl: 'student/courses/courses.html',
             controller: 'CourseController',
-            role: 'ROLE_STUDENT'
+            role: RoleProvider.STUDENT
         });
     }])
 

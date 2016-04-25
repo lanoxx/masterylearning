@@ -6,7 +6,7 @@ angular.module('myApp', [
     'ui.bootstrap',
     'ngCookies',
     'katex',
-    'myApp.services.roles',
+    'myapp.services.roles',
     'myapp.services.user',
     'myapp.services.history',
     'myApp.student',
@@ -21,7 +21,7 @@ angular.module('myApp', [
     'myApp.version'
 ])
 
-    .config(['$stateProvider', '$urlRouterProvider', 'katexConfigProvider', '$httpProvider', '$logProvider', function ($stateProvider, $urlRouterProvider, katexConfigProvider, $httpProvider, $logProvider) {
+    .config(['$stateProvider', '$urlRouterProvider', 'katexConfigProvider', '$httpProvider', 'RoleProvider', function ($stateProvider, $urlRouterProvider, katexConfigProvider, $httpProvider, RoleProvider) {
         var $log =  angular.injector(['ng']).get('$log');
         katexConfigProvider.errorHandler = function (error, expression, element)
         {
@@ -59,7 +59,7 @@ angular.module('myApp', [
                     controller: 'FooterController'
                 }
             },
-            role: 'ROLE_GUEST'
+            role: RoleProvider.NONE
         });
 
         $stateProvider.state ('about', {
@@ -72,57 +72,32 @@ angular.module('myApp', [
                 '@': {
                     templateUrl: 'about.html'
                 }
-            }
+            },
+            role: RoleProvider.NONE
         });
 
         $urlRouterProvider.otherwise('home');
 
     }])
 
-    .run (['$rootScope', '$state', '$cookies', 'UserService', 'RoleService', 'CourseHistory', '$log',
-        function ($rootScope, $state, $cookies, UserService, RoleService, CourseHistory, $log) {
-            var role = $cookies.get('role');
-            var currentUser = $cookies.get('currentUser');
-            var currentMode = $cookies.get('mode');
-
-        if (role) {
-            if (role === 'ROLE_STUDENT') {
-                console.log ('[myApp].run: Switching application role to RoleService.STUDENT and security-role to ROLE_STUDENT');
-                RoleService.currentRole = RoleService.STUDENT;
-            }
-
-            if (role === 'ROLE_TEACHER') {
-                console.log ('[myApp].run: Switching application role to RoleService.TEACHER and security-role to ROLE_TEACHER');
-                RoleService.currentRole = RoleService.TEACHER;
-            }
-
-            UserService.role = role;
-        }
-
-        if (currentUser) {
-            UserService.currentUser = currentUser;
-        }
-
-        if (currentMode) {
-            UserService.set_mode (currentMode);
-        }
-
+    .run (['$rootScope', '$state', '$cookies', 'UserService', 'Role', 'RoleManager', 'CourseHistory', '$log',
+        function ($rootScope, $state, $cookies, UserService, Role, RoleManager, CourseHistory, $log)
+        {
         $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
-            if (toState.role === undefined) {
+            $log.info ("[myApp] $stateChangeStart (checking permissions for destination state: " + toState.name + ")");
+            if (toState.role === undefined || toState.role === Role.NONE) {
                 // if no role is defined, then the route does not need to be secured and we can just continue to change
                 // to it
-                $log.info ("[myApp] $stateChangeStart (destination state: " + toState.name + ")");
+
                 $log.info("[myApp] $stateChangeStart (route change accepted, requires no role)");
                 return;
-            }
-            $log.info ("[myApp] $stateChangeStart (destination state: " + toState.name + "; requires role: '" + toState.role + "'");
-            if (toState.role === 'ROLE_GUEST') {
-                // no need to check anything. We can always transition to an unsecured state.
-            } else if (toState.role === 'ROLE_STUDENT' || toState.role === 'ROLE_TEACHER') {
+            } else {
+                $log.info ("[myApp] $stateChangeStart (destination " + toState.name + " requires role '" + Role.getName (toState.role) + "'");
                 // we need to check that the user is authenticated and has the right role.
-                if (!(UserService.role === 'ROLE_STUDENT' || UserService.role === 'ROLE_TEACHER')) {
+                if (!(RoleManager.hasRole (toState.role))) {
                     event.preventDefault();
-                    $log.info ("[myApp] $stateChangeStart (route change rejected)");
+                    $log.info ("[myApp] $stateChangeStart (route change rejected, redirecting to 'home')");
+                    $state.go ('home');
                     return;
                 }
             }
@@ -140,30 +115,20 @@ angular.module('myApp', [
     .controller ('HomeCtrl', ['$rootScope', function ($rootScope) {
     }])
 
-    .controller ('NavigationController', ['$scope', '$state', '$cookies', 'RoleService', 'UserService', '$log',
-        function ($scope, $state, $cookies, RoleService, UserService, $log)
+    .controller ('NavigationController', ['$scope', '$state', 'Role', 'RoleManager', 'UserService', '$log',
+        function ($scope, $state, Role, RoleManager, UserService, $log)
     {
         $log.info ("[myApp] NavigationController running");
 
-        $scope.roleService = RoleService;
+        $scope.Role = Role;
+        $scope.getCurrentRole = UserService.getCurrentRole;
+        $scope.hasRole = RoleManager.hasRole;
 
-        $scope.activate_flow = function ()
-        {
-            var mode = "flow";
+        $scope.switchRole = UserService.switchRole;
 
-            UserService.set_mode(mode);
-            $cookies.put ('mode', mode);
-        };
-
-        $scope.activate_structure = function ()
-        {
-            var mode = "structure";
-
-            UserService.set_mode(mode);
-            $cookies.put ('mode', mode);
-        };
-
-        $scope.switch_role = UserService.switchRole;
+        $scope.logout = function () {
+            UserService.logout ();
+        }
     }])
 
     .controller ('FooterController', ['$scope', 'UserService', '$log', function ($scope, UserService, $log)
@@ -175,7 +140,7 @@ angular.module('myApp', [
         };
     }])
 
-    .controller ('LoginController', ['$scope', 'UserService', 'RoleService', '$log', function ($scope, UserService, RoleService, $log)
+    .controller ('LoginController', ['$scope', 'UserService', 'Role', '$log', function ($scope, UserService, RoleService, $log)
     {
         $scope.loginError = false;
 
@@ -186,8 +151,8 @@ angular.module('myApp', [
             loginResult.then (
                 function success (result) {
                     if (UserService.isLoggedIn())
-                        UserService.switchRole (RoleService.STUDENT);
-                    },
+                        UserService.switchRole (UserService.getCurrentRole ());
+                },
                 function error (result) {
                     $log.error("[myApp] LoginController: Error logging in.");
                     $scope.loginError = true;

@@ -1,6 +1,6 @@
 angular.module('myapp.teacher', ['ui.router', 'myapp.services.database'])
 
-    .config(['$stateProvider', function ($stateProvider)
+    .config(['$stateProvider', 'RoleProvider', function ($stateProvider, RoleProvider)
     {
         $stateProvider.state('home.teacher', {
             url: '/teacher',
@@ -14,7 +14,7 @@ angular.module('myapp.teacher', ['ui.router', 'myapp.services.database'])
                     controller: 'TeacherCtrl'
                 }
             },
-            role: 'ROLE_TEACHER'
+            role: RoleProvider.TEACHER
         });
     }
     ])

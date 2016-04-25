@@ -1,6 +1,6 @@
 angular.module('myapp.student.courses.entries', ['ui.router', 'ngSanitize', 'myapp.student.courses.entries.structure'])
 
-    .config (['$stateProvider', function ($stateProvider)
+    .config (['$stateProvider', 'RoleProvider', function ($stateProvider, RoleProvider)
     {
         $stateProvider.state ('home.student.courses.entries', {
             url: '/entries/:entry_id',
@@ -12,7 +12,7 @@ angular.module('myapp.student.courses.entries', ['ui.router', 'ngSanitize', 'mya
             },
             templateUrl: 'student/courses/entries/entries.html',
             controller: 'EntriesCtrl',
-            role: 'ROLE_STUDENT'
+            role: RoleProvider.STUDENT
         });
     }])
 
