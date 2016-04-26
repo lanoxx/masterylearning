@@ -15,7 +15,8 @@ angular.module ('myapp.student.courses.entries.flow', ['ui.router', 'ngSanitize'
         });
     }])
 
-    .controller ('FlowController', ['$scope', 'course_id', 'entries', 'RestService', '$sanitize', '$log', '$sce', function ($scope, course_id, entries, RestService, $sanitize, $log, $sce)
+    .controller ('FlowController', ['$scope', 'course_id', 'entries', 'RestService', '$sanitize', '$anchorScroll', '$log', '$sce',
+        function ($scope, course_id, entries, RestService, $sanitize, $anchorScroll, $log, $sce)
     {
         "use strict";
 
@@ -23,6 +24,10 @@ angular.module ('myapp.student.courses.entries.flow', ['ui.router', 'ngSanitize'
 
         $scope.depth = 0;
         $scope.entries = [];
+        $scope.scrollTo = function (id)
+        {
+            $anchorScroll(id);
+        };
 
         $scope.trust = function (value)
         {

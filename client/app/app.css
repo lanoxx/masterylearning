@@ -44,3 +44,36 @@ body {
 .breadcrumb > li.next:before {
     content: "";
 }
+
+/**
+ * Styling for .anchor-link, anchors inside h1, h2, etc. elements will show an anchor link on hower
+ */
+h1 > .anchor-link,
+h2 > .anchor-link,
+h3 > .anchor-link,
+h4 > .anchor-link,
+h5 > .anchor-link,
+h6 > .anchor-link,
+.h1 > .anchor-link,
+.h2 > .anchor-link,
+.h3 > .anchor-link,
+.h4 > .anchor-link,
+.h5 > .anchor-link,
+.h6 > .anchor-link {
+    opacity: 0;
+}
+
+h1:hover > .anchor-link,
+h2:hover > .anchor-link,
+h3:hover > .anchor-link,
+h4:hover > .anchor-link,
+h5:hover > .anchor-link,
+h6:hover > .anchor-link,
+.h1:hover > .anchor-link,
+.h2:hover > .anchor-link,
+.h3:hover > .anchor-link,
+.h4:hover > .anchor-link,
+.h5:hover > .anchor-link,
+.h6:hover > .anchor-link {
+    opacity: 1;
+}

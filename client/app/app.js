@@ -82,9 +82,13 @@ angular.module('myApp', [
 
     }])
 
-    .run (['$rootScope', '$state', '$cookies', 'UserService', 'Role', 'RoleManager', 'CourseHistory', '$log',
-        function ($rootScope, $state, $cookies, UserService, Role, RoleManager, CourseHistory, $log)
+    .run (['$rootScope', '$state', '$cookies', 'UserService', 'Role', 'RoleManager', 'CourseHistory', '$anchorScroll', '$log',
+        function ($rootScope, $state, $cookies, UserService, Role, RoleManager, CourseHistory, $anchorScroll, $log)
         {
+            // 50px is the height of our fixed navigation bar and we add an additional 10px to avoid to the immediate
+            // bottom of the navigation.
+            $anchorScroll.yOffset = 50 + 10;
+
         $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
             $log.info ("[myApp] $stateChangeStart (checking permissions for destination state: " + toState.name + ")");
             if (toState.role === undefined || toState.role === Role.NONE) {
