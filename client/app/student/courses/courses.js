@@ -42,6 +42,7 @@ angular.module('myApp.student.courses', ['ui.router', 'myapp.services.rest'])
         //       For structure mode we enumerate until units
         //       For flow mode we enumerate only sections and subsections
         $scope.entries = entries;
+        $scope.course_id = course_id;
 
         $scope.mode = UserService.mode;
     }]);
