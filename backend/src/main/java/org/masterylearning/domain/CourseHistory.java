@@ -15,14 +15,18 @@ import java.util.List;
 public class CourseHistory {
     @Id
     @GeneratedValue
-    Long id;
+    public Long id;
 
     @OneToOne
-    Course course;
+    public Course course;
 
     @OneToOne
-    Entry lastEntry;
+    public Entry lastEntry;
 
     @OneToMany (cascade = CascadeType.PERSIST)
-    List<EntryHistory> entryHistoryList = new ArrayList<> ();
+    public List<EntryHistory> entryHistoryList = new ArrayList<> ();
+
+    public List<EntryHistory> getEntryHistoryList () {
+        return entryHistoryList;
+    }
 }

@@ -289,7 +289,7 @@ type=yesnoexercise</panel_attributes>
       <x>970</x>
       <y>130</y>
       <w>340</w>
-      <h>40</h>
+      <h>30</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-</panel_attributes>
     <additional_attributes>10.0;10.0;320.0;10.0</additional_attributes>
@@ -376,14 +376,17 @@ type=continue-button</panel_attributes>
     <coordinates>
       <x>50</x>
       <y>750</y>
-      <w>240</w>
-      <h>100</h>
+      <w>280</w>
+      <h>120</h>
     </coordinates>
     <panel_attributes>User
 --
+id
+fullname
 email
 password {hashed}
-role {guest, student, teacher}</panel_attributes>
+role {STUDENT, TEACHER, ADMIN}
+</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
@@ -404,16 +407,16 @@ lastEntry</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>280</x>
+      <x>320</x>
       <y>790</y>
-      <w>270</w>
+      <w>230</w>
       <h>50</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-
 m1=n
 m2=1
 activeCourses</panel_attributes>
-    <additional_attributes>250.0;20.0;10.0;20.0</additional_attributes>
+    <additional_attributes>210.0;20.0;10.0;20.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>

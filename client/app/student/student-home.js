@@ -1,4 +1,4 @@
-angular.module ('myApp.student', ['ui.router', 'ngSanitize'])
+angular.module ('myApp.student', ['ui.router', 'ngSanitize', 'myapp.services.history'])
 
     .config (['$stateProvider', 'RoleProvider', function ($stateProvider, RoleProvider)
     {
@@ -6,9 +6,9 @@ angular.module ('myApp.student', ['ui.router', 'ngSanitize'])
             {
                 url: '/student',
                 resolve: {
-                    courseList: ['RestService', function (RestService)
+                    courseList: ['HistoryService', function (HistoryService)
                     {
-                        return RestService.getCourseList ().get();
+                        return HistoryService.getActiveCourses ().query();
                     }]
                 },
                 views: {

@@ -14,14 +14,14 @@ public class EntryHistory {
 
     @Id
     @GeneratedValue
-    Long id;
+    public Long id;
 
     @OneToOne
-    Course course;
+    public Course course;
 
     @OneToOne
-    Entry entry;
+    public Entry entry;
 
     @Type (type = "text")
-    String state;
+    public String state;
 }

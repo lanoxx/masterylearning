@@ -14,6 +14,7 @@ import org.masterylearning.repository.CourseRepository;
 import org.masterylearning.repository.EntryRepository;
 import org.masterylearning.service.CourseService;
 import org.masterylearning.service.TreeEnumerator;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -47,7 +48,6 @@ public class CourseController {
         return results;
     }
 
-    //TODO: add security role admin
     @CrossOrigin (origins = "*",
                   allowCredentials = "true",
                   methods = {RequestMethod.GET})
@@ -64,12 +64,17 @@ public class CourseController {
         return null;
     }
 
+    /**
+     * This returns the full course tree with all child elements except for cyclic references
+     * which are removed during serialization.
+     *
+     * @param courseId
+     * @return The course object from the database.
+     */
+    @PreAuthorize ("hasRole ('TEACHER') or hasRole ('ADMIN')")
     @RequestMapping (method = RequestMethod.GET, path = "/{courseId}/full")
     public Course
     getCourseFull (@PathVariable Long courseId) {
-
-        //TODO: this should return the course table of contents, e.g. a list of immediate sections
-        // contained in the couse
 
         Course course = courseRepository.findOne (courseId);
 
@@ -78,8 +83,7 @@ public class CourseController {
         return course;
     }
 
-
-    //TODO: add security role admin
+    @PreAuthorize ("hasRole ('TEACHER') or hasRole ('ADMIN')")
     @RequestMapping(method = RequestMethod.POST)
     public CreateCourseOutDto createCourse (@RequestBody Course course) {
         CreateCourseOutDto dto = new CreateCourseOutDto ();
@@ -98,7 +102,6 @@ public class CourseController {
         return dto;
     }
 
-    //TODO: add security role user
     @CrossOrigin
     @RequestMapping(path = "/{courseId}/enumerate/{entryId}", method = RequestMethod.GET)
     @Transactional
@@ -127,7 +130,6 @@ public class CourseController {
         return dto;
     }
 
-    //TODO: add security role user
     @CrossOrigin
     @RequestMapping(path = "/{courseId}/enumerate", method = RequestMethod.GET)
     @Transactional

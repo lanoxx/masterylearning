@@ -95,4 +95,8 @@ public class User implements UserDetails {
     public List<Role> getRoles () {
         return roles;
     }
+
+    public List<CourseHistory> getCourseHistoryList () {
+        return courseHistoryList;
+    }
 }

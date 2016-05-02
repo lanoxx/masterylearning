@@ -15,12 +15,12 @@ angular.module ('myapp.services.rest', ['ngResource', 'myapp.config'])
 
             this.getCourseTableOfContents = function (id)
             {
-                return $resource (apiUrlPrefix + "/courses/:courseId", {courseId: '@courseId'}, { get: { method: 'GET', isArray: true } } );
+                return $resource (apiUrlPrefix + "/userHistory/courses/:courseId/entryHistory", {courseId: '@courseId'});
             };
 
             this.getCourseList = function ()
             {
-                return $resource (apiUrlPrefix + "/courses", null, { get: { method: 'GET', isArray: true } } );
+                return $resource (apiUrlPrefix + "/userHistory/activeCourses", null, { get: { method: 'GET', isArray: true } } );
             };
 
             this.enumerateEntries = function ()
