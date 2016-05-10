@@ -82,8 +82,8 @@ angular.module('myApp', [
 
     }])
 
-    .run (['$rootScope', '$state', '$cookies', 'UserService', 'Role', 'RoleManager', 'CourseHistory', '$anchorScroll', '$log',
-        function ($rootScope, $state, $cookies, UserService, Role, RoleManager, CourseHistory, $anchorScroll, $log)
+    .run (['$rootScope', '$state', '$cookies', 'UserService', 'Role', 'RoleManager', '$anchorScroll', '$log',
+        function ($rootScope, $state, $cookies, UserService, Role, RoleManager, $anchorScroll, $log)
         {
             // 50px is the height of our fixed navigation bar and we add an additional 10px to avoid to the immediate
             // bottom of the navigation.
