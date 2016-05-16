@@ -104,20 +104,10 @@ public class HistoryService {
                       .stream ()
                       .filter (courseHistory -> courseHistory.id.equals (courseId))
                       .findFirst ();
-            /*CourseHistory courseHistoryFound = null;
-            List<CourseHistory> courseHistoryList = user.getCourseHistoryList ();
-            for (CourseHistory courseHistory : courseHistoryList) {
-                if (courseHistory.id.equals (courseId)) {
-                    courseHistoryFound = courseHistory;
-                }
-            }*/
 
         if (first.isPresent ()) {
             return first.get ();
         }
-
-            //return courseHistoryFound;
-
 
         return null;
     }
