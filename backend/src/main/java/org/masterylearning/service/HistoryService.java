@@ -61,12 +61,14 @@ public class HistoryService {
                     Optional<Entry> first = course.getChildren ().stream ().findFirst ();
                     Entry entry = first.isPresent () ? first.get () : null;
 
+                    courseHistory.user = user;
                     courseHistory.lastEntry = entry;
 
                     courseHistoryList.add (courseHistory);
                     courseHistoryRepository.save (courseHistoryList);
 
                     EntryHistory entryHistory = new EntryHistory ();
+                    entryHistory.courseHistory = courseHistory;
                     entryHistory.course = course;
                     entryHistory.entry = entry;
 
