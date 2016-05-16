@@ -47,7 +47,9 @@ public class HistoryController {
     @CrossOrigin
     @RequestMapping (method = RequestMethod.GET, path = "/activeCourses")
     @Transactional
-    public List<CourseHistoryOutDto> getActiveCourses () {
+    public List<CourseHistoryOutDto>
+    getActiveCourses ()
+    {
         List<Course> all = courseRepository.findAll ();
 
         // This is a temporary workaround. We add all courses to the users list of active courses.
