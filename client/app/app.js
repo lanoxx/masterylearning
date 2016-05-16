@@ -111,7 +111,7 @@ angular.module('myApp', [
         });
 
         $rootScope.$on ('$stateChangeError', function (event, toState, toParams, fromState, fromParams, error) {
-            $log.info ("[myApp] $stateChangeError (toState: " + toState.name + ") with error: " + error);
+            $log.error ("[myApp] $stateChangeError (toState: " + toState.name + ") with error: " + error);
             event.preventDefault ();
             $state.go ('home');
         });
