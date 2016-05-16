@@ -2,11 +2,13 @@ package org.masterylearning.web;
 
 import org.masterylearning.domain.Course;
 import org.masterylearning.domain.CourseHistory;
+import org.masterylearning.domain.Entry;
+import org.masterylearning.domain.EntryHistory;
 import org.masterylearning.dto.out.CourseHistoryOutDto;
 import org.masterylearning.dto.out.CourseOutDto;
-import org.masterylearning.dto.out.EntryHistoryDto;
-import org.masterylearning.repository.CourseHistoryRepository;
+import org.masterylearning.dto.out.EntryDataOutDto;
 import org.masterylearning.repository.CourseRepository;
+import org.masterylearning.service.CourseService;
 import org.masterylearning.service.HistoryService;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -28,8 +30,7 @@ import java.util.stream.Collectors;
 public class HistoryController {
 
     @Inject CourseRepository courseRepository;
-    @Inject CourseHistoryRepository courseHistoryRepository;
-
+    @Inject CourseService courseService;
     @Inject HistoryService historyService;
 
     @CrossOrigin
@@ -67,21 +68,40 @@ public class HistoryController {
     }
 
     @CrossOrigin
-    @RequestMapping (method = RequestMethod.GET, path = "/courses/{courseId}/entryHistory")
+    @RequestMapping (method = RequestMethod.GET, path = "/courses/{courseId}")
     @Transactional
-    public List<EntryHistoryDto> getEntryHistory (@PathVariable Long courseId) {
+    public List<EntryDataOutDto> getTableOfContents (@PathVariable Long courseId) {
+        Course course;
+        List<Entry> tableOfContents;
+        CourseHistory courseHistory;
+        List<EntryHistory> entryHistoryList;
+
         if (courseId == null) {
             return null;
         }
-        CourseHistory courseHistory = historyService.getCourseHistory (courseId);
 
-        if (courseHistory != null) {
-            return courseHistory.getEntryHistoryList ()
-                                .stream ()
-                                .map (EntryHistoryDto::new)
-                                .collect (Collectors.toList ());
+        course = courseRepository.findOne (courseId);
+
+        tableOfContents = courseService.getTableOfContents (course);
+
+        courseHistory = historyService.getCourseHistory (courseId);
+
+        entryHistoryList = courseHistory.getEntryHistoryList ();
+
+        List<EntryDataOutDto> result = new ArrayList<> ();
+        if (tableOfContents != null) {
+            for (Entry entry : tableOfContents) {
+                EntryDataOutDto outDto = entry.data.toDto ();
+                entryHistoryList.stream ()
+                                .filter (entryHistory -> entry.id.equals (entryHistory.entry.id))
+                                .forEach (entryHistory -> {
+                                    outDto.state = entryHistory.state;
+                                    outDto.seen = true;
+                                });
+                result.add (outDto);
+            }
         }
 
-        return null;
+        return result;
     }
 }
