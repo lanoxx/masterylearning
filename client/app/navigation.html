@@ -54,12 +54,16 @@
                         </li>
 
                         <li ng-if="getCurrentRole() !== Role.TEACHER && hasRole (Role.TEACHER)">
-                            <a ng-click="switchRole (Role.TEACHER)">Teacher View</a>
+                            <a href="" ng-click="switchRole (Role.TEACHER)">Teacher View</a>
                         </li>
 
                         <li ng-if="getCurrentRole() !== Role.STUDENT && hasRole (Role.STUDENT)">
-                            <a ng-click="switchRole (Role.STUDENT)">Student View</a>
+                            <a href="" ng-click="switchRole (Role.STUDENT)">Student View</a>
                         </li>
+
+                        <!--<li ng-if="currentRole !== Role.ADMIN && hasRole (Role.ADMIN)">
+                            <a href="" ng-click="switchRole (Role.ADMIN)">Administration</a>
+                        </li>-->
 
                         <li ng-show="getCurrentRole() !== Role.NONE" ng-click="logout ()">
                             <a href="">Logout</a>
