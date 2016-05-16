@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<diagram program="umlet" version="14.1.1">
+<diagram program="umlet" version="14.2">
   <zoom_level>10</zoom_level>
   <element>
     <id>UMLClass</id>
     <coordinates>
       <x>420</x>
-      <y>90</y>
+      <y>220</y>
       <w>200</w>
       <h>170</h>
     </coordinates>
@@ -20,7 +20,7 @@
     <id>Relation</id>
     <coordinates>
       <x>360</x>
-      <y>40</y>
+      <y>170</y>
       <w>110</w>
       <h>120</h>
     </coordinates>
@@ -32,7 +32,7 @@ parent</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>330</x>
-      <y>10</y>
+      <y>140</y>
       <w>180</w>
       <h>190</h>
     </coordinates>
@@ -45,8 +45,8 @@ m2=1</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>60</x>
-      <y>90</y>
+      <x>90</x>
+      <y>220</y>
       <w>180</w>
       <h>170</h>
     </coordinates>
@@ -62,7 +62,7 @@ m2=1</panel_attributes>
     <id>UMLClass</id>
     <coordinates>
       <x>800</x>
-      <y>120</y>
+      <y>250</y>
       <w>180</w>
       <h>100</h>
     </coordinates>
@@ -76,7 +76,7 @@ type</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>610</x>
-      <y>140</y>
+      <y>270</y>
       <w>210</w>
       <h>50</h>
     </coordinates>
@@ -89,7 +89,7 @@ data
     <id>UMLClass</id>
     <coordinates>
       <x>580</x>
-      <y>330</y>
+      <y>460</y>
       <w>220</w>
       <h>170</h>
     </coordinates>
@@ -108,7 +108,7 @@ Unit
     <id>UMLClass</id>
     <coordinates>
       <x>830</x>
-      <y>330</y>
+      <y>460</y>
       <w>220</w>
       <h>170</h>
     </coordinates>
@@ -125,7 +125,7 @@ Section
     <id>UMLClass</id>
     <coordinates>
       <x>1180</x>
-      <y>330</y>
+      <y>460</y>
       <w>200</w>
       <h>170</h>
     </coordinates>
@@ -143,8 +143,8 @@ Paragraph
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1450</x>
-      <y>330</y>
+      <x>1520</x>
+      <y>460</y>
       <w>220</w>
       <h>170</h>
     </coordinates>
@@ -153,16 +153,14 @@ YesNoExercise
 --
 - title
 - text
-- answer : boolean
-- blocks : boolean
-</panel_attributes>
+- answer : boolean</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1710</x>
-      <y>330</y>
+      <x>1780</x>
+      <y>460</y>
       <w>260</w>
       <h>170</h>
     </coordinates>
@@ -171,15 +169,14 @@ MultiAnswerExercise
 --
 - title
 - text
-- blocks : boolean
 </panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1730</x>
-      <y>610</y>
+      <x>1800</x>
+      <y>740</y>
       <w>220</w>
       <h>180</h>
     </coordinates>
@@ -199,8 +196,8 @@ solution.</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1830</x>
-      <y>490</y>
+      <x>1900</x>
+      <y>620</y>
       <w>160</w>
       <h>140</h>
     </coordinates>
@@ -214,7 +211,7 @@ m2=1</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>970</x>
-      <y>170</y>
+      <y>300</y>
       <w>280</w>
       <h>180</h>
     </coordinates>
@@ -226,7 +223,7 @@ type=paragraph</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>860</x>
-      <y>210</y>
+      <y>340</y>
       <w>120</w>
       <h>140</h>
     </coordinates>
@@ -238,7 +235,7 @@ type=section</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>670</x>
-      <y>180</y>
+      <y>310</y>
       <w>150</w>
       <h>170</h>
     </coordinates>
@@ -250,31 +247,31 @@ type=unit</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>1380</x>
-      <y>190</y>
-      <w>410</w>
+      <y>320</y>
+      <w>480</w>
       <h>160</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-
 tpye=multianswerexercise</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;40.0;390.0;40.0;390.0;140.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;40.0;460.0;40.0;460.0;140.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
       <x>1340</x>
-      <y>190</y>
-      <w>280</w>
+      <y>320</y>
+      <w>350</w>
       <h>160</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-
 type=yesnoexercise</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;70.0;260.0;70.0;260.0;140.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;70.0;330.0;70.0;330.0;140.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
       <x>1290</x>
-      <y>120</y>
+      <y>250</y>
       <w>180</w>
       <h>80</h>
     </coordinates>
@@ -287,9 +284,9 @@ type=yesnoexercise</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>970</x>
-      <y>130</y>
+      <y>260</y>
       <w>340</w>
-      <h>40</h>
+      <h>30</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-</panel_attributes>
     <additional_attributes>10.0;10.0;320.0;10.0</additional_attributes>
@@ -298,7 +295,7 @@ type=yesnoexercise</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>530</x>
-      <y>10</y>
+      <y>140</y>
       <w>940</w>
       <h>130</h>
     </coordinates>
@@ -310,7 +307,7 @@ incorrect</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>560</x>
-      <y>30</y>
+      <y>160</y>
       <w>880</w>
       <h>110</h>
     </coordinates>
@@ -321,22 +318,22 @@ correct</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>230</x>
-      <y>180</y>
-      <w>210</w>
+      <x>260</x>
+      <y>310</y>
+      <w>180</w>
       <h>50</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-
 m1=n
 m2=1
 children</panel_attributes>
-    <additional_attributes>190.0;20.0;10.0;20.0</additional_attributes>
+    <additional_attributes>160.0;20.0;10.0;20.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
       <x>610</x>
-      <y>110</y>
+      <y>240</y>
       <w>210</w>
       <h>50</h>
     </coordinates>
@@ -349,7 +346,7 @@ container
     <id>UMLClass</id>
     <coordinates>
       <x>1040</x>
-      <y>550</y>
+      <y>680</y>
       <w>200</w>
       <h>80</h>
     </coordinates>
@@ -363,7 +360,7 @@ ContinueButton
     <id>Relation</id>
     <coordinates>
       <x>940</x>
-      <y>210</y>
+      <y>340</y>
       <w>220</w>
       <h>360</h>
     </coordinates>
@@ -374,23 +371,27 @@ type=continue-button</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>50</x>
-      <y>750</y>
-      <w>240</w>
-      <h>100</h>
+      <x>90</x>
+      <y>880</y>
+      <w>280</w>
+      <h>150</h>
     </coordinates>
     <panel_attributes>User
 --
+id
+fullname
 email
+username
 password {hashed}
-role {guest, student, teacher}</panel_attributes>
+role {STUDENT, TEACHER, ADMIN}
+</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>530</x>
-      <y>750</y>
+      <x>550</x>
+      <y>880</y>
       <w>240</w>
       <h>100</h>
     </coordinates>
@@ -404,22 +405,22 @@ lastEntry</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>280</x>
-      <y>790</y>
-      <w>270</w>
+      <x>360</x>
+      <y>920</y>
+      <w>210</w>
       <h>50</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-
 m1=n
 m2=1
 activeCourses</panel_attributes>
-    <additional_attributes>250.0;20.0;10.0;20.0</additional_attributes>
+    <additional_attributes>190.0;20.0;10.0;20.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
       <x>1010</x>
-      <y>750</y>
+      <y>880</y>
       <w>240</w>
       <h>100</h>
     </coordinates>
@@ -433,15 +434,69 @@ state : string</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>760</x>
-      <y>790</y>
-      <w>270</w>
+      <x>780</x>
+      <y>920</y>
+      <w>250</w>
       <h>50</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-
 m1=n
 m2=1
 visitedEntries</panel_attributes>
-    <additional_attributes>250.0;20.0;10.0;20.0</additional_attributes>
+    <additional_attributes>230.0;20.0;10.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1360</x>
+      <y>680</y>
+      <w>240</w>
+      <h>280</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;EntryData&gt;&gt;
+InteractiveContent
+--
+- initData : String
+- init : String
+
+--
+Init contains the name
+of a global function to
+be called after the
+interactive content
+element has been
+rendered. The initData
+field should contain
+JSON formatted data
+which gets deserialized
+and passed to the function
+specified by init.
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>970</x>
+      <y>290</y>
+      <w>520</w>
+      <h>410</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-
+type=interactive-content</panel_attributes>
+    <additional_attributes>10.0;10.0;290.0;10.0;290.0;140.0;500.0;140.0;290.0;140.0;500.0;140.0;500.0;390.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>260</x>
+      <y>350</y>
+      <w>180</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+course</panel_attributes>
+    <additional_attributes>10.0;20.0;160.0;20.0</additional_attributes>
   </element>
 </diagram>
