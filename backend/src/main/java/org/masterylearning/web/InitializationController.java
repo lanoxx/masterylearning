@@ -4,6 +4,7 @@ import org.masterylearning.domain.Role;
 import org.masterylearning.domain.User;
 import org.masterylearning.repository.UserRepository;
 import org.masterylearning.service.UserService;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,6 +22,7 @@ public class InitializationController {
     @Inject UserRepository userRepository;
     @Inject UserService userService;
 
+    @CrossOrigin
     @RequestMapping (method = RequestMethod.GET, path = "/users")
     @Transactional
     public Boolean initUsers () {
@@ -54,6 +56,7 @@ public class InitializationController {
         return false;
     }
 
+    @CrossOrigin
     @RequestMapping (method = RequestMethod.GET)
     public Boolean init () {
         return false;
