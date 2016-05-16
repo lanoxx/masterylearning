@@ -5,6 +5,7 @@ import org.apache.logging.log4j.Logger;
 import org.masterylearning.domain.Course;
 import org.masterylearning.domain.Entry;
 import org.masterylearning.domain.data.ContinueButton;
+import org.masterylearning.domain.data.EntryData;
 import org.masterylearning.domain.data.Exercise;
 import org.masterylearning.dto.out.CourseOutDto;
 import org.masterylearning.dto.out.CreateCourseOutDto;
@@ -120,7 +121,8 @@ public class CourseController {
 
         TreeEnumerator treeEnumerator = new TreeEnumerator (root, entry -> entry.data instanceof ContinueButton || entry.data instanceof Exercise);
 
-        dto.entries = treeEnumerator.enumerateTree ();
+        List<EntryData> entryDatas = treeEnumerator.enumerateTree ();
+        dto.entries = entryDatas.stream ().map (EntryData::toDto).collect (Collectors.toList ());
 
         if (treeEnumerator.entryStack.size () > 0) {
             Entry next = treeEnumerator.entryStack.peek ();
@@ -143,7 +145,8 @@ public class CourseController {
 
         TreeEnumerator treeEnumerator = new TreeEnumerator (root, entry -> entry.data instanceof ContinueButton || entry.data instanceof Exercise);
 
-        dto.entries = treeEnumerator.enumerateTree ();
+        List<EntryData> entryDatas = treeEnumerator.enumerateTree ();
+        dto.entries = entryDatas.stream ().map (EntryData::toDto).collect (Collectors.toList ());
         Entry next = treeEnumerator.entryStack.peek ();
         if (next != null) {
             dto.nextId = next.id;
