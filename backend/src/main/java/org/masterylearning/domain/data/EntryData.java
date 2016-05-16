@@ -28,6 +28,7 @@ import javax.persistence.OneToOne;
         @Type(value = Unit.class, name = "unit"),
         @Type(value = Paragraph.class, name = "paragraph"),
         @Type(value = ContinueButton.class, name = "continue-button"),
+        @Type(value = InteractiveContent.class, name = "interactive-content"),
         @Type(value = YesNoExercise.class, name = "yesnoexercise"),
         @Type(value = MultiAnswerExercise.class, name = "multianswerexercise")
 })
