@@ -38,6 +38,8 @@ public class HistoryService {
         if (principal instanceof User) {
             Long userId = ((User) principal).id;
 
+            // The user object stored in the principal of the security context is no longer bound
+            // to an active hibernate session, so we need to reload the user.
             User user = userRepository.getOne (userId);
 
             courseHistoryList = user.getCourseHistoryList ();
@@ -50,6 +52,8 @@ public class HistoryService {
                     }
                 }
 
+                // If the course was not found, then we add it to the users course history
+                // additionally we add the first entry to the users entry history for that course
                 if (!found) {
                     CourseHistory courseHistory = new CourseHistory ();
                     courseHistory.course = course;
