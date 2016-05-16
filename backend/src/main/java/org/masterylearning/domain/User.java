@@ -54,7 +54,7 @@ public class User implements UserDetails {
     @OneToMany (fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Role> roles = new ArrayList<> ();
 
-    @OneToMany
+    @OneToMany (mappedBy = "user", cascade = CascadeType.PERSIST)
     public List<CourseHistory> courseHistoryList;
 
     @Override

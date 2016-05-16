@@ -4,6 +4,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import java.util.ArrayList;
@@ -17,13 +18,16 @@ public class CourseHistory {
     @GeneratedValue
     public Long id;
 
-    @OneToOne
+    @ManyToOne (optional = false)
+    public User user;
+
+    @OneToOne (optional = false)
     public Course course;
 
-    @OneToOne
+    @OneToOne (optional = false)
     public Entry lastEntry;
 
-    @OneToMany (cascade = CascadeType.PERSIST)
+    @OneToMany (mappedBy = "courseHistory", cascade = CascadeType.PERSIST)
     public List<EntryHistory> entryHistoryList = new ArrayList<> ();
 
     public List<EntryHistory> getEntryHistoryList () {

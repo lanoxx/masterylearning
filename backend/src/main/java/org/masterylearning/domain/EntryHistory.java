@@ -5,7 +5,7 @@ import org.hibernate.annotations.Type;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
 
 /**
  */
@@ -16,10 +16,13 @@ public class EntryHistory {
     @GeneratedValue
     public Long id;
 
-    @OneToOne
+    @ManyToOne (optional = false)
+    public CourseHistory courseHistory;
+
+    @ManyToOne (optional = false)
     public Course course;
 
-    @OneToOne
+    @ManyToOne (optional = false)
     public Entry entry;
 
     @Type (type = "text")
