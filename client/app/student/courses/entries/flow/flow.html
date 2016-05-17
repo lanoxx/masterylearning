@@ -18,28 +18,28 @@
 
     <div ng-if="entry.type == 'section'">
         <h1 ng-if="entry.depth - depth <= 0">
-            {{trust (entry.title)}} <a id="{{entry.id}}" ng-click="scrollTo ('' + entry.id)" class="anchor-link"><span class="glyphicon glyphicon-link"></span></a>
+            {{trust (entry.title)}} <a href="" id="{{entry.id}}" ng-click="scrollTo ('' + entry.id)" class="anchor-link"><small><span class="glyphicon glyphicon-link"></span></small></a>
         </h1>
         <h2 ng-if="entry.depth - depth == 1">
-            {{trust (entry.title)}} <a id="{{entry.id}}" ng-click="scrollTo ('' + entry.id)" class="anchor-link"><span class="glyphicon glyphicon-link"></span></a>
+            {{trust (entry.title)}} <a href="" id="{{entry.id}}" ng-click="scrollTo ('' + entry.id)" class="anchor-link"><small><span class="glyphicon glyphicon-link"></span></small></a>
         </h2>
         <h3 ng-if="entry.depth - depth == 2">
-            {{trust (entry.title)}} <a id="{{entry.id}}" ng-click="scrollTo ('' + entry.id)" class="anchor-link"><span class="glyphicon glyphicon-link"></span></a>
+            {{trust (entry.title)}} <a href="" id="{{entry.id}}" ng-click="scrollTo ('' + entry.id)" class="anchor-link"><small><span class="glyphicon glyphicon-link"></span></small></a>
         </h3>
         <h4 ng-if="entry.depth - depth >= 3">
-            {{trust (entry.title)}} <a id="{{entry.id}}" ng-click="scrollTo ('' + entry.id)" class="anchor-link"><span class="glyphicon glyphicon-link"></span></a>
+            {{trust (entry.title)}} <a href="" id="{{entry.id}}" ng-click="scrollTo ('' + entry.id)" class="anchor-link"><small><span class="glyphicon glyphicon-link"></span></small></a>
         </h4>
         <p>{{trust (entry.description)}}</p>
     </div>
 
     <div ng-if="entry.type == 'unit'">
-        <h1 ng-if="entry.depth - depth <= 0">{{trust (entry.fullTitle)}} <a id="{{entry.id}}" ng-click="scrollTo ('' + entry.id)" class="anchor-link"><span class="glyphicon glyphicon-link"></span></a>
+        <h1 ng-if="entry.depth - depth <= 0">{{trust (entry.fullTitle)}} <a href="" id="{{entry.id}}" ng-click="scrollTo ('' + entry.id)" class="anchor-link"><small><span class="glyphicon glyphicon-link"></span></small></a>
         </h1>
-        <h2 ng-if="entry.depth - depth == 1">{{trust (entry.fullTitle)}} <a id="{{entry.id}}" ng-click="scrollTo ('' + entry.id)" class="anchor-link"><span class="glyphicon glyphicon-link"></span></a>
+        <h2 ng-if="entry.depth - depth == 1">{{trust (entry.fullTitle)}} <a href="" id="{{entry.id}}" ng-click="scrollTo ('' + entry.id)" class="anchor-link"><small><span class="glyphicon glyphicon-link"></span></small></a>
         </h2>
-        <h3 ng-if="entry.depth - depth == 2">{{trust (entry.fullTitle)}} <a id="{{entry.id}}" ng-click="scrollTo ('' + entry.id)" class="anchor-link"><span class="glyphicon glyphicon-link"></span></a>
+        <h3 ng-if="entry.depth - depth == 2">{{trust (entry.fullTitle)}} <a href="" id="{{entry.id}}" ng-click="scrollTo ('' + entry.id)" class="anchor-link"><small><span class="glyphicon glyphicon-link"></span></small></a>
         </h3>
-        <h4 ng-if="entry.depth - depth >= 3">{{trust (entry.fullTitle)}} <a id="{{entry.id}}" ng-click="scrollTo ('' + entry.id)" class="anchor-link"><span class="glyphicon glyphicon-link"></span></a>
+        <h4 ng-if="entry.depth - depth >= 3">{{trust (entry.fullTitle)}} <a href="" id="{{entry.id}}" ng-click="scrollTo ('' + entry.id)" class="anchor-link"><small><span class="glyphicon glyphicon-link"></span></small></a>
         </h4>
     </div>
 
