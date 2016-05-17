@@ -1,18 +1,18 @@
 'use strict';
 
-angular.module('myApp.student.courses', ['ui.router', 'myapp.services.rest'])
+angular.module('myApp.student.courses', ['ui.router', 'myapp.services.history'])
 
     .config (['$stateProvider', 'RoleProvider', function ($stateProvider, RoleProvider) {
         $stateProvider.state ('home.student.courses', {
             url: '/courses/:course_id',
             resolve: {
-                entries: ['$stateParams', 'RestService', '$log', function ($stateParams, RestService, $log)
+                entries: ['$stateParams', 'HistoryService', '$log', function ($stateParams, HistoryService, $log)
                 {
                     $log.info ("[myApp] $stateProvider (resolving 'home.student.courses' with course_id=" + $stateParams.course_id + ")");
 
-                    var course = RestService.getCourseTableOfContents ().get ({courseId: $stateParams.course_id});
+                    var entries = HistoryService.getCourseTableOfContents ().query ({courseId: $stateParams.course_id});
 
-                    return course;
+                    return entries;
                 }],
                 course_id: ['$stateParams', function ($stateParams)
                 {
@@ -30,11 +30,16 @@ angular.module('myApp.student.courses', ['ui.router', 'myapp.services.rest'])
         if (courseList.$resolved) {
             courseList.forEach (function (course)
             {
-                if (course.id == course_id) {
-                    $scope.course = course;
+                if (course.courseOutDto.id == course_id) {
+                    $scope.course = course.courseOutDto;
                 }
             })
         }
+
+        entries.$promise.then (function (result)
+        {
+            $log.info (result);
+        });
 
         // TODO: depending on the mode we need two strategies for enumerating the entries:
         //       For structure mode we enumerate until units

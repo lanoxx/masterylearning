@@ -1,56 +1,34 @@
-angular.module ('myapp.services.history', [])
+angular.module ('myapp.services.history', ['ngResource', 'myapp.config'])
 
-    .factory ('CourseHistory', ['EntryHistory', function CourseHistoryFactory(EntryHistory)
+    .provider ('HistoryService', [function HistoryServiceProvider()
     {
-        /**
-         * @param course_id:String
-         * @constructor
-         */
-        function CourseHistory (course_id) {
-            this.course_id = course_id;
-            this.last_entry_id = null;
-            this.visited_entries = [];
+        var apiUrlPrefix;
+
+        function HistoryService ($resource) {
+            "use strict";
+
+            this.getActiveCourses = function ()
+            {
+                return $resource (apiUrlPrefix + "/userHistory/activeCourses");
+            };
+
+            this.getCourseTableOfContents = function ()
+            {
+                return $resource (apiUrlPrefix + "/userHistory/courses/:courseId", {courseId: '@courseId'});
+            };
+
+            this.enumerateEntries = function ()
+            {
+                return $resource (apiUrlPrefix + "/userHistory/courses/:courseId/enumerate/:entryId",
+                    {courseId: '@courseId', entryId: '@entryId'}
+                );
+            }
+
         }
 
-        CourseHistory.prototype.set_last_entry = function (entry)
+        this.$get = ['$resource', 'Configuration', function ($resource, Configuration)
         {
-            this.last_entry_id = entry.id;
-        };
-
-        CourseHistory.prototype.add_visited_entry = function (entry, state)
-        {
-            var visited_entry = new EntryHistory(entry, state);
-
-            this.visited_entries.push (visited_entry);
-
-            return visited_entry;
-        };
-
-        return CourseHistory;
-    }])
-
-
-    .factory ('EntryHistory', function EntryHistoryFactory ()
-    {
-        function EntryHistory (entry, state)
-        {
-            this.course_id = null;
-            this.entry_id = entry.id;
-
-            if (state !== undefined)
-                this.state = state;
-            else
-                this.state = null;
-        }
-
-        /**
-         * @param state:String The current state of the EntryData object.
-         */
-        EntryHistory.prototype.update_state = function (state)
-        {
-            this.state = state;
-        };
-
-        return EntryHistory;
-    });
-
+            apiUrlPrefix = Configuration.getApiUrl ();
+            return new HistoryService ($resource);
+        }];
+    }]);

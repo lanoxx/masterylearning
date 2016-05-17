@@ -3,11 +3,11 @@ angular.module ('myapp.student.courses.entries.flow', ['ui.router', 'ngSanitize'
     .config (['$stateProvider', function ($stateProvider)
     {
         $stateProvider.state ('home.student.courses.entries.flow', {
-            url: '/flow',
+            url: '/flow?location',
             resolve: {
-                entries: ['course_id', 'entry_id', 'RestService','$log', function (course_id, entry_id, RestService, $log)
+                entries: ['course_id', 'entry_id', 'HistoryService','$log', function (course_id, entry_id, HistoryService, $log)
                 {
-                    return RestService.enumerateEntries ().get( {courseId: course_id, entryId: entry_id });
+                    return HistoryService.enumerateEntries ().get( {courseId: course_id, entryId: entry_id });
                 }]
             },
             templateUrl: 'student/courses/entries/flow/flow.html',
@@ -15,8 +15,8 @@ angular.module ('myapp.student.courses.entries.flow', ['ui.router', 'ngSanitize'
         });
     }])
 
-    .controller ('FlowController', ['$scope', 'course_id', 'entries', 'RestService', '$sanitize', '$anchorScroll', '$log', '$sce',
-        function ($scope, course_id, entries, RestService, $sanitize, $anchorScroll, $log, $sce)
+    .controller ('FlowController', ['$scope', '$timeout', '$location', '$stateParams', 'course_id', 'entries', 'HistoryService', '$sanitize', '$anchorScroll', '$log', '$sce',
+        function ($scope, $timeout, $location, $stateParams, course_id, entries, HistoryService, $sanitize, $anchorScroll, $log, $sce)
     {
         "use strict";
 
@@ -26,6 +26,7 @@ angular.module ('myapp.student.courses.entries.flow', ['ui.router', 'ngSanitize'
         $scope.entries = [];
         $scope.scrollTo = function (id)
         {
+            $location.search("location="+ id);
             $anchorScroll(id);
         };
 
@@ -41,11 +42,19 @@ angular.module ('myapp.student.courses.entries.flow', ['ui.router', 'ngSanitize'
             $scope.entries = entries.entries;
             next.push(entries.nextId);
             $log.info ("[myApp] FlowController: Rendering " + $scope.entries.length + " entries.");
+            if ($stateParams.location) {
+                $timeout (function ()
+                {
+                    $log.info ("[myApp] FlowController: Scrolling to location " + $stateParams.location);
+                    $anchorScroll($stateParams.location);
+                }, 0);
+            }
+
         });
 
         function load_next_content (nextEntryId)
         {
-            var enumerationPromise = RestService.enumerateEntries ()
+            var enumerationPromise = HistoryService.enumerateEntries ()
                 .get( {courseId: course_id, entryId: nextEntryId })
                 .$promise;
 
