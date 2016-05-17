@@ -199,9 +199,9 @@ public class HistoryController {
                                 .collect(Collectors.toList());
 
         List<Long> locations = dto.entries.stream ()
-                                .filter (entryOut -> entryOut.seen)
-                                .map (entryOut -> entryOut.id)
-                                .collect (Collectors.toList ());
+                                          .filter (entryOut -> entryOut.seen)
+                                          .map (entryOut -> entryOut.id)
+                                          .collect (Collectors.toList ());
 
 
         dto.scrollLocation = locations.size () > 0
