@@ -156,25 +156,24 @@ public class HistoryController {
         BlockingStrategy blockingStrategy = entry -> {
             boolean blockingCandidate = entry.data instanceof ContinueButton || entry.data instanceof Exercise;
             if (blockingCandidate) {
-                return entryHistoryList.stream ()
-                                       .filter (entryHistory -> entryHistory.entry.id.equals (entry.id))
-                                       .map (entryHistory -> {
-                                           if (entry.data instanceof ContinueButton) {
-                                               // the entry is already in the users history: dont block
-                                               return false;
-                                           }
-                                           if (entry.data instanceof Exercise) {
-                                               // we must check if the exercise has been answered, only then we block!
-                                               if (entryHistory.state != null) {
-                                                   if (entryHistory.state.contains ("answered")) {
-                                                       return true;
-                                                   }
-                                               }
-                                               return false;
-                                           }
-                                           return false;
-                                       })
-                                       .reduce (true, (a, b) -> false);
+                Optional<Boolean> first = entryHistoryList.stream ()
+                                                          .filter (entryHistory -> entryHistory.entry.id.equals (entry.id))
+                                                          .map (entryHistory -> {
+                                                              if (entry.data instanceof ContinueButton) {
+                                                                  // the entry is already in the users history: dont block
+                                                                  return false;
+                                                              }
+                                                              if (entry.data instanceof Exercise) {
+                                                                  // no state, so the exercise has not been answered: block
+                                                                  if (entryHistory.state == null) {
+                                                                      return true;
+                                                                  }
+                                                              }
+                                                              // default: don't block
+                                                              return false;
+                                                          })
+                                                          .findFirst ();
+                return first.isPresent () ? first.get () : true;
             }
             return false;
         };
