@@ -98,4 +98,30 @@ angular.module ('myapp.student.courses.entries.flow', ['ui.router', 'ngSanitize'
         {
             return $sanitize (text);
         };
+    }])
+
+    .directive ('myAppInitialize', ['$timeout', function ($timeout)
+    {
+        return {
+            scope: {
+                contentObject: '='
+            },
+            link: function (scope, element, attributes)
+                  {
+                      function init_callback (context)
+                      {
+                          var initData = context.contentObject.initData;
+                          var initObject = JSON.parse (initData);
+                          var initName = context.contentObject.init;
+                          var initFunction = window[initName];
+
+                          console.log ("[myApp] myAppInitialize: calling function '" + initName + "' with data: " + initData);
+                          initFunction(context.element[0], initObject);
+                      }
+
+                      $timeout (init_callback, 0, false, { element: element, attributes: attributes, contentObject: scope.contentObject });
+
+                      console.log ('fooobar');
+                  }
+        }
     }]);
