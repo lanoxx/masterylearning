@@ -112,4 +112,20 @@ public class HistoryService {
         return null;
     }
 
+
+    @Transactional
+    public EntryHistory findEntryHistory (User user, Long courseId, Long entryId) {
+
+        Optional<CourseHistory> courseCandidate = user.getCourseHistoryList ().stream ().filter (course -> course.id.equals (courseId)).findFirst ();
+
+        if (!courseCandidate.isPresent ())  return null;
+
+        CourseHistory courseHistory = courseCandidate.get ();
+
+        Optional<EntryHistory> entryCandidate = courseHistory.entryHistoryList.stream ().findAny ();
+
+        if (!entryCandidate.isPresent ()) return null;
+
+        return entryCandidate.get ();
+    }
 }

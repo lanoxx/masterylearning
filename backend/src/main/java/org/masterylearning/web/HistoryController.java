@@ -8,12 +8,14 @@ import org.masterylearning.domain.User;
 import org.masterylearning.domain.data.ContinueButton;
 import org.masterylearning.domain.data.EntryData;
 import org.masterylearning.domain.data.Exercise;
+import org.masterylearning.dto.in.EntryStateDto;
 import org.masterylearning.dto.out.CourseHistoryOutDto;
 import org.masterylearning.dto.out.CourseOutDto;
 import org.masterylearning.dto.out.EntryDataOutDto;
 import org.masterylearning.dto.out.EnumerationOutDto;
 import org.masterylearning.repository.CourseRepository;
 import org.masterylearning.repository.EntryHistoryRepository;
+import org.masterylearning.repository.UserRepository;
 import org.masterylearning.service.BlockingStrategy;
 import org.masterylearning.service.CourseService;
 import org.masterylearning.service.HistoryService;
@@ -22,6 +24,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -43,6 +46,7 @@ public class HistoryController {
     @Inject EntryHistoryRepository entryHistoryRepository;
     @Inject CourseService courseService;
     @Inject HistoryService historyService;
+    @Inject UserRepository userRepository;
 
     @CrossOrigin
     @RequestMapping (method = RequestMethod.GET, path = "/activeCourses")
@@ -228,5 +232,35 @@ public class HistoryController {
         entryHistory.course = course;
         entryHistoryList.add (entryHistory);
         entryHistoryRepository.save (entryHistoryList);
+    }
+
+    @CrossOrigin
+    @RequestMapping (method = RequestMethod.POST, path = "/course/{courseId}/entry/{entryId}")
+    public Boolean
+    setEntryState (@PathVariable Long courseId, @PathVariable Long entryId, @RequestBody EntryStateDto stateDto) {
+
+        Object principal = SecurityContextHolder.getContext ().getAuthentication ().getPrincipal ();
+
+        Long userId;
+        if (principal instanceof User) {
+            User user = (User) principal;
+            userId = user.id;
+        } else {
+            return false;
+        }
+
+        User user = userRepository.findOne (userId);
+
+        EntryHistory entryHistory = historyService.findEntryHistory (user, courseId, entryId);
+
+        if (entryHistory == null) {
+            return false;
+        }
+
+        entryHistory.state = stateDto.state;
+
+        entryHistoryRepository.save (entryHistory);
+
+        return true;
     }
 }
