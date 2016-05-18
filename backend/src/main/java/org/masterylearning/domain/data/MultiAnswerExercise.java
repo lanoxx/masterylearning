@@ -17,7 +17,6 @@ public class MultiAnswerExercise extends Exercise {
 
     @Type(type = "text")
     public String text;
-    public boolean blocks;
 
     @OneToMany (cascade = CascadeType.PERSIST)
     public List<AnswerCandidate> answerCandidates;
