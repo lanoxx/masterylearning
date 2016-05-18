@@ -4,65 +4,17 @@
 
             <ui-view>
 
-                <uib-tabset active="active">
-                    <uib-tab index="0">
-                        <uib-tab-heading>Active Courses</uib-tab-heading>
+                <div ng-repeat="activeCourse in active_courses">
+                    <h2 ><a ui-sref="home.student.courses({course_id: activeCourse.courseOutDto.id})">{{get_course_title (activeCourse.courseOutDto)}}</a></h2>
+                    <p>
+                        Continue from last position:
+                        <a ui-sref="home.student.courses.entries.flow ({course_id: activeCourse.courseOutDto.id, entry_id: activeCourse.lastEntryId})">
+                            Entry {{activeCourse.lastEntryId}}
+                        </a>
+                    </p>
+                </div>
 
-                        <button ng-click="refreshActiveCourses()" class="btn btn-default pull-right">Refresh</button>
-                        <h1>Active Courses</h1>
-
-                        <div ng-repeat="activeCourse in active_courses">
-                            <h2 ><a ui-sref="home.student.courses({course_id: activeCourse.courseOutDto.id})">{{get_course_title (activeCourse.courseOutDto)}}</a></h2>
-                            <p>
-                                Continue from last position:
-                                <a ui-sref="home.student.courses.entries.flow ({course_id: activeCourse.courseOutDto.id, entry_id: activeCourse.lastEntryId})">
-                                    Entry {{activeCourse.lastEntryId}}
-                                </a>
-                            </p>
-                        </div>
-
-
-                        <h2 ng-if="active_courses.length === 0">There are no active courses in the data base. Please create a course first.</h2>
-
-                    </uib-tab>
-                    <uib-tab index="1">
-                        <uib-tab-heading>Retired Courses</uib-tab-heading>
-
-                        <h1>Retired Courses</h1>
-
-                        <div class="lectures">
-                            <div class="entry">
-                                <strong><a>Introduction to programming (WS'15)</a></strong>
-                            </div>
-                            <div class="entry">
-                                <strong><a>Procedural Content Generation in Computer Games (WS'15)</a></strong>
-                            </div>
-                            <div class="entry">
-                                <strong><a>Decision Procedures (WS'15)</a></strong>
-                            </div>
-                        </div>
-
-                        <div class="alert alert-info">
-                            <p>In the initial version of this application there will be only one course: <strong>Formal Methods in Computer Science (SS'16)</strong>.
-                                Therefore there are simply no retired courses yet. We have added just some demo entries to demonstrate future extensions of this
-                                application.
-                            </p>
-                        </div>
-
-                    </uib-tab>
-                    <uib-tab index="2">
-                        <uib-tab-heading>Course List</uib-tab-heading>
-
-                        <h1>Course List</h1>
-
-                        <div class="alert alert-info">
-                            <p>In the initial version of this application there will be only one course: <strong>Formal Methods in Computer Science (SS'16)</strong>.
-                                Therefore this view is deactivated and exists only to demonstrate how this application can be extended in the future.
-                            </p>
-                        </div>
-
-                    </uib-tab>
-                </uib-tabset>
+                <h2 ng-if="active_courses.length === 0">There are no active courses in the data base. Please create a course first.</h2>
 
             </ui-view>
         </div>

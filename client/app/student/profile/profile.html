@@ -3,16 +3,11 @@
 <div class="row">
     <div class="col-md-12">
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-12">
                 <div class="well">
                     <h2>Max Mustermann</h2>
                     <div class="row">
-                        <div class="col-md-3">
-                            <p>
-                                <img src="images/profile/avatar.png" alt="Avatar" width="70px" height="70px" style="float:left; margin-right: 40px; margin-top: 5px;">
-                            </p>
-                        </div>
-                        <div class="col-md-9">
+                        <div class="col-md-12">
                             <form>
                                 <div class="form-group">
                                     <label for="fullname">Full Name:</label>
@@ -23,15 +18,14 @@
                                     <input ng-model="currentUser.username" type="text" id="username" class="form-control" ng-disabled="true">
                                 </div>
                                 <p>You are registered as a <strong>student</strong></p>
-                                <button class="btn btn-default">
-                                    Change picture
-                                </button>
                             </form>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-md-6">
+        </div>
+        <div class="row">
+            <div class="col-md-12">
                 <div class="well">
                     <h2>Account</h2>
                     <p>Change your accounts password:</p>
@@ -63,34 +57,6 @@
                     <button class="btn btn-default" ng-disabled="!passwordsMatch" ng-click="changePassword ()">Save</button>
                 </div>
             </div>
-        </div>
-    </div>
-</div>
-<div class="row">
-    <div class="col-md-12">
-        <div class="alert alert-info">
-            <h1>Storyboard</h1>
-            <p>This is the profile view for the student. It includes information about the student. There will not be an overall
-                progress for the student since progress can only be made in the individual lectures and their respective units.
-            </p>
-            <p>For now we do not include <strong>gamification</strong> elements but they could possibly be added later.
-            </p>
-            <p>For the student we are showing some data of his profile such as:</p>
-            <ul>
-                <li>Information about the student, e.g. name, username, avatar icon</li>
-                <li>Clicking on "Change avatar" will open a dialog where the user can upload a new avatar icon or select one
-                    of several predefined icons.</li>
-                <li>For the "edit profile" button there are still some open questions:
-                    <ul>
-                        <li>Should the user be able to change his full name?</li>
-                        <li>Should the user be able to change his Matrikelnumber?</li>
-                        <li>Are there any other profile related settings that we might want to let the student edit?</li>
-                        <li>Depending on how we decide this, the "edit profile" button could either be removed again, or
-                            it could open a dialog where the user can make the respective adjustments to his profile.
-                        </li>
-                    </ul>
-                </li>
-            </ul>
         </div>
     </div>
 </div>

@@ -4,47 +4,29 @@
             <ui-view>
                 <h1>{{course.title}} {{course.period}}</h1>
                 <p>{{course.description}}</p>
-                <uib-tabset>
-                    <uib-tab>
-                        <uib-tab-heading>Table of Contents</uib-tab-heading>
 
-                        <div ng-repeat="entry in entries">
+                <div ng-repeat="entry in entries">
 
-                            <!-- type Section -->
-                            <div ng-if="entry.type=='section'">
-                                <h2>
-                                    <a ng-if="mode === 'structure'" ui-sref="home.student.courses.entries.structure({course_id: course.id, entry_id: entry.id})">{{ entry.title }}</a>
-                                    <a ng-if="mode === 'flow' && entry.seen" ui-sref="home.student.courses.entries.flow({course_id: course_id, entry_id: entry.id, location: 76})">{{ entry.title }}</a>
-                                    <span ng-if="mode === 'flow' && !entry.seen">{{ entry.title }}</span>
-                                </h2>
-                                <p>{{ entry.description }}</p>
-                            </div>
-                            <!-- type Unit -->
-                            <div ng-if="entry.type=='unit'">
-                                <p><strong>TODO: Rendering unit</strong></p>
-                            </div>
+                    <!-- type Section -->
+                    <div ng-if="entry.type=='section'">
+                        <h2>
+                            <a ng-if="mode === 'structure'" ui-sref="home.student.courses.entries.structure({course_id: course.id, entry_id: entry.id})">{{ entry.title }}</a>
+                            <a ng-if="mode === 'flow' && entry.seen" ui-sref="home.student.courses.entries.flow({course_id: course_id, entry_id: entry.id, location: 76})">{{ entry.title }}</a>
+                            <span ng-if="mode === 'flow' && !entry.seen">{{ entry.title }}</span>
+                        </h2>
+                        <p>{{ entry.description }}</p>
+                    </div>
+                    <!-- type Unit -->
+                    <div ng-if="entry.type=='unit'">
+                        <p><strong>TODO: Rendering unit</strong></p>
+                    </div>
 
-                            <div ng-if="entry.type !='section' && entry.type != 'unit'" class="entry">
-                                <div class="alert alert-danger">An error occurred. A course can contain only sections and units as its immediate children. Please notify the administrator.</div>
-                            </div>
+                    <div ng-if="entry.type !='section' && entry.type != 'unit'" class="entry">
+                        <div class="alert alert-danger">An error occurred. A course can contain only sections and units as its immediate children. Please notify the administrator.</div>
+                    </div>
 
-                        </div>
+                </div>
 
-                    </uib-tab>
-
-                    <uib-tab disable="true">
-                        <uib-tab-heading>
-                            <span class="glyphicon glyphicon-cog"></span> Settings
-                        </uib-tab-heading>
-                        <h1>Configure your lecture preferences</h1>
-                        <div class="panel panel-danger">
-                            <div class="panel-heading bg-danger"><strong>Manage Lecture Attendance</strong></div>
-                            <div class="panel-body">
-                                <p>If you think you can't make it this term you may choose to leave this lecture. But be careful,
-                                    this action cannot be undone.</p><button class="btn btn-danger">Leave lecture</button></div>
-                        </div>
-                    </uib-tab>
-                </uib-tabset>
             </ui-view>
         </div>
     </div>
