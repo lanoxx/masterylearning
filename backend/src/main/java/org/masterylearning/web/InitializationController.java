@@ -31,7 +31,7 @@ public class InitializationController {
 
         if (all.size () == 0) {
 
-            User user = userService.createUser ("John Doe", "user", "123456");
+            User user = userService.createUser ("John Doe", "john@doe.com", "user", "123456");
 
             Role role = new Role ();
             role.name = "STUDENT";

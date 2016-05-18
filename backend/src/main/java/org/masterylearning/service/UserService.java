@@ -17,11 +17,11 @@ public class UserService {
     @Inject UserRepository userRepository;
     @Inject PasswordResetTokenRepository passwordResetTokenRepository;
 
-    public User createUser (String fullname, String username, String password) {
+    public User createUser (String fullname, String email, String username, String password) {
 
         String encodedPassword = passwordEncoder.encode (password);
 
-        User user = new User (fullname, username, encodedPassword);
+        User user = new User (fullname, email, username, encodedPassword);
 
         userRepository.save (user);
 

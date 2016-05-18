@@ -22,6 +22,8 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.OptionalLong;
+import java.util.Random;
 import java.util.stream.Collectors;
 
 /**
@@ -53,18 +55,59 @@ public class UserController {
     public CreateUserOutDto
     createUser (@RequestBody CreateUserDto dto) {
         CreateUserOutDto outDto = new CreateUserOutDto ();
+        outDto.userId = null;
 
-        User existingUser = userRepository.getUserByUsername (dto.username);
-        if (existingUser != null) {
-            outDto.message = "User exists";
-            outDto.userId = null;
-            return outDto;
-        }
+        User existingUser = null;
 
         if (dto.fullname == null) {
             outDto.message = "You must specify a 'fullname'.";
-            outDto.userId = null;
             return outDto;
+        }
+
+        if (!dto.email.contains ("@")) {
+            outDto.message = "Your email address is not valid";
+            return outDto;
+        }
+
+
+        if (dto.username != null) {
+            existingUser = userRepository.getUserByUsername (dto.username);
+            if (existingUser != null) {
+                outDto.message = "User exists";
+                return outDto;
+            }
+
+            //TODO: ideally we should
+            if (dto.username.contains ("@")) {
+                outDto.message = "Username must not contain the '@' character";
+            }
+        } else {
+            // if no user name was given we try to assign a random username
+
+            for (int i = 0; i < 10; i++) {
+                OptionalLong randomCandidate = new Random ().ints (10000, 9999999)
+                                                            .asLongStream ()
+                                                            .findAny ();
+
+                if (!randomCandidate.isPresent ()) {
+                    continue;
+                }
+                Long number = randomCandidate.getAsLong ();
+                dto.username = "user" + String.format ("%07d", number);
+
+                existingUser = userRepository.getUserByUsername (dto.username);
+
+                // the username does not exist yet, so break;
+                if (existingUser == null) {
+                    break;
+                }
+            }
+
+            // we have tried 10 time, but all randomly generated usernames already exist
+            if (existingUser != null) {
+                outDto.message = "Please try again or specify a username.";
+                return outDto;
+            }
         }
 
         String encodedPassword = passwordEncoder.encode (dto.password);

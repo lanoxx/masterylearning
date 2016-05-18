@@ -27,8 +27,10 @@ public class User implements UserDetails {
     @Column(nullable = false, unique = true)
     public String username;
 
-    @Column (nullable = false)
     public String fullname;
+
+    @Column(nullable = false, unique = true)
+    public String email;
 
     /**
      * The ui mode that we are going to use, defaults to flow mode.
@@ -45,8 +47,9 @@ public class User implements UserDetails {
 
     protected User () { }
 
-    public User (String fullname, String username, String password)
+    public User (String fullname, String email, String username, String password)
     {
+        this.email = email;
         this.fullname = fullname;
         this.username = username;
         this.password = password;

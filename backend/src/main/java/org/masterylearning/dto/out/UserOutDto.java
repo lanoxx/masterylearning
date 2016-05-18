@@ -11,13 +11,14 @@ public class UserOutDto {
 
     public String fullname;
     public String username;
+    public String email;
     public List<String> roles;
 
     public UserOutDto (User user) {
         this.fullname = user.fullname;
         this.username = user.username;
+        this.email = user.email;
         this.roles = user.getRoles().stream ().map (role -> role.name).collect(Collectors.toList());
-
     }
 
 }
