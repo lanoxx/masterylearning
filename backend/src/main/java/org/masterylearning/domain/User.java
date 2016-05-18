@@ -10,6 +10,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -51,7 +52,7 @@ public class User implements UserDetails {
         this.password = password;
     }
 
-    @OneToMany (fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Role> roles = new ArrayList<> ();
 
     @OneToMany (mappedBy = "user", cascade = CascadeType.PERSIST)

@@ -1,11 +1,13 @@
 package org.masterylearning.web;
 
+import org.masterylearning.domain.Role;
 import org.masterylearning.domain.User;
 import org.masterylearning.dto.in.ChangePasswordDto;
 import org.masterylearning.dto.in.CreateUserDto;
 import org.masterylearning.dto.out.ChangePasswordOutDto;
 import org.masterylearning.dto.out.CreateUserOutDto;
 import org.masterylearning.dto.out.UserOutDto;
+import org.masterylearning.repository.RoleRepository;
 import org.masterylearning.repository.UserRepository;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -19,6 +21,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.inject.Inject;
 import javax.transaction.Transactional;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  */
@@ -27,6 +31,7 @@ import javax.transaction.Transactional;
 public class UserController {
 
     @Inject UserRepository userRepository;
+    @Inject RoleRepository roleRepository;
     @Inject PasswordEncoder passwordEncoder;
 
     @CrossOrigin
@@ -64,7 +69,13 @@ public class UserController {
 
         String encodedPassword = passwordEncoder.encode (dto.password);
 
-        User user = new User (dto.fullname, dto.username, encodedPassword);
+        User user = new User (dto.fullname, dto.email, dto.username, encodedPassword);
+
+        List<Role> roles = dto.roles.stream ()
+                                    .map (role -> roleRepository.findRoleByName (role))
+                                    .collect(Collectors.toList());
+
+        user.getRoles ().addAll (roles);
 
         userRepository.save (user);
 
