@@ -129,6 +129,12 @@ angular.module('myApp', [
         $log.info ("[myApp] NavigationController running");
 
         $scope.Role = Role;
+        if (UserService.currentUser) {
+            $scope.fullname = UserService.currentUser.fullname;
+            if (!$scope.fullname) {
+                $scope.fullname = UserService.currentUser.username;
+            }
+        }
         $scope.getCurrentRole = UserService.getCurrentRole;
         $scope.hasRole = RoleManager.hasRole;
 
