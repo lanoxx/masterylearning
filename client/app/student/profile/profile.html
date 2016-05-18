@@ -22,7 +22,9 @@
                                     <input ng-model="currentUser.email" type="text" id="username" class="form-control" ng-disabled="true">
                                 </div>
                                 <div class="alert alert-info">Your email address is not visible to other users.</div>
-                                <p>You are registered as a <strong>student</strong></p>
+                                <p>You are registered with the following role(s):
+                                    <span ng-repeat="role in currentUser.roles"><strong>{{ $first ? role : ', ' + role }}</strong></span>
+                                </p>
                             </form>
                         </div>
                     </div>
