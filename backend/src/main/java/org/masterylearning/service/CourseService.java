@@ -28,7 +28,7 @@ public class CourseService {
 
         for (Entry child : course.children) {
             // delegate validation to entry
-            entryService.validate (validationDto, child);
+            entryService.validate (validationDto, course, child);
         }
 
         return validationDto;

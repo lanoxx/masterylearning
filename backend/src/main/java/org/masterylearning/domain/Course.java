@@ -67,6 +67,7 @@ public class Course implements Container<Entry> {
         Entry entry = new Entry(entryData);
 
         entry.course = this;
+        entry.rootCourse = this;
         entry.index = this.children.size ();
         entry.depth = 0;
         this.children.add (entry);

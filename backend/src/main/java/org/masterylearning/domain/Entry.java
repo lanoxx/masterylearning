@@ -30,6 +30,9 @@ public class Entry implements Child<Entry>, Container<Entry> {
     @OneToOne
     public Course course;
 
+    @OneToOne
+    public Course rootCourse;
+
     public int depth;
 
     @JsonManagedReference("entry-data")
@@ -154,6 +157,7 @@ public class Entry implements Child<Entry>, Container<Entry> {
         entry.index = this.children.size () - 1;
         entry.depth = this.depth + 1;
         entry.parent = this;
+        entry.rootCourse = this.rootCourse;
 
         entryData.container = entry;
 
@@ -162,5 +166,9 @@ public class Entry implements Child<Entry>, Container<Entry> {
 
     public EntryData getData () {
         return this.data;
+    }
+
+    public Course getRootCourse () {
+        return this.rootCourse;
     }
 }

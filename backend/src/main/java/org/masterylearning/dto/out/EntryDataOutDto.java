@@ -7,6 +7,7 @@ import org.masterylearning.domain.data.EntryData;
 public class EntryDataOutDto {
     public Long id;      //stores id of containing entry
     public Long parent;  //stores id of containing entries parent
+    public Long courseId;
 
     public int depth;
     public int index;
@@ -29,6 +30,7 @@ public class EntryDataOutDto {
 
         if (data.container != null) {
             this.id = data.container.id;
+            this.courseId = data.container.getRootCourse ().id;
 
             if (data.container.parent != null) {
                 this.parent = data.container.parent.id;
