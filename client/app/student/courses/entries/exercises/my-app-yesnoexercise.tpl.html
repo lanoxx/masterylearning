@@ -3,7 +3,7 @@
     <p data-katex data-bind="sanitize(exercise.text)" data-auto-render></p>
     <div ng-class="{alert: true, 'alert-success': is_answer_correct(), 'alert-danger': is_answer_wrong() }">
         <label for="answer">Answer:</label>
-        <select ng-model="answer" id="answer"
+        <select ng-model="answer" id="answer" class="form-control"
                 ng-options="option.value as option.label for option in [
                     {value: true, label: 'Yes'},
                     {value: false, label: 'No'}]"
