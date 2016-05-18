@@ -393,13 +393,15 @@ role {STUDENT, TEACHER, ADMIN}
       <x>550</x>
       <y>880</y>
       <w>240</w>
-      <h>100</h>
+      <h>130</h>
     </coordinates>
     <panel_attributes>CourseHistory
 --
 id
 courseId
-lastEntry</panel_attributes>
+lastEntry
+created: DateTime
+modified: DateTime</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
@@ -422,12 +424,14 @@ activeCourses</panel_attributes>
       <x>1010</x>
       <y>880</y>
       <w>240</w>
-      <h>100</h>
+      <h>180</h>
     </coordinates>
     <panel_attributes>EntryHistory
 --
 courseId
 entryId
+created: DateTime
+modified: DateTime
 state : string</panel_attributes>
     <additional_attributes/>
   </element>
