@@ -100,28 +100,69 @@ angular.module ('myapp.student.courses.entries.flow', ['ui.router', 'ngSanitize'
         };
     }])
 
-    .directive ('myAppInitialize', ['$timeout', function ($timeout)
+    .directive ('myAppInitialize', ['$timeout', '$log', '$q', function ($timeout, $log, $q)
     {
         return {
             scope: {
-                contentObject: '='
+                entry: '='
             },
-            link: function (scope, element, attributes)
+            link: function (scope, element)
                   {
                       function init_callback (context)
                       {
-                          var initData = context.contentObject.initData;
+                          var initData = context.entry.initData;
                           var initObject = JSON.parse (initData);
-                          var initName = context.contentObject.init;
+                          var initName = context.entry.init;
                           var initFunction = window[initName];
 
-                          console.log ("[myApp] myAppInitialize: calling function '" + initName + "' with data: " + initData);
-                          initFunction(context.element[0], initObject);
+                          $log.info ("[myApp] myAppInitialize: calling function '" + initName + "' with data: " + initData);
+                          initFunction(context.element[0], context.scope.entry.state, initObject, get_event_callback(scope), context);
                       }
 
-                      $timeout (init_callback, 0, false, { element: element, attributes: attributes, contentObject: scope.contentObject });
+                      function get_event_callback (scope) {
+                          "use strict";
+                          return function (data)
+                          {
+                              var deferred = $q.defer ();
 
-                      console.log ('fooobar');
-                  }
+                              scope.deferred = deferred;
+                              scope.state = data.state;
+                              scope.$apply();
+
+                              return deferred.promise;
+                          }
+                      }
+
+                      $timeout (init_callback, 0, false, { element: element, entry: scope.entry, scope: scope });
+                  },
+            controller: ['$scope', 'HistoryService', function ($scope, HistoryService)
+            {
+                $scope.$watch ('state', function (state)
+                {
+                    if (!state) return;
+
+                    $log.info ('[myAppInitialize] State has changed: ' + state);
+                    persist_state(state);
+                });
+
+                function persist_state (state) {
+                    "use strict";
+                    $log.info ('persisting state: ' + state);
+                    $log.info ('course id' + $scope.entry.courseId);
+                    HistoryService.setEntryState().save ({ courseId: $scope.entry.courseId, entryId: $scope.entry.id, state: state }).$promise.then (function ()
+                    {
+                        if ($scope.deferred) {
+                            $scope.deferred.resolve (true);
+                        }
+                        $log.info ('success');
+                    }, function ()
+                    {
+                        if ($scope.deferred) {
+                            $scope.deferred.reject (false);
+                        }
+                        $log.info ('error');
+                    });
+                }
+            }]
         }
     }]);

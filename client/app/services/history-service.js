@@ -24,6 +24,12 @@ angular.module ('myapp.services.history', ['ngResource', 'myapp.config'])
                 );
             }
 
+            this.setEntryState = function ()
+            {
+                return $resource (apiUrlPrefix + "/userHistory/courses/:courseId/entries/:entryId",
+                    {courseId: '@courseId', entryId: '@entryId'});
+            }
+
         }
 
         this.$get = ['$resource', 'Configuration', function ($resource, Configuration)
