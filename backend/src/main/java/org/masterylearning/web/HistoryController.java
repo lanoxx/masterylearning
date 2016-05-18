@@ -235,7 +235,7 @@ public class HistoryController {
     }
 
     @CrossOrigin
-    @RequestMapping (method = RequestMethod.POST, path = "/course/{courseId}/entry/{entryId}")
+    @RequestMapping (method = RequestMethod.POST, path = "/courses/{courseId}/entries/{entryId}")
     public Boolean
     setEntryState (@PathVariable Long courseId, @PathVariable Long entryId, @RequestBody EntryStateDto stateDto) {
 
