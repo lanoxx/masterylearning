@@ -78,7 +78,11 @@ public class PasswordController {
 
         String hostname = environment.getProperty ("email.hostname");
         hostname = hostname != null ? hostname : request.getServerName();
-        String url = "http://" + hostname + "/password/resetToken/" + token + "/user/" + user.id;
+
+        // We always use a secure url here, since we have no way of detecting if the frontend server
+        // is using a secure connection. Its the task of the frontend server to rewrite this if it is using
+        // unsecure connections.
+        String url = "https://" + hostname + "/password/resetToken/" + token + "/user/" + user.id;
 
         SimpleMailMessage email = new SimpleMailMessage();
         email.setFrom ("smartlecture1@gmail.com");
