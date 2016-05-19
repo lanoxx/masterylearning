@@ -37,7 +37,8 @@ angular.module ('myapp.user', ['common.password'])
             $scope.token = $stateParams.token;
             $scope.userId = $stateParams.userId;
             $scope.user = {};
-            $scope.resetRequestSucceeded = false;
+            $scope.requestSent = false;
+            $scope.resetRequestSucceeded = null;
 
             $scope.requestResetToken = function ()
             {
@@ -47,12 +48,14 @@ angular.module ('myapp.user', ['common.password'])
                     function onSuccess (result)
                     {
                         "use strict";
-                        $scope.resetRequestSucceeded = true;
+                        $scope.requestSent = true;
+                        $scope.resetRequestSucceeded = result.success;
                     },
                     function onError (result)
                     {
                         "use strict";
-
+                        $scope.requestSent = true;
+                        $scope.resetRequestSucceeded = false;
                     }
                 )
             };
