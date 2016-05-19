@@ -4,17 +4,12 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.masterylearning.domain.Course;
 import org.masterylearning.domain.Entry;
-import org.masterylearning.domain.data.ContinueButton;
-import org.masterylearning.domain.data.EntryData;
-import org.masterylearning.domain.data.Exercise;
 import org.masterylearning.dto.out.CourseOutDto;
 import org.masterylearning.dto.out.CreateCourseOutDto;
-import org.masterylearning.dto.out.EnumerationOutDto;
 import org.masterylearning.dto.out.ValidationDto;
 import org.masterylearning.repository.CourseRepository;
 import org.masterylearning.repository.EntryRepository;
 import org.masterylearning.service.CourseService;
-import org.masterylearning.service.TreeEnumerator;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.inject.Inject;
-import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -99,58 +93,6 @@ public class CourseController {
 
         dto.validationResult = validate;
         dto.courseId = course.id;
-
-        return dto;
-    }
-
-    @CrossOrigin
-    @RequestMapping(path = "/{courseId}/enumerate/{entryId}", method = RequestMethod.GET)
-    @Transactional
-    public EnumerationOutDto enumerateEntries (@PathVariable Long courseId, @PathVariable Long entryId) {
-        Entry root;
-        EnumerationOutDto dto = new EnumerationOutDto ();
-
-        Course course = courseRepository.getOne (courseId);
-
-        if (course == null) {
-            //TODO return error
-            return null;
-        }
-
-        root = courseService.find (course, entryId);
-
-        TreeEnumerator treeEnumerator = new TreeEnumerator (root, entry -> entry.data instanceof ContinueButton || entry.data instanceof Exercise);
-
-        List<EntryData> entryDatas = treeEnumerator.enumerateTree ();
-        dto.entries = entryDatas.stream ().map (EntryData::toDto).collect (Collectors.toList ());
-
-        if (treeEnumerator.entryStack.size () > 0) {
-            Entry next = treeEnumerator.entryStack.peek ();
-            dto.nextId = next.id;
-        }
-
-        return dto;
-    }
-
-    @CrossOrigin
-    @RequestMapping(path = "/{courseId}/enumerate", method = RequestMethod.GET)
-    @Transactional
-    public EnumerationOutDto enumerateEntries (@PathVariable Long courseId)
-    {
-        Entry root;
-        EnumerationOutDto dto = new EnumerationOutDto ();
-
-        Course course = courseRepository.getOne (courseId);
-        root = course.next ();
-
-        TreeEnumerator treeEnumerator = new TreeEnumerator (root, entry -> entry.data instanceof ContinueButton || entry.data instanceof Exercise);
-
-        List<EntryData> entryDatas = treeEnumerator.enumerateTree ();
-        dto.entries = entryDatas.stream ().map (EntryData::toDto).collect (Collectors.toList ());
-        Entry next = treeEnumerator.entryStack.peek ();
-        if (next != null) {
-            dto.nextId = next.id;
-        }
 
         return dto;
     }
