@@ -23,12 +23,6 @@ angular.module ('myapp.student.courses.entries.exercises')
              */
             $scope.answers = [];
 
-            $scope.exercise.answerCandidates.forEach(function (candidate, index)
-            {
-                results[index] = false;
-                $scope.answers[index] = false;
-            });
-
             /**
              * True if the user has asked to check his answer.
              * @type {boolean}
@@ -48,9 +42,15 @@ angular.module ('myapp.student.courses.entries.exercises')
 
             $scope.check_cb = function (index)
             {
-                results.forEach(function (result, index)
+                // this callback is for answers to single answer candidates, but we always recompute
+                // the results for all candidate to ensure that we generate results also for those
+                // candidate which the user never answered, to ensure that the results contain
+                // valid values (true/false) instead of undefined.
+
+                $scope.exercise.answerCandidates.forEach(function (candidate, index)
                 {
-                    results[index] = $scope.answers[index] === $scope.exercise.answerCandidates[index].correct;
+                    var usersAnswer = $scope.answers[index] || false;
+                    results[index] = usersAnswer === candidate.correct;
                 });
             };
 
