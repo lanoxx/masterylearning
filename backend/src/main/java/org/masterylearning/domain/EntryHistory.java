@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import java.time.LocalDateTime;
 
 /**
  */
@@ -24,6 +25,12 @@ public class EntryHistory {
 
     @ManyToOne (optional = false)
     public Entry entry;
+
+    @Type (type = "localDateTimeType")
+    public LocalDateTime created;
+
+    @Type (type = "localDateTimeType")
+    public LocalDateTime modified;
 
     @Type (type = "text")
     public String state;

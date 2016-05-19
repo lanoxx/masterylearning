@@ -13,6 +13,7 @@ import org.masterylearning.dto.out.CourseHistoryOutDto;
 import org.masterylearning.dto.out.CourseOutDto;
 import org.masterylearning.dto.out.EntryDataOutDto;
 import org.masterylearning.dto.out.EnumerationOutDto;
+import org.masterylearning.repository.CourseHistoryRepository;
 import org.masterylearning.repository.CourseRepository;
 import org.masterylearning.repository.EntryHistoryRepository;
 import org.masterylearning.repository.UserRepository;
@@ -30,6 +31,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.inject.Inject;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -44,6 +46,7 @@ public class HistoryController {
 
     @Inject CourseRepository courseRepository;
     @Inject EntryHistoryRepository entryHistoryRepository;
+    @Inject CourseHistoryRepository courseHistoryRepository;
     @Inject CourseService courseService;
     @Inject HistoryService historyService;
     @Inject UserRepository userRepository;
@@ -230,8 +233,13 @@ public class HistoryController {
         entryHistory.courseHistory = courseHistory;
         entryHistory.entry = entry;
         entryHistory.course = course;
+        entryHistory.created = LocalDateTime.now ();
         entryHistoryList.add (entryHistory);
         entryHistoryRepository.save (entryHistoryList);
+
+        courseHistory.modified = LocalDateTime.now ();
+        courseHistory.lastEntry = entry;
+        courseHistoryRepository.save (courseHistory);
     }
 
     @CrossOrigin
@@ -258,6 +266,7 @@ public class HistoryController {
         }
 
         entryHistory.state = stateDto.state;
+        entryHistory.modified = LocalDateTime.now ();
 
         entryHistoryRepository.save (entryHistory);
 

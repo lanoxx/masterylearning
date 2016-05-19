@@ -14,6 +14,7 @@ import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -57,6 +58,7 @@ public class HistoryService {
                 if (!found) {
                     CourseHistory courseHistory = new CourseHistory ();
                     courseHistory.course = course;
+                    courseHistory.created = LocalDateTime.now ();
 
                     Optional<Entry> first = course.getChildren ().stream ().findFirst ();
                     Entry entry = first.isPresent () ? first.get () : null;
@@ -71,6 +73,7 @@ public class HistoryService {
                     entryHistory.courseHistory = courseHistory;
                     entryHistory.course = course;
                     entryHistory.entry = entry;
+                    entryHistory.created = LocalDateTime.now ();
 
                     List<EntryHistory> entryHistoryList = courseHistory.getEntryHistoryList ();
                     entryHistoryList.add (entryHistory);
