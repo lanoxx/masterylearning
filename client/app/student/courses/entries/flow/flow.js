@@ -7,7 +7,7 @@ angular.module ('myapp.student.courses.entries.flow', ['ui.router', 'ngSanitize'
             resolve: {
                 entries: ['course_id', 'entry_id', 'HistoryService','$log', function (course_id, entry_id, HistoryService, $log)
                 {
-                    return HistoryService.enumerateEntries ().get( {courseId: course_id, entryId: entry_id });
+                    return HistoryService.enumerateEntries ().save ( {courseId: course_id }, { entryIds: [ entry_id ]});
                 }]
             },
             templateUrl: 'student/courses/entries/flow/flow.html',
@@ -40,7 +40,7 @@ angular.module ('myapp.student.courses.entries.flow', ['ui.router', 'ngSanitize'
         entries.$promise.then (function ()
         {
             $scope.entries = entries.entries;
-            next.push(entries.nextId);
+            next = entries.nextIds;
             $log.info ("[myApp] FlowController: Rendering " + $scope.entries.length + " entries.");
             if ($stateParams.location) {
                 $timeout (function ()
@@ -52,16 +52,16 @@ angular.module ('myapp.student.courses.entries.flow', ['ui.router', 'ngSanitize'
 
         });
 
-        function load_next_content (nextEntryId)
+        function load_next_content ()
         {
             var enumerationPromise = HistoryService.enumerateEntries ()
-                .get( {courseId: course_id, entryId: nextEntryId })
+                .save ({ courseId: course_id }, { entryIds: next })
                 .$promise;
 
             enumerationPromise.then (function (enumerationResult)
             {
                 $scope.entries.push.apply ($scope.entries, enumerationResult.entries);
-                next.push (enumerationResult.nextId);
+                next = enumerationResult.nextIds;
             });
         }
 
@@ -69,29 +69,26 @@ angular.module ('myapp.student.courses.entries.flow', ['ui.router', 'ngSanitize'
         {
             $scope.entries.pop ();
 
-            var nextEntryId = next.pop ();
-
-            load_next_content (nextEntryId);
+            load_next_content (next);
         };
 
         $scope.answered_cb = function (entry, answer_model, answer)
         {
             //TODO: store (entry.id, answer) somewhere in the user context
 
-            var nextEntryId;
+            var nextId = null;
+
             if (answer)
-                // get the correct entry of the exercise
-                nextEntryId = entry.correct;
+                // enumerate into the 'correct' subtree
+                nextId = entry.correctId;
             else
-                nextEntryId = entry.incorrect;
+                // enumerate into the 'incorrect' subtree
+                nextId = entry.incorrectId;
 
-            if (!nextEntryId)
-                nextEntryId = next.pop();
-            else {
-                next.push (entries.nextId);
-            }
+            if (nextId)
+                next.push (nextId);
 
-            load_next_content(nextEntryId);
+            load_next_content(next);
         };
 
         $scope.sanitize = function (text)

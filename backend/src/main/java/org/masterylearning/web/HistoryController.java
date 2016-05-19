@@ -9,6 +9,7 @@ import org.masterylearning.domain.data.ContinueButton;
 import org.masterylearning.domain.data.EntryData;
 import org.masterylearning.domain.data.Exercise;
 import org.masterylearning.dto.in.EntryStateDto;
+import org.masterylearning.dto.in.EnumerationInDto;
 import org.masterylearning.dto.out.CourseHistoryOutDto;
 import org.masterylearning.dto.out.CourseOutDto;
 import org.masterylearning.dto.out.EntryDataOutDto;
@@ -35,6 +36,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Stack;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -126,9 +128,9 @@ public class HistoryController {
     }
 
     @CrossOrigin
-    @RequestMapping(path = "/courses/{courseId}/enumerate/{entryId}", method = RequestMethod.GET)
+    @RequestMapping(path = "/courses/{courseId}/enumerate", method = RequestMethod.POST)
     @Transactional
-    public EnumerationOutDto enumerateEntries (@PathVariable Long courseId, @PathVariable Long entryId) {
+    public EnumerationOutDto enumerateEntries (@PathVariable Long courseId, @RequestBody EnumerationInDto inDto) {
 
         Object principal = SecurityContextHolder.getContext ()
                                                 .getAuthentication ()
@@ -152,7 +154,6 @@ public class HistoryController {
             return null;
         }
 
-        root = courseService.find (course, entryId);
         courseHistory = historyService.getCourseHistory (courseId);
 
         entryHistoryList = courseHistory.getEntryHistoryList ();
@@ -184,42 +185,82 @@ public class HistoryController {
             }
             return false;
         };
-        TreeEnumerator treeEnumerator = new TreeEnumerator (root, blockingStrategy);
 
-        List<EntryData> entryDatas = treeEnumerator.enumerateTree ();
+        /**
+         * We have received a list of entryIds from the client. Each entryId is the current position in an
+         * entry tree where we enumeration was previously blocked. Blocks can happen either because we encountered
+         * an exercise or a continue button. If we have previously blocked on an exercise then the client will
+         * not only sent the id of the correct/incorrect link, which points to the location of the exercise subtree
+         * that we are going to enumerate next. But it also sends the ids of entries where we previously blocked.
+         *
+         * Once the enumeration of the exercise subtree has completed we can use the remaining entry ids to resume
+         * enumeration in another subtree.
+         *
+         * The following list gives an overview of cases we can encounter:
+         *
+         *  1. We start enumeration from the top of the stack
+         *  2. When the enumeration returns we distinguish two options:
+         *    a) We blocked on some entry X, then we need to push the next id in the subtree
+         *       on the stack and return the stack and the currently enumerated entries to the
+         *       client.
+         *    b) We did not block, then the enumeration of the current subtree
+         *       was completed and we need to check the stack to see if there more entries which
+         *       need to be enumerated.
+         */
+        Stack<Long> stack = new Stack<> ();
+        inDto.entryIds.forEach (stack::push);
 
-        dto.entries = entryDatas.stream ()
-                                .map (entry -> {
-                                    Optional<EntryHistory> entryHistory = getEntryHistory (entryHistoryList, entry.container);
-                                    EntryDataOutDto outDto = entry.toDto ();
+        while (stack.size () > 0) {
+            root = courseService.find (course, stack.pop ());
 
-                                    if (!entryHistory.isPresent ()) {
-                                        addEntryToUserHistory (entryHistoryList, courseHistory, course, entry.container);
-                                    } else {
-                                        outDto.state = entryHistory.get ().state;
-                                        outDto.seen = true;
-                                    }
-                                    return outDto;
-                                })
+            TreeEnumerator treeEnumerator = new TreeEnumerator (root, blockingStrategy);
+            List<EntryData> entryDatas = treeEnumerator.enumerateTree ();
+
+            List<EntryDataOutDto> entryDataOutDtoList
+                    = entryDatas.stream ()
+                                .map (entry -> mapToEntryDataOutDto (courseHistory, entryHistoryList, course, entry))
                                 .filter (outDto -> !(outDto.type.equals ("continue-button") && outDto.seen))
                                 .collect(Collectors.toList());
 
-        List<Long> locations = dto.entries.stream ()
+            dto.entries.addAll (entryDataOutDtoList);
+
+            dto.scrollLocation = getLastSeenEntryId (dto.entries);
+
+            // we blocked on some entry, so we need to compute the
+            // next enumeration id and break out from the loop
+            if (treeEnumerator.entryStack.size () > 0) {
+                Entry next = treeEnumerator.entryStack.peek ();
+                stack.push (next.id);
+                break;
+            }
+        }
+
+        dto.nextIds = stack;
+        return dto;
+    }
+
+    private EntryDataOutDto mapToEntryDataOutDto (CourseHistory courseHistory, List<EntryHistory> entryHistoryList, Course course, EntryData entry) {
+        Optional<EntryHistory> entryHistory = getEntryHistory (entryHistoryList, entry.container);
+        EntryDataOutDto outDto = entry.toDto ();
+
+        if (!entryHistory.isPresent ()) {
+            addEntryToUserHistory (entryHistoryList, courseHistory, course, entry.container);
+        } else {
+            outDto.state = entryHistory.get ().state;
+            outDto.seen = true;
+        }
+        return outDto;
+    }
+
+    private Long getLastSeenEntryId (List<EntryDataOutDto> entries) {
+        List<Long> locations = entries.stream ()
                                           .filter (entryOut -> entryOut.seen)
                                           .map (entryOut -> entryOut.id)
                                           .collect (Collectors.toList ());
 
-
-        dto.scrollLocation = locations.size () > 0
-                             ? locations.get (locations.size () - 1)
-                             : null;
-
-        if (treeEnumerator.entryStack.size () > 0) {
-            Entry next = treeEnumerator.entryStack.peek ();
-            dto.nextId = next.id;
-        }
-
-        return dto;
+        return locations.size () > 0
+                ? locations.get (locations.size () - 1)
+                : null;
     }
 
     private Optional<EntryHistory> getEntryHistory (List<EntryHistory> entryHistoryList, Entry entry) {
