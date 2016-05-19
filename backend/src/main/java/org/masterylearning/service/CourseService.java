@@ -2,6 +2,7 @@ package org.masterylearning.service;
 
 import org.masterylearning.domain.Course;
 import org.masterylearning.domain.Entry;
+import org.masterylearning.domain.data.Exercise;
 import org.masterylearning.dto.out.ValidationDto;
 import org.springframework.stereotype.Service;
 
@@ -63,6 +64,20 @@ public class CourseService {
         else {
             Entry result;
             for (Entry child : entry.getChildren ()) {
+                if (child.data instanceof Exercise) {
+                    Exercise exercise = (Exercise) child.data;
+                    if (exercise.correct != null) {
+                        result = findRecursive (exercise.correct, entryId);
+                        if (result != null)
+                            return result;
+                    }
+
+                    if (exercise.incorrect != null) {
+                        result = findRecursive (exercise.incorrect, entryId);
+                        if (result != null)
+                            return result;
+                    }
+                }
                 result = findRecursive (child, entryId);
                 if (result != null) {
                     return result;
