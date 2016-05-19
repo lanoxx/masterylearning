@@ -57,7 +57,14 @@ public class PasswordController {
         PasswordResetOutDto outDto = new PasswordResetOutDto ();
         String token = UUID.randomUUID ().toString ();
 
-        User user = userRepository.getUserByUsername (dto.username);
+        User user;
+
+        if (dto.username.contains ("@")) {
+            user = userRepository.getUserByEmail (dto.username);
+        } else {
+            user = userRepository.getUserByUsername (dto.username);
+        }
+
         if (user == null) {
             outDto.message = "The user you are requesting does not exist.";
             outDto.success = false;
