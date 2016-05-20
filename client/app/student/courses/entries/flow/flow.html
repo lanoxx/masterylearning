@@ -20,7 +20,7 @@
         </div>
     </div>
 
-    <div ng-if="entry.type == 'section'">
+    <div ng-if="entry.type == 'section' && entry.title">
         <h1 ng-if="entry.depth - depth <= 0">
             {{trust (entry.title)}} <a href="" id="{{entry.id}}" ng-click="scrollTo ('' + entry.id)" class="anchor-link"><small><span class="glyphicon glyphicon-link"></span></small></a>
         </h1>
