@@ -7,10 +7,9 @@
                 <div ng-repeat="activeCourse in active_courses">
                     <h2 ><a ui-sref="home.student.courses({course_id: activeCourse.courseOutDto.id})">{{get_course_title (activeCourse.courseOutDto)}}</a></h2>
                     <p>
-                        Continue from last position:
-                        <a ui-sref="home.student.courses.entries.flow ({course_id: activeCourse.courseOutDto.id, entry_id: activeCourse.lastEntryId})">
-                            Entry {{activeCourse.lastEntryId}}
-                        </a>
+                        [ <a ui-sref="home.student.courses.entries.flow ({course_id: activeCourse.courseOutDto.id, entry_id: activeCourse.lastEntryId})">
+                            Continue from last position
+                        </a> ]
                     </p>
                 </div>
 
