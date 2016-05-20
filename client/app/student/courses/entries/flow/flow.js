@@ -116,8 +116,13 @@ angular.module ('myapp.student.courses.entries.flow', ['ui.router', 'ngSanitize'
                           var initName = context.entry.init;
                           var initFunction = window[initName];
 
-                          $log.info ("[myApp] myAppInitialize: calling function '" + initName + "' with data: " + initData);
-                          initFunction(context.element[0], context.scope.entry.state, initObject, get_event_callback(scope), context);
+                          if (initFunction) {
+                              $log.info ("[myApp] myAppInitialize: calling function '" + initName + "' with data: " + initData);
+                              initFunction (context.element[0], context.scope.entry.state, initObject, get_event_callback (scope), context);
+                          } else {
+                              $log.error ("myApp] myAppInitialize: tried to initialize an interactive content" +
+                                  "element but the global function '" + initName + "' was not found");
+                          }
                       }
 
                       function get_event_callback (scope) {
