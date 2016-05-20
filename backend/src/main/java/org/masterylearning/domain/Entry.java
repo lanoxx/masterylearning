@@ -61,8 +61,11 @@ public class Entry implements Child<Entry>, Container<Entry> {
             return this.nextSibling();
         else {
             Container<Entry> parent = this.getParent ();
-            return parent.nextUpwards ();
+            if (parent != null) {
+                return parent.nextUpwards ();
+            }
         }
+        return null;
     }
 
     public Entry nextUpwards () {
