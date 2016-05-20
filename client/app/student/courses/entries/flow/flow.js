@@ -32,7 +32,10 @@ angular.module ('myapp.student.courses.entries.flow', ['ui.router', 'ngSanitize'
 
         $scope.trust = function (value)
         {
-            return $sce.trustAsHtml(value).toString();
+            if (value)
+                return $sce.trustAsHtml(value).toString();
+
+            return null;
         };
 
         var next = [];
