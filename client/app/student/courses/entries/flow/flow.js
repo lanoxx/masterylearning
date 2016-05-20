@@ -22,6 +22,7 @@ angular.module ('myapp.student.courses.entries.flow', ['ui.router', 'ngSanitize'
 
         $log.info ('[myApp] FlowController running');
 
+        $scope.courseId = course_id;
         $scope.depth = 0;
         $scope.entries = [];
         $scope.scrollTo = function (id)
