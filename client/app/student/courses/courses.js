@@ -36,11 +36,6 @@ angular.module('myApp.student.courses', ['ui.router', 'myapp.services.history'])
             })
         }
 
-        entries.$promise.then (function (result)
-        {
-            $log.info (result);
-        });
-
         // TODO: depending on the mode we need two strategies for enumerating the entries:
         //       For structure mode we enumerate until units
         //       For flow mode we enumerate only sections and subsections
