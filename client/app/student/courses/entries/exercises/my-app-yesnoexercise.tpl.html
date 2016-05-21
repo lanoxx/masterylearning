@@ -1,5 +1,5 @@
 <div>
-    <p><strong>Exercise: {{exercise.title}}</strong></p>
+    <h3>Exercise: {{exercise.title}}</h3>
     <p data-katex data-bind="sanitize(exercise.text)" data-auto-render></p>
     <div ng-class="{alert: true, 'alert-success': is_answer_correct(), 'alert-danger': is_answer_wrong() }">
         <label for="answer">Answer:</label>
