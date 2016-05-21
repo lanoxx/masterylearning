@@ -125,7 +125,7 @@ public class HistoryService {
 
         CourseHistory courseHistory = courseCandidate.get ();
 
-        Optional<EntryHistory> entryCandidate = courseHistory.entryHistoryList.stream ().filter (entry -> entry.id.equals (entryId)).findFirst ();
+        Optional<EntryHistory> entryCandidate = courseHistory.entryHistoryList.stream ().filter (entryHistory -> entryHistory.entry.id.equals (entryId)).findFirst ();
 
         if (!entryCandidate.isPresent ()) return null;
 
