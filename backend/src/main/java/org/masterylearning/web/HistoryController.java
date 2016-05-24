@@ -136,11 +136,13 @@ public class HistoryController {
                                                 .getAuthentication ()
                                                 .getPrincipal ();
 
+        User user;
         if (!(principal instanceof User)) {
             return null;
+        } else {
+            Long userId = ((User) principal).id;
+            user = userRepository.findOne (userId);
         }
-
-        User user = (User) principal;
 
         Entry root;
         CourseHistory courseHistory;
@@ -213,7 +215,7 @@ public class HistoryController {
         while (stack.size () > 0) {
             root = courseService.find (course, stack.pop ());
 
-            TreeEnumerator treeEnumerator = new TreeEnumerator (root, blockingStrategy);
+            TreeEnumerator treeEnumerator = new TreeEnumerator (user, root, historyService, blockingStrategy);
             List<EntryData> entryDatas = treeEnumerator.enumerateTree ();
 
             List<EntryDataOutDto> entryDataOutDtoList
