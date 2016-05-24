@@ -302,15 +302,6 @@ public class HistoryController {
 
         EntryHistory entryHistory = historyService.findEntryHistory (user, courseId, entryId);
 
-        if (entryHistory == null) {
-            return false;
-        }
-
-        entryHistory.state = stateDto.state;
-        entryHistory.modified = LocalDateTime.now ();
-
-        entryHistoryRepository.save (entryHistory);
-
-        return true;
+        return historyService.setEntryHistoryState (entryHistory, stateDto.state);
     }
 }
