@@ -91,7 +91,7 @@ public class HistoryService {
 
         Object principal = SecurityContextHolder.getContext ().getAuthentication ().getPrincipal ();
 
-        Long userId = null;
+        Long userId;
         if (principal instanceof User) {
 
             User user = (User) principal;
