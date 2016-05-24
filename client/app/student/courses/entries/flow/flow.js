@@ -73,7 +73,7 @@ angular.module ('myapp.student.courses.entries.flow', ['ui.router', 'ngSanitize'
         {
             $scope.entries.pop ();
 
-            load_next_content (next);
+            load_next_content ();
         };
 
         $scope.answered_cb = function (entry, answer_model, answer)
@@ -92,7 +92,7 @@ angular.module ('myapp.student.courses.entries.flow', ['ui.router', 'ngSanitize'
             if (nextId)
                 next.push (nextId);
 
-            load_next_content(next);
+            load_next_content();
         };
 
         $scope.sanitize = function (text)
