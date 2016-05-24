@@ -131,4 +131,18 @@ public class HistoryService {
 
         return entryCandidate.get ();
     }
+
+    @Transactional
+    public Boolean setEntryHistoryState (EntryHistory entryHistory, String state) {
+        if (entryHistory == null) {
+            return false;
+        }
+
+        entryHistory.state = state;
+        entryHistory.modified = LocalDateTime.now ();
+
+        entryHistoryRepository.save (entryHistory);
+
+        return true;
+    }
 }
