@@ -7,7 +7,7 @@ angular.module ('myapp.student.courses.entries.exercises')
      *            { title:String, text:String, answer:boolean }
      * @onanswered: A callback to be called by the directive when the user has selected an answer.
      */
-    .directive ('myAppMultiAnswerExercise', ['$log', '$sanitize', function ($log, $sanitize)
+    .directive ('myAppMultiAnswerExercise', ['$log', '$sanitize', 'HistoryService', function ($log, $sanitize, HistoryService)
     {
         function MultiAnswerExerciseController ($scope)
         {
@@ -24,7 +24,8 @@ angular.module ('myapp.student.courses.entries.exercises')
             $scope.answers = [];
 
             /**
-             * True if the user has asked to check his answer.
+             * True if the user has asked to check his answer or if a previously
+             * answered state was loaded
              * @type {boolean}
              */
             $scope.answered = false;
@@ -35,12 +36,55 @@ angular.module ('myapp.student.courses.entries.exercises')
              */
             var correct = true;
 
-            $scope.sanitize = function (text)
+            $scope.sanitize = sanitize;
+            $scope.answer_changed_cb = answer_changed_cb;
+            $scope.is_answer_correct = is_answer_correct;
+            $scope.is_answer_wrong = is_answer_wrong;
+            $scope.check_cb = check_cb;
+
+            init();
+
+            function init () {
+                "use strict";
+
+                // Always initialize the answers array to false
+                $scope.exercise.answerCandidates.forEach(function (candidate, index)
+                {
+                    $scope.answers[index] = false;
+                });
+
+                // Then check if there is a state and use it to initialize
+                // the exericse.
+                if (!$scope.exercise.state) {
+                    return;
+                }
+
+                var resultTokens = $scope.exercise.state.split (";");
+
+                if (resultTokens.length > 0)
+                    resultTokens.splice (0,1);
+
+                resultTokens.forEach (function (token, index)
+                {
+                    if (token === "false") {
+                        $scope.answers[index] = false;
+                    } else if (token === "true") {
+                        $scope.answers[index] = true;
+                    } else {
+                        $log.error ("[myApp] myMultiAnswerExercise: unknown state entry encountered. Ignoring: " + token);
+                    }
+                });
+
+                $scope.answer_changed_cb ();
+                check_answer ();
+            }
+
+            function sanitize (text)
             {
                 return $sanitize (text);
-            };
+            }
 
-            $scope.check_cb = function (index)
+            function answer_changed_cb ()
             {
                 // this callback is for answers to single answer candidates, but we always recompute
                 // the results for all candidate to ensure that we generate results also for those
@@ -52,26 +96,47 @@ angular.module ('myapp.student.courses.entries.exercises')
                     var usersAnswer = $scope.answers[index] || false;
                     results[index] = usersAnswer === candidate.correct;
                 });
-            };
+            }
 
-            $scope.is_answer_correct = function (index)
+            function is_answer_correct (index)
             {
                 return $scope.answered && results[index];
-            };
+            }
 
-            $scope.is_answer_wrong = function (index)
+            function is_answer_wrong (index)
             {
                 return $scope.answered && !results[index];
-            };
+            }
 
-            $scope.check_answer = function ()
+            function check_answer ()
             {
                 $scope.answered = true;
 
-                results.forEach(function (result)
+                results.forEach (function (result)
                 {
                     correct = correct && result;
                 });
+            }
+
+            function check_cb ()
+            {
+                // Check the users answers
+                check_answer ();
+
+                // Compute state string
+                var resultString = correct;
+                $scope.answers.forEach(function (answer)
+                {
+                    resultString += ";" + answer;
+                });
+
+                // Persist state
+                HistoryService.setEntryState().save (
+                    { courseId: $scope.exercise.courseId, entryId: $scope.exercise.id },
+                    { state: resultString }
+                );
+
+                // Inform users of this directive
                 $scope.onanswered ({answer_model: results, answer: correct});
             }
         }

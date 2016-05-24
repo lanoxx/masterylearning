@@ -5,9 +5,9 @@
 
     <ul class="list-group">
         <li ng-repeat="candidate in exercise.answerCandidates" ng-class="{'list-group-item-danger': is_answer_wrong ($index), 'list-group-item-success': is_answer_correct ($index)}" class="list-group-item" >
-            <input ng-model="answers[$index]" ng-disabled="answered" ng-change="check_cb ($index)" type="checkbox" id="checkbox_{{$index}}">
+            <input ng-model="answers[$index]" ng-disabled="answered" ng-change="answer_changed_cb ()" type="checkbox" id="checkbox_{{$index}}">
             <label for="checkbox_{{$index}}" data-katex data-bind="sanitize(candidate.text)" data-auto-render></label>
         </li>
-        <li class="list-group-item"><button ng-click="check_answer()" ng-disabled="answered" class="btn btn-success">Check</button></li>
+        <li class="list-group-item"><button ng-click="check_cb ()" ng-disabled="answered" class="btn btn-success">Check</button></li>
     </ul>
 </div>
