@@ -58,6 +58,10 @@ angular.module ('myapp.student.courses.entries.flow', ['ui.router', 'ngSanitize'
 
         function load_next_content ()
         {
+            if (next.length === 0) {
+                return;
+            }
+
             var enumerationPromise = HistoryService.enumerateEntries ()
                 .save ({ courseId: course_id }, { entryIds: next })
                 .$promise;
