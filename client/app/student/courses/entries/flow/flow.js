@@ -84,8 +84,6 @@ angular.module ('myapp.student.courses.entries.flow', ['ui.router', 'ngSanitize'
 
         $scope.answered_cb = function (entry, answer_model, answer)
         {
-            //TODO: store (entry.id, answer) somewhere in the user context
-
             var nextId = null;
 
             if (answer)
