@@ -51,6 +51,17 @@ public class UserController {
     }
 
     @CrossOrigin
+    @RequestMapping (method = RequestMethod.GET)
+    @Transactional
+    public List<UserOutDto>
+    getUserList () {
+
+        List<User> userList = userRepository.findAll ();
+
+        return userList.stream ().map (UserOutDto::new).collect (Collectors.toList ());
+    }
+
+    @CrossOrigin
     @PreAuthorize (value = "hasRole('ADMIN')")
     @RequestMapping (method = RequestMethod.POST)
     public CreateUserOutDto
