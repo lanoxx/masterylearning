@@ -1,4 +1,4 @@
-angular.module ('myapp.student.courses.entries.flow', ['ui.router', 'ngSanitize', 'myapp.student.courses.entries.exercises', 'myapp.services.content'])
+angular.module ('myapp.student.courses.entries.flow', ['ui.router', 'ngSanitize', 'common.header', 'myapp.student.courses.entries.exercises', 'myapp.services.content'])
 
     .config (['$stateProvider', function ($stateProvider)
     {
