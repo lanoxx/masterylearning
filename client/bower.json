@@ -17,6 +17,9 @@
     "angular-sanitize": "1.4.*",
     "angular-katex": "~0.9.0",
     "angular-resource": "1.4.*",
-    "angular-base64": "^2.0.5"
+    "angular-base64": "^2.0.5",
+    "js-utils": "git@github.com:andreas-holzer/js-utils.git#master",
+    "elearning-content-fmi": "git@github.com:andreas-holzer/elearning-content-fmi.git#master",
+    "vis": "4.16.1"
   }
 }
