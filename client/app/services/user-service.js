@@ -142,6 +142,20 @@ angular.module ('myapp.services.user', ['ngResource', 'base64', 'myapp.config'])
                 )
             };
 
+            this.loadUsers = function ()
+            {
+                var url = apiUrlPrefix + "/users";
+
+                return $resource (url);
+            };
+
+            this.createUser = function (user)
+            {
+                var url = apiUrlPrefix + "/users";
+
+                return $resource (url).save (user);
+            };
+
             /**
              * This will attempt to set the new role in the role service and if successful switches the route
              * according to the new role.
