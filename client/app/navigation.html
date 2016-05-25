@@ -62,9 +62,9 @@
                             <a href="" ng-click="switchRole (Role.STUDENT)">Student View</a>
                         </li>
 
-                        <!--<li ng-if="currentRole !== Role.ADMIN && hasRole (Role.ADMIN)">
-                            <a href="" ng-click="switchRole (Role.ADMIN)">Administration</a>
-                        </li>-->
+                        <li ng-if="getCurrentRole() !== Role.ADMIN && hasRole (Role.ADMIN)">
+                            <a href="" ng-click="switchRole (Role.ADMIN)">Administration Panel</a>
+                        </li>
 
                         <li ng-show="getCurrentRole() !== Role.NONE" ng-click="logout ()">
                             <a href="">Logout</a>

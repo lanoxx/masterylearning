@@ -18,6 +18,7 @@ angular.module('myApp', [
     'myApp.student.profile',
     'myapp.teacher',
     'myApp.teacher.profile',
+    'myapp.admin',
     'myapp.user',
     'myApp.version'
 ])
