@@ -9,13 +9,17 @@
             <p data-katex data-bind="trust (entry.text)" data-auto-render>
             </p>
         </div>
-        <div ng-if="entry.paragraphType == 'definition'" class="definition">
-            <p><strong>Definition {{entry.number}} ({{trust (entry.title)}})</strong></p>
-            <div ng-if="entry.mode == 'math'">
-                <p data-katex data-bind="trust (entry.text)" data-auto-render></p>
+        <div ng-if="entry.paragraphType == 'definition'" class="definition panel panel-default">
+            <div class="panel-heading">
+                <strong>Definition {{entry.number}} ({{trust (entry.title)}})</strong>
             </div>
-            <div ng-if="entry.mode != 'math'">
-                <p ng-bind-html="trust (entry.text)"></p>
+            <div class="panel-body">
+                <div ng-if="entry.mode == 'math'">
+                    <p data-katex data-bind="trust (entry.text)" data-auto-render></p>
+                </div>
+                <div ng-if="entry.mode != 'math'">
+                    <p ng-bind-html="trust (entry.text)"></p>
+                </div>
             </div>
         </div>
     </div>
