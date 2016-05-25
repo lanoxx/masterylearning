@@ -75,7 +75,9 @@ angular.module ('myapp.student.courses.entries.flow', ['ui.router', 'ngSanitize'
 
         $scope.continue_cb = function ()
         {
-            $scope.entries.pop ();
+            var entry = $scope.entries.pop ();
+
+            HistoryService.setEntryState().save ({ courseId: entry.courseId, entryId: entry.id, state: "true" });
 
             load_next_content ();
         };

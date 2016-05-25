@@ -169,15 +169,9 @@ public class HistoryController {
                 Optional<Boolean> first = entryHistoryList.stream ()
                                                           .filter (entryHistory -> entryHistory.entry.id.equals (entry.id))
                                                           .map (entryHistory -> {
-                                                              if (entry.data instanceof ContinueButton) {
-                                                                  // the entry is already in the users history: dont block
-                                                                  return false;
-                                                              }
-                                                              if (entry.data instanceof Exercise) {
-                                                                  // no state, so the exercise has not been answered: block
-                                                                  if (entryHistory.state == null) {
-                                                                      return true;
-                                                                  }
+                                                              // no state: block
+                                                              if (entryHistory.state == null) {
+                                                                  return true;
                                                               }
                                                               // default: don't block
                                                               return false;
@@ -221,7 +215,7 @@ public class HistoryController {
             List<EntryDataOutDto> entryDataOutDtoList
                     = entryDatas.stream ()
                                 .map (entry -> mapToEntryDataOutDto (courseHistory, entryHistoryList, course, entry))
-                                .filter (outDto -> !(outDto.type.equals ("continue-button") && outDto.seen))
+                                .filter (outDto -> !(outDto.type.equals ("continue-button") && outDto.state != null))
                                 .collect(Collectors.toList());
 
             dto.entries.addAll (entryDataOutDtoList);
