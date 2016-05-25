@@ -57,6 +57,9 @@ angular.module ('myapp.admin', ['ui.router'])
             createUserPromise.$promise.then (
                 function success (result)
                 {
+                    $scope.users.push ($scope.newUser);
+                    $scope.newUser = null;
+                    $scope.createUserActive = false;
                     $log.info ("[myApp] AdminController: saved user with username: " + $scope.newUser.username);
                 },
                 function error (result) {
