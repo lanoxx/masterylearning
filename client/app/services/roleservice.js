@@ -58,6 +58,11 @@ angular.module ('myapp.services.roles', [])
                 return RoleEnum.properties[ordial].route;
             }
 
+            function values ()
+            {
+                return [RoleEnum.STUDENT, RoleEnum.TEACHER, RoleEnum.ADMIN];
+            }
+
             this.fromName = fromName;
             this.getName = getName;
             this.getRoute = getRoute;
@@ -66,10 +71,12 @@ angular.module ('myapp.services.roles', [])
                 NONE:     RoleEnum.NONE,
                 STUDENT:  RoleEnum.STUDENT,
                 TEACHER:  RoleEnum.TEACHER,
+                ADMIN:    RoleEnum.ADMIN,
                 LAST:     RoleEnum.LAST,
                 fromName: fromName,
                 getName:  getName,
-                getRoute: getRoute
+                getRoute: getRoute,
+                values:   values
             });
 
             this.$get = function ()
