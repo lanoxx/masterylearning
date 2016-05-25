@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.inject.Inject;
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.OptionalLong;
 import java.util.Random;
@@ -114,9 +115,17 @@ public class UserController {
 
         User user = new User (dto.fullname, dto.email, dto.username, encodedPassword);
 
-        List<Role> roles = dto.roles.stream ()
-                                    .map (role -> roleRepository.findRoleByName (role))
-                                    .collect(Collectors.toList());
+        List<Role> roles;
+
+        // default to the role STUDENT if no roles were given
+        if (dto.roles.size () == 0) {
+            roles = new ArrayList<> ();
+            roles.add (roleRepository.findRoleByName ("STUDENT"));
+        } else {
+            roles = dto.roles.stream ()
+                             .map (role -> roleRepository.findRoleByName (role))
+                             .collect (Collectors.toList ());
+        }
 
         user.getRoles ().addAll (roles);
 
