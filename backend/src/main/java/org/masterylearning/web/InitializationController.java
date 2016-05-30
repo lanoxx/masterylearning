@@ -1,17 +1,17 @@
 package org.masterylearning.web;
 
-import org.masterylearning.domain.Role;
-import org.masterylearning.domain.User;
+import org.masterylearning.dto.in.CreateUserDto;
+import org.masterylearning.dto.out.CreateUserOutDto;
 import org.masterylearning.repository.UserRepository;
-import org.masterylearning.service.UserService;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.inject.Inject;
 import javax.transaction.Transactional;
-import java.util.List;
+import java.util.Arrays;
 
 /**
  */
@@ -20,45 +20,28 @@ import java.util.List;
 public class InitializationController {
 
     @Inject UserRepository userRepository;
-    @Inject UserService userService;
+    @Inject UserController userController;
 
     @CrossOrigin
-    @RequestMapping (method = RequestMethod.GET, path = "/users")
+    @RequestMapping (method = RequestMethod.POST, path = "/users")
     @Transactional
-    public Boolean initUsers () {
+    public CreateUserOutDto createInitialUser (@RequestBody CreateUserDto dto) {
 
-        List<User> all = userRepository.findAll ();
+        long count = userRepository.count ();
 
-        if (all.size () == 0) {
-
-            User user = userService.createUser ("John Doe", "john@doe.com", "user", "123456");
-
-            Role role = new Role ();
-            role.name = "STUDENT";
-            role.description = "";
-            user.getRoles ().add (role);
-
-            role = new Role ();
-            role.name = "TEACHER";
-            role.description = "";
-            user.getRoles ().add (role);
-
-            role = new Role ();
-            role.name = "ADMIN";
-            role.description = "";
-            user.getRoles ().add (role);
-
-            userRepository.save (user);
-
-            return true;
+        // WARNING: This endpoint has no security settings and is therefore accessible by anyone after
+        //          the application has been started for the first time and when the database is still
+        //          empty. This check is to ensure, that this bootstrap method can only be used to setup
+        //          the initial user.
+        if (count > 0) {
+            CreateUserOutDto outDto = new CreateUserOutDto ();
+            outDto.message = "This endpoint can only be used for the initial application setup.";
+            return outDto;
         }
 
-        return false;
-    }
+        // ensure that our initial user always has all the default roles
+        dto.roles = Arrays.asList ("STUDENT", "TEACHER", "ADMIN");
 
-    @CrossOrigin
-    @RequestMapping (method = RequestMethod.GET)
-    public Boolean init () {
-        return false;
+        return userController.createUserFromDto (dto);
     }
 }
