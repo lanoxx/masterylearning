@@ -105,7 +105,7 @@ public class HistoryService {
         Optional<CourseHistory> first
                 = user.getCourseHistoryList ()
                       .stream ()
-                      .filter (courseHistory -> courseHistory.id.equals (courseId))
+                      .filter (courseHistory -> courseHistory.course.id.equals (courseId))
                       .findFirst ();
 
         if (first.isPresent ()) {
