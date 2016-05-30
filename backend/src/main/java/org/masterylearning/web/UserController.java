@@ -1,7 +1,8 @@
 package org.masterylearning.web;
 
-import org.masterylearning.domain.Role;
 import org.masterylearning.domain.User;
+import org.masterylearning.domain.ValidationIssue;
+import org.masterylearning.domain.ValidationResult;
 import org.masterylearning.dto.in.ChangePasswordDto;
 import org.masterylearning.dto.in.CreateUserDto;
 import org.masterylearning.dto.out.ChangePasswordOutDto;
@@ -9,6 +10,7 @@ import org.masterylearning.dto.out.CreateUserOutDto;
 import org.masterylearning.dto.out.UserOutDto;
 import org.masterylearning.repository.RoleRepository;
 import org.masterylearning.repository.UserRepository;
+import org.masterylearning.service.UserService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -21,10 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.inject.Inject;
 import javax.transaction.Transactional;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.OptionalLong;
-import java.util.Random;
 import java.util.stream.Collectors;
 
 /**
@@ -34,6 +33,7 @@ import java.util.stream.Collectors;
 public class UserController {
 
     @Inject UserRepository userRepository;
+    @Inject UserService userService;
     @Inject RoleRepository roleRepository;
     @Inject PasswordEncoder passwordEncoder;
 
@@ -66,84 +66,41 @@ public class UserController {
     @RequestMapping (method = RequestMethod.POST)
     public CreateUserOutDto
     createUser (@RequestBody CreateUserDto dto) {
-        CreateUserOutDto outDto = new CreateUserOutDto ();
-        outDto.userId = null;
 
-        User existingUser = null;
-
-        if (dto.fullname == null) {
-            outDto.message = "You must specify a 'fullname'.";
-            return outDto;
-        }
-
-        if (!dto.email.contains ("@")) {
-            outDto.message = "Your email address is not valid";
-            return outDto;
-        }
-
-
-        if (dto.username != null) {
-            existingUser = userRepository.getUserByUsername (dto.username);
-            if (existingUser != null) {
-                outDto.message = "User exists";
-                return outDto;
-            }
-
-            //TODO: ideally we should
-            if (dto.username.contains ("@")) {
-                outDto.message = "Username must not contain the '@' character";
-            }
-        } else {
-            // if no user name was given we try to assign a random username
-
-            for (int i = 0; i < 10; i++) {
-                OptionalLong randomCandidate = new Random ().ints (10000, 9999999)
-                                                            .asLongStream ()
-                                                            .findAny ();
-
-                if (!randomCandidate.isPresent ()) {
-                    continue;
-                }
-                Long number = randomCandidate.getAsLong ();
-                dto.username = "user" + String.format ("%07d", number);
-
-                existingUser = userRepository.getUserByUsername (dto.username);
-
-                // the username does not exist yet, so break;
-                if (existingUser == null) {
-                    break;
-                }
-            }
-
-            // we have tried 10 time, but all randomly generated usernames already exist
-            if (existingUser != null) {
-                outDto.message = "Please try again or specify a username.";
-                return outDto;
-            }
-        }
-
-        String encodedPassword = passwordEncoder.encode (dto.password);
-
-        User user = new User (dto.fullname, dto.email, dto.username, encodedPassword);
-
-        List<Role> roles;
 
         // default to the role STUDENT if no roles were given
         if (dto.roles.size () == 0) {
-            roles = new ArrayList<> ();
-            roles.add (roleRepository.findRoleByName ("STUDENT"));
-        } else {
-            roles = dto.roles.stream ()
-                             .map (role -> roleRepository.findRoleByName (role))
-                             .collect (Collectors.toList ());
+            dto.roles.add ("STUDENT");
         }
 
-        user.getRoles ().addAll (roles);
+        return createUserFromDto (dto);
+    }
 
-        userRepository.save (user);
+    public CreateUserOutDto createUserFromDto (@RequestBody CreateUserDto dto) {
+        CreateUserOutDto outDto = new CreateUserOutDto ();
+        outDto.userId = null;
+
+        ValidationResult validationResult = userService.validateCreateUserDto (dto);
+        if (!validationResult.valid) {
+            outDto.message = validationResult.issue.getMessage ();
+            return outDto;
+        }
+
+        if (validationResult.issue == ValidationIssue.USERNAME_MISSING) {
+            String username = userService.generateDefaultUsername ();
+
+            if (username == null) {
+                outDto.message = "Please try again or specify a username.";
+                return outDto;
+            } else {
+                dto.username = username;
+                outDto.message = validationResult.issue.getMessage ();
+            }
+        }
+
+        User user = userService.createUser (dto);
 
         outDto.userId = user.id;
-
         return outDto;
     }
 
