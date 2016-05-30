@@ -72,6 +72,38 @@ public class UserService {
         return resetToken;
     }
 
+    public String generateDefaultUsername () {
+
+        // if no user name was given we try to assign a random username
+        User existingUser = null;
+        for (int i = 0; i < 10; i++) {
+            String username;
+            OptionalLong randomCandidate = new Random ().ints (10000, 9999999)
+                                                        .asLongStream ()
+                                                        .findAny ();
+
+            if (!randomCandidate.isPresent ()) {
+                continue;
+            }
+            Long number = randomCandidate.getAsLong ();
+            username = "user" + String.format ("%07d", number);
+
+            existingUser = userRepository.getUserByUsername (username);
+
+            // the username does not exist yet, so break;
+            if (existingUser == null) {
+                return username;
+            }
+        }
+
+        // we have tried 10 time, but all randomly generated usernames already existed
+        if (existingUser != null) {
+            return null;
+        }
+
+        return null;
+    }
+
     public ValidationResult validateCreateUserDto (CreateUserDto dto) {
         User existingUser;
         ValidationResult result = new ValidationResult ();
