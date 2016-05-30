@@ -128,7 +128,7 @@ public class CourseRepositoryIT {
 
         course = courseRepository.save(course);
 
-        assertTrue (course.id == 1);
+        assertTrue (course.id != null);
 
         assertTrue(course.children.size() == 1);
 
