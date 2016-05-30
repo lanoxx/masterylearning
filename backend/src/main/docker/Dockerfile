@@ -1,6 +1,6 @@
 FROM java:8
 VOLUME /tmp
-ADD main.backend-0.1.jar app.jar
+ADD backend-@project.version@.jar app.jar
 RUN bash -c 'touch /app.jar'
 ARG DB_HOST=mysql
 ENV DB_HOST $DB_HOST
