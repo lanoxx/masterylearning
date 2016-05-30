@@ -38,9 +38,10 @@ run a new docker container with mysql use the following command:
 
     docker network create mlnet
 
-    docker run --name masterylearning-mysql --net mlnet --net-alias backend -p 4000:3306 \
+    docker run --name masterylearning-mysql --net mlnet --net-alias mysql -p 4000:3306 \
                --env MYSQL_ROOT_PASSWORD=masterylearning \
-               --env MYSQL_DATABASE=masterylearning -d mysql:latest
+               --env MYSQL_DATABASE=masterylearning \
+               -v /srv/masterylearning:/var/lib/mysql -d mysql:latest
 
 If you use an alternative password instead of `masterylearning` you
 should overwrite the password datasource option when starting the
