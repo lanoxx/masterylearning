@@ -77,6 +77,7 @@ public class PasswordController {
         passwordResetTokenRepository.save (resetToken);
 
         String hostname = environment.getProperty ("email.hostname");
+        String from = environment.getProperty ("email.from");
         hostname = hostname != null ? hostname : request.getServerName();
 
         // We always use a secure url here, since we have no way of detecting if the frontend server
@@ -85,9 +86,9 @@ public class PasswordController {
         String url = "https://" + hostname + "/password/resetToken/" + token + "/user/" + user.id;
 
         SimpleMailMessage email = new SimpleMailMessage();
-        email.setFrom ("smartlecture1@gmail.com");
-        email.setTo(user.username);
-        email.setSubject("Reset Password");
+        email.setFrom (from);
+        email.setTo(user.email);
+        email.setSubject("Reset e-learning Password");
         email.setText("Click here to rest your password for the system: " + url);
 
         try {
