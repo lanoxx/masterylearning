@@ -24,14 +24,18 @@ angular.module ('myapp.admin', ['ui.router'])
     {
         $scope.Role = Role;
         $scope.users = users;
-        $scope.roles = [];
+        $scope.roles = [true];
         $scope.createUserActive = false;
         $scope.newUser = null;
+
+        $scope.errors = [];
+        $scope.usernamematches = false;
 
         $scope.createUser = createUser;
         $scope.addUser = addUser;
         $scope.cancel = cancel;
         $scope.roleCheckedCb = roleCheckedCb;
+        $scope.usernameChangedCb = usernameChangedCb;
 
         function roleCheckedCb () {
 
@@ -42,6 +46,22 @@ angular.module ('myapp.admin', ['ui.router'])
                 if ($scope.roles[index])
                     $scope.newUser.roles.push (Role.getName (index + 1));
             })
+        }
+
+        function usernameChangedCb () {
+            if ($scope.newUser && $scope.newUser.username) {
+                var regExp = /^[a-z0-9](-?[a-z0-9])*$/gi;
+                if (!regExp.test($scope.newUser.username)) {
+                    $scope.usernamematches = false;
+                    $scope.errors['username'] = true;
+                } else {
+                    $scope.usernamematches = true;
+                    $scope.errors['username'] = false;
+                }
+            } else {
+                $scope.errors['username'] = false;
+                $scope.usernamematches = false;
+            }
         }
 
         function addUser () {
