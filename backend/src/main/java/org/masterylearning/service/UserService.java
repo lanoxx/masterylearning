@@ -28,6 +28,7 @@ public class UserService {
     @Inject RoleRepository roleRepository;
     @Inject PasswordResetTokenRepository passwordResetTokenRepository;
 
+    @Transactional
     public User createUser (String fullname, String email, String username, String password) {
 
         String encodedPassword = passwordEncoder.encode (password);
