@@ -83,6 +83,12 @@
       <version>5.1.10</version>
     </dependency>
 
+    <dependency>
+      <groupId>org.flywaydb</groupId>
+      <artifactId>flyway-core</artifactId>
+    </dependency>
+
+
     <!-- Development dependencies -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
