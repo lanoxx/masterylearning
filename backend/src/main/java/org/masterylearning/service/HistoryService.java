@@ -119,7 +119,7 @@ public class HistoryService {
     @Transactional
     public EntryHistory findEntryHistory (User user, Long courseId, Long entryId) {
 
-        Optional<CourseHistory> courseCandidate = user.getCourseHistoryList ().stream ().filter (course -> course.id.equals (courseId)).findFirst ();
+        Optional<CourseHistory> courseCandidate = user.getCourseHistoryList ().stream ().filter (courseHistory -> courseHistory.course.id.equals (courseId)).findFirst ();
 
         if (!courseCandidate.isPresent ())  return null;
 
