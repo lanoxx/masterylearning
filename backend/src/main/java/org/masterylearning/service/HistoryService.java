@@ -41,7 +41,7 @@ public class HistoryService {
 
             // The user object stored in the principal of the security context is no longer bound
             // to an active hibernate session, so we need to reload the user.
-            User user = userRepository.getOne (userId);
+            User user = userRepository.findOne (userId);
 
             courseHistoryList = user.getCourseHistoryList ();
             for (Course course : all) {
