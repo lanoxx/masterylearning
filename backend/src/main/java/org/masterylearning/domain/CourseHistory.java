@@ -8,7 +8,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,10 +23,10 @@ public class CourseHistory {
     @ManyToOne (optional = false)
     public User user;
 
-    @OneToOne (optional = false)
+    @ManyToOne (optional = false)
     public Course course;
 
-    @OneToOne (optional = false)
+    @ManyToOne (optional = false)
     public Entry lastEntry;
 
     @Type(type = "localDateTimeType")
