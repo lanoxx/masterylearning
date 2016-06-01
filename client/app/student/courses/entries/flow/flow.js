@@ -147,7 +147,7 @@ angular.module ('myapp.student.courses.entries.flow', ['ui.router', 'ngSanitize'
                           }
                       }
 
-                      $timeout (init_callback, 0, false, { element: element, entry: scope.entry, scope: scope });
+                      init_callback ({ element: element, entry: scope.entry, scope: scope });
                   },
             controller: ['$scope', 'HistoryService', function ($scope, HistoryService)
             {
