@@ -1,8 +1,14 @@
 angular.module ('myapp.user', ['common.password'])
 
-    .config (['$stateProvider', function ($stateProvider)
+    .config (['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider)
     {
+        $urlRouterProvider.when ('/user', '/home');
+
         $stateProvider.state ('user', {
+            url: '/user'
+        });
+
+        $stateProvider.state ('user.recovery', {
             url: '/password/resetToken',
             views: {
                 'navigation@': {
@@ -16,7 +22,7 @@ angular.module ('myapp.user', ['common.password'])
             }
         });
 
-        $stateProvider.state ('user.password', {
+        $stateProvider.state ('user.recovery.password', {
             url: '/:token/user/:userId',
             views: {
                 'navigation@': {

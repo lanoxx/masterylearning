@@ -47,11 +47,8 @@
                         </span>
                     </a>
                     <ul class="uib-dropdown-menu" role="menu" aria-labelledby="single-button">
-                        <li ui-sref-active="active" ng-if="getCurrentRole() === Role.STUDENT">
-                            <a ui-sref="home.student.profile">Profile</a>
-                        </li>
-                        <li ui-sref-active="active" ng-if="getCurrentRole() === Role.TEACHER">
-                            <a ui-sref="home.teacher.profile">Profile</a>
+                        <li ui-sref-active="active">
+                            <a ui-sref="user.profile">Profile</a>
                         </li>
 
                         <li ng-if="getCurrentRole() !== Role.TEACHER && hasRole (Role.TEACHER)">
