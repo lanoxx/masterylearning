@@ -1,5 +1,6 @@
 package org.masterylearning.web;
 
+import org.masterylearning.domain.Container;
 import org.masterylearning.domain.Course;
 import org.masterylearning.domain.CourseHistory;
 import org.masterylearning.domain.Entry;
@@ -8,6 +9,7 @@ import org.masterylearning.domain.User;
 import org.masterylearning.domain.data.ContinueButton;
 import org.masterylearning.domain.data.EntryData;
 import org.masterylearning.domain.data.Exercise;
+import org.masterylearning.domain.data.Section;
 import org.masterylearning.dto.in.EntryStateDto;
 import org.masterylearning.dto.in.EnumerationInDto;
 import org.masterylearning.dto.out.CourseHistoryOutDto;
@@ -82,11 +84,34 @@ public class HistoryController {
             CourseHistoryOutDto courseHistoryOutDto = new CourseHistoryOutDto ();
             courseHistoryOutDto.courseOutDto = new CourseOutDto (courseHistory.course);
             if (courseHistory.lastEntry != null) {
-                courseHistoryOutDto.lastEntryId = courseHistory.lastEntry.id;
+                courseHistoryOutDto.enumerationStart = courseHistory.course.next ().id;
+                Entry parentSection = findParentSection (courseHistory.lastEntry);
+                if (parentSection != null) {
+                    courseHistoryOutDto.scrollTarget = parentSection.id;
+                }
             }
 
             return courseHistoryOutDto;
         };
+    }
+
+    private Entry findParentSection (Entry entry) {
+        Entry current = entry;
+
+        while (current != null) {
+            if (current.data instanceof Section) {
+                return current;
+            }
+
+                Container<Entry> parent = current.getParent ();
+            if (parent instanceof Entry) {
+                current = (Entry) parent;
+            } else {
+                break;
+            }
+        }
+
+        return null;
     }
 
     @CrossOrigin

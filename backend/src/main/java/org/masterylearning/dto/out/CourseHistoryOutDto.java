@@ -6,6 +6,8 @@ public class CourseHistoryOutDto {
 
     public CourseOutDto courseOutDto;
 
-    public Long lastEntryId;
+    public Long enumerationStart;
+
+    public Long scrollTarget;
 
 }
