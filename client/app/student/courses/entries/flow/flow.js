@@ -11,25 +11,29 @@ angular.module ('myapp.student.courses.entries.flow', ['ui.router', 'ngSanitize'
                 }]
             },
             templateUrl: 'student/courses/entries/flow/flow.html',
-            controller: 'FlowController'
+            controller: 'FlowController',
+            reloadOnSearch: false
         });
     }])
 
-    .controller ('FlowController', ['$scope', '$timeout', '$location', '$stateParams', 'course_id', 'entries', 'HistoryService', '$sanitize', '$anchorScroll', '$log', '$sce',
-        function ($scope, $timeout, $location, $stateParams, course_id, entries, HistoryService, $sanitize, $anchorScroll, $log, $sce)
+    .controller ('FlowController', ['$scope', '$timeout', '$location', '$stateParams', 'course_id', 'entry_id', 'entries', 'HistoryService', '$sanitize', '$anchorScroll', '$log', '$sce',
+        function ($scope, $timeout, $location, $stateParams, course_id, entry_id, entries, HistoryService, $sanitize, $anchorScroll, $log, $sce)
     {
         "use strict";
 
         $log.info ('[myApp] FlowController running');
 
         $scope.courseId = course_id;
+        $scope.entryId = entry_id;
         $scope.depth = 0;
         $scope.entries = [];
-        $scope.scrollTo = function (id)
+
+        $scope.$on ('$locationChangeSuccess', function (event, newLocation, oldLocation)
         {
-            $location.search("location="+ id);
-            $anchorScroll(id);
-        };
+            $timeout (function () {
+                $anchorScroll ($location.search ().location);
+            }, 0);
+        });
 
         $scope.trust = function (value)
         {
@@ -174,5 +178,15 @@ angular.module ('myapp.student.courses.entries.flow', ['ui.router', 'ngSanitize'
                     });
                 }
             }]
+        }
+    }])
+
+    .directive ('myAppScrollHandler', ['$anchorScroll', '$location', function ($anchorScroll, $location)
+    {
+        return {
+            link: function ()
+                  {
+                      $anchorScroll ($location.search().location);
+                  }
         }
     }]);
