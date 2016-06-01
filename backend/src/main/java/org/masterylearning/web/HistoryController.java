@@ -229,7 +229,9 @@ public class HistoryController {
          *       need to be enumerated.
          */
         Stack<Long> stack = new Stack<> ();
-        inDto.entryIds.forEach (stack::push);
+        inDto.entryIds.stream ()
+                      .filter (id -> id != null) // null values are invalid and need to be filtered out
+                      .forEach (stack::push);
 
         while (stack.size () > 0) {
             root = courseService.find (course, stack.pop ());
