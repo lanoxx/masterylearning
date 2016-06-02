@@ -22,6 +22,21 @@
                 </div>
             </div>
         </div>
+
+        <div ng-if="entry.paragraphType == 'takeaway'" class="takeaway panel panel-success">
+            <div class="panel-heading">
+                <strong>Takeaway Point {{entry.number}} ({{trust (entry.title)}})</strong>
+            </div>
+            <div class="panel-body">
+                <div ng-if="entry.mode == 'math'">
+                    <p data-katex data-bind="trust (entry.text)" data-auto-render></p>
+                </div>
+                <div ng-if="entry.mode != 'math'">
+                    <p ng-bind-html="trust (entry.text)"></p>
+                </div>
+            </div>
+        </div>
+
     </div>
 
     <!-- The section is only rendered if the title is non-empty. We add this additional anchor element,
