@@ -1,4 +1,4 @@
-angular.module('myapp.teacher', ['ui.router', 'myapp.services.database'])
+angular.module('myapp.teacher', ['ui.router', 'myapp.services.course'])
 
     .config(['$stateProvider', 'RoleProvider', function ($stateProvider, RoleProvider)
     {
@@ -14,93 +14,54 @@ angular.module('myapp.teacher', ['ui.router', 'myapp.services.database'])
                     controller: 'TeacherCtrl'
                 }
             },
+            resolve: {
+                courses: ['CourseService', function (CourseService)
+                {
+                    return CourseService.getCourseList ().query ();
+                }]
+            },
             role: RoleProvider.TEACHER
         });
     }
     ])
 
-    .controller('TeacherCtrl', ['$scope', function ($scope)
+    .controller('TeacherCtrl', ['$scope', 'courses', 'CourseService', '$log', function ($scope, courses, CourseService, $log)
     {
-        
-    }])
-    
-    .controller('CourseStorageController', ['$scope', 'database', '$log', function ($scope, database, $log)
-    {
-        $scope.course = {};
-        $scope.section = {};
-        $scope.courses = database.courses;
+        $scope.courses = courses;
 
-        $scope.save = function(course)
+        $scope.courseEditMode = false;
+
+        $scope.edit_cb = edit_cb;
+        $scope.save_cb = save_cb;
+        $scope.cancel_cb = cancel_cb;
+
+        function edit_cb ($index)
         {
-            var db_course = new database.Course('fmi2', course.title, course.period, course.description);
+            $scope.courseEditMode = true;
 
-            db_course.print();
+            var editCourse = $scope.courses[$index];
 
-            database.insert_course (db_course);
-
-            $log.info('[myApp] CourseStorageController: Course saved');
+            $scope.course = {
+                id: editCourse.id,
+                title: editCourse.title,
+                period: editCourse.period,
+                description: editCourse.description
+            };
         }
-    }])
 
-    .controller('SectionStorageController', ['$scope', 'database', '$log', function ($scope, database, $log)
-    {
-        $scope.section = {};
-        $scope.courses = database.courses;
-
-        $scope.get_sections = function () {
-            return database.get_entries('section');
-        };
-
-        $scope.save = function(section)
+        function save_cb ()
         {
-            var db_section = new database.Section(section.title, section.description);
+            var updatePromise = CourseService.updateCourse ().save ({ courseId: $scope.course.id }, $scope.course);
 
-            $log.info (db_section.toString());
-            $log.debug ("Section.course_id: " + section.course_id);
-
-            database.courses[section.course_id].insert (db_section);
-
-            $log.info('[myApp] SectionStorageController: Section saved');
-        }
-    }])
-
-    .controller('UnitStorageController', ['$scope', 'database', '$log', function ($scope, database, $log)
-    {
-        $scope.section = {};
-        $scope.courses = database.courses;
-
-        $scope.get_sections = function (course_id)
-        {
-            var sections = database.get_entries('section');
-            var result = [];
-
-            if (!course_id)
-                return sections;
-
-            sections.forEach (function (section)
+            updatePromise.$promise.then (function (result)
             {
-                if (section.course_id === course_id) {
-                    result.push (section);
-                }
+                $log.info ("Update result" + result);
             });
-            return result;
-        };
 
-        $scope.get_section_title = function (section)
-        {
-            return section.getIndex() + " " + section.data.title;
-        };
+            $scope.courseEditMode = false;
+        }
 
-        $scope.get_units = function() {
-            return database.get_entries ('unit');
-        };
-
-        $scope.save = function(unit)
-        {
-            var db_unit = new database.Unit(unit.full_title, unit.breadcrumb_title);
-
-            unit.section.insert (db_unit);
-
-            $log.info('[myApp] UnitStorageController: Unit saved');
+        function cancel_cb () {
+            $scope.courseEditMode = false;
         }
     }]);

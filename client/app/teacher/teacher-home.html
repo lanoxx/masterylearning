@@ -1,11 +1,29 @@
 <div class="container-fluid maxwidth">
     <ui-view>
-        <h1>Teacher Home</h1>
+        <h1>Current courses</h1>
 
-        <div ng-controller="CourseStorageController">
-            <h2>Create Course</h2>
+        <table class="table">
+            <tr>
+                <th>#</th>
+                <th>Title</th>
+                <th>Period</th>
+                <th>Description</th>
+                <th>Action</th>
+            </tr>
+
+            <tr ng-repeat="course in courses">
+                <th>{{$index + 1}}</th>
+                <td>{{course.title}}</td>
+                <td>{{course.period}}</td>
+                <td>{{course.description | limitTo : 200 }}</td>
+                <td><a ng-click="edit_cb ($index)" href="">Edit</a></td>
+            </tr>
+
+        </table>
+
+        <div ng-if="courseEditMode">
+            <h2>Edit Course</h2>
             <div>
-                <p>Create a new course:</p>
                 <form>
                     <div class="form-group">
                         <label for="course_title">Title</label>
@@ -16,79 +34,12 @@
                         <input ng-model="course.period" type="text" class="form-control" id="course_period" placeholder="Period">
                     </div>
                     <div class="form-group">
-                        <label for="course_description">Password</label>
-                        <textarea ng-model="description" class="form-control" id="course_description" placeholder="Description..."></textarea>
+                        <label for="course_description">Description</label>
+                        <textarea ng-model="course.description" class="form-control" rows="5" id="course_description" placeholder="Description..."></textarea>
                     </div>
 
-                    <button ng-click="save(course)" class="btn btn-default">Add course</button>
-
-                    <p><strong>Existing Courses:</strong></p>
-                    <div ng-repeat="course in courses">
-                        <strong>{{course.course_id}}: </strong>{{course.title}}<br>
-                    </div>
-                </form>
-            </div>
-        </div>
-
-        <div ng-controller="SectionStorageController">
-            <h2>Create Section</h2>
-            <div>
-                <p>Create a new section:</p>
-                <form>
-                    <div class="form-group">
-                        <label for="section_course">Course</label>
-                        <select ng-model="section.course_id" ng-options="course.id as course.title for (course_id, course) in courses" id="section_course"></select>
-                    </div>
-                    <div class="form-group">
-                        <label for="section_title">Title</label>
-                        <input ng-model="section.title" type="text" class="form-control" id="section_title" placeholder="Title">
-                    </div>
-                    <div class="form-group">
-                        <label for="section_description">Description</label>
-                        <textarea ng-model="section.description" type="text" class="form-control" id="section_description" placeholder="Description..."></textarea>
-                    </div>
-
-                    <button ng-click="save(section)" class="btn btn-default">Add section</button>
-
-                    <p><strong>Existing Sections:</strong></p>
-                    <div ng-repeat="section in get_sections()">
-                        <strong>{{section.data.id}}: </strong>{{section.data.title}}<br>
-                    </div>
-                </form>
-            </div>
-        </div>
-
-        <div ng-controller="UnitStorageController">
-            <h2>Create Unit</h2>
-            <div>
-                <p>Create a new unit:</p>
-                <form>
-                    <div class="form-group">
-                        <label for="unit_course">Course</label>
-                        <select ng-model="unit.course_id" ng-options="course.id as course.title for (course_id, course) in courses" id="unit_course"></select>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="unit_section">Section</label>
-                        <select ng-model="unit.section" ng-options="section as get_section_title(section) for section in get_sections(unit.course_id)" id="unit_section"></select>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="unit_full_title">Full Title</label>
-                        <input ng-model="unit.full_title" type="text" class="form-control" id="unit_full_title" placeholder="Full Title">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="unit_breadcrumb_title">Breadcrumb Title</label>
-                        <input ng-model="unit.breadcrumb_title" type="text" class="form-control" id="unit_breadcrumb_title" placeholder="Breadcrumb Title">
-                    </div>
-
-                    <button ng-click="save(unit)" class="btn btn-default">Add unit</button>
-
-                    <p><strong>Existing units:</strong></p>
-                    <div ng-repeat="unit in get_units()">
-                        <strong>{{unit.data.id}}: </strong>{{unit.data.full_title}}<br>
-                    </div>
+                    <button ng-click="save_cb ()" class="btn btn-success">Save</button>
+                    <button ng-click="cancel_cb ()" class="btn btn-default">Cancel</button>
                 </form>
             </div>
         </div>

@@ -4,6 +4,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.masterylearning.domain.Course;
 import org.masterylearning.domain.Entry;
+import org.masterylearning.dto.in.CourseUpdateDto;
 import org.masterylearning.dto.out.CourseOutDto;
 import org.masterylearning.dto.out.CreateCourseOutDto;
 import org.masterylearning.dto.out.ValidationDto;
@@ -11,6 +12,7 @@ import org.masterylearning.repository.CourseRepository;
 import org.masterylearning.repository.EntryRepository;
 import org.masterylearning.service.CourseService;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -57,6 +59,40 @@ public class CourseController {
         }
 
         return null;
+    }
+
+
+    @CrossOrigin
+    @RequestMapping (method = RequestMethod.POST, path = "/{courseId}")
+    @Transactional
+    public Boolean
+    updateCourse (@PathVariable Long courseId, @RequestBody CourseUpdateDto dto) {
+
+        if (courseId == null) {
+            return false;
+        }
+
+        Course course = courseRepository.findOne (courseId);
+
+        if (course == null) {
+            return false;
+        }
+
+        if (dto.title != null) {
+            course.title = dto.title;
+        }
+
+        if (dto.period != null) {
+            course.period = dto.period;
+        }
+
+        if (dto.description != null) {
+            course.description = dto.description;
+        }
+
+        courseRepository.save (course);
+
+        return true;
     }
 
     /**
