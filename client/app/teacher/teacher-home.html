@@ -8,7 +8,7 @@
                 <th>Title</th>
                 <th>Period</th>
                 <th>Description</th>
-                <th>Action</th>
+                <th>Actions</th>
             </tr>
 
             <tr ng-repeat="course in courses">
@@ -16,7 +16,10 @@
                 <td>{{course.title}}</td>
                 <td>{{course.period}}</td>
                 <td>{{course.description | limitTo : 200 }}</td>
-                <td><a ng-click="edit_cb ($index)" href="">Edit</a></td>
+                <td>
+                    <a ng-click="edit_cb ($index)" href="">Edit</a><span> | </span>
+                    <a ng-click="loadStatistics ($index)" href="">Statistics</a>
+                </td>
             </tr>
 
         </table>
@@ -44,6 +47,30 @@
                     </div>
                 </form>
             </div>
+        </div>
+
+        <div ng-if="statistics !== null">
+
+            <h2>Statistics for Course {{ statistics.courseId }}</h2>
+
+            <table class="table">
+
+                <tr>
+                    <th>#</th>
+                    <th>Fullname</th>
+                    <th class="text-right">Entries read</th>
+                    <th class="text-right">Progress (%)</th>
+                </tr>
+
+                <tr ng-repeat="historyEntry in statistics.historyEntriesPerUsers">
+                    <td>{{ $index + 1 }}</td>
+                    <td>{{ historyEntry.fullname }}</td>
+                    <td class="text-right">{{ historyEntry.historyCount + " / " + statistics.entryCount }}</td>
+                    <td class="text-right">{{ (historyEntry.historyCount / statistics.entryCount) | percent : 1 }}</td>
+                </tr>
+
+            </table>
+
         </div>
     </ui-view>
 </div>
