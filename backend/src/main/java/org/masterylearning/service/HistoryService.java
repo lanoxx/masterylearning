@@ -73,6 +73,7 @@ public class HistoryService {
                     entryHistory.courseHistory = courseHistory;
                     entryHistory.course = course;
                     entryHistory.entry = entry;
+                    entryHistory.user = user;
                     entryHistory.created = LocalDateTime.now ();
 
                     List<EntryHistory> entryHistoryList = courseHistory.getEntryHistoryList ();
