@@ -21,6 +21,9 @@ public class EntryHistory {
     public CourseHistory courseHistory;
 
     @ManyToOne (optional = false)
+    public User user;
+
+    @ManyToOne (optional = false)
     public Course course;
 
     @ManyToOne (optional = false)
