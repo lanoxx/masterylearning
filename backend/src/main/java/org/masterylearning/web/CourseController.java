@@ -3,11 +3,13 @@ package org.masterylearning.web;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.masterylearning.domain.Course;
+import org.masterylearning.domain.CourseHistory;
 import org.masterylearning.domain.Entry;
 import org.masterylearning.dto.in.CourseUpdateDto;
 import org.masterylearning.dto.out.CourseOutDto;
 import org.masterylearning.dto.out.CreateCourseOutDto;
 import org.masterylearning.dto.out.ValidationDto;
+import org.masterylearning.repository.CourseHistoryRepository;
 import org.masterylearning.repository.CourseRepository;
 import org.masterylearning.repository.EntryRepository;
 import org.masterylearning.service.CourseService;
@@ -34,6 +36,7 @@ public class CourseController {
     @Inject CourseRepository courseRepository;
     @Inject EntryRepository entryRepository;
     @Inject CourseService courseService;
+    @Inject CourseHistoryRepository courseHistoryRepository;
 
     @CrossOrigin
     @RequestMapping (method = RequestMethod.GET)
@@ -131,5 +134,23 @@ public class CourseController {
         dto.courseId = course.id;
 
         return dto;
+    }
+
+    @PreAuthorize ("hasRole ('TEACHER') or hasRole ('ADMIN')")
+    @RequestMapping (method = RequestMethod.DELETE, path = "/{courseId}")
+    @Transactional
+    public Boolean deleteCourse (@PathVariable Long courseId) {
+
+        if (courseId == null) {
+            return false;
+        }
+
+        List<CourseHistory> courseHistories = courseHistoryRepository.findByCourse_Id (courseId);
+
+        courseHistories.forEach (courseHistory -> courseHistoryRepository.delete (courseHistory));
+
+        courseRepository.delete (courseId);
+
+        return false;
     }
 }

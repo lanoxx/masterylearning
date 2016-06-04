@@ -36,7 +36,7 @@ public class Entry implements Child<Entry>, Container<Entry> {
     public int depth;
 
     @JsonManagedReference("entry-data")
-    @OneToOne (mappedBy = "container", cascade = CascadeType.PERSIST)
+    @OneToOne (mappedBy = "container", cascade = CascadeType.ALL)
     public EntryData data;
 
     @JsonBackReference ("entry-child")
@@ -44,7 +44,7 @@ public class Entry implements Child<Entry>, Container<Entry> {
     public Entry parent;
 
     @JsonManagedReference("entry-child")
-    @OneToMany (mappedBy = "parent", cascade = CascadeType.PERSIST)
+    @OneToMany (mappedBy = "parent", cascade = CascadeType.ALL)
     public List<Entry> children = new ArrayList<> ();
 
     public Entry () {}

@@ -23,7 +23,7 @@ public class Course implements Container<Entry> {
     public String description;
 
     @JsonManagedReference ("course-child")
-    @OneToMany (mappedBy = "course", cascade = CascadeType.PERSIST)
+    @OneToMany (mappedBy = "course", cascade = CascadeType.ALL)
     public List<Entry> children = new ArrayList<>();
 
     @Override

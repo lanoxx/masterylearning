@@ -16,9 +16,9 @@ import javax.persistence.OneToOne;
 @Inheritance (strategy = InheritanceType.TABLE_PER_CLASS)
 public abstract class Exercise extends EntryData {
 
-    @OneToOne(cascade = CascadeType.PERSIST)
+    @OneToOne(cascade = CascadeType.ALL)
     public Entry correct;
 
-    @OneToOne (cascade = CascadeType.PERSIST)
+    @OneToOne (cascade = CascadeType.ALL)
     public Entry incorrect;
 }

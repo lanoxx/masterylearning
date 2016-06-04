@@ -18,7 +18,7 @@ public class MultiAnswerExercise extends Exercise {
     @Type(type = "text")
     public String text;
 
-    @OneToMany (cascade = CascadeType.PERSIST)
+    @OneToMany (cascade = CascadeType.ALL)
     public List<AnswerCandidate> answerCandidates;
 
     public MultiAnswerExercise () {

@@ -35,7 +35,7 @@ public class CourseHistory {
     @Type (type = "localDateTimeType")
     public LocalDateTime modified;
 
-    @OneToMany (mappedBy = "courseHistory", cascade = CascadeType.PERSIST)
+    @OneToMany (mappedBy = "courseHistory", cascade = CascadeType.ALL)
     public List<EntryHistory> entryHistoryList = new ArrayList<> ();
 
     public List<EntryHistory> getEntryHistoryList () {
