@@ -297,7 +297,6 @@ public class HistoryController {
         entryHistory.courseHistory = courseHistory;
         entryHistory.entry = entry;
         entryHistory.course = course;
-        entryHistory.user = courseHistory.user;
         entryHistory.created = LocalDateTime.now ();
         entryHistoryList.add (entryHistory);
         entryHistoryRepository.save (entryHistoryList);
