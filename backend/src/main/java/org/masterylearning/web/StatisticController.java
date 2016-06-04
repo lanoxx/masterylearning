@@ -39,7 +39,7 @@ public class StatisticController {
         Long entryCount = entryRepository.countByRootCourse_Id (courseId);
 
         // for each user calculate number of entryHistory items for that course
-        List<HistoryEntriesPerUser> entryCountByUserForCourse = entryHistoryRepository.getEntryCountByUserForCourse (1L);
+        List<HistoryEntriesPerUser> entryCountByUserForCourse = entryHistoryRepository.getEntryCountByUserForCourse (courseId);
 
         CourseStatisticsOutDto outDto = new CourseStatisticsOutDto (courseId);
 
