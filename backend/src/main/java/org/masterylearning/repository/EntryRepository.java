@@ -7,6 +7,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface EntryRepository extends JpaRepository<Entry, Long> {
 
-    Long countByRootCourse_Id (Long courseId);
+    Entry getEntryById (Long id);
 
 }
