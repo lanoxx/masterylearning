@@ -4,7 +4,7 @@
 
   <groupId>org.masterylearning</groupId>
   <artifactId>main</artifactId>
-  <version>0.2</version>
+  <version>0.3</version>
   <packaging>pom</packaging>
 
   <name>Application root for mastery learning app.</name>
