@@ -78,3 +78,7 @@ http://calenlegaspi.blogspot.co.at/
 # Maven Phase and Goal overview
 
 http://stackoverflow.com/questions/1709625/maven-command-to-list-lifecycle-phases-along-with-bound-goals
+
+# Setup ssl certificate in nginx
+
+https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04
