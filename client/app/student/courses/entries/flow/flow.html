@@ -6,7 +6,7 @@
 
     <div ng-if="entry.type == 'paragraph'">
         <div ng-if="entry.paragraphType == 'text'" class="text">
-            <p data-katex data-bind="trust (entry.text)" data-auto-render>
+            <p data-katex data-bind="trust (entry.text)" data-auto-render class="text-justify">
             </p>
         </div>
         <div ng-if="entry.paragraphType == 'definition'" class="definition panel panel-default">
@@ -15,10 +15,10 @@
             </div>
             <div class="panel-body">
                 <div ng-if="entry.mode == 'math'">
-                    <p data-katex data-bind="trust (entry.text)" data-auto-render></p>
+                    <p data-katex data-bind="trust (entry.text)" data-auto-render class="text-justify"></p>
                 </div>
                 <div ng-if="entry.mode != 'math'">
-                    <p ng-bind-html="trust (entry.text)"></p>
+                    <p ng-bind-html="trust (entry.text)" class="text-justify"></p>
                 </div>
             </div>
         </div>
@@ -29,10 +29,10 @@
             </div>
             <div class="panel-body">
                 <div ng-if="entry.mode == 'math'">
-                    <p data-katex data-bind="trust (entry.text)" data-auto-render></p>
+                    <p data-katex data-bind="trust (entry.text)" data-auto-render class="text-justify"></p>
                 </div>
                 <div ng-if="entry.mode != 'math'">
-                    <p ng-bind-html="trust (entry.text)"></p>
+                    <p ng-bind-html="trust (entry.text)" class="text-justify"></p>
                 </div>
             </div>
         </div>
