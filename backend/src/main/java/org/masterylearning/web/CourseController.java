@@ -151,6 +151,6 @@ public class CourseController {
 
         courseRepository.delete (courseId);
 
-        return false;
+        return true;
     }
 }
