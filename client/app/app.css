@@ -77,3 +77,11 @@ h6:hover > .anchor-link,
 .h6:hover > .anchor-link {
     opacity: 1;
 }
+
+.keyword {
+    font-weight: bold;
+}
+
+.substatements {
+    margin-left: 20px;
+}
