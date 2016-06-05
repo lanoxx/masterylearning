@@ -40,8 +40,8 @@ server {
         proxy_pass http://backend:8080;
     }
 
-    location /password/resetToken {
-        rewrite /password/resetToken/(.*) /#/password/resetToken/$1 redirect;
+    location /user/password/resetToken {
+        rewrite /user/password/resetToken/(.*) /#/user/password/resetToken/$1 redirect;
     }
 
     #error_page  404              /404.html;
