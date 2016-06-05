@@ -1,7 +1,6 @@
 package org.masterylearning.repository;
 
 import org.hibernate.Hibernate;
-import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.masterylearning.App;
@@ -82,6 +81,8 @@ public class CourseRepositoryIT {
         entry1 = course.children.get (0);
 
         assertTrue (entry1.course == course);
+
+        courseRepository.delete (course);
     }
 
     @Test
@@ -143,10 +144,7 @@ public class CourseRepositoryIT {
 
         assertTrue ("Expected paragraph.id to be not null", paragraph.id != null);
         assertTrue (paragraph.container == entry2);
-    }
 
-    @After
-    public void deleteAll () {
-        courseRepository.deleteAll ();
+        courseRepository.delete (course);
     }
 }
