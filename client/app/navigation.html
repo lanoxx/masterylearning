@@ -51,12 +51,12 @@
                             <a ui-sref="user.profile">Profile</a>
                         </li>
 
-                        <li ng-if="getCurrentRole() !== Role.TEACHER && hasRole (Role.TEACHER)">
-                            <a href="" ng-click="switchRole (Role.TEACHER)">Teacher View</a>
-                        </li>
-
                         <li ng-if="getCurrentRole() !== Role.STUDENT && hasRole (Role.STUDENT)">
                             <a href="" ng-click="switchRole (Role.STUDENT)">Student View</a>
+                        </li>
+
+                        <li ng-if="getCurrentRole() !== Role.TEACHER && hasRole (Role.TEACHER)">
+                            <a href="" ng-click="switchRole (Role.TEACHER)">Teacher View</a>
                         </li>
 
                         <li ng-if="getCurrentRole() !== Role.ADMIN && hasRole (Role.ADMIN)">
