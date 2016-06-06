@@ -15,7 +15,7 @@
                     <div ng-if="entry.type=='section'">
                         <h2>
                             <a ng-if="mode === 'structure'" ui-sref="home.student.courses.entries.structure({course_id: course.id, entry_id: entry.id})">{{ entry.title }}</a>
-                            <a ng-if="mode === 'flow' && entry.seen" ui-sref="home.student.courses.entries.flow({course_id: course_id, entry_id: entry.id, location: 76})">{{ entry.title }}</a>
+                            <a ng-if="mode === 'flow' && entry.seen" ui-sref="home.student.courses.entries.flow({course_id: course_id, entry_id: entry.id })">{{ entry.title }}</a>
                             <span ng-if="mode === 'flow' && !entry.seen">{{ entry.title }}</span>
                         </h2>
                         <p>{{ entry.description }}</p>
