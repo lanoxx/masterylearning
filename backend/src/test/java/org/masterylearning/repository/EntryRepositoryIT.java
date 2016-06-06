@@ -1,7 +1,6 @@
 package org.masterylearning.repository;
 
 import org.hibernate.Hibernate;
-import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.masterylearning.App;
@@ -60,6 +59,7 @@ public class EntryRepositoryIT {
         assertTrue (section.title != null);
         assertTrue (section.description != null);
 
+        entryRepository.delete (entry1);
     }
 
     @Test
@@ -78,6 +78,8 @@ public class EntryRepositoryIT {
         Hibernate.initialize (entry1.children);
 
         assertTrue (entry1.children.size () > 0);
+
+        entryRepository.delete (entry1);
     }
 
     @Test
@@ -87,10 +89,5 @@ public class EntryRepositoryIT {
 
         YesNoExercise exercise = new YesNoExercise ();
         exercise.type = "exercise";
-    }
-
-    @After
-    public void deleteAll () {
-        entryRepository.deleteAll ();
     }
 }
