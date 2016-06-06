@@ -45,14 +45,14 @@
 
     <div ng-if="entry.type == 'section' && entry.title">
         <my-app-header level="entry.depth - depth">
-            {{trust (entry.title)}} <a id="{{entry.id}}" my-app-scroll-handler destination="entry.id" class="anchor-link"><small><span class="glyphicon glyphicon-link"></span></small></a>
+            {{trust (entry.title)}} <a href="" id="{{entry.id}}" my-app-scroll-handler destination="entry.id" class="anchor-link"><small><span class="glyphicon glyphicon-link"></span></small></a>
         </my-app-header>
         <p>{{trust (entry.description)}}</p>
     </div>
 
     <div ng-if="entry.type == 'unit'">
         <my-app-header level="entry.depth - depth">
-            {{trust (entry.fullTitle)}} <a id="{{entry.id}}" my-app-scroll-handler destination="entry.id" class="anchor-link"><small><span class="glyphicon glyphicon-link"></span></small></a>
+            {{trust (entry.fullTitle)}} <a href="" id="{{entry.id}}" my-app-scroll-handler destination="entry.id" class="anchor-link"><small><span class="glyphicon glyphicon-link"></span></small></a>
         </my-app-header>
         <p>{{ trust (entry.description) }}</p>
     </div>
