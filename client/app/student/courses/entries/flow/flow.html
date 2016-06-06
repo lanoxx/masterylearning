@@ -4,6 +4,10 @@
 
 <div ng-repeat="entry in entries">
 
+    <!-- The section is only rendered if the title is non-empty. We add this additional anchor element,
+     such that scrolling to the anchro id works also in cases where the title is empty. -->
+    <a ng-if="entry.type != 'section' || !entry.title" id="{{entry.id}}" ></a>
+
     <div ng-if="entry.type == 'paragraph'">
         <div ng-if="entry.paragraphType == 'text'" class="text">
             <p data-katex data-bind="trust (entry.text)" data-auto-render class="text-justify">
@@ -39,28 +43,16 @@
 
     </div>
 
-    <!-- The section is only rendered if the title is non-empty. We add this additional anchor element,
-         such that scrolling to the anchro id works also in cases where the title is empty. -->
-    <a ng-if="entry.type == 'section' && !entry.title" ui-sref="home.student.courses.entries.flow ({
-                                                                     course_id: courseId,
-                                                                     entry_id: entryId,
-                                                                     location: entry.id
-                                                })" id="{{entry.id}}" ></a>
     <div ng-if="entry.type == 'section' && entry.title">
         <my-app-header level="entry.depth - depth">
-            {{trust (entry.title)}} <a ui-sref="home.student.courses.entries.flow ({
-                                                    course_id: courseId,
-                                                    entry_id: entryId,
-                                                    location: entry.id
-                                                })"
-                                       id="{{entry.id}}" class="anchor-link"><small><span class="glyphicon glyphicon-link"></span></small></a>
+            {{trust (entry.title)}} <a id="{{entry.id}}" my-app-scroll-handler destination="entry.id" class="anchor-link"><small><span class="glyphicon glyphicon-link"></span></small></a>
         </my-app-header>
         <p>{{trust (entry.description)}}</p>
     </div>
 
     <div ng-if="entry.type == 'unit'">
         <my-app-header level="entry.depth - depth">
-            {{trust (entry.fullTitle)}} <a href="" id="{{entry.id}}" ng-click="scrollTo ('' + entry.id)" class="anchor-link"><small><span class="glyphicon glyphicon-link"></span></small></a>
+            {{trust (entry.fullTitle)}} <a id="{{entry.id}}" my-app-scroll-handler destination="entry.id" class="anchor-link"><small><span class="glyphicon glyphicon-link"></span></small></a>
         </my-app-header>
         <p>{{ trust (entry.description) }}</p>
     </div>
@@ -80,7 +72,5 @@
     <div ng-if="entry.type == 'interactive-content'" my-app-initialize entry="entry" >
 
     </div>
-
-    <div ng-if="$last" my-app-scroll-handler></div>
 
 </div>

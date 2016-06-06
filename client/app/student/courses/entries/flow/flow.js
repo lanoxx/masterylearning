@@ -50,6 +50,8 @@ angular.module ('myapp.student.courses.entries.flow', ['ui.router', 'ngSanitize'
             $scope.entries = entries.entries;
             next = entries.nextIds;
             $log.info ("[myApp] FlowController: Rendering " + $scope.entries.length + " entries.");
+
+            // this part is only called if the 'continue from last position' was used
             if ($stateParams.location) {
                 $timeout (function ()
                 {
@@ -74,6 +76,8 @@ angular.module ('myapp.student.courses.entries.flow', ['ui.router', 'ngSanitize'
             {
                 $scope.entries.push.apply ($scope.entries, enumerationResult.entries);
                 next = enumerationResult.nextIds;
+                if (enumerationResult.entries && enumerationResult.entries[0])
+                    $location.search ("location", "" + enumerationResult.entries[0].id);
             });
         }
 
@@ -184,9 +188,24 @@ angular.module ('myapp.student.courses.entries.flow', ['ui.router', 'ngSanitize'
     .directive ('myAppScrollHandler', ['$anchorScroll', '$location', function ($anchorScroll, $location)
     {
         return {
-            link: function ()
+            scope: {
+                destination: '='
+            },
+            link: function (scope, element)
                   {
-                      $anchorScroll ($location.search().location);
+                      element.click (function ()
+                      {
+                          if (!scope.destination) {
+                              return;
+                          }
+
+                          if (typeof destination !== 'string')
+                              scope.destination = "" + scope.destination;
+
+                          $anchorScroll (scope.destination);
+                          $location.search("location", scope.destination);
+                          scope.$apply ();
+                      })
                   }
         }
     }]);
