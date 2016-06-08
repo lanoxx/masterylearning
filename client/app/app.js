@@ -6,6 +6,8 @@ angular.module('myApp', [
     'ui.bootstrap',
     'ngCookies',
     'katex',
+    'myapp.navigation',
+    'myapp.footer',
     'myapp.services.roles',
     'myapp.services.user',
     'myapp.services.history',
@@ -53,8 +55,7 @@ angular.module('myApp', [
                     controller: 'NavigationController'
                 },
                 '@': {
-                    templateUrl: 'app.html',
-                    controller: 'HomeCtrl'
+                    templateUrl: 'app.html'
                 },
                 'footer@': {
                     templateUrl: 'footer.html',
@@ -118,40 +119,6 @@ angular.module('myApp', [
         $rootScope.$on ('$stateNotFound', function (event, toState, toParams, fromState, fromParams) {
             $log.info ("[myApp] $stateNotFound (state: " + toState.name + ")");
         });
-    }])
-
-    .controller ('HomeCtrl', ['$rootScope', function ($rootScope) {
-    }])
-
-    .controller ('NavigationController', ['$scope', '$state', 'Role', 'RoleManager', 'UserService', '$log',
-        function ($scope, $state, Role, RoleManager, UserService, $log)
-    {
-        $log.info ("[myApp] NavigationController running");
-
-        $scope.Role = Role;
-        if (UserService.currentUser) {
-            $scope.fullname = UserService.currentUser.fullname;
-            if (!$scope.fullname) {
-                $scope.fullname = UserService.currentUser.username;
-            }
-        }
-        $scope.getCurrentRole = UserService.getCurrentRole;
-        $scope.hasRole = RoleManager.hasRole;
-
-        $scope.switchRole = UserService.switchRole;
-
-        $scope.logout = function () {
-            UserService.logout ();
-        }
-    }])
-
-    .controller ('FooterController', ['$scope', 'UserService', '$log', function ($scope, UserService, $log)
-    {
-        $log.info ("[myApp] FooterController running");
-        $scope.show_footer = function ()
-        {
-            return !UserService.isLoggedIn ();
-        };
     }])
 
     .controller ('LoginController', ['$scope', 'UserService', 'Role', '$log', function ($scope, UserService, RoleService, $log)
