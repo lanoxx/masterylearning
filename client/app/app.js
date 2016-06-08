@@ -90,36 +90,40 @@ angular.module('myApp', [
             // bottom of the navigation.
             $anchorScroll.yOffset = 50 + 10;
 
-        $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
-            $log.info ("[myApp] $stateChangeStart (checking permissions for destination state: " + toState.name + ")");
-            if (toState.role === undefined || toState.role === Role.NONE) {
-                // if no role is defined, then the route does not need to be secured and we can just continue to change
-                // to it
+            $rootScope.$on ('$stateChangeStart', function (event, toState, toParams, fromState, fromParams)
+            {
+                $log.info ("[myApp] $stateChangeStart (checking permissions for destination state: " + toState.name + ")");
+                if (toState.role === undefined || toState.role === Role.NONE) {
+                    // if no role is defined, then the route does not need to be secured and we can just continue to
+                    // change to it
 
-                $log.info("[myApp] $stateChangeStart (route change accepted, requires no role)");
-                return;
-            } else {
-                $log.info ("[myApp] $stateChangeStart (destination " + toState.name + " requires role '" + Role.getName (toState.role) + "'");
-                // we need to check that the user is authenticated and has the right role.
-                if (!(RoleManager.hasRole (toState.role))) {
-                    event.preventDefault();
-                    $log.info ("[myApp] $stateChangeStart (route change rejected, redirecting to 'home')");
-                    $state.go ('home');
+                    $log.info ("[myApp] $stateChangeStart (route change accepted, requires no role)");
                     return;
+                } else {
+                    $log.info ("[myApp] $stateChangeStart (destination " + toState.name + " requires role '" + Role.getName (toState.role) + "'");
+                    // we need to check that the user is authenticated and has the right role.
+                    if (!(RoleManager.hasRole (toState.role))) {
+                        event.preventDefault ();
+                        $log.info ("[myApp] $stateChangeStart (route change rejected, redirecting to 'home')");
+                        $state.go ('home');
+                        return;
+                    }
                 }
-            }
-            $log.info("[myApp] $stateChangeStart (route change accepted)");
-        });
+                $log.info ("[myApp] $stateChangeStart (route change accepted)");
+            });
 
-        $rootScope.$on ('$stateChangeError', function (event, toState, toParams, fromState, fromParams, error) {
-            $log.error ("[myApp] $stateChangeError (toState: " + toState.name + ") with error: " + error);
-            event.preventDefault ();
-            $state.go ('home');
-        });
-        $rootScope.$on ('$stateNotFound', function (event, toState, toParams, fromState, fromParams) {
-            $log.info ("[myApp] $stateNotFound (state: " + toState.name + ")");
-        });
-    }])
+            $rootScope.$on ('$stateChangeError', function (event, toState, toParams, fromState, fromParams, error)
+            {
+                $log.error ("[myApp] $stateChangeError (toState: " + toState.name + ") with error: " + error);
+                event.preventDefault ();
+                $state.go ('home');
+            });
+
+            $rootScope.$on ('$stateNotFound', function (event, toState, toParams, fromState, fromParams)
+            {
+                $log.info ("[myApp] $stateNotFound (state: " + toState.name + ")");
+            });
+        }])
 
     .controller ('LoginController', ['$scope', 'UserService', 'Role', '$log', function ($scope, UserService, RoleService, $log)
     {
