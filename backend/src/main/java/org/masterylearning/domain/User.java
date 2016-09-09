@@ -55,10 +55,10 @@ public class User implements UserDetails {
         this.password = password;
     }
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER)
     private List<Role> roles = new ArrayList<> ();
 
-    @OneToMany (mappedBy = "user", cascade = CascadeType.PERSIST)
+    @OneToMany (mappedBy = "user", cascade = CascadeType.ALL)
     public List<CourseHistory> courseHistoryList;
 
     @Override
