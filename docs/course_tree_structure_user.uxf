@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="14.2">
+  <zoom_level>10</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>370</x>
+      <y>560</y>
+      <w>280</w>
+      <h>150</h>
+    </coordinates>
+    <panel_attributes>User
+--
+id
+fullname
+email
+username
+password {hashed}
+role {STUDENT, TEACHER, ADMIN}
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>810</x>
+      <y>560</y>
+      <w>240</w>
+      <h>130</h>
+    </coordinates>
+    <panel_attributes>CourseHistory
+--
+id
+courseId
+lastEntry
+created: DateTime
+modified: DateTime</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>640</x>
+      <y>600</y>
+      <w>190</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-
+m1=n
+m2=1
+activeCourses</panel_attributes>
+    <additional_attributes>170.0;20.0;10.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>820</x>
+      <y>780</y>
+      <w>240</w>
+      <h>180</h>
+    </coordinates>
+    <panel_attributes>EntryHistory
+--
+courseId
+entryId
+created: DateTime
+modified: DateTime
+state : string</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>920</x>
+      <y>680</y>
+      <w>120</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-
+m1=n
+m2=1
+visitedEntries</panel_attributes>
+    <additional_attributes>10.0;100.0;10.0;10.0</additional_attributes>
+  </element>
+</diagram>
