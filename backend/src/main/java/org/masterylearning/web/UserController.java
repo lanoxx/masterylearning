@@ -101,6 +101,8 @@ public class UserController {
         User user = userService.createUser (dto);
 
         outDto.userId = user.id;
+        outDto.username = user.username;
+        outDto.roles = user.getRoles ().stream ().map (role -> role.name).collect (Collectors.toList ());
         return outDto;
     }
 
