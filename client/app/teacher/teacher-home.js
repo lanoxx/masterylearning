@@ -49,6 +49,7 @@ angular.module('myapp.teacher', ['ui.router', 'myapp.services.course', 'myapp.se
 
             var editCourse = $scope.courses[$index];
 
+            $scope.courseIndex = $index;
             $scope.course = {
                 id: editCourse.id,
                 title: editCourse.title,
@@ -63,7 +64,15 @@ angular.module('myapp.teacher', ['ui.router', 'myapp.services.course', 'myapp.se
 
             updatePromise.$promise.then (function (result)
             {
-                $log.info ("Update result" + result);
+                $log.info ("[myapp.teacher.TeacherController: Update course result: " + result);
+
+                if (result) {
+                    var course = $scope.courses[$scope.courseIndex];
+
+                    course.title = $scope.course.title;
+                    course.description = $scope.course.description;
+                    course.period = $scope.course.period;
+                }
             });
 
             $scope.courseEditMode = false;
