@@ -77,6 +77,9 @@ angular.module ('myapp.admin', ['ui.router'])
             createUserPromise.$promise.then (
                 function success (result)
                 {
+                    $scope.newUser.roles = result.roles;
+                    $scope.newUser.username = result.username;
+
                     $scope.users.push ($scope.newUser);
                     $scope.newUser = null;
                     $scope.createUserActive = false;
