@@ -27,7 +27,7 @@ this will build docker images for all child modules.
 Running the `install` phase includes the `verify` phase which runs
 integration tests. Therefore a properly configured MySQL database
 must be accessible. By default the tests look for a MySQL database
-on `localhost` with port `4000`, and expect an existing database named
+on `localhost` with port `4001`, and expect an existing database named
 `masterylearning` that is accessible for user `root` with password
 `masterylearning`. You can override with the `spring.datasource.url`
 option:
