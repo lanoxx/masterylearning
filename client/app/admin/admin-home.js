@@ -1,4 +1,9 @@
-angular.module ('myapp.admin', ['ui.router'])
+angular.module ('myapp.admin', [
+    'ui.router',
+    'myapp.admin.edituser',
+    'myapp.admin.adduser',
+    'myapp.admin.deleteuser'
+])
 
     .config (['$stateProvider', 'RoleProvider', function ($stateProvider, RoleProvider)
     {
@@ -20,78 +25,78 @@ angular.module ('myapp.admin', ['ui.router'])
         });
     }])
 
-    .controller ('AdminController', ['$scope', 'users', 'UserService', 'Role', '$log', function ($scope, users, UserService, Role, $log)
+    .controller ('AdminController', ['$scope', 'users', 'UserService', 'Role', '$log', '$q', function ($scope, users, UserService, Role, $log, $q)
     {
-        $scope.Role = Role;
+        $scope.disabled = false;
+
         $scope.users = users;
-        $scope.roles = [true];
-        $scope.createUserActive = false;
-        $scope.newUser = null;
 
-        $scope.errors = [];
-        $scope.usernamematches = false;
+        //
+        // EDIT USER
+        //
+        $scope.editUserController = {};
 
-        $scope.createUser = createUser;
-        $scope.addUser = addUser;
-        $scope.cancel = cancel;
-        $scope.roleCheckedCb = roleCheckedCb;
-        $scope.usernameChangedCb = usernameChangedCb;
-
-        function roleCheckedCb () {
-
-            $scope.newUser.roles = [];
-
-            $scope.roles.forEach(function (role, index)
-            {
-                if ($scope.roles[index])
-                    $scope.newUser.roles.push (Role.getName (index + 1));
-            })
-        }
-
-        function usernameChangedCb () {
-            if ($scope.newUser && $scope.newUser.username) {
-                var regExp = /^[a-z0-9](-?[a-z0-9])*$/gi;
-                if (!regExp.test($scope.newUser.username)) {
-                    $scope.usernamematches = false;
-                    $scope.errors['username'] = true;
-                } else {
-                    $scope.usernamematches = true;
-                    $scope.errors['username'] = false;
-                }
-            } else {
-                $scope.errors['username'] = false;
-                $scope.usernamematches = false;
-            }
-        }
-
-        function addUser () {
-            "use strict";
-            $scope.newUser = {};
-            $scope.createUserActive = true;
-        }
-
-        function createUser ()
+        $scope.editUserCb = function (user)
         {
-            var createUserPromise = UserService.createUser ($scope.newUser);
+            $scope.editUserController.init (user);
+            $scope.disabled = true;
+        };
 
-            createUserPromise.$promise.then (
-                function success (result)
-                {
-                    $scope.newUser.roles = result.roles;
-                    $scope.newUser.username = result.username;
+        $scope.editUserCancelCb = function ()
+        {
+            $scope.disabled = false;
+        };
 
-                    $scope.users.push ($scope.newUser);
-                    $scope.newUser = null;
-                    $scope.createUserActive = false;
-                    $log.info ("[myApp] AdminController: saved user with username: " + $scope.newUser.username);
-                },
-                function error (result) {
-                    $log.info ("[myApp] AdminController: failuser to save the new user with username: " + $scope.newUser.username);
-                }
-            )
-        }
+        $scope.editUserConfirmCb = function ()
+        {
+            $scope.disabled = false;
+        };
 
-        function cancel () {
-            $scope.createUserActive = false;
-        }
+        //
+        // ADD USER
+        //
+        $scope.addUserController = {};
+
+        $scope.addUserCb = function ()
+        {
+            $scope.addUserController.init ();
+            $scope.disabled = true;
+        };
+
+        $scope.addUserCancelCb = function ()
+        {
+            $scope.disabled = false;
+        };
+
+        $scope.addUserConfirmCb = function (user)
+        {
+            if (user) {
+                $scope.users.push (user);
+            }
+
+            $scope.disabled = false;
+        };
+
+        //
+        // DELETE USER
+        //
+        $scope.deleteUserController = {};
+
+        $scope.deleteUserCb = function (user)
+        {
+            $scope.disabled = true;
+            $scope.deleteUserController.init (user);
+        };
+
+        $scope.deleteUserCancelCb = function ()
+        {
+            $scope.disabled = false;
+        };
+
+        $scope.deleteUserConfirmCb = function (user)
+        {
+            _.pull(users, user);
+
+            $scope.disabled = false;
+        };
     }]);

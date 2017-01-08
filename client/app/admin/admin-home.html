@@ -7,81 +7,53 @@
             <h1>Registered Users</h1>
 
             <!-- TODO: we probably want to be able to filter this by role -->
-            <ul ng-repeat="user in users" class="list-group">
-                <li class="list-group-item">
-                    <strong>Full name:</strong> {{ user.fullname }}
-                    <strong>-</strong>
-                    <strong>User name:</strong> {{ user.username }}
-                    <strong>-</strong>
-                    <strong>Email:</strong> {{ user.email }}<br>
-                    <strong>Roles:</strong> <span ng-repeat-start="role in user.roles"></span><span class="label label-default">{{ role }}</span> <span ng-repeat-end></span>
-                    <!-- TODO: add an edit button and create a directive that allows inline editing of the user's roles -->
-                    <!-- TODO: add a delete button that is able to delete the user -->
-                </li>
-            </ul>
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>User Information</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="user in users">
+                        <td>
+                            {{ $index + 1}}
+                        </td>
+                        <td>
+                            <strong>Full name:</strong> {{ user.fullname }}
+                            <strong>-</strong>
+                            <strong>User name:</strong> {{ user.username }}
+                            <strong>-</strong>
+                            <strong>Email:</strong> {{ user.email }}<br>
+                            <strong>Roles:</strong> <span ng-repeat-start="role in user.roles"></span><span class="label label-default">{{ role }}</span> <span ng-repeat-end></span>
+                        </td>
+                        <td>
+                            <button ng-click="editUserCb(user)" ng-disabled="disabled" class="btn btn-default">Edit</button>
+                            <button ng-click="deleteUserCb(user)" ng-disabled="disabled" class="btn btn-default">Delete</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <my-app-edit-user controller="editUserController"
+                              on-cancel="editUserCancelCb()"
+                              on-confirm="editUserConfirmCb()"></my-app-edit-user>
+
+            <my-app-delete-user controller="deleteUserController"
+                                on-cancel="deleteUserCancelCb()"
+                                on-confirm="deleteUserConfirmCb(user)"></my-app-delete-user>
 
             <div class="form-group">
-                <button ng-disabled="createUserActive" ng-click="addUser ()" class="btn btn-default">Add user</button>
+                <button ng-disabled="disabled" ng-click="addUserCb ()" class="btn btn-default">Add user</button>
             </div>
 
         </div>
     </div>
 
-    <div class="row" ng-if="createUserActive">
-        <div class="col-md-12">
+    <my-app-add-user controller="addUserController"
+                     on-cancel="addUserCancelCb()"
+                     on-confirm="addUserConfirmCb(user)"></my-app-add-user>
 
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <strong>Create User</strong>
-                </div>
-                <div class="panel-body">
-                    <form>
-
-                        <div class="form-group">
-                            <label for="fullname">Fullname:</label>
-                            <input ng-model="newUser.fullname" type="text" id="fullname" class="form-control" placeholder="Fullname">
-                        </div>
-
-                        <div class="form-group has-feedback" ng-class="{ 'has-error': errors['username'], 'has-success': usernamematches }">
-                            <label for="username">Username:</label>
-                            <input ng-model="newUser.username" ng-change="usernameChangedCb ()" type="text" id="username" class="form-control" placeholder="Username">
-                            <span ng-show="errors['username']" class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
-                            <span ng-show="usernamematches"
-                                  class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
-                        </div>
-
-                        <div class="alert alert-info">
-                            The username is optional. If you leave it empty, then a generic username in the
-                            form of 'user1234567' will be created.
-                        </div>
-
-                        <div class="form-group">
-                            <label for="email">Email:</label>
-                            <input ng-model="newUser.email" type="text" id="email" class="form-control" placeholder="Email">
-                        </div>
-
-                        <!-- TODO: it would be nice not to set a password, and instead have a password reset token
-                                   be created automatically.
-                          -->
-
-                        <div class="form-group">
-                            <label for="password">Password:</label>
-                            <input ng-model="newUser.password" type="password" id="password" class="form-control" placeholder="Passwort">
-                        </div>
-
-                        <div ng-repeat="role in Role.values ()" class="checkbox">
-                            <label>
-                                <input ng-model="roles[$index]" ng-change="roleCheckedCb ()" type="checkbox" id="roles">
-                                {{ Role.getName (role) }}
-                            </label>
-                        </div>
-
-                        <button ng-click="createUser ()" class="btn btn-success">Create</button>
-                        <button ng-click="cancel ()" class="btn btn-default">Cancel</button>
-
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
 </div>
