@@ -44,7 +44,7 @@ type=yesnoexercise</panel_attributes>
       <x>370</x>
       <y>490</y>
       <w>220</w>
-      <h>170</h>
+      <h>100</h>
     </coordinates>
     <panel_attributes>&lt;&lt;Exercise&gt;&gt;
 YesNoExercise
@@ -60,7 +60,7 @@ YesNoExercise
       <x>700</x>
       <y>500</y>
       <w>260</w>
-      <h>170</h>
+      <h>90</h>
     </coordinates>
     <panel_attributes>&lt;&lt;Exercise&gt;&gt;
 MultiAnswerExercise
@@ -73,19 +73,17 @@ MultiAnswerExercise
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>720</x>
-      <y>770</y>
+      <x>510</x>
+      <y>610</y>
       <w>220</w>
       <h>180</h>
     </coordinates>
     <panel_attributes>AnswerCandidate
 --
-- id
 - text
 - correct : boolean
-
 --
-The key determines
+The 'correct' flag determines
 whether this candidate's
 text represents a correct
 solution.</panel_attributes>
@@ -94,15 +92,15 @@ solution.</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>820</x>
-      <y>660</y>
-      <w>160</w>
-      <h>130</h>
+      <x>720</x>
+      <y>580</y>
+      <w>230</w>
+      <h>160</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-
 answerCandidates
 m1=n
 m2=1</panel_attributes>
-    <additional_attributes>10.0;110.0;10.0;10.0</additional_attributes>
+    <additional_attributes>10.0;130.0;210.0;130.0;210.0;10.0</additional_attributes>
   </element>
 </diagram>

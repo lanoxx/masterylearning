@@ -4,14 +4,13 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>350</x>
-      <y>100</y>
+      <x>530</x>
+      <y>170</y>
       <w>200</w>
-      <h>170</h>
+      <h>150</h>
     </coordinates>
     <panel_attributes>Entry
 --
-- id
 - index
 - depth</panel_attributes>
     <additional_attributes/>
@@ -19,40 +18,39 @@
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>290</x>
-      <y>50</y>
+      <x>470</x>
+      <y>120</y>
       <w>110</w>
-      <h>120</h>
+      <h>100</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 parent</panel_attributes>
-    <additional_attributes>90.0;50.0;90.0;20.0;10.0;20.0;10.0;100.0;60.0;100.0</additional_attributes>
+    <additional_attributes>90.0;50.0;90.0;20.0;10.0;20.0;10.0;80.0;60.0;80.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>260</x>
-      <y>20</y>
+      <x>440</x>
+      <y>90</y>
       <w>180</w>
-      <h>190</h>
+      <h>160</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-
 children
 m1=n
 m2=1</panel_attributes>
-    <additional_attributes>160.0;80.0;160.0;20.0;10.0;20.0;10.0;160.0;90.0;160.0</additional_attributes>
+    <additional_attributes>160.0;80.0;160.0;20.0;10.0;20.0;10.0;130.0;90.0;130.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>20</x>
-      <y>100</y>
+      <x>200</x>
+      <y>170</y>
       <w>180</w>
-      <h>170</h>
+      <h>150</h>
     </coordinates>
     <panel_attributes>Course
 --
-- id
 - title
 - period
 - description</panel_attributes>
@@ -61,8 +59,8 @@ m2=1</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>190</x>
-      <y>190</y>
+      <x>370</x>
+      <y>240</y>
       <w>180</w>
       <h>50</h>
     </coordinates>
@@ -75,8 +73,8 @@ children</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>190</x>
-      <y>230</y>
+      <x>370</x>
+      <y>280</y>
       <w>180</w>
       <h>40</h>
     </coordinates>
@@ -87,40 +85,39 @@ course</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>540</x>
-      <y>150</y>
-      <w>210</w>
-      <h>50</h>
+      <x>590</x>
+      <y>310</y>
+      <w>60</w>
+      <h>90</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 data
 </panel_attributes>
-    <additional_attributes>190.0;20.0;10.0;20.0</additional_attributes>
+    <additional_attributes>10.0;70.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>540</x>
-      <y>120</y>
-      <w>210</w>
-      <h>50</h>
+      <x>640</x>
+      <y>310</y>
+      <w>90</w>
+      <h>90</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 container
 </panel_attributes>
-    <additional_attributes>10.0;20.0;190.0;20.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;70.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>730</x>
-      <y>130</y>
+      <x>550</x>
+      <y>380</y>
       <w>180</w>
       <h>100</h>
     </coordinates>
     <panel_attributes>/EntryData/
 --
-id
 type</panel_attributes>
     <additional_attributes/>
   </element>

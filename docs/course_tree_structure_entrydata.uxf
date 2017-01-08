@@ -11,52 +11,32 @@
     </coordinates>
     <panel_attributes>/EntryData/
 --
-id
 type</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>530</x>
-      <y>490</y>
-      <w>220</w>
-      <h>170</h>
-    </coordinates>
-    <panel_attributes>&lt;&lt;EntryData&gt;&gt;
-Unit
---
-- fullTitle
-- breadcrumbTitle
-- description
-- nextUnitId
-- prevUnitId
-</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>780</x>
-      <y>490</y>
-      <w>220</w>
-      <h>170</h>
+      <x>580</x>
+      <y>430</y>
+      <w>140</w>
+      <h>120</h>
     </coordinates>
     <panel_attributes>&lt;&lt;EntryData&gt;&gt;
 Section
 --
-- id
 - title
 - description
-</panel_attributes>
+--
+type = 'section'</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1130</x>
-      <y>440</y>
-      <w>200</w>
+      <x>820</x>
+      <y>550</y>
+      <w>230</w>
       <h>170</h>
     </coordinates>
     <panel_attributes>&lt;&lt;EntryData&gt;&gt;
@@ -66,53 +46,42 @@ Paragraph
 - title
 - text
 - paragraphType 
-  {text, definition}
-- mode</panel_attributes>
+  {text, definition, takewaway}
+- mode
+  {math}</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
       <x>920</x>
-      <y>330</y>
-      <w>280</w>
-      <h>130</h>
+      <y>340</y>
+      <w>70</w>
+      <h>230</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-
-type=paragraph</panel_attributes>
-    <additional_attributes>10.0;20.0;260.0;20.0;260.0;110.0</additional_attributes>
+</panel_attributes>
+    <additional_attributes>10.0;20.0;50.0;20.0;50.0;210.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>810</x>
-      <y>370</y>
-      <w>120</w>
+      <x>600</x>
+      <y>310</y>
+      <w>170</w>
       <h>140</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-
 type=section</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;120.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>620</x>
-      <y>340</y>
-      <w>150</w>
-      <h>170</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;&lt;-
-type=unit</panel_attributes>
-    <additional_attributes>130.0;20.0;10.0;20.0;10.0;150.0</additional_attributes>
+    <additional_attributes>150.0;20.0;10.0;20.0;10.0;120.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1240</x>
-      <y>250</y>
+      <x>1150</x>
+      <y>280</y>
       <w>180</w>
-      <h>120</h>
+      <h>100</h>
     </coordinates>
     <panel_attributes>&lt;&lt;EntryData&gt;&gt;
 /Exercise/
@@ -126,45 +95,45 @@ incorrect: Entry</panel_attributes>
     <coordinates>
       <x>920</x>
       <y>290</y>
-      <w>340</w>
+      <w>250</w>
       <h>30</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-</panel_attributes>
-    <additional_attributes>10.0;10.0;320.0;10.0</additional_attributes>
+    <additional_attributes>10.0;10.0;230.0;10.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>990</x>
-      <y>680</y>
-      <w>200</w>
+      <x>750</x>
+      <y>430</y>
+      <w>190</w>
       <h>80</h>
     </coordinates>
     <panel_attributes>&lt;&lt;EntryData&gt;&gt;
 ContinueButton
 --
-</panel_attributes>
+type = 'continue-button'</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>890</x>
+      <x>820</x>
       <y>370</y>
-      <w>220</w>
-      <h>330</h>
+      <w>30</w>
+      <h>80</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-
-type=continue-button</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;40.0;200.0;40.0;200.0;310.0</additional_attributes>
+</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;60.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1390</x>
+      <x>1070</x>
       <y>430</y>
       <w>240</w>
-      <h>280</h>
+      <h>290</h>
     </coordinates>
     <panel_attributes>&lt;&lt;EntryData&gt;&gt;
 InteractiveContent
@@ -192,12 +161,12 @@ specified by init.
     <id>Relation</id>
     <coordinates>
       <x>920</x>
-      <y>320</y>
-      <w>600</w>
-      <h>130</h>
+      <y>310</y>
+      <w>220</w>
+      <h>140</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-
-type=interactive-content</panel_attributes>
-    <additional_attributes>10.0;10.0;290.0;10.0;290.0;80.0;580.0;80.0;290.0;80.0;580.0;80.0;580.0;110.0</additional_attributes>
+</panel_attributes>
+    <additional_attributes>10.0;20.0;200.0;20.0;200.0;120.0</additional_attributes>
   </element>
 </diagram>
