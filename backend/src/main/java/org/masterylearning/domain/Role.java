@@ -2,6 +2,7 @@ package org.masterylearning.domain;
 
 import org.hibernate.annotations.Type;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -15,6 +16,7 @@ public class Role {
     @GeneratedValue
     public Long id;
 
+    @Column(nullable = false, unique = true)
     public String name;
 
     @Type(type = "text")
