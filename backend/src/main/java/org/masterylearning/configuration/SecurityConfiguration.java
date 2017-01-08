@@ -10,6 +10,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.AuthenticationEntryPoint;
+import org.springframework.security.web.access.AccessDeniedHandler;
 
 /**
  */
@@ -29,7 +30,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
         AuthenticationEntryPoint entryPoint = entryPoint();
-        http.exceptionHandling().authenticationEntryPoint(entryPoint);
+        AccessDeniedHandler accessDeniedHandler = accessDeniedHandler ();
+
+        http.exceptionHandling()
+            .authenticationEntryPoint(entryPoint)
+            .accessDeniedHandler (accessDeniedHandler);
+
         http.httpBasic().authenticationEntryPoint(entryPoint);
         http.requestMatchers().antMatchers("/**");
         //String[] roles = new String[] { "USER", "ADMIN"};
@@ -47,5 +53,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         RestAuthenticationEntryPoint entryPoint = new RestAuthenticationEntryPoint ();
         entryPoint.setRealmName("MasteryLearning");
         return entryPoint;
+    }
+
+    private AccessDeniedHandler accessDeniedHandler() {
+        return new AccessDeniedHandlerImpl ();
     }
 }
