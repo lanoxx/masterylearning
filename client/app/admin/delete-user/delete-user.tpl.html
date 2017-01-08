@@ -1,0 +1,19 @@
+<div class="row" ng-if="active">
+    <div class="col-md-12">
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <strong>Delete User</strong>
+            </div>
+            <div class="panel-body">
+
+                <div>
+                    <p>Do you want to delete the user: {{user.username}}?</p>
+                </div>
+
+                <button ng-click="confirmCb (user)" class="btn btn-success">Delete</button>
+                <button ng-click="cancelCb ()" class="btn btn-default">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>

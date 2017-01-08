@@ -1,0 +1,26 @@
+<div class="row" ng-if="active">
+    <div class="col-md-12">
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <strong>Edit User</strong>
+            </div>
+            <div class="panel-body">
+                <form>
+
+                    <div ng-repeat="role in Role.values()" class="checkbox">
+                        <label>
+                            <input ng-model="roles[$index]" type="checkbox" id="roles">
+                            {{ Role.getName (role) }}
+                        </label>
+                    </div>
+
+                    <button ng-click="confirmCb ()" class="btn btn-success">Update</button>
+                    <button ng-click="cancelCb ()" class="btn btn-default">Cancel</button>
+
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>
