@@ -156,6 +156,24 @@ angular.module ('myapp.services.user', ['ngResource', 'base64', 'myapp.config'])
                 return $resource (url).save (user);
             };
 
+            this.updateRoles = function (username, rolesToAdd, rolesToDelete) {
+                var url = apiUrlPrefix + "/users/" + username + "/roles";
+
+                var rolesDto = {
+                    rolesToAdd: rolesToAdd,
+                    rolesToDelete: rolesToDelete
+                };
+
+                return $resource (url).save (username, rolesDto);
+            };
+
+            this.deleteUser = function (username)
+            {
+                var url = apiUrlPrefix + "/users/" + username;
+
+                return $resource (url).delete();
+            };
+
             /**
              * This will attempt to set the new role in the role service and if successful switches the route
              * according to the new role.
