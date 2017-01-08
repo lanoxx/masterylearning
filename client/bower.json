@@ -20,6 +20,7 @@
     "angular-base64": "^2.0.5",
     "js-utils": "git@github.com:andreas-holzer/js-utils.git#master",
     "elearning-content-fmi": "git@github.com:andreas-holzer/elearning-content-fmi.git#master",
-    "vis": "4.16.1"
+    "vis": "4.16.1",
+    "lodash": "^4.17.4"
   }
 }
