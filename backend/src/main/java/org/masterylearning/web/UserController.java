@@ -1,8 +1,11 @@
 package org.masterylearning.web;
 
+import org.masterylearning.domain.Role;
 import org.masterylearning.domain.User;
 import org.masterylearning.domain.ValidationIssue;
 import org.masterylearning.domain.ValidationResult;
+import org.masterylearning.dto.RolesDto;
+import org.masterylearning.dto.RolesOutDto;
 import org.masterylearning.dto.in.ChangePasswordDto;
 import org.masterylearning.dto.in.CreateUserDto;
 import org.masterylearning.dto.out.ChangePasswordOutDto;
@@ -10,6 +13,7 @@ import org.masterylearning.dto.out.CreateUserOutDto;
 import org.masterylearning.dto.out.UserOutDto;
 import org.masterylearning.repository.RoleRepository;
 import org.masterylearning.repository.UserRepository;
+import org.masterylearning.service.RoleService;
 import org.masterylearning.service.UserService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -36,6 +40,7 @@ public class UserController {
     @Inject UserService userService;
     @Inject RoleRepository roleRepository;
     @Inject PasswordEncoder passwordEncoder;
+    @Inject RoleService roleService;
 
     @CrossOrigin
     @RequestMapping (method = RequestMethod.GET, path = "/current")
@@ -120,6 +125,32 @@ public class UserController {
         }
 
         return false;
+    }
+
+    @PreAuthorize (value = "hasRole('ADMIN')")
+    @RequestMapping (method = RequestMethod.POST, path = "{username}/roles")
+    public RolesOutDto
+    updateRoles (@PathVariable String username, @RequestBody RolesDto dto)
+    {
+        RolesOutDto result = new RolesOutDto();
+
+        User userByUsername = userRepository.getUserByUsername (username);
+
+        List<Role> rolesAdded = roleService.addRolesFromDto (userByUsername,
+                                                             dto.rolesToAdd);
+
+        List<Role> rolesDeleted = roleService.deleteRolesFromDto (userByUsername,
+                                                                  dto.rolesToDelete);
+
+        result.rolesAdded = rolesAdded.stream ()
+                                      .map (role -> role.name)
+                                      .collect(Collectors.toList());
+
+        result.rolesDeleted = rolesDeleted.stream ()
+                                          .map (role -> role.name)
+                                          .collect (Collectors.toList ());
+
+        return result;
     }
 
     @CrossOrigin
