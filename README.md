@@ -37,3 +37,27 @@ option:
 ```
 
 Replace `<db_host>`, `<db_port>` and, `db_name` by your respective configuration.
+
+# Deploying on AWS
+
+This section explains how to push the docker images that were built in with Maven
+to an AWS EC2 Container Registry (e.g. a docker registry). The following
+steps assume that you have installed the `aws` command line tool. 
+
+ 1. You need to use the `aws` command to get a login command for docker:
+
+        aws erc get-login
+
+    This will output a `docker login` command with a very long password, that you can use to login
+    with docker.
+
+ 2. Use `docker tag` to tag your images. This step is necessary to let the push command know which
+ images to push:
+
+        docker tag masterylearning/backend:latest <your_ec2registry>/masterylearning/backend
+        docker tag masterylearning/client:latest <your_ec2registry>/masterylearning/client
+
+ 3. Finally use `docker push` to push your images into your docker registry:
+
+        docker push <your_ec2registry>/masterylearning/backend
+        docker push <your_ec2registry>/masterylearning/client
