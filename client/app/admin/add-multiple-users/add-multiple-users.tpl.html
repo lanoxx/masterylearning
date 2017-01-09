@@ -1,0 +1,125 @@
+<div class="row" ng-if="active">
+    <div class="col-md-12">
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <strong>Create Multiple Users</strong>
+            </div>
+            <div class="panel-body">
+
+                <div ng-if="!fileSupport">
+                    <div class="alert alert-danger">
+                        Your browser does not support the required APIs to read the user data from a file.
+                    </div>
+                </div>
+
+                <div ng-if="fileSupport">
+
+
+
+                    <h2>Notes</h2>
+
+                    <p>Import multiple users from a CSV file. The file must have one of the following two
+                        formats:</p>
+
+                    <pre>
+fullname;email</pre>
+
+                    <p>or</p>
+
+                    <pre>
+COLUMN 1 HEADER; COLUMN 2 HEADER
+fullname;email</pre>
+
+                    <p>If the first line in your CSV file is a header line (e.g. with the names of the columns), then
+                        make sure to check the checkbox below. Enabling the checkbox will ignore the first line during the import.</p>
+
+                    <div class="alert alert-info">
+                        <strong>Note:</strong> Users will be informed by email about the creation of their account.
+                        The password for each user will be included in the email notification and will not
+                        be shown in this dialog.
+                    </div>
+
+                    <h2>Import</h2>
+
+                    <div class="checkbox">
+                        <label for="skipFirstLine">
+                            <input ng-model="settings.skipFirstLine" ng-disabled="hasFile" id="skipFirstLine" type="checkbox">
+                            Ignore header line (e.g. the first line in the CSV file will be ignored).
+                        </label>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="fileImport">Select a CSV file to import users</label><br>
+                        <label ng-disabled="hasFile" for="fileImport" class="btn btn-default btn-file">Browse
+                            <input ng-model="file.data" ng-disabled="hasFile" file-upload data-file-on-load="dataLoadedCb()" type="file" id="fileImport">
+                        </label>
+                    </div>
+
+
+                    <div ng-if="hasFile && !usersCreated">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Email Address</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="user in users">
+                                <td>{{user.fullname}}</td>
+                                <td>{{user.email}}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+
+
+                        <button ng-click="confirmCb ()" ng-disabled="disabled" class="btn btn-success">Add All</button>
+                        <button ng-click="cancelCb ()" class="btn btn-default">Cancel</button>
+                    </div>
+
+                    <div ng-if="usersCreated">
+
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th>User ID</th>
+                                <th>Fullname</th>
+                                <th>Email Address</th>
+                                <th>Username</th>
+                                <th>Roles</th>
+                                <th>Messages</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="user in users" ng-class="{ 'danger': !user.success, 'success': user.success }">
+                                <td>{{user.userId}}</td>
+                                <td>{{user.fullname}}</td>
+                                <td>{{user.email}}</td>
+                                <td>{{user.username}}</td>
+                                <td>
+                                    <span ng-repeat-start="role in user.roles"></span>
+                                    <span class="label label-default">{{ role }}</span>
+                                    <span ng-repeat-end></span>
+                                </td>
+                                <td>{{user.message}}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+
+                        <p>
+                            The users have been imported into the system. Please check the above table, for
+                            any errors that might have occurred. Lines displayed in red have not been
+                            imported into the system.
+                        </p>
+
+                        <button ng-click="cancelCb()" class="btn btn-default">Close</button>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

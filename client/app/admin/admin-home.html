@@ -47,6 +47,7 @@
 
             <div class="form-group">
                 <button ng-disabled="disabled" ng-click="addUserCb ()" class="btn btn-default">Add user</button>
+                <button ng-disabled="disabled" ng-click="addMultipleUsersCb ()" class="btn btn-default">Add Multiple Users</button>
             </div>
 
         </div>
@@ -55,5 +56,9 @@
     <my-app-add-user controller="addUserController"
                      on-cancel="addUserCancelCb()"
                      on-confirm="addUserConfirmCb(user)"></my-app-add-user>
+
+    <my-app-add-multiple-users controller="addMultipleUsersController"
+                               on-cancel="addMultipleUsersCancelCb()"
+                               on-confirm="addMultipleUsersConfirmCb()"></my-app-add-multiple-users>
 
 </div>

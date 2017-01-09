@@ -2,7 +2,8 @@ angular.module ('myapp.admin', [
     'ui.router',
     'myapp.admin.edituser',
     'myapp.admin.adduser',
-    'myapp.admin.deleteuser'
+    'myapp.admin.deleteuser',
+    'myapp.admin.addmultipleuser'
 ])
 
     .config (['$stateProvider', 'RoleProvider', function ($stateProvider, RoleProvider)
@@ -97,6 +98,27 @@ angular.module ('myapp.admin', [
         {
             _.pull(users, user);
 
+            $scope.disabled = false;
+        };
+
+        //
+        // ADD MULTIPLE USERS
+        //
+        $scope.addMultipleUsersController = {};
+
+        $scope.addMultipleUsersCb = function ()
+        {
+            $scope.disabled = true;
+            $scope.addMultipleUsersController.init();
+        };
+
+        $scope.addMultipleUsersCancelCb = function ()
+        {
+            $scope.disabled = false;
+        };
+
+        $scope.addMultipleUsersConfirmCb = function ()
+        {
             $scope.disabled = false;
         };
     }]);

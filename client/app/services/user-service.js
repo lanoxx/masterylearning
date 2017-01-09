@@ -156,6 +156,13 @@ angular.module ('myapp.services.user', ['ngResource', 'base64', 'myapp.config'])
                 return $resource (url).save (user);
             };
 
+            this.createUsers = function (users)
+            {
+                var url = apiUrlPrefix + "/users/import";
+
+                return $resource (url).save ({users: users});
+            };
+
             this.updateRoles = function (username, rolesToAdd, rolesToDelete) {
                 var url = apiUrlPrefix + "/users/" + username + "/roles";
 
