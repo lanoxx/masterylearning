@@ -117,8 +117,10 @@ angular.module ('myapp.admin', [
             $scope.disabled = false;
         };
 
-        $scope.addMultipleUsersConfirmCb = function ()
+        $scope.addMultipleUsersConfirmCb = function (createdUsers)
         {
             $scope.disabled = false;
+
+            [].push.apply ($scope.users, createdUsers);
         };
     }]);

@@ -107,7 +107,8 @@ fullname;email</pre>
                     </div>
 
                     <button ng-click="confirmCb ()" ng-disabled="disabled || usersCreated" class="btn btn-success">Add All</button>
-                    <button ng-click="cancelCb ()" class="btn btn-default">{{ usersCreated ? "Close" : "Cancel" }}</button>
+                    <button ng-click="cancelCb ()" ng-if="!usersCreated" class="btn btn-default">Cancel</button>
+                    <button ng-click="closeCb ()" ng-if="usersCreated" class="btn btn-default">Close</button>
 
                 </div>
 

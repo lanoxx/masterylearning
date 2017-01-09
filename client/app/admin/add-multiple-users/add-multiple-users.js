@@ -34,6 +34,15 @@ angular.module ('myapp.admin.addmultipleuser', [])
                 $scope.onCancel();
             };
 
+            $scope.closeCb = function ()
+            {
+                var createdUsers = $scope.createdUsers;
+
+                reset ();
+
+                $scope.onConfirm({createdUsers: createdUsers});
+            };
+
             function submitNextChunk () {
 
                 var chunk = $scope.users.splice(0, 5);
