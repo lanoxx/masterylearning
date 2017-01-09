@@ -1,5 +1,6 @@
 package org.masterylearning.service;
 
+import org.apache.commons.lang3.RandomStringUtils;
 import org.masterylearning.domain.PasswordResetToken;
 import org.masterylearning.domain.Role;
 import org.masterylearning.domain.User;
@@ -9,13 +10,16 @@ import org.masterylearning.dto.in.CreateUserDto;
 import org.masterylearning.repository.PasswordResetTokenRepository;
 import org.masterylearning.repository.RoleRepository;
 import org.masterylearning.repository.UserRepository;
+import org.masterylearning.web.CreateUsersDto;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.OptionalLong;
 import java.util.Random;
 import java.util.regex.Pattern;
@@ -104,6 +108,40 @@ public class UserService {
         return null;
     }
 
+    public Map<ValidationResult, CreateUserDto> validateCreateUsersDto (CreateUsersDto usersDto) {
+
+        Map<ValidationResult, CreateUserDto> results = new HashMap<> ();
+
+        for (CreateUserDto dto : usersDto.users) {
+            ValidationResult result = new ValidationResult ();
+            result.valid = false;
+
+            if (dto.fullname == null) {
+                result.issue = ValidationIssue.FULLNAME_MISSING;
+                results.put (result, dto);
+                continue;
+            }
+
+            if (dto.email == null || !dto.email.contains ("@")) {
+                result.issue = ValidationIssue.EMAIL_INVALID;
+                results.put (result, dto);
+                continue;
+            } else {
+                User userByEmail = userRepository.getUserByEmail (dto.email);
+                if (userByEmail != null) {
+                    result.issue = ValidationIssue.EMAIL_EXISTS;
+                    results.put (result, dto);
+                    continue;
+                }
+            }
+
+            result.valid = true;
+            results.put (result, dto);
+        }
+
+        return results;
+    }
+
     public ValidationResult validateCreateUserDto (CreateUserDto dto) {
         User existingUser;
         ValidationResult result = new ValidationResult ();
@@ -147,5 +185,9 @@ public class UserService {
 
         result.valid = true;
         return result;
+    }
+
+    public String generateDefaultPassword () {
+        return RandomStringUtils.random (10, true, true);
     }
 }
