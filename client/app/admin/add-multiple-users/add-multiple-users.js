@@ -35,6 +35,7 @@ angular.module ('myapp.admin.addmultipleuser', [])
                 $scope.file = {};
                 $scope.users = [];
 
+                $scope.onCancel();
             };
 
             $scope.confirmCb = function ()
@@ -47,6 +48,8 @@ angular.module ('myapp.admin.addmultipleuser', [])
                         $scope.usersCreated = true;
 
                         $scope.users = result.users;
+
+                        $scope.onConfirm();
                     },
                     function error (result) {
 

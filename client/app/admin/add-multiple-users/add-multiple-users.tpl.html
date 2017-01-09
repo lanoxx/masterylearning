@@ -15,8 +15,6 @@
 
                 <div ng-if="fileSupport">
 
-
-
                     <h2>Notes</h2>
 
                     <p>Import multiple users from a CSV file. The file must have one of the following two
@@ -56,27 +54,20 @@ fullname;email</pre>
                         </label>
                     </div>
 
-
-                    <div ng-if="hasFile && !usersCreated">
-                        <table class="table">
-                            <thead>
-                            <tr>
-                                <th>Name</th>
-                                <th>Email Address</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr ng-repeat="user in users">
-                                <td>{{user.fullname}}</td>
-                                <td>{{user.email}}</td>
-                            </tr>
-                            </tbody>
-                        </table>
-
-
-                        <button ng-click="confirmCb ()" ng-disabled="disabled" class="btn btn-success">Add All</button>
-                        <button ng-click="cancelCb ()" class="btn btn-default">Cancel</button>
-                    </div>
+                    <table ng-if="hasFile && !usersCreated" class="table">
+                        <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Email Address</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="user in users">
+                            <td>{{user.fullname}}</td>
+                            <td>{{user.email}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
 
                     <div ng-if="usersCreated">
 
@@ -113,9 +104,10 @@ fullname;email</pre>
                             imported into the system.
                         </p>
 
-                        <button ng-click="cancelCb()" class="btn btn-default">Close</button>
-
                     </div>
+
+                    <button ng-click="confirmCb ()" ng-disabled="disabled || usersCreated" class="btn btn-success">Add All</button>
+                    <button ng-click="cancelCb ()" class="btn btn-default">{{ usersCreated ? "Close" : "Cancel" }}</button>
 
                 </div>
 
