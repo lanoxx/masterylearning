@@ -1,4 +1,4 @@
-angular.module ('myapp.admin.addmultipleuser', ['angularFileUpload'])
+angular.module ('myapp.admin.addmultipleuser', [])
 
     .directive ('myAppAddMultipleUsers', function ()
     {
