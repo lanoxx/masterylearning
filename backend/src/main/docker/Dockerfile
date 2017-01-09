@@ -1,4 +1,4 @@
-FROM java:8
+FROM openjdk:8
 VOLUME /tmp
 ADD backend-@project.version@.jar app.jar
 RUN bash -c 'touch /app.jar'
