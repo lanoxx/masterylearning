@@ -1,5 +1,6 @@
 package org.masterylearning.web;
 
+import org.masterylearning.domain.PasswordResetToken;
 import org.masterylearning.domain.Role;
 import org.masterylearning.domain.User;
 import org.masterylearning.domain.ValidationIssue;
@@ -12,6 +13,7 @@ import org.masterylearning.dto.in.CreateUserDto;
 import org.masterylearning.dto.out.ChangePasswordOutDto;
 import org.masterylearning.dto.out.CreateUserOutDto;
 import org.masterylearning.dto.out.UserOutDto;
+import org.masterylearning.repository.PasswordResetTokenRepository;
 import org.masterylearning.repository.RoleRepository;
 import org.masterylearning.repository.UserRepository;
 import org.masterylearning.service.RoleService;
@@ -43,6 +45,7 @@ import java.util.stream.Collectors;
 public class UserController {
 
     @Inject UserRepository userRepository;
+    @Inject PasswordResetTokenRepository passwordResetTokenRepository;
     @Inject UserService userService;
     @Inject RoleRepository roleRepository;
     @Inject PasswordEncoder passwordEncoder;
@@ -202,6 +205,7 @@ public class UserController {
         return outDto;
     }
 
+    @Transactional
     @CrossOrigin
     @PreAuthorize (value = "hasRole('ADMIN')")
     @RequestMapping (method = RequestMethod.DELETE, path = "{username}")
@@ -211,6 +215,10 @@ public class UserController {
         User userByUsername = userRepository.getUserByUsername (username);
 
         if (userByUsername != null) {
+            List<PasswordResetToken> passwordResetTokenByUser_username = passwordResetTokenRepository.findPasswordResetTokenByUser_Username (username);
+
+            passwordResetTokenRepository.deleteInBatch (passwordResetTokenByUser_username);
+
             userRepository.delete (userByUsername);
             return true;
         }
