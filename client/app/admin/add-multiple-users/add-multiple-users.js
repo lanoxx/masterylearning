@@ -2,7 +2,7 @@ angular.module ('myapp.admin.addmultipleuser', [])
 
     .directive ('myAppAddMultipleUsers', function ()
     {
-        function AddMultipleUsersController($scope, Role, UserService, FileUploader, $log, $window) {
+        function AddMultipleUsersController($scope, UserService, $log, $window) {
 
             $log.info ("[myapp.admin.addmultipleuser.myAppAddMultipleUser] AddMultipleUserController running");
 
@@ -22,7 +22,6 @@ angular.module ('myapp.admin.addmultipleuser', [])
 
             function init() {
                 $scope.active = true;
-                $scope.uploader = new FileUploader();
             }
 
             $scope.cancelCb = function ()
@@ -94,7 +93,7 @@ angular.module ('myapp.admin.addmultipleuser', [])
                 onCancel: '&',
                 onConfirm: '&'
             },
-            controller: ['$scope', 'Role', 'UserService', 'FileUploader', '$log', '$window', AddMultipleUsersController]
+            controller: ['$scope', 'UserService', '$log', '$window', AddMultipleUsersController]
         }
     })
 
