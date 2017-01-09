@@ -6,17 +6,20 @@ angular.module ('myapp.admin.addmultipleuser', [])
 
             $log.info ("[myapp.admin.addmultipleuser.myAppAddMultipleUser] AddMultipleUserController running");
 
-            $scope.active = false;
-            $scope.disabled = true;
-            $scope.hasFile = false;
-            $scope.usersCreated = false;
-
             $scope.fileSupport = !!$window.FileReader;
 
-            $scope.settings = {};
-            $scope.file = {};
+            var reset = function () {
+                $scope.active = false;
+                $scope.disabled = true;
+                $scope.hasFile = false;
+                $scope.usersCreated = false;
 
-            $scope.users = [];
+                $scope.settings = {};
+                $scope.file = {};
+                $scope.users = [];
+                $scope.createdUsers = [];
+            };
+            reset();
 
             $scope.controller.init = init;
 
@@ -26,14 +29,7 @@ angular.module ('myapp.admin.addmultipleuser', [])
 
             $scope.cancelCb = function ()
             {
-                $scope.active = false;
-                $scope.disabled = true;
-                $scope.hasFile = false;
-                $scope.usersCreated = false;
-
-                $scope.settings = {};
-                $scope.file = {};
-                $scope.users = [];
+                reset();
 
                 $scope.onCancel();
             };
