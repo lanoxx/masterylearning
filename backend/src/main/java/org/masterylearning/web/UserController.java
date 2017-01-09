@@ -173,7 +173,7 @@ public class UserController {
                     SimpleMailMessage email = new SimpleMailMessage();
                     email.setFrom (from);
                     email.setTo(user.email);
-                    email.setSubject("Interactice Lecture Notes Account");
+                    email.setSubject("Interactive Lecture Notes Account");
                     email.setText("Dear " + user.fullname + "\n" +
                                           "\n" +
                                           "We have created an account for our e-learning software for you.\n" +
