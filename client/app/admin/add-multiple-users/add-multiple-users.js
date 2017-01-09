@@ -34,23 +34,39 @@ angular.module ('myapp.admin.addmultipleuser', [])
                 $scope.onCancel();
             };
 
-            $scope.confirmCb = function ()
-            {
-                var createMultipleUsersPromise = UserService.createUsers($scope.users);
+            function submitNextChunk () {
 
-                createMultipleUsersPromise.$promise.then (
+                var chunk = $scope.users.splice(0, 5);
+
+                var createMultipleUsersPromise = UserService.createUsers(chunk);
+
+                var chunkPromise = createMultipleUsersPromise.$promise.then (
                     function success (result) {
 
                         $scope.usersCreated = true;
 
-                        $scope.users = result.users;
+                        [].push.apply($scope.createdUsers, result.users);
 
-                        $scope.onConfirm();
+                        return $scope.users.length > 0;
                     },
                     function error (result) {
 
                     }
-                )
+                );
+
+                chunkPromise.then (function (moreUsers)
+                {
+                    if (moreUsers) {
+                        submitNextChunk();
+                    }
+                });
+            }
+
+            $scope.confirmCb = function ()
+            {
+                $scope.createdUsers = [];
+
+                submitNextChunk();
             };
 
             $scope.dataLoadedCb = function ()

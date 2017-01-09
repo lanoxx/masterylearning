@@ -83,7 +83,7 @@ fullname;email</pre>
                             </tr>
                             </thead>
                             <tbody>
-                            <tr ng-repeat="user in users" ng-class="{ 'danger': !user.success, 'success': user.success }">
+                            <tr ng-repeat="user in createdUsers" ng-class="{ 'danger': !user.success, 'success': user.success }">
                                 <td>{{user.userId}}</td>
                                 <td>{{user.fullname}}</td>
                                 <td>{{user.email}}</td>
