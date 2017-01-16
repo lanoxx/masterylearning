@@ -1,3 +1,11 @@
+# Documentation
+
+This folder contains the UML models for our data model. They can be opened
+with [Umlet](http://www.umlet.com) (a free and open source UML editor).
+
+The [Postman subfolder](Postman/README.md) contains the REST endpoint configurations
+for Postman which can be used to manually access the REST endpoints of the backend.
+
 # Continuous Integration
 
 In order to setup a continuous integration environment create the following
