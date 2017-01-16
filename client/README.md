@@ -1,32 +1,28 @@
-# Notes
+# Client Documentation
 
-I originally used the [AsciiMath][1] module from MathJax, but due to the asynchronous nature of MathJax
-it was difficult to integrate it properly into the AngularJS $compile and $digest cycle. So I decided to
-switch to [KaTex][2]. A comparison of the two can be found [on intmath.com][3].
+This is the client module which contains the code for the website that is served to our end users.
+Some might also call this the frontend of our application.
 
-[1]: http://asciimath.org/
-[2]: https://github.com/Khan/KaTeX/blob/master/README.md
-[3]: http://www.intmath.com/cg5/katex-mathjax-comparison.php?processor=MathJax
+## Deployment
 
-I still plan to enhance the [logging][4] in my application.
+When this module is built with the install phase of Maven, then 
+it will create a Docker image named `masterylearning/client`.
 
-[4]: http://solutionoptimist.com/2013/10/07/enhance-angularjs-logging-using-decorators/
-
-For rendering recursive data structures I need to take a look at [angular-tree][5]
-
-[5]: https://github.com/dotJEM/angular-tree
-
-Evaluate [ui.router.extras][6] by Christopher Thielen
-
-[6]: https://github.com/christopherthielen/ui-router-extras
+This Docker image is based on the **nginx** web server and include
+ the application files and is configured to work as a
+ reverse-proxy to forward API request to the backend module.
 
 ## Starting the web server:
 
-To start a local development webserver with proxying use:
+During development you will need start a development web
+server that can also work as a revese-proxy, we use
+[ws](https://www.npmjs.com/package/local-web-server) for this.
+
+To start a local development web server with proxying use:
 
     ws -p 8082 -r '/api/*->http://localhost:8080/$1' -d app
 
-You should `cd` into the `client/` folder first.
+Make sure you `cd` into the `client/` folder first.
 
 # angular-seed — the seed for AngularJS apps
 
@@ -229,93 +225,6 @@ bower update
 This will find the latest versions that match the version ranges specified in the `bower.json` file.
 
 
-## Loading Angular Asynchronously
-
-The angular-seed project supports loading the framework and application scripts asynchronously.  The
-special `index-async.html` is designed to support this style of loading.  For it to work you must
-inject a piece of Angular JavaScript into the HTML page.  The project has a predefined script to help
-do this.
-
-```
-npm run update-index-async
-```
-
-This will copy the contents of the `angular-loader.js` library file into the `index-async.html` page.
-You can run this every time you update the version of Angular that you are using.
-
-
-## Serving the Application Files
-
-While angular is client-side-only technology and it's possible to create angular webapps that
-don't require a backend server at all, we recommend serving the project files using a local
-webserver during development to avoid issues with security restrictions (sandbox) in browsers. The
-sandbox implementation varies between browsers, but quite often prevents things like cookies, xhr,
-etc to function properly when an html page is opened via `file://` scheme instead of `http://`.
-
-
-### Running the App during Development
-
-The angular-seed project comes preconfigured with a local development webserver.  It is a node.js
-tool called [http-server][http-server].  You can start this webserver with `npm start` but you may choose to
-install the tool globally:
-
-```
-sudo npm install -g http-server
-```
-
-Then you can start your own development web server to serve static files from a folder by
-running:
-
-```
-http-server -a localhost -p 8000
-```
-
-Alternatively, you can choose to configure your own webserver, such as apache or nginx. Just
-configure your server to serve the files under the `app/` directory.
-
-
-### Running the App in Production
-
-This really depends on how complex your app is and the overall infrastructure of your system, but
-the general rule is that all you need in production are all the files under the `app/` directory.
-Everything else should be omitted.
-
-Angular apps are really just a bunch of static html, css and js files that just need to be hosted
-somewhere they can be accessed by browsers.
-
-If your Angular app is talking to the backend server via xhr or other means, you need to figure
-out what is the best way to host the static files to comply with the same origin policy if
-applicable. Usually this is done by hosting the files by the backend server or through
-reverse-proxying the backend server(s) and webserver(s).
-
-
-## Continuous Integration
-
-### Travis CI
-
-[Travis CI][travis] is a continuous integration service, which can monitor GitHub for new commits
-to your repository and execute scripts such as building the app or running tests. The angular-seed
-project contains a Travis configuration file, `.travis.yml`, which will cause Travis to run your
-tests when you push to GitHub.
-
-You will need to enable the integration between Travis and GitHub. See the Travis website for more
-instruction on how to do this.
-
-### CloudBees
-
-CloudBees have provided a CI/deployment setup:
-
-<a href="https://grandcentral.cloudbees.com/?CB_clickstart=https://raw.github.com/CloudBees-community/angular-js-clickstart/master/clickstart.json">
-<img src="https://d3ko533tu1ozfq.cloudfront.net/clickstart/deployInstantly.png"/></a>
-
-If you run this, you will get a cloned version of this repo to start working on in a private git repo,
-along with a CI service (in Jenkins) hosted that will run unit and end to end tests in both Firefox and Chrome.
-
-
-## Contact
-
-For more information on AngularJS please check out http://angularjs.org/
-
 [git]: http://git-scm.com/
 [bower]: http://bower.io
 [npm]: https://www.npmjs.org/
@@ -325,3 +234,21 @@ For more information on AngularJS please check out http://angularjs.org/
 [karma]: http://karma-runner.github.io
 [travis]: https://travis-ci.org/
 [http-server]: https://github.com/nodeapps/http-server
+
+# Some Additional Notes
+
+I originally used the [AsciiMath][1] module from MathJax, but due to the asynchronous nature of MathJax
+it was difficult to integrate it properly into the AngularJS $compile and $digest cycle. So I decided to
+switch to [KaTex][2]. A comparison of the two can be found [on intmath.com][3].
+
+[1]: http://asciimath.org/
+[2]: https://github.com/Khan/KaTeX/blob/master/README.md
+[3]: http://www.intmath.com/cg5/katex-mathjax-comparison.php?processor=MathJax
+
+I still plan to enhance the [logging][4] in my application.
+
+[4]: http://solutionoptimist.com/2013/10/07/enhance-angularjs-logging-using-decorators/
+
+Evaluate [ui.router.extras][6] by Christopher Thielen
+
+[6]: https://github.com/christopherthielen/ui-router-extras
