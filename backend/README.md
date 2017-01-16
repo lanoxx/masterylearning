@@ -1,4 +1,4 @@
-# About
+# Backend Documentation
 
 This is the backend of this e-learning platform. It is a web-based
 Spring Boot application and its main functionality is to provide
@@ -22,19 +22,23 @@ for data serialization.
 This application is containerized for docker with the
 `docker-maven-plugin`.
 
-# Configuration and preparation
+# Configuration and Preparation
 
-The default `datasource` configuration to find the mysql database
-is stored in the `application.properties` file and can be overridden
-by using the `-D` option when starting the executable `jar` file.
+The default `datasource` configuration for the MySQL
+database is stored in the 
+[application.properties](src/main/resources/application.properties)
+file and can be overridden by using the `-D` option when starting
+the executable `jar` file.
 
 In order to run this application a mysql database must be installed
-and the user configured by the `datasource` configuration must have
+and the user configured in the `datasource` configuration must have
 access to an existing database named `masterylearning`.
 
-I use a docker mysql instance to run the database but it is also
-possible to install mysql directly on the system. To create and
-run a new docker container with mysql use the following command:
+I use a docker `mysql` instance to run the database, alternatively it is
+possible to install MySQL directly on your the system. 
+
+To create and run a new docker container with a MySQL database 
+use the following command:
 
     docker network create mlnet
 
@@ -48,32 +52,38 @@ should overwrite the password datasource option when starting the
 backend. The above command also creates a default database named
 `masterylearning`.
 
-# Building and Deployment
+# Start and Deployment
 
-To build this application you can run
+After you have [built this application](../README.md#testing-building-installing),
+there are two ways to run this application in a production environment:
 
-    mvn package docker:build
+ 1. Directly execute the executable jar file found in `target/` which is 
+    named `backend-<version>.jar`.
+ 2. Use docker and start the docker container named `masterylearning/backend`. 
 
-This will install a docker image named `masterylearning/main.backend`
-in your local docker registry. Additionally an executable jar file
-has been build by maven and put in the `target/` directory.
+### Run Executable `jar`-File
 
-You can either run the executable `jar`-file directly with the following
-command
+To run the executable `jar`-file directly use the following
+command:
 
     java -jar target/main.backend-0.1.jar
 
-or
+You can define additional properties with the `-D` option. Use this
+ if you need to override some of the properties defined in
+ [application.properties](src/main/resources/application.properties).
+ For example to override the *data source URL* use:
 
-    java -jar target/main.backend-0.1.jar -Dspring.datasource.foo=bar
+    java -jar target/main.backend-0.1.jar -Dspring.datasource.url=<some url>
 
-if you need to override any of the default values in the
-`application.properties` as explained above under configuration.
-Replace `foo` and `bar` with the respective property name and value.
+See [Configuration and preparation](#configuration-and-preparation) 
+for configuration details for the data source.
+
+### Start a Docker Container
 
 Alternatively you can create and start a new docker container:
 
     docker create --name masterylearning-backend --net mlnet --net-alias=backend -p 8080:8080 <imageId>
+    docker start masterylearning-backend
 
 This has the following effect, the name for our new container is
 `backend`, it is linked with an existing mysql container named `masterylearning-mysql`,
@@ -84,5 +94,5 @@ You can check if everything works by running
 
     docker logs <containerId>
 
-The rest endpoints should now be available on the host through
+The REST endpoints should now be available on the host through
 `http://localhost:8080`.
