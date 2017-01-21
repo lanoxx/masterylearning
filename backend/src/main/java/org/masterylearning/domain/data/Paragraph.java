@@ -18,6 +18,7 @@ public class Paragraph extends EntryData {
 
     public Paragraph () {
         this.type = "paragraph";
+        this.paragraphType = "text";
     }
 
     /* Supported modes are 'math' and 'text'. This defines if the text field is to be rendered
