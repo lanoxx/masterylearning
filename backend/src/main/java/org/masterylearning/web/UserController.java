@@ -1,5 +1,7 @@
 package org.masterylearning.web;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.masterylearning.domain.PasswordResetToken;
 import org.masterylearning.domain.Role;
 import org.masterylearning.domain.User;
@@ -19,11 +21,11 @@ import org.masterylearning.repository.UserRepository;
 import org.masterylearning.service.RoleService;
 import org.masterylearning.service.UserService;
 import org.springframework.core.env.Environment;
-import org.springframework.mail.MailSender;
-import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.MailException;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -32,8 +34,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.inject.Inject;
-import javax.servlet.http.HttpServletRequest;
-import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -44,6 +44,8 @@ import java.util.stream.Collectors;
 @RequestMapping (path = "users")
 public class UserController {
 
+    Logger log = LogManager.getLogger (UserController.class);
+
     @Inject UserRepository userRepository;
     @Inject PasswordResetTokenRepository passwordResetTokenRepository;
     @Inject UserService userService;
@@ -52,9 +54,6 @@ public class UserController {
     @Inject RoleService roleService;
 
     @Inject Environment environment;
-
-    @SuppressWarnings("SpringJavaAutowiringInspection")
-    @Inject MailSender mailSender;
 
     @CrossOrigin
     @RequestMapping (method = RequestMethod.GET, path = "/current")
@@ -129,7 +128,7 @@ public class UserController {
     @PreAuthorize (value = "hasRole ('ADMIN')")
     @RequestMapping (method = RequestMethod.POST, path = "import")
     public CreateUsersOutDto
-    createUsers (HttpServletRequest request, @RequestBody CreateUsersDto dto) {
+    createUsers (@RequestBody CreateUsersDto dto) {
         CreateUsersOutDto outDto = new CreateUsersOutDto ();
 
         Map<ValidationResult, CreateUserDto> validationResultMap = userService.validateCreateUsersDto (dto);
@@ -153,51 +152,40 @@ public class UserController {
                     outDto.users.add (userOutDto);
                 } else {
 
-                    createUserDto.password = userService.generateDefaultPassword ();
-
-                    createUserDto.username = userService.generateDefaultUsername ();
-
-                    if (createUserDto.roles.size () == 0) {
-                        createUserDto.roles.add ("STUDENT");
-                    }
-
-                    User user = userService.createUser (createUserDto);
-
                     CreateUserOutDto userOutDto = new CreateUserOutDto ();
+                    userOutDto.email = createUserDto.email;
+                    userOutDto.fullname = createUserDto.fullname;
 
-                    userOutDto.userId = user.id;
-                    userOutDto.username = user.username;
-                    userOutDto.fullname = user.fullname;
-                    userOutDto.email = user.email;
-                    userOutDto.roles = user.getRoles ().stream ().map (role -> role.name).collect (Collectors.toList ());
+                    try {
 
-                    String from = environment.getProperty ("email.from");
+                        String from = environment.getProperty ("email.from");
 
-                    SimpleMailMessage email = new SimpleMailMessage();
-                    email.setFrom (from);
-                    email.setTo(user.email);
-                    email.setSubject("Interactive Lecture Notes Account");
-                    email.setText("Dear " + user.fullname + "\n" +
-                                          "\n" +
-                                          "We have created an account for our e-learning software for you.\n" +
-                                          "Below are the details to login to the system:\n" +
-                                          "Email: " + user.email + "\n" +
-                                          "Password: " + createUserDto.password + "\n" +
-                                          "\n" +
-                                          "Please use the following link to login:\n" +
-                                          "https://elearning.forsyte.at\n" +
-                                          "\n" +
-                                          "Thank you for your interest in our e-learning system.\n" +
-                                          "\n" +
-                                          "Sebastian Geiger,\n" +
-                                          "Andreas Holzer,\n" +
-                                          "Forsyte ");
+                        User user = userService.importUser (createUserDto, from);
 
-                    mailSender.send (email);
+                        userOutDto.userId = user.id;
+                        userOutDto.username = user.username;
+                        userOutDto.roles = user.getRoles ().stream ().map (role -> role.name).collect (Collectors.toList ());
 
-                    userOutDto.success = true;
+                        userOutDto.success = true;
 
-                    outDto.users.add (userOutDto);
+                    } catch (MailException e) {
+
+                        userOutDto.success = false;
+                        userOutDto.message = "Could not create user because sending mail to user failed.";
+
+                        outDto.users.add (userOutDto);
+
+                        return outDto;
+
+                    } catch (Exception e) {
+
+                        userOutDto.success = false;
+                        userOutDto.message = "An unknown error occurred while importing this user.";
+
+                        outDto.users.add (userOutDto);
+
+                        return outDto;
+                    }
                 }
             }
         }

@@ -1,6 +1,8 @@
 package org.masterylearning.service;
 
 import org.apache.commons.lang3.RandomStringUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.masterylearning.domain.PasswordResetToken;
 import org.masterylearning.domain.Role;
 import org.masterylearning.domain.User;
@@ -11,6 +13,9 @@ import org.masterylearning.repository.PasswordResetTokenRepository;
 import org.masterylearning.repository.RoleRepository;
 import org.masterylearning.repository.UserRepository;
 import org.masterylearning.web.CreateUsersDto;
+import org.springframework.mail.MailException;
+import org.springframework.mail.MailSender;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,10 +35,15 @@ public class UserService {
 
     public static final String USERNAME_REGEX = "[a-z0-9](-?[a-z0-9])*";
 
+    private final Logger log = LogManager.getLogger (UserService.class);
+
     @Inject PasswordEncoder passwordEncoder;
     @Inject UserRepository userRepository;
     @Inject RoleRepository roleRepository;
     @Inject PasswordResetTokenRepository passwordResetTokenRepository;
+
+    @SuppressWarnings("SpringJavaAutowiringInspection")
+    @Inject MailSender mailSender;
 
     @Transactional
     public User createUser (String fullname, String email, String username, String password) {
@@ -189,5 +199,58 @@ public class UserService {
 
     public String generateDefaultPassword () {
         return RandomStringUtils.random (10, true, true);
+    }
+
+    @Transactional
+    public User importUser (CreateUserDto createUserDto, String from) {
+
+        createUserDto.password = this.generateDefaultPassword ();
+
+        createUserDto.username = this.generateDefaultUsername ();
+
+        if (createUserDto.roles.size () == 0) {
+            createUserDto.roles.add ("STUDENT");
+        }
+
+        User user = this.createUser (createUserDto);
+
+        try {
+            SimpleMailMessage email = getAccountCreatedMail (createUserDto, user, from);
+
+            mailSender.send (email);
+
+
+            log.debug ("Account creation mail successfully sent to: " + user.email);
+
+        } catch (MailException e) {
+            log.error ("An error occurred while sending the mail to: " + user.email);
+
+            throw e;
+        }
+
+        return user;
+    }
+
+    private SimpleMailMessage getAccountCreatedMail (CreateUserDto createUserDto, User user, String from) {
+        SimpleMailMessage email = new SimpleMailMessage ();
+        email.setFrom (from);
+        email.setTo (user.email);
+        email.setSubject ("Interactive Lecture Notes Account");
+        email.setText ("Dear " + user.fullname + "\n" +
+                               "\n" +
+                               "We have created an account for our e-learning software for you.\n" +
+                               "Below are the details to login to the system:\n" +
+                               "Email: " + user.email + "\n" +
+                               "Password: " + createUserDto.password + "\n" +
+                               "\n" +
+                               "Please use the following link to login:\n" +
+                               "https://elearning.forsyte.at\n" +
+                               "\n" +
+                               "Thank you for your interest in our e-learning system.\n" +
+                               "\n" +
+                               "Sebastian Geiger,\n" +
+                               "Andreas Holzer,\n" +
+                               "Forsyte ");
+        return email;
     }
 }
