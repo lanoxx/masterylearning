@@ -36,7 +36,10 @@ angular.module ('myapp.admin.addmultipleuser', [])
 
             $scope.closeCb = function ()
             {
-                var createdUsers = $scope.createdUsers;
+                var createdUsers = $scope.createdUsers.filter(function (user)
+                {
+                    return user.success;
+                });
 
                 reset ();
 
