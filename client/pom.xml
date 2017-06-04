@@ -43,20 +43,7 @@
             </goals>
           </execution>
           <execution>
-            <id>exec-bower-install</id>
-            <phase>generate-sources</phase>
-            <configuration>
-              <executable>bower</executable>
-              <arguments>
-                <argument>install</argument>
-              </arguments>
-            </configuration>
-            <goals>
-              <goal>exec</goal>
-            </goals>
-          </execution>
-          <execution>
-            <id>exec-grunt</id>
+            <id>exec-npm-production</id>
             <phase>generate-resources</phase>
             <configuration>
               <executable>npm</executable>
