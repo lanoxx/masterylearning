@@ -26,6 +26,10 @@ public class CourseService {
         validationDto.validate (course.title != null, "Course title must not be empty.");
         validationDto.validate (course.period != null, "Course period must not be empty.");
         validationDto.validate (course.description != null, "Course description must not be empty.");
+        if (course.description != null) {
+            validationDto.validate (course.description.length () <= 3000,
+                                    "Course description length must not exceed 3000 characters.");
+        }
 
         for (Entry child : course.children) {
             // delegate validation to entry
