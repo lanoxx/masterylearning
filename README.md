@@ -68,7 +68,7 @@ steps assume that you have installed the `aws` command line tool.
 
  1. You need to use the `aws` command to get a login command for docker:
 
-        aws erc get-login
+        aws ecr get-login
 
     This will output a `docker login` command with a very long password, that you can use to login
     with docker.
