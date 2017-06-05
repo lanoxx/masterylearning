@@ -1,4 +1,4 @@
-angular.module('myapp.teacher', ['ui.router', 'myapp.services.course', 'myapp.services.statistic'])
+angular.module('myapp.teacher', ['ui.router', 'ngSanitize', 'myapp.services.course', 'myapp.services.statistic'])
 
     .config(['$stateProvider', 'RoleProvider', function ($stateProvider, RoleProvider)
     {
@@ -25,7 +25,8 @@ angular.module('myapp.teacher', ['ui.router', 'myapp.services.course', 'myapp.se
     }
     ])
 
-    .controller('TeacherCtrl', ['$scope', 'courses', 'CourseService', 'StatisticService', '$log', function ($scope, courses, CourseService, StatisticService, $log)
+    .controller('TeacherCtrl', ['$scope', 'courses', 'CourseService', 'StatisticService', '$sce', '$log',
+        function ($scope, courses, CourseService, StatisticService, $sce, $log)
     {
         $scope.courses = courses;
         $scope.statistics = null;
@@ -37,6 +38,14 @@ angular.module('myapp.teacher', ['ui.router', 'myapp.services.course', 'myapp.se
         $scope.cancel_cb = cancel_cb;
 
         $scope.loadStatistics = loadStatistics;
+        $scope.trust = trust;
+
+        $scope.truncateAndTrust = function (string, length)
+        {
+
+            var clippedString = text_clipper_clipHtmlclip (string, length);
+            return trust(clippedString);
+        };
 
         function loadStatistics ($index)
         {
@@ -80,6 +89,14 @@ angular.module('myapp.teacher', ['ui.router', 'myapp.services.course', 'myapp.se
 
         function cancel_cb () {
             $scope.courseEditMode = false;
+        }
+
+        function trust (value)
+        {
+            if (value)
+                return $sce.trustAsHtml(value).toString();
+
+            return null;
         }
     }])
 

@@ -15,7 +15,7 @@
                 <th>{{$index + 1}}</th>
                 <td>{{course.title}}</td>
                 <td>{{course.period}}</td>
-                <td>{{course.description | limitTo : 200 }}</td>
+                <td ng-bind-html="truncateAndTrust(course.description, 200)"></td>
                 <td>
                     <a ng-click="edit_cb ($index)" href="">Edit</a><span> | </span>
                     <a ng-click="loadStatistics ($index)" href="">Statistics</a>
