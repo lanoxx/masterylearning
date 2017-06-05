@@ -3,13 +3,13 @@
   <modelVersion>4.0.0</modelVersion>
 
   <artifactId>backend</artifactId>
-  <version>0.6.0</version>
+  <version>0.6.1</version>
   <packaging>jar</packaging>
 
   <parent>
     <groupId>org.masterylearning</groupId>
     <artifactId>main</artifactId>
-    <version>0.6.0</version>
+    <version>0.6.1</version>
   </parent>
 
   <name>backend</name>
