@@ -30,7 +30,23 @@ angular.module ('myapp.admin', [
     {
         $scope.disabled = false;
 
+        $scope.currentPage = 1;
+        $scope.totalItems = users.length;
         $scope.users = users;
+
+        $scope.getUserView = function ()
+        {
+            return users.slice (($scope.currentPage - 1) * 10, $scope.currentPage * 10);
+        };
+
+        /**
+         * update totalItems when the promise has been resolved
+         * to ensure that the pagination widget renders correctly.
+         */
+        users.$promise.then (function (users)
+                             {
+                                 $scope.totalItems = users.length;
+                             });
 
         //
         // EDIT USER

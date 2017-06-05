@@ -10,32 +10,34 @@
 
             <table class="table">
                 <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>User Information</th>
-                        <th>Actions</th>
-                    </tr>
+                <tr>
+                    <th>#</th>
+                    <th>User Information</th>
+                    <th>Actions</th>
+                </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="user in users">
-                        <td>
-                            {{ $index + 1}}
-                        </td>
-                        <td>
-                            <strong>Full name:</strong> {{ user.fullname }}
-                            <strong>-</strong>
-                            <strong>User name:</strong> {{ user.username }}
-                            <strong>-</strong>
-                            <strong>Email:</strong> {{ user.email }}<br>
-                            <strong>Roles:</strong> <span ng-repeat-start="role in user.roles"></span><span class="label label-default">{{ role }}</span> <span ng-repeat-end></span>
-                        </td>
-                        <td>
-                            <button ng-click="editUserCb(user)" ng-disabled="disabled" class="btn btn-default">Edit</button>
-                            <button ng-click="deleteUserCb(user)" ng-disabled="disabled" class="btn btn-default">Delete</button>
-                        </td>
-                    </tr>
+                <tr ng-repeat="user in getUserView()">
+                    <td>
+                        {{ $index + 1}}
+                    </td>
+                    <td>
+                        <strong>Full name:</strong> {{ user.fullname }}
+                        <strong>-</strong>
+                        <strong>User name:</strong> {{ user.username }}
+                        <strong>-</strong>
+                        <strong>Email:</strong> {{ user.email }}<br>
+                        <strong>Roles:</strong> <span ng-repeat-start="role in user.roles"></span><span class="label label-default">{{ role }}</span> <span ng-repeat-end></span>
+                    </td>
+                    <td>
+                        <button ng-click="editUserCb(user)" ng-disabled="disabled" class="btn btn-default">Edit</button>
+                        <button ng-click="deleteUserCb(user)" ng-disabled="disabled" class="btn btn-default">Delete</button>
+                    </td>
+                </tr>
                 </tbody>
             </table>
+
+            <ul uib-pagination ng-disabled="disabled" total-items="totalItems" ng-model="currentPage" ng-change="pageChanged()"></ul>
 
             <my-app-edit-user controller="editUserController"
                               on-cancel="editUserCancelCb()"
