@@ -7,7 +7,7 @@
                 </div>
 
                 <h1>{{course.title}} {{course.period}}</h1>
-                <p>{{course.description}}</p>
+                <p ng-bind-html="trust (entry.text)"></p>
 
                 <div ng-repeat="entry in entries">
 

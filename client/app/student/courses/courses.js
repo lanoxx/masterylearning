@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('myApp.student.courses', ['ui.router', 'myapp.services.history'])
+angular.module('myApp.student.courses', ['ui.router', 'ngSanitize', 'myapp.services.history'])
 
     .config (['$stateProvider', 'RoleProvider', function ($stateProvider, RoleProvider) {
         $stateProvider.state ('home.student.courses', {
@@ -25,7 +25,8 @@ angular.module('myApp.student.courses', ['ui.router', 'myapp.services.history'])
         });
     }])
 
-    .controller('CourseController', ['$scope', 'course_id', 'courseList', 'entries', 'UserService', '$log', function ($scope, course_id, courseList, entries, UserService, $log) {
+    .controller('CourseController', ['$scope', 'course_id', 'courseList', 'entries', 'UserService', '$sce', '$log',
+        function ($scope, course_id, courseList, entries, UserService, $sce, $log) {
 
         if (courseList.$resolved) {
             courseList.forEach (function (course)
@@ -35,6 +36,14 @@ angular.module('myApp.student.courses', ['ui.router', 'myapp.services.history'])
                 }
             })
         }
+
+        $scope.trust = function (value)
+        {
+            if (value)
+                return $sce.trustAsHtml(value).toString();
+
+            return null;
+        };
 
         // TODO: depending on the mode we need two strategies for enumerating the entries:
         //       For structure mode we enumerate until units
