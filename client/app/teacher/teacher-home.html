@@ -51,26 +51,40 @@
 
         <div ng-if="statistics !== null">
 
-            <h2>Statistics for Course {{ statistics.courseId }}</h2>
+            <h1>Statistics for <br> "{{ courseTitle }} {{ coursePeriod }}"</h1>
 
-            <table class="table">
+            <div>
+                <h2>Histogramm</h2>
+                <div>
+                    <my-app-histogram class="histogram" controller="histogramController"></my-app-histogram>
+                </div>
+            </div>
 
-                <tr>
-                    <th>#</th>
-                    <th>Fullname</th>
-                    <th class="text-right">Entries read</th>
-                    <th class="text-right">Progress (%)</th>
-                </tr>
+            <div>
 
-                <tr ng-repeat="historyEntry in statistics.historyEntriesPerUsers">
-                    <td>{{ $index + 1 }}</td>
-                    <td>{{ historyEntry.fullname }}</td>
-                    <td class="text-right">{{ historyEntry.historyCount + " / " + statistics.entryCount }}</td>
-                    <td class="text-right">{{ (historyEntry.historyCount / statistics.entryCount) | percent : 1 }}</td>
-                </tr>
+                <h2>Statistics for Course {{ statistics.courseId }}</h2>
 
-            </table>
+                <table class="table">
+
+                    <tr>
+                        <th>#</th>
+                        <th>Fullname</th>
+                        <th class="text-right">Entries read</th>
+                        <th class="text-right">Progress (%)</th>
+                    </tr>
+
+                    <tr ng-repeat="historyEntry in statistics.historyEntriesPerUsers">
+                        <td>{{ $index + 1 }}</td>
+                        <td>{{ historyEntry.fullname }}</td>
+                        <td class="text-right">{{ historyEntry.historyCount + " / " + statistics.entryCount }}</td>
+                        <td class="text-right">{{ (historyEntry.historyCount / statistics.entryCount) | percent : 1 }}</td>
+                    </tr>
+
+                </table>
+
+            </div>
 
         </div>
+
     </ui-view>
 </div>

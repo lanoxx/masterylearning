@@ -105,3 +105,52 @@ h6:hover > .anchor-link,
     cursor: inherit;
     display: block;
 }
+
+/* Histogram Styles Start */
+ .histogram svg {
+     font: 10px sans-serif;
+ }
+
+.histogram .y.axis path {
+    display: none;
+}
+
+.histogram .y.axis line {
+    stroke: #fff;
+    stroke-opacity: .2;
+    shape-rendering: crispEdges;
+}
+
+.histogram .y.axis .zero line {
+    stroke: #000;
+    stroke-opacity: 1;
+}
+
+.histogram .title {
+    font: 30px Helvetica Neue;
+    fill: #666;
+}
+
+.histogram .percentage,
+.histogram .count {
+    text-anchor: middle;
+}
+
+.histogram .percentageBar {
+    fill: #fff;
+}
+
+.histogram rect {
+    fill-opacity: .6;
+    fill: #e377c2;
+}
+
+.histogram rect:first-child {
+    fill: #1f77b4;
+}
+
+.histogram .axisLabel {
+    font-size: 1.3em;
+    font-weight: bold;
+}
+/* Histogram Styles End */

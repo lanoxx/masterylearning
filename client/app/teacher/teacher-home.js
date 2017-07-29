@@ -1,4 +1,4 @@
-angular.module('myapp.teacher', ['ui.router', 'ngSanitize', 'myapp.services.course', 'myapp.services.statistic'])
+angular.module('myapp.teacher', ['ui.router', 'ngSanitize', 'myapp.services.course', 'myapp.services.statistic', 'myapp.teacher.histogram'])
 
     .config(['$stateProvider', 'RoleProvider', function ($stateProvider, RoleProvider)
     {
@@ -30,6 +30,7 @@ angular.module('myapp.teacher', ['ui.router', 'ngSanitize', 'myapp.services.cour
     {
         $scope.courses = courses;
         $scope.statistics = null;
+        $scope.histogramController = {};
 
         $scope.courseEditMode = false;
 
@@ -50,6 +51,13 @@ angular.module('myapp.teacher', ['ui.router', 'ngSanitize', 'myapp.services.cour
         function loadStatistics ($index)
         {
             $scope.statistics = StatisticService.getStatistics ().get ({courseId: $scope.courses[$index].id });
+
+            $scope.statistics.$promise.then (function (statistics) {
+                                        $scope.histogramController.init (statistics);
+                                    });
+
+            $scope.courseTitle = $scope.courses[$index].title;
+            $scope.coursePeriod = $scope.courses[$index].period;
         }
 
         function edit_cb ($index)
