@@ -47,7 +47,7 @@
                         </label>
                     </div>
 
-                    <div class="form-group has-feedback" ng-class="{ 'has-error': errors['addUser']}">
+                    <div ng-if="errors['addUser']" class="form-group has-feedback" ng-class="{ 'has-error': errors['addUser']}">
                         Adding the user failed.
                     </div>
 
