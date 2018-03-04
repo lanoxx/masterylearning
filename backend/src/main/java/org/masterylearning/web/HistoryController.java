@@ -37,6 +37,7 @@ import javax.inject.Inject;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Stack;
 import java.util.function.Function;
@@ -172,7 +173,6 @@ public class HistoryController {
         Entry root;
         CourseHistory courseHistory;
         List<EntryHistory> entryHistoryList;
-        EnumerationOutDto dto = new EnumerationOutDto ();
 
         Course course = courseRepository.findOne (courseId);
 
@@ -202,7 +202,7 @@ public class HistoryController {
                                                               return false;
                                                           })
                                                           .findFirst ();
-                return first.isPresent () ? first.get () : true;
+                return first.orElse (true);
             }
             return false;
         };
@@ -230,8 +230,10 @@ public class HistoryController {
          */
         Stack<Long> stack = new Stack<> ();
         inDto.entryIds.stream ()
-                      .filter (id -> id != null) // null values are invalid and need to be filtered out
+                      .filter (Objects::nonNull) // null values are invalid and need to be filtered out
                       .forEach (stack::push);
+
+        EnumerationOutDto dto = new EnumerationOutDto ();
 
         while (stack.size () > 0) {
             root = courseService.find (course, stack.pop ());
@@ -247,7 +249,7 @@ public class HistoryController {
 
             dto.entries.addAll (entryDataOutDtoList);
 
-            dto.scrollLocation = getLastSeenEntryId (dto.entries);
+            dto.scrollLocation = this.getLastSeenEntryId (dto.entries);
 
             // we blocked on some entry, so we need to compute the
             // next enumeration id and break out from the loop
