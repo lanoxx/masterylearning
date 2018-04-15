@@ -37,7 +37,9 @@
                 </tbody>
             </table>
 
-            <ul uib-pagination ng-disabled="disabled" total-items="totalItems" ng-model="currentPage" ng-change="pageChanged()"></ul>
+            <div class="text-center">
+                <ul uib-pagination ng-disabled="disabled" total-items="totalItems" ng-model="currentPage" ng-change="pageChanged()"></ul>
+            </div>
 
             <my-app-edit-user controller="editUserController"
                               on-cancel="editUserCancelCb()"
