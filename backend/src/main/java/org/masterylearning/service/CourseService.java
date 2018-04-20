@@ -39,8 +39,12 @@ public class CourseService {
         return validationDto;
     }
 
-    public List<Entry> getTableOfContents (Course course) {
-        List<Entry> entries = course.getChildren ().stream ().filter (child -> "section".equals (child.data.type)).collect (Collectors.toList ());
+    public List<Entry> getTableOfContents (Course course)
+    {
+        List<Entry> entries = course.getChildren ()
+                                    .stream ()
+                                    .filter (child -> "section".equals (child.data.type))
+                                    .collect (Collectors.toList ());
 
         return entries;
     }
