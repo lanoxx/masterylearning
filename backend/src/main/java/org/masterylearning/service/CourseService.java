@@ -69,27 +69,31 @@ public class CourseService {
 
         if (entryId.equals (entry.id))
             return entry;
-        else {
-            Entry result;
-            for (Entry child : entry.getChildren ()) {
-                if (child.data instanceof Exercise) {
-                    Exercise exercise = (Exercise) child.data;
-                    if (exercise.correct != null) {
-                        result = findRecursive (exercise.correct, entryId);
-                        if (result != null)
-                            return result;
-                    }
 
-                    if (exercise.incorrect != null) {
-                        result = findRecursive (exercise.incorrect, entryId);
-                        if (result != null)
-                            return result;
-                    }
+        Entry result;
+
+        for (Entry child : entry.getChildren ())
+        {
+            if (child.data instanceof Exercise) {
+                Exercise exercise = (Exercise) child.data;
+
+                if (exercise.correct != null) {
+                    result = findRecursive (exercise.correct, entryId);
+                    if (result != null)
+                        return result;
                 }
-                result = findRecursive (child, entryId);
-                if (result != null) {
-                    return result;
+
+                if (exercise.incorrect != null) {
+                    result = findRecursive (exercise.incorrect, entryId);
+                    if (result != null)
+                        return result;
                 }
+            }
+
+            result = findRecursive (child, entryId);
+
+            if (result != null) {
+                return result;
             }
         }
 
