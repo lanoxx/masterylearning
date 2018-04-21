@@ -7,6 +7,27 @@ angular.module ('myapp.services.course', ['ngResource', 'myapp.config'])
     function CourseService ($resource) {
         "use strict";
 
+        this.getCourse = function(courseId)
+        {
+            if (typeof courseId === "string")
+            {
+                courseId = parseInt (courseId, 10);
+            }
+
+            var filterCoursesByCourseId = function (courses) {
+                return courses.find (function (course) {
+                    if (course.id === courseId) {
+                        return course;
+                    }
+                })
+            };
+
+            return $resource (apiUrlPrefix + "/courses")
+                .query()
+                .$promise
+                .then(filterCoursesByCourseId);
+        };
+
         this.getCourseList = function ()
         {
             return $resource (apiUrlPrefix + "/courses");
