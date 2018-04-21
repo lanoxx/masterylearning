@@ -1,0 +1,42 @@
+<ol class="breadcrumb">
+    <li><a data-ui-sref="^">Back</a></li>
+</ol>
+
+<h1>Statistics for <br> "{{ courseTitle }} {{ coursePeriod }}"</h1>
+
+<div>
+    <h2>Histogramm</h2>
+
+    <div>
+        <my-app-histogram class="histogram" controller="histogramController" statistics="statistics"></my-app-histogram>
+    </div>
+</div>
+
+<div>
+    <h2>Detailed Statistics</h2>
+
+    <table class="table">
+
+        <tr>
+            <th>#</th>
+            <th>Fullname</th>
+            <th class="text-right">Entries read</th>
+            <th class="text-right">Progress (%)</th>
+        </tr>
+
+        <tr ng-repeat="historyEntry in getStatisticsView()">
+            <td>{{ $index + 1 }}</td>
+            <td>{{ historyEntry.fullname }}</td>
+            <td class="text-right">{{ historyEntry.historyCount + " / " + statistics.entryCount }}</td>
+            <td class="text-right">{{ (historyEntry.historyCount / statistics.entryCount) | percent : 1 }}</td>
+        </tr>
+
+    </table>
+
+    <div class="text-center">
+        <ul uib-pagination total-items="totalItems" boundary-links="true" max-size="10" force-ellipses="true"
+            ng-model="currentPage">
+        </ul>
+    </div>
+
+</div>

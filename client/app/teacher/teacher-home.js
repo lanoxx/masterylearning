@@ -1,4 +1,10 @@
-angular.module('myapp.teacher', ['ui.router', 'ngSanitize', 'myapp.services.course', 'myapp.services.statistic', 'myapp.teacher.histogram'])
+angular.module('myapp.teacher', [
+    'ui.router',
+    'ngSanitize',
+    'myapp.services.course',
+    'myapp.teacher.edit',
+    'myapp.teacher.statistics'
+])
 
     .config(['$stateProvider', 'RoleProvider', function ($stateProvider, RoleProvider)
     {
@@ -29,16 +35,7 @@ angular.module('myapp.teacher', ['ui.router', 'ngSanitize', 'myapp.services.cour
         function ($scope, courses, CourseService, StatisticService, $sce, $log)
     {
         $scope.courses = courses;
-        $scope.statistics = null;
-        $scope.histogramController = {};
 
-        $scope.courseEditMode = false;
-
-        $scope.edit_cb = edit_cb;
-        $scope.save_cb = save_cb;
-        $scope.cancel_cb = cancel_cb;
-
-        $scope.loadStatistics = loadStatistics;
         $scope.trust = trust;
 
         $scope.truncateAndTrust = function (string, length)
@@ -47,57 +44,6 @@ angular.module('myapp.teacher', ['ui.router', 'ngSanitize', 'myapp.services.cour
             var clippedString = text_clipper_clipHtmlclip (string, length);
             return trust(clippedString);
         };
-
-        function loadStatistics ($index)
-        {
-            $scope.statistics = StatisticService.getStatistics ().get ({courseId: $scope.courses[$index].id });
-
-            $scope.statistics.$promise.then (function (statistics) {
-                                        $scope.histogramController.init (statistics);
-                                    });
-
-            $scope.courseTitle = $scope.courses[$index].title;
-            $scope.coursePeriod = $scope.courses[$index].period;
-        }
-
-        function edit_cb ($index)
-        {
-            $scope.courseEditMode = true;
-
-            var editCourse = $scope.courses[$index];
-
-            $scope.courseIndex = $index;
-            $scope.course = {
-                id: editCourse.id,
-                title: editCourse.title,
-                period: editCourse.period,
-                description: editCourse.description
-            };
-        }
-
-        function save_cb ()
-        {
-            var updatePromise = CourseService.updateCourse ().save ({ courseId: $scope.course.id }, $scope.course);
-
-            updatePromise.$promise.then (function (result)
-            {
-                $log.info ("[myapp.teacher.TeacherController: Update course result: " + result);
-
-                if (result) {
-                    var course = $scope.courses[$scope.courseIndex];
-
-                    course.title = $scope.course.title;
-                    course.description = $scope.course.description;
-                    course.period = $scope.course.period;
-                }
-            });
-
-            $scope.courseEditMode = false;
-        }
-
-        function cancel_cb () {
-            $scope.courseEditMode = false;
-        }
 
         function trust (value)
         {

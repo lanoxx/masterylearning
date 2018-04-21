@@ -1,0 +1,30 @@
+<ol class="breadcrumb">
+    <li><a data-ui-sref="^">Back</a></li>
+</ol>
+
+<h2>Edit Course</h2>
+<div>
+    <form>
+        <div class="form-group">
+            <label for="course_title">Title</label>
+            <input ng-model="course.title" type="text" class="form-control" id="course_title" placeholder="Title">
+        </div>
+        <div class="form-group">
+            <label for="course_period">Period</label>
+            <input ng-model="course.period" type="text" class="form-control" id="course_period" placeholder="Period">
+        </div>
+        <div class="form-group">
+            <label for="course_description">Description</label>
+            <textarea ng-model="course.description" class="form-control" rows="5" id="course_description" placeholder="Description..."></textarea>
+        </div>
+
+        <div class="form-group">
+            <button ng-click="save_cb ()" class="btn btn-success">Save</button>
+            <button ng-click="cancel_cb ()" class="btn btn-default">Cancel</button>
+        </div>
+
+        <div>
+            <p class="alert alert-danger" ng-if="error">An error occured while submitting the form.</p>
+        </div>
+    </form>
+</div>

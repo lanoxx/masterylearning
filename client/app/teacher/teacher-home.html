@@ -17,74 +17,12 @@
                 <td>{{course.period}}</td>
                 <td ng-bind-html="truncateAndTrust(course.description, 200)"></td>
                 <td>
-                    <a ng-click="edit_cb ($index)" href="">Edit</a><span> | </span>
-                    <a ng-click="loadStatistics ($index)" href="">Statistics</a>
+                    <a data-ui-sref=".edit-course({ courseId: course.id })" href="">Edit</a><span> | </span>
+                    <a data-ui-sref=".statistics({ courseId: course.id })" href="">Statistics</a>
                 </td>
             </tr>
 
         </table>
-
-        <div ng-if="courseEditMode">
-            <h2>Edit Course</h2>
-            <div>
-                <form>
-                    <div class="form-group">
-                        <label for="course_title">Title</label>
-                        <input ng-model="course.title" type="text" class="form-control" id="course_title" placeholder="Title">
-                    </div>
-                    <div class="form-group">
-                        <label for="course_period">Period</label>
-                        <input ng-model="course.period" type="text" class="form-control" id="course_period" placeholder="Period">
-                    </div>
-                    <div class="form-group">
-                        <label for="course_description">Description</label>
-                        <textarea ng-model="course.description" class="form-control" rows="5" id="course_description" placeholder="Description..."></textarea>
-                    </div>
-
-                    <div class="form-group">
-                        <button ng-click="save_cb ()" class="btn btn-success">Save</button>
-                        <button ng-click="cancel_cb ()" class="btn btn-default">Cancel</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-
-        <div ng-if="statistics !== null">
-
-            <h1>Statistics for <br> "{{ courseTitle }} {{ coursePeriod }}"</h1>
-
-            <div>
-                <h2>Histogramm</h2>
-                <div>
-                    <my-app-histogram class="histogram" controller="histogramController"></my-app-histogram>
-                </div>
-            </div>
-
-            <div>
-
-                <h2>Statistics for Course {{ statistics.courseId }}</h2>
-
-                <table class="table">
-
-                    <tr>
-                        <th>#</th>
-                        <th>Fullname</th>
-                        <th class="text-right">Entries read</th>
-                        <th class="text-right">Progress (%)</th>
-                    </tr>
-
-                    <tr ng-repeat="historyEntry in statistics.historyEntriesPerUsers">
-                        <td>{{ $index + 1 }}</td>
-                        <td>{{ historyEntry.fullname }}</td>
-                        <td class="text-right">{{ historyEntry.historyCount + " / " + statistics.entryCount }}</td>
-                        <td class="text-right">{{ (historyEntry.historyCount / statistics.entryCount) | percent : 1 }}</td>
-                    </tr>
-
-                </table>
-
-            </div>
-
-        </div>
-
     </ui-view>
+    <ui-view name="details"></ui-view>
 </div>
