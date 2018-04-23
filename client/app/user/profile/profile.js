@@ -10,7 +10,7 @@ angular.module ('myApp.user.profile', [])
                     controller: 'NavigationController'
                 },
                 '@': {
-                    templateUrl: '/user/profile/profile.html',
+                    templateUrl: 'user/profile/profile.html',
                     controller: 'ProfileController'
                 }
             },
