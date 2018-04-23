@@ -8,7 +8,7 @@ angular.module('myApp.student.courses', ['ui.router', 'ngSanitize', 'myapp.servi
             resolve: {
                 entries: ['$stateParams', 'HistoryService', '$log', function ($stateParams, HistoryService, $log)
                 {
-                    $log.info ("[myApp] $stateProvider (resolving 'home.student.courses' with course_id=" + $stateParams.course_id + ")");
+                    $log.info ("[myApp.student.courses] $stateProvider (resolving 'home.student.courses' with course_id=" + $stateParams.course_id + ")");
 
                     var entries = HistoryService.getCourseTableOfContents ().query ({courseId: $stateParams.course_id});
 
