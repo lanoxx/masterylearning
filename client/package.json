@@ -1,12 +1,15 @@
 {
   "name": "smartlecture-client",
   "private": true,
-  "version": "0.6.4",
+  "version": "0.7.0",
   "description": "An elearning system for logic and math courses.",
   "repository": "https://github.com/lanoxx/masterylearning",
   "license": "MIT",
   "devDependencies": {
     "bower": "^1.8.0",
+    "css-loader": "^0.28.11",
+    "html-loader": "^0.5.5",
+    "html-webpack-plugin": "^3.2.0",
     "jasmine-core": "^2.4.1",
     "karma": "~0.12",
     "karma-chrome-launcher": "^0.1.12",
@@ -14,15 +17,27 @@
     "karma-jasmine": "^0.3.5",
     "karma-junit-reporter": "^0.2.2",
     "local-web-server": "^1.2",
+    "mini-css-extract-plugin": "^0.4.0",
+    "ngtemplate-loader": "^2.0.1",
     "protractor": "^2.1.0",
-    "shelljs": "^0.2.6"
+    "script-loader": "^0.7.2",
+    "shelljs": "^0.2.6",
+    "style-loader": "^0.21.0",
+    "uglifyjs-webpack-plugin": "^1.2.5",
+    "webpack": "^4.6.0",
+    "webpack-cli": "^2.0.15"
   },
   "scripts": {
+    "clean": "rm -rf ./dist",
     "postinstall": "bower install",
     "prestart": "npm install",
     "start": "ws -p 8082 -r '/api/*->http://localhost:8080/$1' -d app",
     "pretest": "npm install",
     "bower": "bower",
+    "prebuild": "npm run clean",
+    "build": "npx webpack --config webpack.prod.js; cp -R app/bower_components dist; cp app/app.css dist",
+    "prerelease": "npm run clean",
+    "release": "npx webpack --config webpack.prod.js -p; cp -R app/bower_components dist; cp app/app.css dist",
     "test": "karma start karma.conf.js",
     "test-single-run": "karma start karma.conf.js  --single-run",
     "preupdate-webdriver": "npm install",
@@ -32,5 +47,22 @@
     "preprotractor": "npm run update-webdriver",
     "protractor": "protractor e2e-tests/protractor.conf.js",
     "update-index-async": "node -e \"require('shelljs/global'); sed('-i', /\\/\\/@@NG_LOADER_START@@[\\s\\S]*\\/\\/@@NG_LOADER_END@@/, '//@@NG_LOADER_START@@\\n' + sed(/sourceMappingURL=angular-loader.min.js.map/,'sourceMappingURL=bower_components/angular-loader/angular-loader.min.js.map','app/bower_components/angular-loader/angular-loader.min.js') + '\\n//@@NG_LOADER_END@@', 'app/index-async.html');\""
+  },
+  "dependencies": {
+    "angular": "~1.4",
+    "angular-base64": "^2.0.5",
+    "angular-cookies": "~1.4",
+    "angular-katex": "~0.9",
+    "angular-resource": "~1.4",
+    "angular-sanitize": "~1.4",
+    "angular-ui-bootstrap": "~2.5",
+    "angular-ui-router": "^1.0.3",
+    "d3": "^3.5.17",
+    "elearning-content-fmi": "git+ssh://git@gitlab.com/lanoxx/elearning-content-fmi.git#master",
+    "jquery": "^2.2.4",
+    "js-utils": "git+ssh://git@gitlab.com/lanoxx/js-utils.git#master",
+    "lodash": "^4.17.4",
+    "text-clipper": "^1.2.1",
+    "vis": "^4.16.1"
   }
 }

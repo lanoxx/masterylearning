@@ -1,3 +1,4 @@
+var clip = require('text-clipper/dist/index.js');
 angular.module('myapp.teacher', [
     'ui.router',
     'ngSanitize',
@@ -41,7 +42,7 @@ angular.module('myapp.teacher', [
         $scope.truncateAndTrust = function (string, length)
         {
 
-            var clippedString = text_clipper_clipHtmlclip (string, length);
+            var clippedString = clip (string, length);
             return trust(clippedString);
         };
 
