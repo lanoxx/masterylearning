@@ -2,7 +2,7 @@ angular.module ('myapp.student.courses.entries.flow', ['ui.router', 'ngSanitize'
     'myapp.student.courses.entries.exercises',
     'myapp.services.content'])
 
-    .config (['$stateProvider', function ($stateProvider)
+    .config (['$stateProvider', 'RoleProvider', function ($stateProvider, RoleProvider)
     {
         $stateProvider.state ('home.student.courses.entries.flow', {
             url: '/flow?location',
@@ -14,7 +14,8 @@ angular.module ('myapp.student.courses.entries.flow', ['ui.router', 'ngSanitize'
             },
             templateUrl: 'student/courses/entries/flow/flow.html',
             controller: 'FlowController',
-            reloadOnSearch: false
+            reloadOnSearch: false,
+            role: RoleProvider.STUDENT
         });
     }])
 
