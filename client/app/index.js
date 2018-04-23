@@ -31,7 +31,7 @@ require('lodash/lodash.js');
 require('angular-resource/angular-resource.js');
 require('angular-sanitize/angular-sanitize.js');
 require('angular-cookies/angular-cookies.js');
-require('angular-ui-router/release/angular-ui-router.js');
+require('@uirouter/angularjs');
 require('angular-ui-bootstrap/dist/ui-bootstrap-tpls.js');
 require('angular-katex/angular-katex.js');
 require('angular-base64/angular-base64.js');

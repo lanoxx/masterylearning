@@ -56,7 +56,7 @@
     "angular-resource": "~1.4",
     "angular-sanitize": "~1.4",
     "angular-ui-bootstrap": "~2.5",
-    "angular-ui-router": "^1.0.3",
+    "@uirouter/angularjs": "~1.0",
     "d3": "^3.5.17",
     "elearning-content-fmi": "git+ssh://git@gitlab.com/lanoxx/elearning-content-fmi.git#master",
     "jquery": "^2.2.4",
