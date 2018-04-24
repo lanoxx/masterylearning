@@ -19,6 +19,14 @@ import org.springframework.security.web.access.AccessDeniedHandler;
 @EnableGlobalMethodSecurity (prePostEnabled = true, securedEnabled = true)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
+    /**
+     * Ant-Matcher Patterns to allow requests for Swagger UI and Swagger APIs
+     */
+    public static final String[] SWAGGER_PATTERNS = {
+            "/v2/api-docs", "/configuration/ui",
+            "/swagger-resources", "/configuration/security",
+            "/swagger-ui.html", "/webjars/**"};
+
     Logger logger = LogManager.getLogger (SecurityConfiguration.class);
 
     @Override
@@ -42,11 +50,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
         //http.authorizeRequests().anyRequest().hasAnyRole(roles);
 
-        http.authorizeRequests()
-                .antMatchers (HttpMethod.OPTIONS, "/**").permitAll ()
-                .antMatchers (HttpMethod.POST, "/bootstrap/**").permitAll ()
-                .antMatchers (HttpMethod.POST, "/password/resetToken/**").permitAll ()
-                .anyRequest().authenticated();
+        http.authorizeRequests ()
+            .antMatchers (HttpMethod.OPTIONS, "/**").permitAll ()
+            .antMatchers (HttpMethod.POST, "/bootstrap/**").permitAll ()
+            .antMatchers (HttpMethod.POST, "/password/resetToken/**").permitAll ()
+            .antMatchers (SWAGGER_PATTERNS).permitAll ()
+            .anyRequest().authenticated();
     }
 
     private AuthenticationEntryPoint entryPoint() {
