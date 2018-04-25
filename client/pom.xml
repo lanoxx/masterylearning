@@ -30,12 +30,13 @@
         <artifactId>exec-maven-plugin</artifactId>
         <executions>
           <execution>
-            <id>exec-npm-install</id>
+            <id>exec-npm-release</id>
             <phase>generate-sources</phase>
             <configuration>
               <executable>npm</executable>
               <arguments>
-                <argument>install</argument>
+                <argument>run</argument>
+                <argument>release</argument>
               </arguments>
             </configuration>
             <goals>
