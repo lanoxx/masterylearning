@@ -71,6 +71,7 @@
         <artifactId>docker-maven-plugin</artifactId>
         <executions>
           <execution>
+            <id>build-client-with-ssl</id>
             <phase>install</phase>
             <goals>
               <goal>build</goal>
@@ -85,7 +86,34 @@
               <targetPath>/</targetPath>
               <directory>${project.basedir}</directory>
               <includes>
-                <include>app/**</include>
+                <include>dist/**</include>
+                <include>nginx/**</include>
+              </includes>
+            </resource>
+          </resources>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>com.spotify</groupId>
+        <artifactId>docker-maven-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>build-client</id>
+            <phase>install</phase>
+            <goals>
+              <goal>build</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <imageName>${docker.image.prefix}/${project.artifactId}-plain</imageName>
+          <dockerDirectory>${project.basedir}/docker/plain</dockerDirectory>
+          <resources>
+            <resource>
+              <targetPath>/</targetPath>
+              <directory>${project.basedir}</directory>
+              <includes>
+                <include>dist/**</include>
                 <include>nginx/**</include>
               </includes>
             </resource>
