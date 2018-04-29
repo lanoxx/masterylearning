@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <parent>
+    <groupId>org.masterylearning</groupId>
+    <artifactId>main</artifactId>
+    <version>0.6.4</version>
+  </parent>
+
+  <modelVersion>4.0.0</modelVersion>
+
+  <artifactId>reverse-proxy</artifactId>
+  <version>0.6.4</version>
+  <packaging>pom</packaging>
+
+  <build>
+    <plugins>
+
+      <!-- Build client's docker image. This works as following:
+         -    The `Dockerfile` is copied to target/docker together
+         -    with any resource listed in the resources section.
+         -    Then docker is invoked with the docker file to build
+         -    the image.
+        -->
+      <plugin>
+        <groupId>com.spotify</groupId>
+        <artifactId>docker-maven-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>reverse-proxy</id>
+            <phase>install</phase>
+            <goals>
+              <goal>build</goal>
+            </goals>
+            <configuration>
+              <imageName>${docker.image.prefix}/${project.artifactId}</imageName>
+              <dockerDirectory>${project.basedir}/docker</dockerDirectory>
+              <resources>
+                <resource>
+                  <targetPath>/</targetPath>
+                  <directory>${project.basedir}</directory>
+                  <includes>
+                    <include>nginx/**</include>
+                  </includes>
+                </resource>
+              </resources>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+
+</project>

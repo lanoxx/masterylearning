@@ -1,0 +1,6 @@
+reverse-proxy:
+  image: masterylearning/reverse-proxy
+  ports:
+   - 80:80
+  environment:
+   - NGINX_HOST=smartlecture.com
