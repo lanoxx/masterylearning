@@ -170,6 +170,8 @@ public class UserController {
 
                     } catch (MailException e) {
 
+                        log.error (e.getMessage ());
+
                         userOutDto.success = false;
                         userOutDto.message = "Could not create user because sending mail to user failed.";
 

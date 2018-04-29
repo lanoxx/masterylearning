@@ -14,6 +14,7 @@ import org.masterylearning.repository.RoleRepository;
 import org.masterylearning.repository.UserRepository;
 import org.masterylearning.web.CreateUsersDto;
 import org.springframework.mail.MailException;
+import org.springframework.mail.MailSendException;
 import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -223,9 +224,8 @@ public class UserService {
             log.debug ("Account creation mail successfully sent to: " + user.email);
 
         } catch (MailException e) {
-            log.error ("An error occurred while sending the mail to: " + user.email);
 
-            throw e;
+            throw new MailSendException ("An error occurred while sending the mail to: " + user.email, e);
         }
 
         return user;
