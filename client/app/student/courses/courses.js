@@ -28,14 +28,17 @@ angular.module('myApp.student.courses', ['ui.router', 'ngSanitize', 'myapp.servi
     .controller('CourseController', ['$scope', 'course_id', 'courseList', 'entries', 'UserService', '$sce', '$log',
         function ($scope, course_id, courseList, entries, UserService, $sce, $log) {
 
-        if (courseList.$resolved) {
-            courseList.forEach (function (course)
+        courseList.$promise.then (function () {
+
+            function findCourseByCourseId (course)
             {
                 if (course.courseOutDto.id == course_id) {
                     $scope.course = course.courseOutDto;
                 }
-            })
-        }
+            }
+
+            courseList.forEach (findCourseByCourseId);
+        });
 
         $scope.trust = function (value)
         {
