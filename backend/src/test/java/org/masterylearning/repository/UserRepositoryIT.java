@@ -6,17 +6,15 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
-import org.masterylearning.App;
 import org.masterylearning.domain.Course;
 import org.masterylearning.domain.CourseHistory;
 import org.masterylearning.domain.Entry;
 import org.masterylearning.domain.Role;
 import org.masterylearning.domain.User;
-import org.springframework.boot.test.IntegrationTest;
-import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.core.env.Environment;
 import org.springframework.test.context.TestPropertySource;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
@@ -27,9 +25,8 @@ import static org.hamcrest.Matchers.isA;
 
 /**
  */
-@RunWith(SpringJUnit4ClassRunner.class)
-@IntegrationTest
-@SpringApplicationConfiguration(App.class)
+@RunWith(SpringRunner.class)
+@SpringBootTest
 @TestPropertySource(locations="classpath:app.properties")
 public class UserRepositoryIT {
 

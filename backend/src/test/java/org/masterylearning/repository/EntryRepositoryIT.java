@@ -3,13 +3,11 @@ package org.masterylearning.repository;
 import org.hibernate.Hibernate;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.masterylearning.App;
 import org.masterylearning.domain.Entry;
 import org.masterylearning.domain.data.Section;
 import org.masterylearning.domain.data.YesNoExercise;
-import org.springframework.boot.test.IntegrationTest;
-import org.springframework.boot.test.SpringApplicationConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.inject.Inject;
 import javax.transaction.Transactional;
@@ -20,9 +18,8 @@ import static org.junit.Assert.assertTrue;
  * This is an integration test which requires the whole spring application context to be loaded. A possible improvement
  * might be to configure an in-memory hsqldb to test against.
  */
-@RunWith(SpringJUnit4ClassRunner.class)
-@IntegrationTest
-@SpringApplicationConfiguration(App.class)
+@RunWith(SpringRunner.class)
+@SpringBootTest
 public class EntryRepositoryIT {
 
     @Inject EntryRepository entryRepository;
