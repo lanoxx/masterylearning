@@ -96,12 +96,6 @@ public class UserController {
     public CreateUserOutDto
     createUser (@RequestBody CreateUserDto dto) {
 
-
-        // default to the role STUDENT if no roles were given
-        if (dto.roles.size () == 0) {
-            dto.roles.add ("STUDENT");
-        }
-
         return createUserFromDto (dto);
     }
 
@@ -127,6 +121,11 @@ public class UserController {
                 dto.username = username;
                 outDto.message = validationResult.issue.getMessage ();
             }
+        }
+
+        // default to the role STUDENT if no roles were given
+        if (dto.roles.size () == 0) {
+            dto.roles.add ("STUDENT");
         }
 
         try {
