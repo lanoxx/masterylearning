@@ -93,7 +93,13 @@ fullname;email</pre>
                                     <span class="label label-default">{{ role }}</span>
                                     <span ng-repeat-end></span>
                                 </td>
-                                <td>{{user.message}}</td>
+                                <td>
+                                    <!-- If there was an error then message will be set, multiple informational messages
+                                         will be in the messages array
+                                      -->
+                                    <span ng-if="user.messages && user.messages.length > 0">{{ user.messages.join(" ") }}</span>
+                                    <span ng-if="!user.messages || user.messages.length === 0">{{ user.message }}</span>
+                                </td>
                             </tr>
                             </tbody>
                         </table>
