@@ -8,7 +8,8 @@ public enum ValidationIssue {
     USERNAME_INVALID ("The username does not match the username requirements."),
     USERNAME_MISSING ("The username was missing. A default username has been generated."),
     EMAIL_EXISTS ("This email address is already registered by another user."),
-    EMAIL_INVALID ("Your email address is not valid");
+    EMAIL_INVALID ("Your email address is not valid"),
+    PASSWORD_MISSING ("The password was missing. A default password has been generated.");
 
     String message;
 

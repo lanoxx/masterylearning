@@ -11,6 +11,7 @@ import org.masterylearning.domain.ValidationResult;
 import org.masterylearning.dto.in.CreateUserDto;
 import org.masterylearning.dto.out.CreateUserOutDto;
 import org.masterylearning.service.UserService;
+import org.masterylearning.web.validation.UserValidation;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -25,6 +26,9 @@ public class UserControllerTest {
 
     @Mock
     private UserService userService = new UserService ();
+
+    @Mock
+    private UserValidation userValidation = new UserValidation ();
 
     @Before
     public void before () {
@@ -47,9 +51,9 @@ public class UserControllerTest {
 
         ValidationResult result = new ValidationResult ();
         result.valid = true;
-        result.issue = ValidationIssue.USERNAME_MISSING;
+        result.issues.add (ValidationIssue.USERNAME_MISSING);
 
-        when (userService.validateCreateUserDto (dto)).thenReturn (result);
+        when (userValidation.validateCreateUserDto (dto)).thenReturn (result);
 
         when (userService.generateDefaultUsername ()).thenReturn (generatedUsername);
 

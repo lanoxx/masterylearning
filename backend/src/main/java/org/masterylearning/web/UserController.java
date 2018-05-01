@@ -19,6 +19,7 @@ import org.masterylearning.repository.PasswordResetTokenRepository;
 import org.masterylearning.repository.UserRepository;
 import org.masterylearning.service.RoleService;
 import org.masterylearning.service.UserService;
+import org.masterylearning.web.validation.UserValidation;
 import org.springframework.core.env.Environment;
 import org.springframework.mail.MailException;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -49,6 +50,7 @@ public class UserController {
     private UserService userService;
     private PasswordEncoder passwordEncoder;
     private RoleService roleService;
+    private UserValidation userValidation;
     private Environment environment;
 
     public UserController (UserRepository userRepository,
@@ -56,6 +58,7 @@ public class UserController {
                            UserService userService,
                            PasswordEncoder passwordEncoder,
                            RoleService roleService,
+                           UserValidation userValidation,
                            Environment environment)
     {
         this.userRepository = userRepository;
@@ -63,6 +66,7 @@ public class UserController {
         this.userService = userService;
         this.passwordEncoder = passwordEncoder;
         this.roleService = roleService;
+        this.userValidation = userValidation;
         this.environment = environment;
     }
 
@@ -105,13 +109,13 @@ public class UserController {
         outDto.email = dto.email;
         outDto.fullname = dto.fullname;
 
-        ValidationResult validationResult = userService.validateCreateUserDto (dto);
+        ValidationResult validationResult = userValidation.validateCreateUserDto (dto);
         if (!validationResult.valid) {
-            outDto.message = validationResult.issue.getMessage ();
+            outDto.message = validationResult.getFirstMessage ();
             return outDto;
         }
 
-        if (validationResult.issue == ValidationIssue.USERNAME_MISSING) {
+        if (validationResult.issues.contains (ValidationIssue.USERNAME_MISSING)) {
             String username = userService.generateDefaultUsername ();
 
             if (username == null) {
@@ -119,7 +123,7 @@ public class UserController {
                 return outDto;
             } else {
                 dto.username = username;
-                outDto.message = validationResult.issue.getMessage ();
+                outDto.messages.add (ValidationIssue.USERNAME_MISSING.getMessage ());
             }
         }
 
@@ -172,7 +176,7 @@ public class UserController {
                     dto.users.remove (createUserDto);
 
                     CreateUserOutDto userOutDto = new CreateUserOutDto ();
-                    userOutDto.message = validationResult.issue.getMessage ();
+                    userOutDto.message = validationResult.getFirstMessage ();
                     userOutDto.fullname = createUserDto.fullname;
                     userOutDto.email = createUserDto.email;
                     userOutDto.success = false;

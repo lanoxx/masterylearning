@@ -29,7 +29,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.OptionalLong;
 import java.util.Random;
-import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 @Service
@@ -136,19 +135,19 @@ public class UserService {
             result.valid = false;
 
             if (dto.fullname == null) {
-                result.issue = ValidationIssue.FULLNAME_MISSING;
+                result.issues.add (ValidationIssue.FULLNAME_MISSING);
                 results.put (result, dto);
                 continue;
             }
 
             if (dto.email == null || !dto.email.contains ("@")) {
-                result.issue = ValidationIssue.EMAIL_INVALID;
+                result.issues.add (ValidationIssue.EMAIL_INVALID);
                 results.put (result, dto);
                 continue;
             } else {
                 User userByEmail = userRepository.getUserByEmail (dto.email);
                 if (userByEmail != null) {
-                    result.issue = ValidationIssue.EMAIL_EXISTS;
+                    result.issues.add (ValidationIssue.EMAIL_EXISTS);
                     results.put (result, dto);
                     continue;
                 }
@@ -159,51 +158,6 @@ public class UserService {
         }
 
         return results;
-    }
-
-    public ValidationResult validateCreateUserDto (CreateUserDto dto) {
-        User existingUser;
-        ValidationResult result = new ValidationResult ();
-        result.valid = false;
-
-        if (dto.fullname == null) {
-            result.issue = ValidationIssue.FULLNAME_MISSING;
-            return result;
-        }
-
-        if (dto.email == null || !dto.email.contains ("@")) {
-            result.issue = ValidationIssue.EMAIL_INVALID;
-            return result;
-        } else {
-            User userByEmail = userRepository.getUserByEmail (dto.email);
-            if (userByEmail != null) {
-                result.issue = ValidationIssue.EMAIL_EXISTS;
-                return result;
-            }
-        }
-
-
-        if (dto.username != null) {
-            existingUser = userRepository.getUserByUsername (dto.username);
-            if (existingUser != null) {
-                result.issue = ValidationIssue.USERNAME_EXISTS;
-                return result;
-            }
-
-            Pattern pattern = Pattern.compile (USERNAME_REGEX, Pattern.CASE_INSENSITIVE);
-            if (!pattern.matcher (dto.username).matches ()) {
-                result.issue = ValidationIssue.USERNAME_INVALID;
-                return result;
-            }
-        } else {
-            // missing usernames do not make the dto invalid, since we are going to create a generic username
-            result.valid = true;
-            result.issue = ValidationIssue.USERNAME_MISSING;
-            return result;
-        }
-
-        result.valid = true;
-        return result;
     }
 
     @Transactional
