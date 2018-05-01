@@ -30,7 +30,7 @@ import static org.mockito.Mockito.*;
 @RunWith(SpringRunner.class)
 public class UserServiceTest {
 
-    public static final User NULL_USER = new User (null, null, null, null);
+    private static final User NULL_USER = new User (null, null, null, null);
     @InjectMocks private UserService userService = new UserService ();
     @Mock private UserRepository userRepository;
     @Spy private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder ();
