@@ -105,7 +105,7 @@ public class UserController {
         return createUserFromDto (dto);
     }
 
-    public CreateUserOutDto createUserFromDto (@RequestBody CreateUserDto dto) {
+    CreateUserOutDto createUserFromDto (CreateUserDto dto) {
         CreateUserOutDto outDto = new CreateUserOutDto ();
         outDto.success = false;
         outDto.email = dto.email;
