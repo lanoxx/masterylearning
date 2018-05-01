@@ -236,7 +236,7 @@ public class UserService {
         email.setFrom (from);
         email.setTo (user.email);
         email.setSubject ("Interactive Lecture Notes Account");
-        email.setText ("Dear " + user.fullname + "\n" +
+        email.setText ("Dear " + user.fullname + ",\n" +
                                "\n" +
                                "We have created an account for our e-learning software for you.\n" +
                                "Below are the details to login to the system:\n" +
@@ -250,7 +250,7 @@ public class UserService {
                                "\n" +
                                "Sebastian Geiger,\n" +
                                "Andreas Holzer,\n" +
-                               "Forsyte ");
+                               "Forsyte");
         return email;
     }
 }
