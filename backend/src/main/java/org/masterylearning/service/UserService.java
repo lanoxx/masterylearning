@@ -64,8 +64,8 @@ public class UserService {
     public User createUser (CreateUserDto dto) {
 
         List<Role> roles = dto.roles.stream ()
-                             .map (role -> roleRepository.findRoleByName (role))
-                             .collect (Collectors.toList ());
+                                    .map (role -> roleRepository.findRoleByName (role))
+                                    .collect (Collectors.toList ());
 
         User user = createUser (dto.fullname, dto.email, dto.username, dto.password);
 
