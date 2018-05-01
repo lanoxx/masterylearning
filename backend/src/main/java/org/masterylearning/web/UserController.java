@@ -16,7 +16,6 @@ import org.masterylearning.dto.out.ChangePasswordOutDto;
 import org.masterylearning.dto.out.CreateUserOutDto;
 import org.masterylearning.dto.out.UserOutDto;
 import org.masterylearning.repository.PasswordResetTokenRepository;
-import org.masterylearning.repository.RoleRepository;
 import org.masterylearning.repository.UserRepository;
 import org.masterylearning.service.RoleService;
 import org.masterylearning.service.UserService;
@@ -33,7 +32,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.inject.Inject;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -44,16 +42,29 @@ import java.util.stream.Collectors;
 @RequestMapping (path = "users")
 public class UserController {
 
-    Logger log = LogManager.getLogger (UserController.class);
+    private Logger log = LogManager.getLogger (UserController.class);
 
-    @Inject UserRepository userRepository;
-    @Inject PasswordResetTokenRepository passwordResetTokenRepository;
-    @Inject UserService userService;
-    @Inject RoleRepository roleRepository;
-    @Inject PasswordEncoder passwordEncoder;
-    @Inject RoleService roleService;
+    private UserRepository userRepository;
+    private PasswordResetTokenRepository passwordResetTokenRepository;
+    private UserService userService;
+    private PasswordEncoder passwordEncoder;
+    private RoleService roleService;
+    private Environment environment;
 
-    @Inject Environment environment;
+    public UserController (UserRepository userRepository,
+                           PasswordResetTokenRepository passwordResetTokenRepository,
+                           UserService userService,
+                           PasswordEncoder passwordEncoder,
+                           RoleService roleService,
+                           Environment environment)
+    {
+        this.userRepository = userRepository;
+        this.passwordResetTokenRepository = passwordResetTokenRepository;
+        this.userService = userService;
+        this.passwordEncoder = passwordEncoder;
+        this.roleService = roleService;
+        this.environment = environment;
+    }
 
     @CrossOrigin
     @RequestMapping (method = RequestMethod.GET, path = "/current")

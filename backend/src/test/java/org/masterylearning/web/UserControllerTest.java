@@ -21,7 +21,7 @@ import static org.mockito.Mockito.*;
 public class UserControllerTest {
 
     @InjectMocks
-    private UserController userController = new UserController ();
+    private UserController userController;
 
     @Mock
     private UserService userService = new UserService ();
