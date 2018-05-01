@@ -98,7 +98,7 @@ public class UserServiceTest {
      * Test that a default username is generated, is prefixed with 'user' and followed by 7 digits.
      */
     @Test
-    public void testDefaultUsernameGenerationSuccussful () {
+    public void testDefaultUsernameGenerationSuccessful () {
 
         when (userRepository.getUserByUsername (Mockito.anyString ())).thenReturn (null);
 
