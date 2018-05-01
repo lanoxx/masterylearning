@@ -42,8 +42,6 @@ public class UserService {
     @Inject UserRepository userRepository;
     @Inject RoleRepository roleRepository;
     @Inject PasswordResetTokenRepository passwordResetTokenRepository;
-
-    @SuppressWarnings("SpringJavaAutowiringInspection")
     @Inject MailSender mailSender;
 
     @Transactional
