@@ -215,6 +215,12 @@ public class UserService {
 
         User user = this.createUser (createUserDto);
 
+        sendAccountCreationMail (createUserDto, from, user);
+
+        return user;
+    }
+
+    private void sendAccountCreationMail (CreateUserDto createUserDto, String from, User user) {
         try {
             SimpleMailMessage email = getAccountCreatedMail (createUserDto, user, from);
 
@@ -226,8 +232,6 @@ public class UserService {
 
             throw new MailSendException ("An error occurred while sending the mail to: " + user.email, e);
         }
-
-        return user;
     }
 
     private SimpleMailMessage getAccountCreatedMail (CreateUserDto createUserDto, User user, String from) {
