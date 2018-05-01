@@ -20,7 +20,6 @@ import org.masterylearning.repository.UserRepository;
 import org.masterylearning.service.RoleService;
 import org.masterylearning.service.UserService;
 import org.masterylearning.web.validation.UserValidation;
-import org.springframework.core.env.Environment;
 import org.springframework.mail.MailException;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -34,7 +33,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -51,15 +49,13 @@ public class UserController {
     private PasswordEncoder passwordEncoder;
     private RoleService roleService;
     private UserValidation userValidation;
-    private Environment environment;
 
     public UserController (UserRepository userRepository,
                            PasswordResetTokenRepository passwordResetTokenRepository,
                            UserService userService,
                            PasswordEncoder passwordEncoder,
                            RoleService roleService,
-                           UserValidation userValidation,
-                           Environment environment)
+                           UserValidation userValidation)
     {
         this.userRepository = userRepository;
         this.passwordResetTokenRepository = passwordResetTokenRepository;
@@ -67,7 +63,6 @@ public class UserController {
         this.passwordEncoder = passwordEncoder;
         this.roleService = roleService;
         this.userValidation = userValidation;
-        this.environment = environment;
     }
 
     @CrossOrigin
@@ -101,6 +96,26 @@ public class UserController {
     createUser (@RequestBody CreateUserDto dto) {
 
         return createUserFromDto (dto);
+    }
+
+    @PreAuthorize (value = "hasRole ('ADMIN')")
+    @RequestMapping (method = RequestMethod.POST, path = "import")
+    public CreateUsersOutDto
+    createUsers (@RequestBody CreateUsersDto dto) {
+        CreateUsersOutDto outDto = new CreateUsersOutDto ();
+
+        for (CreateUserDto createUserDto : dto.users) {
+
+            CreateUserOutDto createUserOutDto = createUserFromDto (createUserDto);
+
+            // if creation was not successful we add the dto to the list, so we can
+            // display a proper error message in the UI.
+            if (!createUserOutDto.success) {
+                outDto.users.add (createUserOutDto);
+            }
+        }
+
+        return outDto;
     }
 
     CreateUserOutDto createUserFromDto (CreateUserDto dto) {
@@ -156,77 +171,6 @@ public class UserController {
         } catch (Exception e) {
 
             outDto.message = "An unknown error occurred while creating this user.";
-        }
-
-        return outDto;
-    }
-
-
-    @PreAuthorize (value = "hasRole ('ADMIN')")
-    @RequestMapping (method = RequestMethod.POST, path = "import")
-    public CreateUsersOutDto
-    createUsers (@RequestBody CreateUsersDto dto) {
-        CreateUsersOutDto outDto = new CreateUsersOutDto ();
-
-        Map<ValidationResult, CreateUserDto> validationResultMap = userService.validateCreateUsersDto (dto);
-
-        if (validationResultMap.size () > 0) {
-
-            for (ValidationResult validationResult : validationResultMap.keySet ()) {
-
-                CreateUserDto createUserDto = validationResultMap.get (validationResult);
-
-                if (!validationResult.valid) {
-
-                    dto.users.remove (createUserDto);
-
-                    CreateUserOutDto userOutDto = new CreateUserOutDto ();
-                    userOutDto.message = validationResult.getFirstMessage ();
-                    userOutDto.fullname = createUserDto.fullname;
-                    userOutDto.email = createUserDto.email;
-                    userOutDto.success = false;
-
-                    outDto.users.add (userOutDto);
-                } else {
-
-                    CreateUserOutDto userOutDto = new CreateUserOutDto ();
-                    userOutDto.email = createUserDto.email;
-                    userOutDto.fullname = createUserDto.fullname;
-
-                    try {
-
-                        String from = environment.getProperty ("email.from");
-
-                        User user = userService.importUser (createUserDto, from);
-
-                        userOutDto.userId = user.id;
-                        userOutDto.username = user.username;
-                        userOutDto.roles = user.getRoles ().stream ().map (role -> role.name).collect (Collectors.toList ());
-
-                        userOutDto.success = true;
-
-                    } catch (MailException e) {
-
-                        log.error (e.getMessage ());
-
-                        userOutDto.success = false;
-                        userOutDto.message = "Could not create user because sending mail to user failed.";
-
-                        outDto.users.add (userOutDto);
-
-                        return outDto;
-
-                    } catch (Exception e) {
-
-                        userOutDto.success = false;
-                        userOutDto.message = "An unknown error occurred while importing this user.";
-
-                        outDto.users.add (userOutDto);
-
-                        return outDto;
-                    }
-                }
-            }
         }
 
         return outDto;

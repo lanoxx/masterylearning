@@ -42,11 +42,11 @@ public class UserServiceIT {
      */
     @Test
     @Transactional
-    public void testUserImportIsSuccessful () {
+    public void testUserCreationIsSuccessful () {
 
         CreateUserDto createUserDto = getTestUser ();
 
-        userService.importUser (createUserDto, "sender@example.com");
+        userService.createUser (createUserDto);
 
         Mockito.verify (mailSender, Mockito.times (1)).send (Mockito.any (SimpleMailMessage.class));
 
@@ -67,7 +67,7 @@ public class UserServiceIT {
         Mockito.doThrow (new MailSendException ("Failure")).when (mailSender).send (Mockito.any (SimpleMailMessage.class));
 
         try {
-            userService.importUser (createUserDto, "sender@example.com");
+            userService.createUser (createUserDto);
 
             Assert.fail ("Expected MailSendException during user import.");
 

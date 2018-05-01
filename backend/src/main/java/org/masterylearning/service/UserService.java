@@ -6,13 +6,10 @@ import org.apache.logging.log4j.Logger;
 import org.masterylearning.domain.PasswordResetToken;
 import org.masterylearning.domain.Role;
 import org.masterylearning.domain.User;
-import org.masterylearning.domain.ValidationIssue;
-import org.masterylearning.domain.ValidationResult;
 import org.masterylearning.dto.in.CreateUserDto;
 import org.masterylearning.repository.PasswordResetTokenRepository;
 import org.masterylearning.repository.RoleRepository;
 import org.masterylearning.repository.UserRepository;
-import org.masterylearning.web.CreateUsersDto;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.MailException;
 import org.springframework.mail.MailSendException;
@@ -24,17 +21,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
 import java.time.LocalDateTime;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.OptionalLong;
 import java.util.Random;
 import java.util.stream.Collectors;
 
 @Service
 public class UserService {
-
-    public static final String USERNAME_REGEX = "[a-z0-9](-?[a-z0-9])*";
 
     private final Logger log = LogManager.getLogger (UserService.class);
 
@@ -124,56 +117,6 @@ public class UserService {
 
     public String generateDefaultPassword () {
         return RandomStringUtils.random (10, true, true);
-    }
-
-    public Map<ValidationResult, CreateUserDto> validateCreateUsersDto (CreateUsersDto usersDto) {
-
-        Map<ValidationResult, CreateUserDto> results = new HashMap<> ();
-
-        for (CreateUserDto dto : usersDto.users) {
-            ValidationResult result = new ValidationResult ();
-            result.valid = false;
-
-            if (dto.fullname == null) {
-                result.issues.add (ValidationIssue.FULLNAME_MISSING);
-                results.put (result, dto);
-                continue;
-            }
-
-            if (dto.email == null || !dto.email.contains ("@")) {
-                result.issues.add (ValidationIssue.EMAIL_INVALID);
-                results.put (result, dto);
-                continue;
-            } else {
-                User userByEmail = userRepository.getUserByEmail (dto.email);
-                if (userByEmail != null) {
-                    result.issues.add (ValidationIssue.EMAIL_EXISTS);
-                    results.put (result, dto);
-                    continue;
-                }
-            }
-
-            result.valid = true;
-            results.put (result, dto);
-        }
-
-        return results;
-    }
-
-    @Transactional
-    public User importUser (CreateUserDto createUserDto, String from) {
-
-        createUserDto.password = this.generateDefaultPassword ();
-
-        createUserDto.username = this.generateDefaultUsername ();
-
-        if (createUserDto.roles.size () == 0) {
-            createUserDto.roles.add ("STUDENT");
-        }
-
-        User user = this.createUser (createUserDto);
-
-        return user;
     }
 
     private void sendAccountCreationMail (CreateUserDto createUserDto, String from, User user) {
