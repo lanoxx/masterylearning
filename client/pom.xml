@@ -78,6 +78,10 @@
             </goals>
             <configuration>
               <imageName>${docker.image.prefix}/${project.artifactId}</imageName>
+              <imageTags>
+                <imageTag>latest</imageTag>
+                <imageTag>${project.version}</imageTag>
+              </imageTags>
               <dockerDirectory>${project.basedir}/docker</dockerDirectory>
               <resources>
                 <resource>
@@ -99,6 +103,10 @@
             </goals>
             <configuration>
               <imageName>${docker.image.prefix}/${project.artifactId}-plain</imageName>
+              <imageTags>
+                <imageTag>latest</imageTag>
+                <imageTag>${project.version}</imageTag>
+              </imageTags>
               <dockerDirectory>${project.basedir}/docker/plain</dockerDirectory>
               <resources>
                 <resource>
