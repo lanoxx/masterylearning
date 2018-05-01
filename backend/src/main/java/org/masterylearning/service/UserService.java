@@ -220,7 +220,6 @@ public class UserService {
 
             mailSender.send (email);
 
-
             log.debug ("Account creation mail successfully sent to: " + user.email);
 
         } catch (MailException e) {
