@@ -4,10 +4,10 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.BlockJUnit4ClassRunner;
+import org.masterylearning.UserUtility;
 import org.masterylearning.dto.in.CreateUserDto;
 import org.masterylearning.dto.out.CreateUserOutDto;
 import org.masterylearning.repository.UserRepository;
-import org.masterylearning.service.UserServiceTest;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -40,7 +40,7 @@ public class InitializationControllerTest {
     @Test
     public void testInitialBootstrapSucceeds () {
 
-        CreateUserDto dto = UserServiceTest.getCreateUserDto ();
+        CreateUserDto dto = UserUtility.getCreateUserDto ();
 
         // reset roles to ensure they are added back by the initialization controller
         dto.roles = null;
@@ -57,7 +57,7 @@ public class InitializationControllerTest {
     @Test
     public void testDoubleBootstrapFails () {
 
-        CreateUserDto dto = UserServiceTest.getCreateUserDto ();
+        CreateUserDto dto = UserUtility.getCreateUserDto ();
 
         when (userRepository.count ()).thenReturn (1L);
 
