@@ -31,13 +31,14 @@
                         <input ng-model="user.email" type="text" id="email" class="form-control" placeholder="Email">
                     </div>
 
-                    <!-- TODO: it would be nice not to set a password, and instead have a password reset token
-                               be created automatically.
-                      -->
-
                     <div class="form-group">
                         <label for="password">Password:</label>
                         <input ng-model="user.password" type="password" id="password" class="form-control" placeholder="Passwort">
+                    </div>
+
+                    <div class="alert alert-info">
+                        The password is optional. If you leave it empty, then a generic password be created. The user
+                        wil receive an Email with the initial password.
                     </div>
 
                     <div ng-repeat="role in Role.values ()" class="checkbox">

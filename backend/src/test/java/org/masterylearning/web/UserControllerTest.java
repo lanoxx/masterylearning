@@ -69,4 +69,71 @@ public class UserControllerTest {
         Assert.assertTrue (outDto.userId != null);
     }
 
+    @Test
+    public void testDefaultPasswordGeneration () {
+
+        CreateUserDto dto = new CreateUserDto ();
+
+        String generatedUsername = "user1234567";
+
+        User user = new User (null, null, generatedUsername, null);
+
+        user.id = 1L;
+
+        ValidationResult result = new ValidationResult ();
+        result.valid = true;
+        result.issues.add (ValidationIssue.PASSWORD_MISSING);
+
+        when (userValidation.validateCreateUserDto (dto)).thenReturn (result);
+
+        when (userService.generateDefaultUsername ()).thenReturn (generatedUsername);
+        when (userService.generateDefaultPassword ()).thenCallRealMethod ();
+
+        when (userService.createUser (dto)).thenReturn (user);
+
+        CreateUserOutDto outDto = userController.createUser (dto);
+
+        verify (userService, times (1)).generateDefaultPassword ();
+        verify (userService, times (1)).createUser (dto);
+
+        Assert.assertTrue (dto.password != null);
+
+        Assert.assertTrue (outDto.userId != null);
+    }
+
+    @Test
+    public void testGenerationOfUsernameAndPassword () {
+
+        CreateUserDto dto = new CreateUserDto ();
+
+        String generatedUsername = "user1234567";
+
+        User user = new User (null, null, generatedUsername, null);
+
+        user.id = 1L;
+
+        ValidationResult result = new ValidationResult ();
+        result.valid = true;
+        result.issues.add (ValidationIssue.PASSWORD_MISSING);
+        result.issues.add (ValidationIssue.USERNAME_MISSING);
+
+        when (userValidation.validateCreateUserDto (dto)).thenReturn (result);
+
+        when (userService.generateDefaultUsername ()).thenReturn (generatedUsername);
+        when (userService.generateDefaultPassword ()).thenCallRealMethod ();
+
+        when (userService.createUser (dto)).thenReturn (user);
+
+        CreateUserOutDto outDto = userController.createUser (dto);
+
+        verify (userService, times (1)).generateDefaultUsername ();
+        verify (userService, times (1)).generateDefaultPassword ();
+        verify (userService, times (1)).createUser (dto);
+
+        Assert.assertTrue (dto.password != null);
+        Assert.assertTrue (dto.username != null);
+
+        Assert.assertTrue (outDto.userId != null);
+    }
+
 }

@@ -115,6 +115,11 @@ public class UserController {
             return outDto;
         }
 
+        if (validationResult.issues.contains (ValidationIssue.PASSWORD_MISSING)) {
+            dto.password = userService.generateDefaultPassword ();
+            outDto.messages.add (ValidationIssue.PASSWORD_MISSING.getMessage ());
+        }
+
         if (validationResult.issues.contains (ValidationIssue.USERNAME_MISSING)) {
             String username = userService.generateDefaultUsername ();
 
