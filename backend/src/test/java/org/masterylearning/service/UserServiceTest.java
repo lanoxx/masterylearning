@@ -15,6 +15,8 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.mockito.Spy;
+import org.springframework.mail.MailSender;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -35,6 +37,7 @@ public class UserServiceTest {
     @Mock private UserRepository userRepository;
     @Spy private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder ();
     @Mock private RoleRepository roleRepository;
+    @Mock private MailSender mailSender;
 
     @Before
     public void before () {
@@ -73,6 +76,7 @@ public class UserServiceTest {
 
         assertFalse (dto.password.equals (user.password));
 
+        verify (mailSender, atLeastOnce ()).send (Mockito.any (SimpleMailMessage.class));
     }
 
     /**

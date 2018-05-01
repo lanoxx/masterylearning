@@ -13,6 +13,7 @@ import org.masterylearning.repository.PasswordResetTokenRepository;
 import org.masterylearning.repository.RoleRepository;
 import org.masterylearning.repository.UserRepository;
 import org.masterylearning.web.CreateUsersDto;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.MailException;
 import org.springframework.mail.MailSendException;
 import org.springframework.mail.MailSender;
@@ -44,6 +45,9 @@ public class UserService {
     @Inject PasswordResetTokenRepository passwordResetTokenRepository;
     @Inject MailSender mailSender;
 
+    @Value ("${email.from:user@localhost}")
+    private String fromAddress;
+
     @Transactional
     public User createUser (String fullname, String email, String username, String password) {
 
@@ -68,6 +72,8 @@ public class UserService {
         user.getRoles ().addAll (roles);
 
         userRepository.save (user);
+
+        sendAccountCreationMail (dto, fromAddress, user);
 
         return user;
     }
@@ -212,8 +218,6 @@ public class UserService {
         }
 
         User user = this.createUser (createUserDto);
-
-        sendAccountCreationMail (createUserDto, from, user);
 
         return user;
     }

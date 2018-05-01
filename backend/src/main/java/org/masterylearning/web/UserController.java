@@ -129,12 +129,27 @@ public class UserController {
             }
         }
 
-        User user = userService.createUser (dto);
+        try {
+            User user = userService.createUser (dto);
 
-        outDto.success = true;
-        outDto.userId = user.id;
-        outDto.username = user.username;
-        outDto.roles = user.getRoles ().stream ().map (role -> role.name).collect (Collectors.toList ());
+            outDto.success = true;
+            outDto.userId = user.id;
+            outDto.fullname = user.fullname;
+            outDto.username = user.username;
+            outDto.email = user.email;
+            outDto.roles = user.getRoles ().stream ().map (role -> role.name).collect (Collectors.toList ());
+
+        } catch (MailException e) {
+
+            log.error (e.getMessage ());
+
+            outDto.message = "Could not create user because sending mail to user failed.";
+
+        } catch (Exception e) {
+
+            outDto.message = "An unknown error occurred while creating this user.";
+        }
+
         return outDto;
     }
 
