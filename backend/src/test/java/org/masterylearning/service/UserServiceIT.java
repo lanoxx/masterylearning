@@ -44,9 +44,7 @@ public class UserServiceIT {
     @Transactional
     public void testUserImportIsSuccessful () {
 
-        CreateUserDto createUserDto = new CreateUserDto ();
-        createUserDto.fullname = "John Doe";
-        createUserDto.email = "john@example.com";
+        CreateUserDto createUserDto = getTestUser ();
 
         userService.importUser (createUserDto, "sender@example.com");
 
@@ -57,7 +55,6 @@ public class UserServiceIT {
         Assert.assertNotNull (userByEmail);
     }
 
-
     /**
      * Test that when we throw a MailSendException the transaction is rolled back and there is
      * no user saved to the database.
@@ -65,9 +62,7 @@ public class UserServiceIT {
     @Test
     public void testUserImportIsRolledBack () {
 
-        CreateUserDto createUserDto = new CreateUserDto ();
-        createUserDto.fullname = "John Doe";
-        createUserDto.email = "john@example.com";
+        CreateUserDto createUserDto = getTestUser ();
 
         Mockito.doThrow (new MailSendException ("Failure")).when (mailSender).send (Mockito.any (SimpleMailMessage.class));
 
@@ -82,5 +77,14 @@ public class UserServiceIT {
 
             Assert.assertNull ("Expected imported user to be rolled back", userByEmail);
         }
+    }
+
+    private CreateUserDto getTestUser () {
+        CreateUserDto createUserDto = new CreateUserDto ();
+        createUserDto.fullname = "John Doe";
+        createUserDto.email = "john@example.com";
+        createUserDto.password = "123456";
+        createUserDto.username = "user";
+        return createUserDto;
     }
 }
