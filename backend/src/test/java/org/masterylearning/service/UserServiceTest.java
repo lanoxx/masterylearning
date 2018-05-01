@@ -3,7 +3,6 @@ package org.masterylearning.service;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.junit.runners.BlockJUnit4ClassRunner;
 import org.masterylearning.domain.Role;
 import org.masterylearning.domain.User;
 import org.masterylearning.domain.ValidationIssue;
@@ -18,6 +17,7 @@ import org.mockito.MockitoAnnotations;
 import org.mockito.Spy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Arrays;
 
@@ -27,7 +27,7 @@ import static org.mockito.Mockito.*;
 
 /**
  */
-@RunWith(BlockJUnit4ClassRunner.class)
+@RunWith(SpringRunner.class)
 public class UserServiceTest {
 
     public static final User NULL_USER = new User (null, null, null, null);
