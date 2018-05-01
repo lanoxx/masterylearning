@@ -96,7 +96,9 @@ public class UserController {
 
     public CreateUserOutDto createUserFromDto (@RequestBody CreateUserDto dto) {
         CreateUserOutDto outDto = new CreateUserOutDto ();
-        outDto.userId = null;
+        outDto.success = false;
+        outDto.email = dto.email;
+        outDto.fullname = dto.fullname;
 
         ValidationResult validationResult = userService.validateCreateUserDto (dto);
         if (!validationResult.valid) {
@@ -118,6 +120,7 @@ public class UserController {
 
         User user = userService.createUser (dto);
 
+        outDto.success = true;
         outDto.userId = user.id;
         outDto.username = user.username;
         outDto.roles = user.getRoles ().stream ().map (role -> role.name).collect (Collectors.toList ());
