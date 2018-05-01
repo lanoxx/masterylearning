@@ -119,6 +119,10 @@ public class UserService {
         return null;
     }
 
+    public String generateDefaultPassword () {
+        return RandomStringUtils.random (10, true, true);
+    }
+
     public Map<ValidationResult, CreateUserDto> validateCreateUsersDto (CreateUsersDto usersDto) {
 
         Map<ValidationResult, CreateUserDto> results = new HashMap<> ();
@@ -196,10 +200,6 @@ public class UserService {
 
         result.valid = true;
         return result;
-    }
-
-    public String generateDefaultPassword () {
-        return RandomStringUtils.random (10, true, true);
     }
 
     @Transactional
