@@ -89,6 +89,15 @@ public class UserController {
         return userList.stream ().map (UserOutDto::new).collect (Collectors.toList ());
     }
 
+    @RequestMapping (path = "{username}", method = RequestMethod.GET)
+    @PreAuthorize ("hasRole ('ADMIN')")
+    public User
+    findUser (@PathVariable String username) {
+        User userByUsername = userRepository.getUserByUsername (username);
+
+        return userByUsername;
+    }
+
     @CrossOrigin
     @PreAuthorize (value = "hasRole('ADMIN')")
     @RequestMapping (method = RequestMethod.POST)
