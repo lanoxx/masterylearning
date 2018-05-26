@@ -1,7 +1,7 @@
 {
   "name": "smartlecture-client",
   "private": true,
-  "version": "0.7.2",
+  "version": "0.7.3",
   "description": "An elearning system for logic and math courses.",
   "repository": "https://github.com/lanoxx/masterylearning",
   "license": "MIT",
