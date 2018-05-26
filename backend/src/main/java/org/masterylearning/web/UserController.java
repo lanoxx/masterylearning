@@ -33,6 +33,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 /**
@@ -89,13 +90,21 @@ public class UserController {
         return userList.stream ().map (UserOutDto::new).collect (Collectors.toList ());
     }
 
-    @RequestMapping (path = "{username}", method = RequestMethod.GET)
+    @RequestMapping (path = "{username:.+}", method = RequestMethod.GET)
     @PreAuthorize ("hasRole ('ADMIN')")
-    public User
+    public UserOutDto
     findUser (@PathVariable String username) {
         User userByUsername = userRepository.getUserByUsername (username);
 
-        return userByUsername;
+        if (userByUsername == null) {
+            userByUsername = userRepository.getUserByEmail (username);
+        }
+
+        if (userByUsername == null) {
+            throw new NoSuchElementException ("User with username or email: " + username + " not found.");
+        }
+
+        return new UserOutDto (userByUsername);
     }
 
     @CrossOrigin
