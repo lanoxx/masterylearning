@@ -94,11 +94,13 @@ angular.module ('myapp.admin.addmultipleuser', [])
 
                 lines.forEach (function (line, index)
                 {
+                    line = line.trim();
+
                     if ($scope.settings.skipFirstLine && index === 0) {
                         return;
                     }
 
-                    if (line.length == 0) {
+                    if (line.length === 0) {
                         return;
                     }
 
