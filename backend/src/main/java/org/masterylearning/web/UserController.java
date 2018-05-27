@@ -12,6 +12,7 @@ import org.masterylearning.dto.RolesDto;
 import org.masterylearning.dto.RolesOutDto;
 import org.masterylearning.dto.in.ChangePasswordDto;
 import org.masterylearning.dto.in.CreateUserDto;
+import org.masterylearning.dto.in.CreateUsersInDto;
 import org.masterylearning.dto.out.ChangePasswordOutDto;
 import org.masterylearning.dto.out.CreateUserOutDto;
 import org.masterylearning.dto.out.UserOutDto;
@@ -119,7 +120,7 @@ public class UserController {
     @PreAuthorize (value = "hasRole ('ADMIN')")
     @RequestMapping (method = RequestMethod.POST, path = "import")
     public CreateUsersOutDto
-    createUsers (@RequestBody CreateUsersDto dto) {
+    createUsers (@RequestBody CreateUsersInDto dto) {
         CreateUsersOutDto outDto = new CreateUsersOutDto ();
 
         for (CreateUserDto createUserDto : dto.users) {

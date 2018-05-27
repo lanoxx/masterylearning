@@ -9,6 +9,7 @@ import org.masterylearning.domain.ValidationIssue;
 import org.masterylearning.domain.ValidationResult;
 import org.masterylearning.dto.CreateUsersOutDto;
 import org.masterylearning.dto.in.CreateUserDto;
+import org.masterylearning.dto.in.CreateUsersInDto;
 import org.masterylearning.dto.out.CreateUserOutDto;
 import org.masterylearning.service.UserService;
 import org.masterylearning.web.validation.UserValidation;
@@ -143,7 +144,7 @@ public class UserControllerTest {
     @Test
     public void testImportOfUsersWithErrors () {
 
-        CreateUsersDto usersDto = getImportUsers ();
+        CreateUsersInDto usersDto = getImportUsers ();
 
         String generatedUsername = "user1234567";
 
@@ -194,8 +195,8 @@ public class UserControllerTest {
         Assert.assertTrue (createUserOutDto.message.equals (ValidationIssue.FULLNAME_MISSING.getMessage ()));
     }
 
-    private CreateUsersDto getImportUsers () {
-        CreateUsersDto usersdto = new CreateUsersDto ();
+    private CreateUsersInDto getImportUsers () {
+        CreateUsersInDto usersdto = new CreateUsersInDto ();
         usersdto.users = new ArrayList<> ();
 
         CreateUserDto dto;
