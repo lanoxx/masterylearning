@@ -30,8 +30,8 @@
   "scripts": {
     "clean": "rm -rf ./dist",
     "postinstall": "bower install",
-    "prestart": "npm install",
-    "start": "ws -p 8082 -r '/api/*->http://localhost:8080/$1' -d app",
+    "prestart": "npm run build",
+    "start": "ws -p 8082 -r '/api/*->http://localhost:8080/$1' -d dist",
     "pretest": "npm install",
     "bower": "bower",
     "prebuild": "npm run clean",
