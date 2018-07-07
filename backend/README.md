@@ -61,7 +61,7 @@ there are two ways to run this application in a production environment:
     named `backend-<version>.jar`.
  2. Use docker and start the docker container named `masterylearning/backend`. 
 
-### Run Executable `jar`-File
+## Run Executable `jar`-File
 
 To run the executable `jar`-file directly use the following
 command:
@@ -78,7 +78,7 @@ You can define additional properties with the `-D` option. Use this
 See [Configuration and preparation](#configuration-and-preparation) 
 for configuration details for the data source.
 
-### Start a Docker Container
+## Start a Docker Container
 
 Alternatively you can create and start a new docker container:
 
@@ -96,3 +96,29 @@ You can check if everything works by running
 
 The REST endpoints should now be available on the host through
 `http://localhost:8080`.
+
+## Swagger Documentation
+
+REST endpoints are documented with Swagger using the Springfox libraries.
+After starting the backend service you can navigate to `${swagger-host}/${swagger-path}/swagger-ui.html`
+by default `${swagger-host}` and `${swagger-path}` resolve to the empty string,
+which makes the Swagger UI accessible from `/swagger-ui.html`. By starting
+the backend module with these properties you can customize the location of
+the swagger-ui in case the application runs behind a *reverse-proxy*.
+
+For example, set `swagger.path=/api`, to access the Swagger UI via
+`/api/swagger-ui.html`. 
+
+## Developing with E-Mail Support
+
+For development we recommend to setup a Docker container that runs `mailhog`.
+To start a MailHog container use:
+
+    docker run -d --name masterylearning-mailhog mailhog
+
+The default Docker container runs an SMTP server on 1025 and a
+simple web frontend on port 8025.
+
+By setting the properties `spring.mail.host=localhost` and `spring.mail.port=1025`
+you can enable mail support in the backend and check if you received mail
+from the backend via `http://localhost:8025`.
