@@ -27,10 +27,16 @@ in the individual modules as well as in the documentation:
 * [Reverse-Proxy](reverse-proxy/)
 * [Documentation](docs/)
 
-The backend module handles access to the database
-and offers REST endpoints for access to the data. The client module
+The **backend** module handles access to the database
+and offers REST endpoints for access to the data. 
+
+The **client** module
 contains all the code for the website that our end users will see.
-The documentation contains additional information about this application,
+
+The **reverse-proxy** module handles redirection from HTTP to HTTPS
+and also serves ACME challenges from *certbot* which run via HTTP.
+
+The **documentation** contains additional information about this application,
 including information about the data model and the REST endpoints.
 
 ## Testing, Building, Installing
