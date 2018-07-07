@@ -32,7 +32,7 @@ body {
     padding: 50px;
     position: relative;
     margin-top: -100px; /* negative value of footer height */
-    height: 100px;
+    min-height: 100px;
     clear:both;
     padding-top:20px;
 }
