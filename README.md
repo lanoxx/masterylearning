@@ -24,6 +24,7 @@ in the individual modules as well as in the documentation:
 
 * [Backend](backend/)
 * [Client](client/)
+* [Reverse-Proxy](reverse-proxy/)
 * [Documentation](docs/)
 
 The backend module handles access to the database
