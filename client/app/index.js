@@ -28,6 +28,12 @@ require('./components/password/password.html');
 require('d3/d3.js');
 require('lodash/lodash.js');
 
+/** angular-katex requires a global variable named 'katex' to be present in the global scope
+ *  therefore we need to assign the require statement to the katex variable.
+ **/
+window.katex = require('katex/dist/katex.min');
+require('katex/dist/contrib/auto-render.min');
+
 require('angular-resource/angular-resource.js');
 require('angular-sanitize/angular-sanitize.js');
 require('angular-cookies/angular-cookies.js');
