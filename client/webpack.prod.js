@@ -1,5 +1,6 @@
 const webpack = require ('webpack');
 const path = require ('path');
+const devMode = process.env.NODE_ENV !== 'production';
 
 /*
  * We've enabled UglifyJSPlugin for you! This minifies your app
@@ -20,7 +21,7 @@ const UglifyJSPlugin = require ('uglifyjs-webpack-plugin');
  *
  */
 
-//const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 /*
  * SplitChunksPlugin is enabled by default and replaced
@@ -67,18 +68,13 @@ module.exports = {
                         loader: 'html-loader'
                     }
                 ]
-            }
-        ]
-    },
-
-    /*module: {
-        rules: [
+            },
             {
-                test: /app/**\.css$/,
+                test: /\.css$/,
 
                 use: [
                     {
-                        loader: MiniCssExtractPlugin.loader
+                        loader: devMode ? 'style-loader' : MiniCssExtractPlugin.loader,
                     },
                     {
                         loader: 'css-loader',
@@ -88,18 +84,32 @@ module.exports = {
                         }
                     }
                 ]
+            },
+            {
+                test: /\.(png|svg|jpg|gif)$/,
+
+                use: [
+                    'file-loader'
+                ]
+            },
+            {
+                test: /\.(woff|woff2|eot|ttf|otf)$/,
+                use: [
+                    'file-loader'
+                ]
             }
         ]
-    },*/
+    },
 
     plugins: [
         new UglifyJSPlugin (),
         new HtmlWebpackPlugin({
                                   template: 'app/index.tpl.html'
-                              })
-        /*new MiniCssExtractPlugin({ filename: 'app/app.css' })*/
+                              }),
+        new MiniCssExtractPlugin({ filename: devMode ? '[name].css' : '[name].[hash].css' })
     ],
     mode:    'development',
+    devtool: devMode ? 'cheap-module-eval-source-map' : 'source-map',
 
     optimization: {
         splitChunks: {

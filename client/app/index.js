@@ -1,3 +1,10 @@
+window.jQuery = require('jquery/dist/jquery');
+require('bootstrap/dist/css/bootstrap.css');
+require('bootstrap/dist/js/bootstrap');
+require('angular-ui-bootstrap/dist/ui-bootstrap-csp.css');
+require('katex/dist/katex.min.css');
+require('vis/dist/vis.css');
+require('./app.css');
 require('angular/angular.js');
 
 require('./teacher/statistics/course-statistics.html');
@@ -32,7 +39,11 @@ require('lodash/lodash.js');
  *  therefore we need to assign the require statement to the katex variable.
  **/
 window.katex = require('katex/dist/katex.min');
-require('katex/dist/contrib/auto-render.min');
+
+/**
+ * The js-utils from Andreas Holzer depend on the global renderMathinElement function being available.
+ **/
+window.renderMathInElement = require('katex/dist/contrib/auto-render.min');
 
 require('angular-resource/angular-resource.js');
 require('angular-sanitize/angular-sanitize.js');
