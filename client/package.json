@@ -35,7 +35,7 @@
     "prebuild": "npm run clean",
     "build": "webpack --config webpack.prod.js",
     "prerelease": "npm run clean",
-    "release": "webpack --config webpack.prod.js -p",
+    "release": "NODE_ENV='production' webpack --config webpack.prod.js -p",
     "test": "karma start karma.conf.js",
     "test-single-run": "karma start karma.conf.js  --single-run",
     "preupdate-webdriver": "npm install",
