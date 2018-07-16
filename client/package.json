@@ -34,7 +34,7 @@
     "pretest": "npm install",
     "prebuild": "npm run clean",
     "build": "webpack --config webpack.prod.js",
-    "prerelease": "npm run clean",
+    "prerelease": "npm ci; npm run clean",
     "release": "NODE_ENV='production' webpack --config webpack.prod.js -p",
     "test": "karma start karma.conf.js",
     "test-single-run": "karma start karma.conf.js  --single-run",
