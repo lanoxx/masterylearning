@@ -5,6 +5,25 @@
   "description": "An elearning system for logic and math courses.",
   "repository": "https://github.com/lanoxx/masterylearning",
   "license": "MIT",
+  "dependencies": {
+    "@uirouter/angularjs": "~1.0",
+    "angular": "~1.4",
+    "angular-base64": "^2.0.5",
+    "angular-cookies": "~1.4",
+    "angular-katex": "~0.9",
+    "angular-resource": "~1.4",
+    "angular-sanitize": "~1.4",
+    "angular-ui-bootstrap": "~2.5",
+    "bootstrap": "3.3.7",
+    "d3": "^3.5.17",
+    "elearning-content-fmi": "git+ssh://git@gitlab.com/lanoxx/elearning-content-fmi.git#master",
+    "jquery": "~3.3.1",
+    "js-utils": "git+ssh://git@gitlab.com/lanoxx/js-utils.git#master",
+    "katex": "^0.6.0",
+    "lodash": "^4.17.4",
+    "text-clipper": "^1.2.1",
+    "vis": "^4.16.1"
+  },
   "devDependencies": {
     "css-loader": "~1.0",
     "file-loader": "~1.1.11",
@@ -24,7 +43,7 @@
     "shelljs": "^0.2.6",
     "style-loader": "^0.21.0",
     "uglifyjs-webpack-plugin": "^1.2.5",
-    "webpack": "^4.6.0",
+    "webpack": "^4.16.0",
     "webpack-cli": "^2.0.15"
   },
   "scripts": {
@@ -43,25 +62,7 @@
     "config_production": "cp config/production.js app/config.js",
     "config_development": "cp config/development.js app/config.js",
     "preprotractor": "npm run update-webdriver",
-    "protractor": "protractor e2e-tests/protractor.conf.js"
-  },
-  "dependencies": {
-    "@uirouter/angularjs": "~1.0",
-    "angular": "~1.4",
-    "angular-base64": "^2.0.5",
-    "angular-cookies": "~1.4",
-    "angular-katex": "~0.9",
-    "angular-resource": "~1.4",
-    "angular-sanitize": "~1.4",
-    "angular-ui-bootstrap": "~2.5",
-    "bootstrap": "3.3.7",
-    "d3": "^3.5.17",
-    "elearning-content-fmi": "git+ssh://git@gitlab.com/lanoxx/elearning-content-fmi.git#master",
-    "jquery": "~3.3.1",
-    "js-utils": "git+ssh://git@gitlab.com/lanoxx/js-utils.git#master",
-    "katex": "^0.6.0",
-    "lodash": "^4.17.4",
-    "text-clipper": "^1.2.1",
-    "vis": "^4.16.1"
+    "protractor": "protractor e2e-tests/protractor.conf.js",
+    "watch": "webpack --config webpack.prod.js --watch --progress && npm run start"
   }
 }
