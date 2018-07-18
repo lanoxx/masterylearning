@@ -1,9 +1,14 @@
 var clip = require('text-clipper/dist/index.js');
+require ('./delete/delete-course.js');
+require ('./import/import-course.js');
+
 angular.module('myapp.teacher', [
     'ui.router',
     'ngSanitize',
     'myapp.services.course',
     'myapp.teacher.edit',
+    'myapp.teacher.import-course',
+    'myapp.teacher.delete',
     'myapp.teacher.statistics'
 ])
 

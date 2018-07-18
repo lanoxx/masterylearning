@@ -1,28 +1,49 @@
 <div class="container-fluid maxwidth">
     <ui-view>
-        <h1>Current courses</h1>
 
-        <table class="table">
-            <tr>
-                <th>#</th>
-                <th>Title</th>
-                <th>Period</th>
-                <th>Description</th>
-                <th>Actions</th>
-            </tr>
+        <div class="row">
+            <div class="col-md-12">
 
-            <tr ng-repeat="course in courses">
-                <th>{{$index + 1}}</th>
-                <td>{{course.title}}</td>
-                <td>{{course.period}}</td>
-                <td ng-bind-html="truncateAndTrust(course.description, 200)"></td>
-                <td>
-                    <a data-ui-sref=".edit-course({ courseId: course.id })" href="">Edit</a><span> | </span>
-                    <a data-ui-sref=".statistics({ courseId: course.id })" href="">Statistics</a>
-                </td>
-            </tr>
+                <h1>Course Overview</h1>
 
-        </table>
+                <table class="table">
+                    <tr>
+                        <th>#</th>
+                        <th>Title</th>
+                        <th>Period</th>
+                        <th>Description</th>
+                        <th>Actions</th>
+                    </tr>
+
+                    <tr ng-repeat="course in courses">
+                        <th>{{$index + 1}}</th>
+                        <td>{{course.title}}</td>
+                        <td>{{course.period}}</td>
+                        <td ng-bind-html="truncateAndTrust(course.description, 200)"></td>
+                        <td>
+                            <a data-ui-sref=".edit-course({ courseId: course.id })" href="">Edit</a><span> | </span>
+                            <a data-ui-sref=".statistics({ courseId: course.id })" href="">Statistics</a><span> | </span>
+                            <a data-ui-sref=".delete-course({ courseId: course.id })" href="">Delete</a>
+                        </td>
+                    </tr>
+
+                </table>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+
+                <h1>Course Import</h1>
+
+                <div class="alert alert-info">
+                    Import new courses from a JSON file.
+                </div>
+
+                <a class="btn btn-primary" ui-sref="home.teacher.import" href="">Import Course</a>
+            </div>
+        </div>
+
     </ui-view>
     <ui-view name="details"></ui-view>
 </div>

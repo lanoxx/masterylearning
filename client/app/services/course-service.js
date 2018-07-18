@@ -36,8 +36,17 @@ angular.module ('myapp.services.course', ['ngResource', 'myapp.config'])
         this.updateCourse = function ()
         {
             return $resource (apiUrlPrefix + "/courses/:courseId", {courseId: "@courseId"});
-        }
+        };
 
+        this.createCourse = function ()
+        {
+            return $resource (apiUrlPrefix + "/courses");
+        };
+
+        this.deleteCourse = function ()
+        {
+            return $resource (apiUrlPrefix + "/courses/:courseId", {courseId: "@courseId"});
+        }
     }
 
     this.$get = ['$resource', 'Configuration', function ($resource, Configuration)

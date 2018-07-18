@@ -1,4 +1,4 @@
-angular.module ('myapp.admin.addmultipleuser', [])
+angular.module ('myapp.admin.addmultipleuser', ['common.file-upload'])
 
     .directive ('myAppAddMultipleUsers', function ()
     {
@@ -123,59 +123,6 @@ angular.module ('myapp.admin.addmultipleuser', [])
                 onConfirm: '&'
             },
             controller: ['$scope', 'UserService', '$log', '$window', AddMultipleUsersController]
-        }
-    })
-
-    /**
-     * References:
-     *   https://www.html5rocks.com/en/tutorials/file/dndfiles/
-     *
-     *
-     */
-    .directive ('fileUpload', function ()
-    {
-        function FileUploadController ($scope)
-        {
-            this.emitLoadEvent = function ()
-            {
-                $scope.fileOnLoad();
-            };
-        }
-
-        function link (scope, element, attributes, controllers)
-        {
-            var fileUploadController = controllers[0];
-            var ngModelController = controllers[1];
-
-            element.bind ('change', function (changeEvent)
-            {
-                var file = changeEvent.target.files[0];
-
-                var fileReader = new FileReader ();
-
-                fileReader.onload = function (loadEvent)
-                {
-                    var data = loadEvent.target.result;
-
-                    ngModelController.$setViewValue(data);
-
-                    fileUploadController.emitLoadEvent();
-
-                    scope.$apply();
-                };
-
-                fileReader.readAsText(file);
-            });
-        }
-
-        return {
-            require: ['fileUpload', 'ngModel'],
-            restrict: 'A',
-            scope: {
-                fileOnLoad: '&'
-            },
-            controller: ['$scope', FileUploadController],
-            link: link
         }
     });
 
