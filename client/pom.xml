@@ -43,20 +43,6 @@
               <goal>exec</goal>
             </goals>
           </execution>
-          <execution>
-            <id>exec-npm-production</id>
-            <phase>generate-resources</phase>
-            <configuration>
-              <executable>npm</executable>
-              <arguments>
-                <argument>run</argument>
-                <argument>config_production</argument>
-              </arguments>
-            </configuration>
-            <goals>
-              <goal>exec</goal>
-            </goals>
-          </execution>
         </executions>
       </plugin>
 
