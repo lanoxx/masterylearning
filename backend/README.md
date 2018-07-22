@@ -122,3 +122,12 @@ simple web frontend on port 8025.
 By setting the properties `spring.mail.host=localhost` and `spring.mail.port=1025`
 you can enable mail support in the backend and check if you received mail
 from the backend via `http://localhost:8025`.
+
+## Database Migrations
+
+The backend uses the [Flyway library](https://flywaydb.org/) to perform
+automated database migrations and schema validatiosn at startup.
+
+Additional notes concerning database migrations and how to create
+corresponding migration scripts can be found in the
+[migration/Readme.md](src/main/resources/db/migration/Readme.md).
