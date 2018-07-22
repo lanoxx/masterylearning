@@ -9,9 +9,9 @@ When this module is built with the install phase of Maven, then
 it will create two Docker images named `masterylearning/client`
 and `masterylearning/client-plain`. The plain image was added in version
 0.7 and does not require SSL certificates, it serves files on port
-80, however it has no reverse-proxy configuration, so for development
-and testing purposes a separate reverse-proxy needs to be started
-on the development machine when the plain image is used.
+80, in addition it has a reverse-proxy configuration. The plain image
+can be used for development and testing purposes but should not
+be used in production environments.
 
 Both Docker images are based on the **nginx** web server and include
 the application files. Each image also works as reverse-proxy to forward

@@ -1,35 +1,11 @@
 # This is a template file that will be replaced at container instantiation time
 # by the docker entry point. See the 'RUN' directive in the Dockerfile of this module
 server {
-    listen       443;
+    listen       80;
     server_name  ${NGINX_HOST};
 
     #charset koi8-r;
     #access_log  /var/log/nginx/log/host.access.log  main;
-
-    ssl on;
-    ssl_certificate /etc/letsencrypt/live/${NGINX_HOST}/fullchain.pem;
-    ssl_certificate_key /etc/letsencrypt/live/${NGINX_HOST}/privkey.pem;
-
-    ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
-    ssl_prefer_server_ciphers on;
-
-    # This is the location of the private key, due to the nature of the private
-    # key this cannot be shared with the docker image and must be mapped
-    # or copied into the container when the container is created.
-    #
-    # When a deployment on a new host is made a new key can be generated with the
-    # following command.
-    #
-    #    sudo openssl dhparam -out /etc/ssl/certs/dhparam.pem 2048
-    ssl_dhparam /etc/ssl/certs/dhparam.pem;
-    ssl_ciphers 'ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-AES256-GCM-SHA384:DHE-RSA-AES128-GCM-SHA256:DHE-DSS-AES128-GCM-SHA256:kEDH+AESGCM:ECDHE-RSA-AES128-SHA256:ECDHE-ECDSA-AES128-SHA256:ECDHE-RSA-AES128-SHA:ECDHE-ECDSA-AES128-SHA:ECDHE-RSA-AES256-SHA384:ECDHE-ECDSA-AES256-SHA384:ECDHE-RSA-AES256-SHA:ECDHE-ECDSA-AES256-SHA:DHE-RSA-AES128-SHA256:DHE-RSA-AES128-SHA:DHE-DSS-AES128-SHA256:DHE-RSA-AES256-SHA256:DHE-DSS-AES256-SHA:DHE-RSA-AES256-SHA:AES128-GCM-SHA256:AES256-GCM-SHA384:AES128-SHA256:AES256-SHA256:AES128-SHA:AES256-SHA:AES:CAMELLIA:DES-CBC3-SHA:!aNULL:!eNULL:!EXPORT:!DES:!RC4:!MD5:!PSK:!aECDH:!EDH-DSS-DES-CBC3-SHA:!EDH-RSA-DES-CBC3-SHA:!KRB5-DES-CBC3-SHA';
-    ssl_session_timeout 1d;
-    ssl_session_cache shared:SSL:50m;
-    ssl_stapling on;
-    ssl_stapling_verify on;
-    add_header Strict-Transport-Security max-age=15768000;
-
 
     location / {
         root /var/www;
