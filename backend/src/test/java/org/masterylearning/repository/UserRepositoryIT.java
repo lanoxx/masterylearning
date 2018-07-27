@@ -13,7 +13,6 @@ import org.masterylearning.domain.Role;
 import org.masterylearning.domain.User;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.core.env.Environment;
-import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,7 +26,6 @@ import static org.hamcrest.Matchers.isA;
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest
-@TestPropertySource(locations="classpath:app.properties")
 public class UserRepositoryIT {
 
     @Inject UserRepository userRepository;

@@ -22,8 +22,7 @@ import javax.inject.Inject;
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest
-@TestPropertySource(locations="classpath:app.properties",
-                    /* we need to disable mail health check since we are mocking the mailSender bean */
+@TestPropertySource(/* we need to disable mail health check since we are mocking the mailSender bean */
                     properties = {"management.health.mail.enabled=false"})
 public class UserServiceIT {
 
