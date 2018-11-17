@@ -27,7 +27,7 @@ public class PasswordResetToken {
             = Duration.ZERO.plus (EXPIRATION, MINUTES);
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     public String token;

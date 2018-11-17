@@ -14,6 +14,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
+import java.util.Optional;
 
 import static org.junit.Assert.assertTrue;
 
@@ -42,7 +43,11 @@ public class CourseRepositoryIT {
 
         assertTrue (course.id != null);
 
-        course = courseRepository.findOne(course.id);
+        Optional<Course> maybeCourse = courseRepository.findById (course.id);
+
+        assertTrue (maybeCourse.isPresent ());
+
+        course = maybeCourse.get ();
 
         Hibernate.initialize (course.children);
 
@@ -69,7 +74,11 @@ public class CourseRepositoryIT {
 
         courseRepository.save (course);
 
-        course = courseRepository.findOne(course.id);
+        Optional<Course> maybeCourse = courseRepository.findById (course.id);
+
+        assertTrue (maybeCourse.isPresent ());
+
+        course = maybeCourse.get ();
 
         Hibernate.initialize (course.children);
 

@@ -4,6 +4,7 @@ import org.hibernate.annotations.Type;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import java.time.LocalDateTime;
@@ -14,7 +15,7 @@ import java.time.LocalDateTime;
 public class EntryHistory {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue (strategy = GenerationType.IDENTITY)
     public Long id;
 
     @ManyToOne (optional = false)
@@ -29,10 +30,8 @@ public class EntryHistory {
     @ManyToOne (optional = false)
     public Entry entry;
 
-    @Type (type = "localDateTimeType")
     public LocalDateTime created;
 
-    @Type (type = "localDateTimeType")
     public LocalDateTime modified;
 
     @Type (type = "text")

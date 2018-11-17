@@ -10,7 +10,6 @@ import org.masterylearning.repository.EntryHistoryRepository;
 import org.masterylearning.repository.UserRepository;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
@@ -28,8 +27,6 @@ public class HistoryService {
     @Inject EntryHistoryRepository entryHistoryRepository;
     @Inject UserRepository userRepository;
 
-    @Inject PlatformTransactionManager transactionManager;
-
     @Transactional
     public List<CourseHistory> addActiveCourses (List<Course> all) {
         Object principal = SecurityContextHolder.getContext ().getAuthentication ().getPrincipal ();
@@ -41,7 +38,13 @@ public class HistoryService {
 
             // The user object stored in the principal of the security context is no longer bound
             // to an active hibernate session, so we need to reload the user.
-            User user = userRepository.findOne (userId);
+            Optional<User> maybeUser = userRepository.findById (userId);
+
+            if (!maybeUser.isPresent ()) {
+                return null;
+            }
+
+            User user = maybeUser.get ();
 
             courseHistoryList = user.getCourseHistoryList ();
             for (Course course : all) {
@@ -67,7 +70,7 @@ public class HistoryService {
                     courseHistory.lastEntry = entry;
 
                     courseHistoryList.add (courseHistory);
-                    courseHistoryRepository.save (courseHistoryList);
+                    courseHistoryRepository.saveAll (courseHistoryList);
 
                     EntryHistory entryHistory = new EntryHistory ();
                     entryHistory.courseHistory = courseHistory;
@@ -79,7 +82,7 @@ public class HistoryService {
                     List<EntryHistory> entryHistoryList = courseHistory.getEntryHistoryList ();
                     entryHistoryList.add (entryHistory);
 
-                    entryHistoryRepository.save (entryHistoryList);
+                    entryHistoryRepository.saveAll (entryHistoryList);
                 }
             }
         }
@@ -101,7 +104,13 @@ public class HistoryService {
             return null;
         }
 
-        User user = userRepository.findOne (userId);
+        Optional<User> maybeUser = userRepository.findById (userId);
+
+        if (!maybeUser.isPresent ()) {
+            return null;
+        }
+
+        User user = maybeUser.get ();
 
         Optional<CourseHistory> first
                 = user.getCourseHistoryList ()
@@ -109,11 +118,8 @@ public class HistoryService {
                       .filter (courseHistory -> courseHistory.course.id.equals (courseId))
                       .findFirst ();
 
-        if (first.isPresent ()) {
-            return first.get ();
-        }
+        return first.orElse (null);
 
-        return null;
     }
 
 

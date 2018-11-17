@@ -11,6 +11,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.inject.Inject;
 import javax.transaction.Transactional;
+import java.util.Optional;
 
 import static org.junit.Assert.assertTrue;
 
@@ -41,7 +42,11 @@ public class EntryRepositoryIT {
 
         entryRepository.save (entry1);
 
-        entry1 = entryRepository.findOne (entry1.id);
+        Optional<Entry> maybeEntry = entryRepository.findById (entry1.id);
+
+        assertTrue (maybeEntry.isPresent ());
+
+        entry1 = maybeEntry.get ();
 
         Hibernate.initialize (entry1.data);
 
@@ -70,7 +75,11 @@ public class EntryRepositoryIT {
 
         entryRepository.save (entry1);
 
-        entry1 = entryRepository.findOne (entry1.id);
+        Optional<Entry> maybeEntry = entryRepository.findById (entry1.id);
+
+        assertTrue (maybeEntry.isPresent ());
+
+        entry1 = maybeEntry.get ();
 
         Hibernate.initialize (entry1.children);
 

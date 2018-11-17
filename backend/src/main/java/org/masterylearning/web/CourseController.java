@@ -25,6 +25,8 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
@@ -55,13 +57,10 @@ public class CourseController {
     public List<Entry>
     getCourseOverview (@PathVariable Long courseId) {
 
-        Course course = courseRepository.findOne (courseId);
+        Optional<Course> maybeCourse = courseRepository.findById (courseId);
 
-        if (course != null) {
-            return courseService.getTableOfContents (course);
-        }
-
-        return null;
+        return maybeCourse.map (course -> courseService.getTableOfContents (course))
+                          .orElse (null);
     }
 
 
@@ -75,11 +74,13 @@ public class CourseController {
             return false;
         }
 
-        Course course = courseRepository.findOne (courseId);
+        Optional<Course> maybeCourse = courseRepository.findById (courseId);
 
-        if (course == null) {
+        if (!maybeCourse.isPresent ()) {
             return false;
         }
+
+        Course course = maybeCourse.get ();
 
         if (dto.title != null) {
             course.title = dto.title;
@@ -110,11 +111,9 @@ public class CourseController {
     public Course
     getCourseFull (@PathVariable Long courseId) {
 
-        Course course = courseRepository.findOne (courseId);
+        Optional<Course> course = courseRepository.findById (courseId);
 
-        logger.info ("Loaded course: " + (course != null ? course.id : "NULL"));
-
-        return course;
+        return course.orElseThrow (() -> new NoSuchElementException ("Course not found. Course Id: " + courseId));
     }
 
     @PreAuthorize ("hasRole ('TEACHER') or hasRole ('ADMIN')")
@@ -149,7 +148,7 @@ public class CourseController {
 
         courseHistories.forEach (courseHistory -> courseHistoryRepository.delete (courseHistory));
 
-        courseRepository.delete (courseId);
+        courseRepository.deleteById (courseId);
 
         return true;
     }

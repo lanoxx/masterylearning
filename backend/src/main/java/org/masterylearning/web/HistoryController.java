@@ -119,7 +119,6 @@ public class HistoryController {
     @RequestMapping (method = RequestMethod.GET, path = "/courses/{courseId}")
     @Transactional
     public List<EntryDataOutDto> getTableOfContents (@PathVariable Long courseId) {
-        Course course;
         List<Entry> tableOfContents;
         CourseHistory courseHistory;
         List<EntryHistory> entryHistoryList;
@@ -128,7 +127,13 @@ public class HistoryController {
             return null;
         }
 
-        course = courseRepository.findOne (courseId);
+        Optional<Course> maybeCourse = courseRepository.findById (courseId);
+
+        if (!maybeCourse.isPresent ()) {
+            return null;
+        }
+
+        Course course = maybeCourse.get ();
 
         tableOfContents = courseService.getTableOfContents (course);
 
@@ -162,24 +167,33 @@ public class HistoryController {
                                                 .getAuthentication ()
                                                 .getPrincipal ();
 
-        User user;
+        Optional<User> maybeUser;
         if (!(principal instanceof User)) {
             return null;
         } else {
             Long userId = ((User) principal).id;
-            user = userRepository.findOne (userId);
+
+            maybeUser = userRepository.findById (userId);
+
+            if (!maybeUser.isPresent ()) {
+                return null;
+            }
         }
+
+        User user = maybeUser.get ();
 
         Entry root;
         CourseHistory courseHistory;
         List<EntryHistory> entryHistoryList;
 
-        Course course = courseRepository.findOne (courseId);
+        Optional<Course> maybeCourse = courseRepository.findById (courseId);
 
-        if (course == null) {
+        if (!maybeCourse.isPresent ()) {
             //TODO return error
             return null;
         }
+
+        Course course = maybeCourse.get ();
 
         courseHistory = historyService.getCourseHistory (courseId);
 
@@ -302,7 +316,7 @@ public class HistoryController {
         entryHistory.user = courseHistory.user;
         entryHistory.created = LocalDateTime.now ();
         entryHistoryList.add (entryHistory);
-        entryHistoryRepository.save (entryHistoryList);
+        entryHistoryRepository.saveAll (entryHistoryList);
 
         courseHistory.modified = LocalDateTime.now ();
         courseHistory.lastEntry = entry;
@@ -324,7 +338,13 @@ public class HistoryController {
             return false;
         }
 
-        User user = userRepository.findOne (userId);
+        Optional<User> maybeUser = userRepository.findById (userId);
+
+        if (!maybeUser.isPresent ()) {
+            return false;
+        }
+
+        User user = maybeUser.get ();
 
         EntryHistory entryHistory = historyService.findEntryHistory (user, courseId, entryId);
 

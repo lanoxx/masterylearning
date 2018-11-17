@@ -21,7 +21,6 @@ import javax.persistence.OneToOne;
  */
 @JsonTypeInfo(
         use = JsonTypeInfo.Id.NAME,
-        include = JsonTypeInfo.As.PROPERTY,
         property = "type")
 @JsonSubTypes({
         @Type(value = Section.class, name = "section"),
