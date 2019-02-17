@@ -48,19 +48,4 @@ public class StatisticController {
 
         return outDto;
     }
-
-/*  @RequestMapping(method = RequestMethod.GET, path = "courseHistory/{courseId}/users/{userId}")
-    @Transactional
-    public UserStatisticsOutDto getUserStatistics (@PathVariable Long courseId, @PathVariable Long userId) {
-
-        if (courseId == null || userId == null) {
-            return null;
-        }
-
-        UserStatisticsOutDto outDto = new UserStatisticsOutDto ();
-
-
-
-        return outDto;
-    }*/
 }
