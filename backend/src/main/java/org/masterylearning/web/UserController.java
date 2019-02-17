@@ -2,7 +2,6 @@ package org.masterylearning.web;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.masterylearning.domain.PasswordResetToken;
 import org.masterylearning.domain.Role;
 import org.masterylearning.domain.User;
 import org.masterylearning.domain.ValidationIssue;
@@ -16,15 +15,14 @@ import org.masterylearning.dto.in.CreateUsersInDto;
 import org.masterylearning.dto.out.ChangePasswordOutDto;
 import org.masterylearning.dto.out.CreateUserOutDto;
 import org.masterylearning.dto.out.UserOutDto;
-import org.masterylearning.repository.PasswordResetTokenRepository;
 import org.masterylearning.repository.UserRepository;
+import org.masterylearning.service.PasswordService;
 import org.masterylearning.service.RoleService;
 import org.masterylearning.service.UserService;
 import org.masterylearning.web.validation.UserValidation;
 import org.springframework.mail.MailException;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -47,23 +45,20 @@ public class UserController {
     private Logger log = LogManager.getLogger (UserController.class);
 
     private UserRepository userRepository;
-    private PasswordResetTokenRepository passwordResetTokenRepository;
     private UserService userService;
-    private PasswordEncoder passwordEncoder;
+    private PasswordService passwordService;
     private RoleService roleService;
     private UserValidation userValidation;
 
     public UserController (UserRepository userRepository,
-                           PasswordResetTokenRepository passwordResetTokenRepository,
                            UserService userService,
-                           PasswordEncoder passwordEncoder,
+                           PasswordService passwordService,
                            RoleService roleService,
                            UserValidation userValidation)
     {
         this.userRepository = userRepository;
-        this.passwordResetTokenRepository = passwordResetTokenRepository;
         this.userService = userService;
-        this.passwordEncoder = passwordEncoder;
+        this.passwordService = passwordService;
         this.roleService = roleService;
         this.userValidation = userValidation;
     }
@@ -224,26 +219,21 @@ public class UserController {
     }
 
     @PostMapping(path = "/current/password")
-    @Transactional
     public ChangePasswordOutDto
     changePassword (@RequestBody ChangePasswordDto dto) {
         ChangePasswordOutDto outDto = new ChangePasswordOutDto ();
 
         Object principal = SecurityContextHolder.getContext ().getAuthentication ().getPrincipal ();
 
-        if (principal instanceof User) {
-            User currentUser = (User) principal;
-
-            if (passwordEncoder.matches (dto.oldPassword, currentUser.password)) {
-                currentUser.password = passwordEncoder.encode (dto.newPassword);
-                userRepository.save (currentUser);
-
-                outDto.passwordChanged = true;
-
-            } else {
-                outDto.passwordChanged = false;
-            }
+        if (!(principal instanceof User)) {
+            return outDto;
         }
+
+        User currentUser = (User) principal;
+
+        outDto.passwordChanged = passwordService.changePassword (currentUser,
+                                                                 dto.oldPassword,
+                                                                 dto.newPassword);
 
         return outDto;
     }

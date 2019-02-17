@@ -31,6 +31,22 @@ public class PasswordService {
     @Inject PasswordResetTokenRepository resetTokenRepository;
 
     @Transactional
+    public boolean changePassword (User user,
+                                   String oldPassword,
+                                   String newPassword)
+    {
+        // this ensures that the current user's password matches the password that the user supplied
+        if (!passwordEncoder.matches (oldPassword, user.password)) {
+            return false;
+        }
+
+        user.password = passwordEncoder.encode (newPassword);
+        userRepository.save (user);
+
+        return true;
+    }
+
+    @Transactional
     public void sendPasswordResetEmail (String username, String hostname)
     {
         if (username == null)
