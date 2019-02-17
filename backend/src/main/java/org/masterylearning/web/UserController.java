@@ -174,12 +174,7 @@ public class UserController {
         try {
             User user = userService.createUser (dto);
 
-            outDto.success = true;
-            outDto.userId = user.id;
-            outDto.fullname = user.fullname;
-            outDto.username = user.username;
-            outDto.email = user.email;
-            outDto.roles = user.getRoles ().stream ().map (role -> role.name).collect (Collectors.toList ());
+            outDto.copyUserDetails (user);
 
         } catch (MailException e) {
 
