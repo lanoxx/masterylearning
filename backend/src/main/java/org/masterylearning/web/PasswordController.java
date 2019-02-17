@@ -2,19 +2,13 @@ package org.masterylearning.web;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.masterylearning.domain.PasswordResetToken;
-import org.masterylearning.domain.User;
 import org.masterylearning.dto.in.ResetPasswordDto;
 import org.masterylearning.dto.out.ChangePasswordOutDto;
 import org.masterylearning.dto.out.PasswordResetOutDto;
-import org.masterylearning.repository.PasswordResetTokenRepository;
-import org.masterylearning.repository.UserRepository;
-import org.masterylearning.service.UserService;
+import org.masterylearning.service.PasswordService;
 import org.springframework.core.env.Environment;
 import org.springframework.mail.MailException;
-import org.springframework.mail.MailSender;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,10 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
-import javax.transaction.Transactional;
-import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
-import java.util.UUID;
 
 /**
  *
@@ -35,122 +25,74 @@ import java.util.UUID;
 @RequestMapping (path = "password")
 public class PasswordController {
 
-    Logger logger = LogManager.getLogger (PasswordController.class);
+    private Logger logger = LogManager.getLogger (PasswordController.class);
 
     @Inject Environment environment;
-
-    @Inject UserRepository userRepository;
-    @Inject UserService userService;
-    @Inject PasswordResetTokenRepository passwordResetTokenRepository;
-    @Inject PasswordEncoder passwordEncoder;
-
-    @SuppressWarnings("SpringJavaAutowiringInspection")
-    @Inject MailSender mailSender;
+    @Inject PasswordService passwordService;
 
     @PostMapping(path = "/resetToken")
-    @Transactional
     public PasswordResetOutDto
     getPasswordTokenPerMail (HttpServletRequest request, @RequestBody ResetPasswordDto dto)
     {
+        final String message = "Your password reset request has been received. If the provided username exists, then " +
+                "an email with instructions on how to reset your password will be sent to the registered email address.";
+
         PasswordResetOutDto outDto = new PasswordResetOutDto ();
-        String token = UUID.randomUUID ().toString ();
 
-        User user;
+        String hostname = environment.getProperty ("email.hostname", request.getServerName());
 
-        if (dto.username.contains ("@")) {
-            user = userRepository.getUserByEmail (dto.username);
-        } else {
-            user = userRepository.getUserByUsername (dto.username);
+        // when there was a problem with sending we inform the user accordingly, but if the provided username does not
+        // exist then we return the same generic response to avoid that users abuse the mechanism
+        // to check which usernames or email addresses are valid.
+        try
+        {
+            passwordService.sendPasswordResetEmail (dto.username, hostname);
         }
-
-        if (user == null) {
-            outDto.message = "The user you are requesting does not exist.";
+        catch (UsernameNotFoundException e)
+        {
+            logger.debug (String.format ("The requested user account '%s' does not exist.", dto.username));
+        }
+        catch (MailException mailException)
+        {
+            outDto.message = "A password reset token could not be generated, because sending an email to the user failed.";
             outDto.success = false;
             return outDto;
         }
 
-        PasswordResetToken resetToken
-                = userService.createPasswordResetToken (user, token);
-
-        passwordResetTokenRepository.save (resetToken);
-
-        String hostname = environment.getProperty ("email.hostname");
-        String from = environment.getProperty ("email.from");
-        hostname = hostname != null ? hostname : request.getServerName();
-
-        // We always use a secure url here, since we have no way of detecting if the frontend server
-        // is using a secure connection. Its the task of the frontend server to rewrite this if it is using
-        // unsecure connections.
-        String url = "https://" + hostname + "/user/password/resetToken/" + token + "/user/" + user.id;
-
-        SimpleMailMessage email = new SimpleMailMessage();
-        email.setFrom (from);
-        email.setTo(user.email);
-        email.setSubject("Reset e-learning Password");
-        email.setText("Click here to rest your password for the system: " + url);
-
-        try {
-            mailSender.send (email);
-            outDto.message = "An email was sent to the respective user account with instructions on how to reset your password";
-            outDto.success = true;
-        } catch (MailException ex) {
-            logger.error ("An error occurred while sending the mail. The mail could not be send.", ex);
-        }
-
-        logger.debug ("A user reset token has been generated for user '" + dto.username + "': " + token);
-        logger.debug ("Please visit: " + url + " to reset.");
+        outDto.message = message;
+        outDto.success = true;
 
         return outDto;
     }
 
-    private boolean
-    validateResetPasswordToken (Long userId, PasswordResetToken passwordResetToken)
-    {
-        if (passwordResetToken == null || passwordResetToken.expiryDate == null) {
-            return false;
-        }
-
-        long until = LocalDateTime.now ().until (passwordResetToken.expiryDate, ChronoUnit.MILLIS);
-
-        if (until > 0) {
-            if (passwordResetToken.user.id.equals (userId)) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
     /**
-     * Here we actually reset the password
+     * This methods resets the password of the user to which the token belongs to a new password
+     * provided that the presented token exists and has not expired.
      */
     @PostMapping(path = "/resetToken/{token}")
-    @Transactional
     public ChangePasswordOutDto
     resetPassword (@PathVariable String token, @RequestBody ResetPasswordDto dto)
     {
         ChangePasswordOutDto outDto = new ChangePasswordOutDto ();
-        PasswordResetToken passwordResetToken = passwordResetTokenRepository.findPasswordResetTokenByToken (token);
 
-        if (validateResetPasswordToken (dto.userId, passwordResetToken)) {
-            if (dto.password == null) {
-                outDto.message = "No password specified. Cannot reset password.";
-                outDto.passwordChanged = false;
-                return outDto;
-            }
-
-            User user = passwordResetToken.user;
-            user.password = passwordEncoder.encode (dto.password);
-            userRepository.save (user);
-
-            passwordResetTokenRepository.delete (passwordResetToken);
-
-            outDto.message = "Your password was reset, you can now login with the new password.";
-            outDto.passwordChanged = true;
-        } else {
-            outDto.message = "The given token has expired and the password was not reset. Please request a new token.";
+        if (dto.password == null) {
+            outDto.message = "No password specified. Cannot reset password.";
             outDto.passwordChanged = false;
+            return outDto;
         }
+
+        boolean passwordChanged = passwordService.resetPassword (dto.userId, token, dto.password);
+
+        if (!passwordChanged)
+        {
+            outDto.message = "The presented token was not valid or has expired and the password was not reset. " +
+                    "Please request a new token.";
+            outDto.passwordChanged = false;
+            return outDto;
+        }
+
+        outDto.message = "Your password was reset, you can now login with the new password.";
+        outDto.passwordChanged = true;
 
         return outDto;
     }

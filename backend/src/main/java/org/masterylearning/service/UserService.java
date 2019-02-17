@@ -24,6 +24,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.OptionalLong;
 import java.util.Random;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -88,8 +89,12 @@ public class UserService {
         return true;
     }
 
-    public PasswordResetToken createPasswordResetToken (User user, String token) {
+
+    @Transactional
+    public PasswordResetToken createPasswordResetToken (User user) {
         PasswordResetToken resetToken = new PasswordResetToken ();
+
+        String token = UUID.randomUUID ().toString ();
 
         resetToken.user = user;
         resetToken.token = token;
