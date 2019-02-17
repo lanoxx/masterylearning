@@ -26,7 +26,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -67,7 +66,6 @@ public class UserController {
         this.userValidation = userValidation;
     }
 
-    @CrossOrigin
     @RequestMapping (method = RequestMethod.GET, path = "/current")
     @Transactional
     public UserOutDto
@@ -80,7 +78,6 @@ public class UserController {
         return null;
     }
 
-    @CrossOrigin
     @RequestMapping (method = RequestMethod.GET)
     @Transactional
     public List<UserOutDto>
@@ -108,7 +105,6 @@ public class UserController {
         return new UserOutDto (userByUsername);
     }
 
-    @CrossOrigin
     @PreAuthorize (value = "hasRole('ADMIN')")
     @RequestMapping (method = RequestMethod.POST)
     public CreateUserOutDto
@@ -191,7 +187,6 @@ public class UserController {
     }
 
     @Transactional
-    @CrossOrigin
     @PreAuthorize (value = "hasRole('ADMIN')")
     @RequestMapping (method = RequestMethod.DELETE, path = "{username}")
     public Boolean
@@ -226,7 +221,6 @@ public class UserController {
         return result;
     }
 
-    @CrossOrigin
     @RequestMapping (method = RequestMethod.POST, path = "/current/password")
     @Transactional
     public ChangePasswordOutDto

@@ -26,7 +26,6 @@ import org.masterylearning.service.HistoryService;
 import org.masterylearning.service.TreeEnumerator;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -56,7 +55,6 @@ public class HistoryController {
     @Inject HistoryService historyService;
     @Inject UserRepository userRepository;
 
-    @CrossOrigin
     @RequestMapping (method = RequestMethod.GET, path = "/activeCourses")
     @Transactional
     public List<CourseHistoryOutDto>
@@ -115,7 +113,6 @@ public class HistoryController {
         return null;
     }
 
-    @CrossOrigin
     @RequestMapping (method = RequestMethod.GET, path = "/courses/{courseId}")
     @Transactional
     public List<EntryDataOutDto> getTableOfContents (@PathVariable Long courseId) {
@@ -158,7 +155,6 @@ public class HistoryController {
         return result;
     }
 
-    @CrossOrigin
     @RequestMapping(path = "/courses/{courseId}/enumerate", method = RequestMethod.POST)
     @Transactional
     public EnumerationOutDto enumerateEntries (@PathVariable Long courseId, @RequestBody EnumerationInDto inDto) {
@@ -323,7 +319,6 @@ public class HistoryController {
         courseHistoryRepository.save (courseHistory);
     }
 
-    @CrossOrigin
     @RequestMapping (method = RequestMethod.POST, path = "/courses/{courseId}/entries/{entryId}")
     public Boolean
     setEntryState (@PathVariable Long courseId, @PathVariable Long entryId, @RequestBody EntryStateDto stateDto) {

@@ -7,7 +7,6 @@ import org.masterylearning.repository.EntryHistoryRepository;
 import org.masterylearning.repository.EntryRepository;
 import org.masterylearning.repository.UserRepository;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -26,7 +25,6 @@ public class StatisticController {
     @Inject EntryRepository entryRepository;
     @Inject UserRepository userRepository;
 
-    @CrossOrigin
     @RequestMapping (method = RequestMethod.GET, path = "/courseHistory/{courseId}")
     @Transactional
     public CourseStatisticsOutDto getStatistics (@PathVariable Long courseId) {
@@ -51,8 +49,7 @@ public class StatisticController {
         return outDto;
     }
 
-/*    @CrossOrigin
-    @RequestMapping(method = RequestMethod.GET, path = "courseHistory/{courseId}/users/{userId}")
+/*  @RequestMapping(method = RequestMethod.GET, path = "courseHistory/{courseId}/users/{userId}")
     @Transactional
     public UserStatisticsOutDto getUserStatistics (@PathVariable Long courseId, @PathVariable Long userId) {
 

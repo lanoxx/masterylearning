@@ -3,7 +3,6 @@ package org.masterylearning.web;
 import org.masterylearning.dto.in.CreateUserDto;
 import org.masterylearning.dto.out.CreateUserOutDto;
 import org.masterylearning.repository.UserRepository;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -22,7 +21,6 @@ public class InitializationController {
     @Inject UserRepository userRepository;
     @Inject UserController userController;
 
-    @CrossOrigin
     @RequestMapping (method = RequestMethod.POST, path = "/users")
     @Transactional
     public CreateUserOutDto createInitialUser (@RequestBody CreateUserDto dto) {

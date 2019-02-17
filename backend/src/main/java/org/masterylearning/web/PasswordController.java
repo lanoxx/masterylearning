@@ -15,7 +15,6 @@ import org.springframework.mail.MailException;
 import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -48,7 +47,6 @@ public class PasswordController {
     @SuppressWarnings("SpringJavaAutowiringInspection")
     @Inject MailSender mailSender;
 
-    @CrossOrigin
     @RequestMapping (method = RequestMethod.POST, path = "/resetToken")
     @Transactional
     public PasswordResetOutDto
@@ -126,7 +124,6 @@ public class PasswordController {
     /**
      * Here we actually reset the password
      */
-    @CrossOrigin
     @RequestMapping (method = RequestMethod.POST, path = "/resetToken/{token}")
     @Transactional
     public ChangePasswordOutDto

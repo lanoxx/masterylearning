@@ -15,7 +15,6 @@ import org.masterylearning.repository.EntryRepository;
 import org.masterylearning.service.CourseService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -40,7 +39,6 @@ public class CourseController {
     @Inject CourseService courseService;
     @Inject CourseHistoryRepository courseHistoryRepository;
 
-    @CrossOrigin
     @RequestMapping (method = RequestMethod.GET)
     public List<CourseOutDto>
     getCourseList () {
@@ -50,9 +48,6 @@ public class CourseController {
         return results;
     }
 
-    @CrossOrigin (origins = "*",
-                  allowCredentials = "true",
-                  methods = {RequestMethod.GET})
     @RequestMapping (method = RequestMethod.GET, path = "/{courseId}")
     public List<Entry>
     getCourseOverview (@PathVariable Long courseId) {
@@ -63,8 +58,6 @@ public class CourseController {
                           .orElse (null);
     }
 
-
-    @CrossOrigin
     @RequestMapping (method = RequestMethod.POST, path = "/{courseId}")
     @Transactional
     public Boolean
