@@ -17,6 +17,10 @@ angular.module ('myapp.admin', [
                        }]
             },
             views: {
+                'navigation@': {
+                    templateUrl: 'navigation.html',
+                    controller: 'NavigationController'
+                },
                 '@': {
                     templateUrl: 'admin/admin-home.html',
                     controller: 'AdminController'
