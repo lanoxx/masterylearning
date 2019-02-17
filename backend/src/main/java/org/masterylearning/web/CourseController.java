@@ -15,10 +15,12 @@ import org.masterylearning.repository.EntryRepository;
 import org.masterylearning.service.CourseService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.inject.Inject;
@@ -39,7 +41,7 @@ public class CourseController {
     @Inject CourseService courseService;
     @Inject CourseHistoryRepository courseHistoryRepository;
 
-    @RequestMapping (method = RequestMethod.GET)
+    @GetMapping
     public List<CourseOutDto>
     getCourseList () {
         List<CourseOutDto> results = new ArrayList<> ();
@@ -48,7 +50,7 @@ public class CourseController {
         return results;
     }
 
-    @RequestMapping (method = RequestMethod.GET, path = "/{courseId}")
+    @GetMapping (path = "/{courseId}")
     public List<Entry>
     getCourseOverview (@PathVariable Long courseId) {
 
@@ -58,7 +60,7 @@ public class CourseController {
                           .orElse (null);
     }
 
-    @RequestMapping (method = RequestMethod.POST, path = "/{courseId}")
+    @PostMapping (path = "/{courseId}")
     @Transactional
     public Boolean
     updateCourse (@PathVariable Long courseId, @RequestBody CourseUpdateDto dto) {
@@ -100,7 +102,7 @@ public class CourseController {
      * @return The course object from the database.
      */
     @PreAuthorize ("hasRole ('TEACHER') or hasRole ('ADMIN')")
-    @RequestMapping (method = RequestMethod.GET, path = "/{courseId}/full")
+    @GetMapping (path = "/{courseId}/full")
     public Course
     getCourseFull (@PathVariable Long courseId) {
 
@@ -110,7 +112,7 @@ public class CourseController {
     }
 
     @PreAuthorize ("hasRole ('TEACHER') or hasRole ('ADMIN')")
-    @RequestMapping(method = RequestMethod.POST)
+    @PostMapping
     public CreateCourseOutDto createCourse (@RequestBody Course course) {
         CreateCourseOutDto dto = new CreateCourseOutDto ();
 
@@ -129,7 +131,7 @@ public class CourseController {
     }
 
     @PreAuthorize ("hasRole ('TEACHER') or hasRole ('ADMIN')")
-    @RequestMapping (method = RequestMethod.DELETE, path = "/{courseId}")
+    @DeleteMapping (path = "/{courseId}")
     @Transactional
     public Boolean deleteCourse (@PathVariable Long courseId) {
 

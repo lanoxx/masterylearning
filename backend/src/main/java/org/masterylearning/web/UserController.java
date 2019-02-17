@@ -26,10 +26,12 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -66,7 +68,7 @@ public class UserController {
         this.userValidation = userValidation;
     }
 
-    @RequestMapping (method = RequestMethod.GET, path = "/current")
+    @GetMapping(path = "/current")
     @Transactional
     public UserOutDto
     getUser () {
@@ -78,7 +80,7 @@ public class UserController {
         return null;
     }
 
-    @RequestMapping (method = RequestMethod.GET)
+    @GetMapping
     @Transactional
     public List<UserOutDto>
     getUserList () {
@@ -88,8 +90,8 @@ public class UserController {
         return userList.stream ().map (UserOutDto::new).collect (Collectors.toList ());
     }
 
-    @RequestMapping (path = "{username:.+}", method = RequestMethod.GET)
     @PreAuthorize ("hasRole ('ADMIN')")
+    @GetMapping(path = "{username:.+}")
     public UserOutDto
     findUser (@PathVariable String username) {
         User userByUsername = userRepository.getUserByUsername (username);
@@ -106,7 +108,7 @@ public class UserController {
     }
 
     @PreAuthorize (value = "hasRole('ADMIN')")
-    @RequestMapping (method = RequestMethod.POST)
+    @PostMapping
     public CreateUserOutDto
     createUser (@RequestBody CreateUserDto dto) {
 
@@ -114,7 +116,7 @@ public class UserController {
     }
 
     @PreAuthorize (value = "hasRole ('ADMIN')")
-    @RequestMapping (method = RequestMethod.POST, path = "import")
+    @PostMapping (path = "import")
     public CreateUsersOutDto
     createUsers (@RequestBody CreateUsersInDto dto) {
         CreateUsersOutDto outDto = new CreateUsersOutDto ();
@@ -188,7 +190,7 @@ public class UserController {
 
     @Transactional
     @PreAuthorize (value = "hasRole('ADMIN')")
-    @RequestMapping (method = RequestMethod.DELETE, path = "{username}")
+    @DeleteMapping(path = "{username}")
     public Boolean
     deleteUser (@PathVariable String username)
     {
@@ -196,7 +198,7 @@ public class UserController {
     }
 
     @PreAuthorize (value = "hasRole('ADMIN')")
-    @RequestMapping (method = RequestMethod.POST, path = "{username}/roles")
+    @PostMapping(path = "{username}/roles")
     public RolesOutDto
     updateRoles (@PathVariable String username, @RequestBody RolesDto dto)
     {
@@ -221,7 +223,7 @@ public class UserController {
         return result;
     }
 
-    @RequestMapping (method = RequestMethod.POST, path = "/current/password")
+    @PostMapping(path = "/current/password")
     @Transactional
     public ChangePasswordOutDto
     changePassword (@RequestBody ChangePasswordDto dto) {

@@ -3,9 +3,9 @@ package org.masterylearning.web;
 import org.masterylearning.dto.in.CreateUserDto;
 import org.masterylearning.dto.out.CreateUserOutDto;
 import org.masterylearning.repository.UserRepository;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.inject.Inject;
@@ -21,7 +21,7 @@ public class InitializationController {
     @Inject UserRepository userRepository;
     @Inject UserController userController;
 
-    @RequestMapping (method = RequestMethod.POST, path = "/users")
+    @PostMapping (path = "/users")
     @Transactional
     public CreateUserOutDto createInitialUser (@RequestBody CreateUserDto dto) {
 

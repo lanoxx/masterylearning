@@ -26,10 +26,11 @@ import org.masterylearning.service.HistoryService;
 import org.masterylearning.service.TreeEnumerator;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.inject.Inject;
@@ -55,7 +56,7 @@ public class HistoryController {
     @Inject HistoryService historyService;
     @Inject UserRepository userRepository;
 
-    @RequestMapping (method = RequestMethod.GET, path = "/activeCourses")
+    @GetMapping (path = "/activeCourses")
     @Transactional
     public List<CourseHistoryOutDto>
     getActiveCourses ()
@@ -113,7 +114,7 @@ public class HistoryController {
         return null;
     }
 
-    @RequestMapping (method = RequestMethod.GET, path = "/courses/{courseId}")
+    @GetMapping (path = "/courses/{courseId}")
     @Transactional
     public List<EntryDataOutDto> getTableOfContents (@PathVariable Long courseId) {
         List<Entry> tableOfContents;
@@ -155,7 +156,7 @@ public class HistoryController {
         return result;
     }
 
-    @RequestMapping(path = "/courses/{courseId}/enumerate", method = RequestMethod.POST)
+    @PostMapping (path = "/courses/{courseId}/enumerate")
     @Transactional
     public EnumerationOutDto enumerateEntries (@PathVariable Long courseId, @RequestBody EnumerationInDto inDto) {
 
@@ -319,7 +320,7 @@ public class HistoryController {
         courseHistoryRepository.save (courseHistory);
     }
 
-    @RequestMapping (method = RequestMethod.POST, path = "/courses/{courseId}/entries/{entryId}")
+    @PostMapping (path = "/courses/{courseId}/entries/{entryId}")
     public Boolean
     setEntryState (@PathVariable Long courseId, @PathVariable Long entryId, @RequestBody EntryStateDto stateDto) {
 
