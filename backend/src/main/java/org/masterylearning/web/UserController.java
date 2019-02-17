@@ -197,18 +197,7 @@ public class UserController {
     public Boolean
     deleteUser (@PathVariable String username)
     {
-        User userByUsername = userRepository.getUserByUsername (username);
-
-        if (userByUsername != null) {
-            List<PasswordResetToken> passwordResetTokenByUser_username = passwordResetTokenRepository.findPasswordResetTokenByUser_Username (username);
-
-            passwordResetTokenRepository.deleteInBatch (passwordResetTokenByUser_username);
-
-            userRepository.delete (userByUsername);
-            return true;
-        }
-
-        return false;
+        return userService.deleteUser (username);
     }
 
     @PreAuthorize (value = "hasRole('ADMIN')")

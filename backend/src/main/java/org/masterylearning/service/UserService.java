@@ -70,6 +70,24 @@ public class UserService {
         return user;
     }
 
+    @Transactional
+    public boolean deleteUser (String username) {
+        User userByUsername = userRepository.getUserByUsername (username);
+
+        if (userByUsername == null) {
+            return false;
+        }
+
+        List<PasswordResetToken> passwordResetTokenByUser_username =
+                passwordResetTokenRepository.findPasswordResetTokenByUser_Username (username);
+
+        passwordResetTokenRepository.deleteInBatch (passwordResetTokenByUser_username);
+
+        userRepository.delete (userByUsername);
+
+        return true;
+    }
+
     public PasswordResetToken createPasswordResetToken (User user, String token) {
         PasswordResetToken resetToken = new PasswordResetToken ();
 
