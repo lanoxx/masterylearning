@@ -62,6 +62,9 @@ public class User implements UserDetails {
     @OneToMany (mappedBy = "user", cascade = CascadeType.ALL)
     public List<CourseHistory> courseHistoryList;
 
+    @OneToMany (mappedBy = "user", cascade = CascadeType.ALL)
+    public List<LoginHistory> loginHistoryList;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities () {
         return getRoles ().stream ()
