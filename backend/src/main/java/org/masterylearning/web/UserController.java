@@ -18,11 +18,12 @@ import org.masterylearning.dto.out.UserOutDto;
 import org.masterylearning.repository.UserRepository;
 import org.masterylearning.service.PasswordService;
 import org.masterylearning.service.RoleService;
+import org.masterylearning.service.UserFacade;
 import org.masterylearning.service.UserService;
 import org.masterylearning.web.validation.UserValidation;
 import org.springframework.mail.MailException;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -48,18 +49,21 @@ public class UserController {
     private UserService userService;
     private PasswordService passwordService;
     private RoleService roleService;
+    private UserFacade userFacade;
     private UserValidation userValidation;
 
     public UserController (UserRepository userRepository,
                            UserService userService,
                            PasswordService passwordService,
                            RoleService roleService,
+                           UserFacade userFacade,
                            UserValidation userValidation)
     {
         this.userRepository = userRepository;
         this.userService = userService;
         this.passwordService = passwordService;
         this.roleService = roleService;
+        this.userFacade = userFacade;
         this.userValidation = userValidation;
     }
 
@@ -67,12 +71,13 @@ public class UserController {
     @Transactional
     public UserOutDto
     getUser () {
-        Object principal = SecurityContextHolder.getContext ().getAuthentication ().getPrincipal ();
-        if (principal instanceof User) {
-            return new UserOutDto ((User) principal);
-        }
+        try {
+            User user = userFacade.getCurrentUser ();
 
-        return null;
+            return new UserOutDto (user);
+        } catch (UsernameNotFoundException e) {
+            return null;
+        }
     }
 
     @GetMapping
@@ -223,13 +228,7 @@ public class UserController {
     changePassword (@RequestBody ChangePasswordDto dto) {
         ChangePasswordOutDto outDto = new ChangePasswordOutDto ();
 
-        Object principal = SecurityContextHolder.getContext ().getAuthentication ().getPrincipal ();
-
-        if (!(principal instanceof User)) {
-            return outDto;
-        }
-
-        User currentUser = (User) principal;
+        User currentUser = userFacade.getCurrentUser ();
 
         outDto.passwordChanged = passwordService.changePassword (currentUser,
                                                                  dto.oldPassword,
