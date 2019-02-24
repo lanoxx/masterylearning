@@ -8,7 +8,7 @@ import org.masterylearning.domain.User;
 import org.masterylearning.repository.CourseHistoryRepository;
 import org.masterylearning.repository.EntryHistoryRepository;
 import org.masterylearning.repository.UserRepository;
-import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,65 +26,72 @@ public class HistoryService {
     @Inject CourseHistoryRepository courseHistoryRepository;
     @Inject EntryHistoryRepository entryHistoryRepository;
     @Inject UserRepository userRepository;
+    @Inject UserFacade userFacade;
 
     @Transactional
     public List<CourseHistory> addActiveCourses (List<Course> all) {
-        Object principal = SecurityContextHolder.getContext ().getAuthentication ().getPrincipal ();
+        User user;
 
-        List<CourseHistory> courseHistoryList = null;
+        try {
+            user = userFacade.getCurrentUser ();
+        } catch (UsernameNotFoundException e) {
+            return null;
+        }
 
-        if (principal instanceof User) {
-            Long userId = ((User) principal).id;
+        List<CourseHistory> courseHistoryList;
 
-            // The user object stored in the principal of the security context is no longer bound
-            // to an active hibernate session, so we need to reload the user.
-            Optional<User> maybeUser = userRepository.findById (userId);
+        Long userId = user.id;
 
-            if (!maybeUser.isPresent ()) {
-                return null;
-            }
+        // The user object stored in the principal of the security context is no longer bound
+        // to an active hibernate session, so we need to reload the user.
+        Optional<User> maybeUser = userRepository.findById (userId);
 
-            User user = maybeUser.get ();
+        if (!maybeUser.isPresent ()) {
+            return null;
+        }
 
-            courseHistoryList = user.getCourseHistoryList ();
-            for (Course course : all) {
-                boolean found = false;
-                for (CourseHistory courseHistory : courseHistoryList) {
-                    if (courseHistory.course.id.equals (course.id)) {
-                        found = true;
-                        break;
-                    }
-                }
+        user = maybeUser.get ();
 
-                // If the course was not found, then we add it to the users course history
-                // additionally we add the first entry to the users entry history for that course
-                if (!found) {
-                    CourseHistory courseHistory = new CourseHistory ();
-                    courseHistory.course = course;
-                    courseHistory.created = LocalDateTime.now ();
-
-                    Optional<Entry> first = course.getChildren ().stream ().findFirst ();
-                    Entry entry = first.isPresent () ? first.get () : null;
-
-                    courseHistory.user = user;
-                    courseHistory.lastEntry = entry;
-
-                    courseHistoryList.add (courseHistory);
-                    courseHistoryRepository.saveAll (courseHistoryList);
-
-                    EntryHistory entryHistory = new EntryHistory ();
-                    entryHistory.courseHistory = courseHistory;
-                    entryHistory.course = course;
-                    entryHistory.entry = entry;
-                    entryHistory.user = user;
-                    entryHistory.created = LocalDateTime.now ();
-
-                    List<EntryHistory> entryHistoryList = courseHistory.getEntryHistoryList ();
-                    entryHistoryList.add (entryHistory);
-
-                    entryHistoryRepository.saveAll (entryHistoryList);
+        courseHistoryList = user.getCourseHistoryList ();
+        for (Course course : all) {
+            boolean found = false;
+            for (CourseHistory courseHistory : courseHistoryList) {
+                if (courseHistory.course.id.equals (course.id)) {
+                    found = true;
+                    break;
                 }
             }
+
+            // If the course was not found, then we add it to the users course history
+            // additionally we add the first entry to the users entry history for that course
+            if (found) {
+                continue;
+            }
+
+            CourseHistory courseHistory = new CourseHistory ();
+            courseHistory.course = course;
+            courseHistory.created = LocalDateTime.now ();
+
+            Optional<Entry> first = course.getChildren ().stream ().findFirst ();
+            Entry entry = first.orElse (null);
+
+            courseHistory.user = user;
+            courseHistory.lastEntry = entry;
+
+            courseHistoryList.add (courseHistory);
+            courseHistoryRepository.saveAll (courseHistoryList);
+
+            EntryHistory entryHistory = new EntryHistory ();
+            entryHistory.courseHistory = courseHistory;
+            entryHistory.course = course;
+            entryHistory.entry = entry;
+            entryHistory.user = user;
+            entryHistory.created = LocalDateTime.now ();
+
+            List<EntryHistory> entryHistoryList = courseHistory.getEntryHistoryList ();
+            entryHistoryList.add (entryHistory);
+
+            entryHistoryRepository.saveAll (entryHistoryList);
         }
 
         return courseHistoryList;
@@ -93,14 +100,13 @@ public class HistoryService {
     @Transactional
     public CourseHistory getCourseHistory (Long courseId) {
 
-        Object principal = SecurityContextHolder.getContext ().getAuthentication ().getPrincipal ();
-
+        User user;
         Long userId;
-        if (principal instanceof User) {
 
-            User user = (User) principal;
+        try {
+            user = userFacade.getCurrentUser ();
             userId = user.id;
-        } else {
+        } catch (UsernameNotFoundException e) {
             return null;
         }
 
@@ -110,7 +116,7 @@ public class HistoryService {
             return null;
         }
 
-        User user = maybeUser.get ();
+        user = maybeUser.get ();
 
         Optional<CourseHistory> first
                 = user.getCourseHistoryList ()
@@ -134,9 +140,7 @@ public class HistoryService {
 
         Optional<EntryHistory> entryCandidate = courseHistory.entryHistoryList.stream ().filter (entryHistory -> entryHistory.entry.id.equals (entryId)).findFirst ();
 
-        if (!entryCandidate.isPresent ()) return null;
-
-        return entryCandidate.get ();
+        return entryCandidate.orElse (null);
     }
 
     @Transactional
