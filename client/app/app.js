@@ -113,6 +113,8 @@ angular.module('myApp', [
                                              errorMessage: 'Authentication required.',
                                              authenticationRequired: true
                                          });
+                    } else {
+                        UserService.setCurrentRole ($to.self.role);
                     }
                 }
                 $log.info ("[myApp] $stateChangeStart (route change accepted)");

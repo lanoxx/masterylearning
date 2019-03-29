@@ -192,7 +192,6 @@ angular.module ('myapp.services.user', ['ngResource', 'base64', 'myapp.config'])
                 $log.info ("[myApp] Switching application role to " + Role.getName (role));
 
                 if (role) {
-                    this.setCurrentRole (role);
                     $state.go (Role.getRoute (role));
                 }
             }.bind(this);
